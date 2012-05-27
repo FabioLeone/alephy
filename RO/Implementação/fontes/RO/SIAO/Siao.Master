@@ -1,0 +1,58 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Siao.master.cs" Inherits="SIAO.Siao" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>R.O.</title>
+    <link href="Content/ssSIAO.css" rel="Stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+    </asp:ToolkitScriptManager>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+            <header>
+                <h1>R.O.</h1>
+                <p>
+                    CasBrasil RELATÓRIO ONLINE</p>
+                <asp:Button ID="btnLogoff" CssClass="button blue logoff" runat="server" Text="Logoff"
+                    OnClick="btnLogoff_Click" />
+            </header>
+            <nav>
+                <ul>
+                    <%if (SIAO.Global.Acs == "adm")
+                      { %>
+                    <li>
+                        <h2>
+                            Cadastros</h2>
+                        <ul>
+                            <li><a href="wfmCadastroUsuario.aspx">Cadastro de Usuários</a></li>
+                            <li><a href="wfmCadastroRede.aspx">Cadastro de Redes</a></li>
+                            <li><a href="wfmCadastroLojas.aspx">Cadastro de Lojas</a></li>
+                            <li><a href="wfmBanco.aspx">Manutenção do Banco de Dados</a></li>
+                        </ul>
+                    </li>
+                    <%} %>
+                    <li>
+                        <h2>
+                            Opções</h2>
+                        <ul>
+                            <li><a href="wfmEnvio.aspx">Envio de arquivos</a></li>
+                            <li><a href="wfmGerarRelatorios.aspx">Gerar relatórios</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <section class="border">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </section>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    </form>
+</body>
+</html>
