@@ -69,5 +69,16 @@ namespace SIAO
             Response.Redirect("wfmCrossRelat.aspx");
         }
 
+        protected void btnRelat2_Click(object sender, EventArgs e)
+        {
+            List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
+
+            lr1 = oc.GetCross(scn, ou, ddlAno.SelectedItem.Value);
+
+            Session["cross"] = lr1;
+
+            Response.Redirect("wfmCrossRelat2.aspx");
+        }
+
     }
 }

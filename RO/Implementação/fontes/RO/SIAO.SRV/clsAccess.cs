@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace SIAO.SRV
 {
     public class clsAccess
     {
         clsDB db = new clsDB();
-        SqlCommand cmm = new SqlCommand();
-        SqlConnection cnn = new SqlConnection();
+        MySqlCommand cmm = new MySqlCommand();
+        MySqlConnection cnn = new MySqlConnection();
         clsFuncs o = new clsFuncs();
 
         public Usuario VerifAcesso(Usuario user, string scn)
@@ -20,10 +21,10 @@ namespace SIAO.SRV
             string lsSenha = o.encr(user.Password);
             string lsNome = o.encr(user.AcsName.ToUpper());
 
-            cmm.CommandText = "SELECT Memberships.*, Users.UserName"
-                + " FROM  Memberships INNER JOIN"
-                + " Users ON Memberships.UserId = Users.UserId"
-                + " WHERE (Memberships.Password = '" + lsSenha + "') AND (Memberships.Name = '" + lsNome + "')";
+            cmm.CommandText = "SELECT memberships.*, users.UserName"
+                + " FROM  memberships INNER JOIN"
+                + " users ON memberships.UserId = users.UserId"
+                + " WHERE (memberships.Password = '" + lsSenha + "') AND (memberships.Name = '" + lsNome + "')";
 
             if (db.openConnection(cmm))
             {
@@ -39,7 +40,7 @@ namespace SIAO.SRV
                     user.CreateDate = (DateTime)ds.Tables["User"].Rows[0]["CreateDate"];
                     user.Email = ds.Tables["User"].Rows[0]["Email"].ToString();
                     user.ExpirationDate = (DateTime)ds.Tables["User"].Rows[0]["ExpirationDate"];
-                    user.Inactive = (bool)ds.Tables["User"].Rows[0]["Inactive"];
+                    user.Inactive = (bool)(ds.Tables["User"].Rows[0]["Inactive"].ToString() == "0" ? false : true);
                     user.Name = ds.Tables["User"].Rows[0]["UserName"].ToString();
                     user.UserId = (int)ds.Tables["User"].Rows[0]["UserId"];
                     user.Access = o.denc(ds.Tables["User"].Rows[0]["Access"].ToString());

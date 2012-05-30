@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace SIAO.SRV
 {
     public class clsDB
     {
         // Abre o acesso ao banco
-        public bool openConnection(SqlCommand cmm)
+        public bool openConnection(MySqlCommand cmm)
         {
             bool lbOk = false;
             try
@@ -24,7 +25,7 @@ namespace SIAO.SRV
         }
 
         // Fecha o acesso ao banco
-        public void closeConnection(SqlCommand cmm)
+        public void closeConnection(MySqlCommand cmm)
         {
             try
             {
@@ -39,7 +40,7 @@ namespace SIAO.SRV
         }
 
         // Traz o retorno do banco
-        public object Query(object retorno, ref SqlCommand cmm)
+        public object Query(object retorno, ref MySqlCommand cmm)
         {
             DataSet ds = new DataSet();
 
@@ -57,7 +58,7 @@ namespace SIAO.SRV
 
             try
             {
-                SqlDataAdapter da = new SqlDataAdapter(cmm);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmm);
 
                 da.Fill(ds);
             }
@@ -87,7 +88,7 @@ namespace SIAO.SRV
         }
 
         // Executa SQL
-        public void Execute(ref SqlCommand cmm)
+        public void Execute(ref MySqlCommand cmm)
         {
             try
             {
@@ -105,7 +106,7 @@ namespace SIAO.SRV
         }
 
         // Traz o dataset do banco
-        public DataSet QueryDS(ref SqlCommand cmm, ref DataSet ds, string nomeTabela)
+        public DataSet QueryDS(ref MySqlCommand cmm, ref DataSet ds, string nomeTabela)
         {
 
             try
@@ -122,7 +123,7 @@ namespace SIAO.SRV
 
             try
             {
-                SqlDataAdapter da = new SqlDataAdapter(cmm);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmm);
 
                 da.Fill(ds, nomeTabela);
             }

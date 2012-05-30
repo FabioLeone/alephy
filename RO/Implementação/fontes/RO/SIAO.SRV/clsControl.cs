@@ -3,13 +3,14 @@ using System.Data;
 using System.Xml;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace SIAO.SRV
 {
     public class clsControl
     {
         clsDB oDB = new clsDB();
-        SqlCommand cmm = new SqlCommand();
+        MySqlCommand cmm = new MySqlCommand();
         clsFuncs o = new clsFuncs();
 
         public string AddUser(Usuario u, string scn) {
@@ -21,32 +22,32 @@ namespace SIAO.SRV
                 string acs = o.encr(u.Access);
                 string nme = o.encr(u.AcsName.ToUpper());
 
-                SqlConnection cnn = new SqlConnection(scn);
+                MySqlConnection cnn = new MySqlConnection(scn);
                 cmm.Connection = cnn;
 
                 if (oDB.openConnection(cmm))
                 {
-                    cmm.CommandText = "SELECT UserId FROM  Users WHERE UserName = '" + u.Name + "'";
+                    cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = '" + u.Name + "'";
 
                     int id = 0;
                     if (oDB.Query(id, ref cmm) == DBNull.Value)
                     {
                         string lDate = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00";
                         
-                        cmm.CommandText = "INSERT INTO Users"
+                        cmm.CommandText = "INSERT INTO users"
                             + " (UserName, LastActivityDate)"
                             + " VALUES ('" + u.Name + "', '" + lDate + "')";
 
                         oDB.Execute(ref cmm);
 
-                        cmm.CommandText = "SELECT UserId FROM  Users WHERE UserName = '" + u.Name + "'";
+                        cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = '" + u.Name + "'";
 
                         id = (int)oDB.Query(id, ref cmm);
 
                         string cDate = u.CreateDate.Year + "-" + u.CreateDate.Month + "-" + u.CreateDate.Day + " 00:00:00";
                         string eDate = u.ExpirationDate.Year + "-" + u.ExpirationDate.Month + "-" + u.ExpirationDate.Day + " 00:00:00";
 
-                        cmm.CommandText = "INSERT INTO Memberships"
+                        cmm.CommandText = "INSERT INTO memberships"
                             + " (UserId, Password, Email, Inactive, CreateDate, ExpirationDate, Access, Name)"
                             + " VALUES (" + id + ", '" + pass + "', '" + u.Email + "', "
                             + (u.Inactive == false ? 0 : 1) + ", '" + cDate + "', '" + eDate + "', '" 
@@ -54,7 +55,7 @@ namespace SIAO.SRV
 
                         oDB.Execute(ref cmm);
 
-                        cmm.CommandText = "INSERT INTO Usuarios_Farmacias"
+                        cmm.CommandText = "INSERT INTO usuarios_farmacias"
                             +" (UserId, FarmaciaId)"
                             +" VALUES ("+ id +", "+ u.FarmaciaId +")";
 
@@ -76,13 +77,13 @@ namespace SIAO.SRV
             string s = o.encr(p);
             DataSet ds = new DataSet();
 
-            cmm.CommandText = "SELECT Users.UserName, Memberships.UserId"
-                +" FROM  Users INNER JOIN"
-                +" Memberships ON Users.UserId = Memberships.UserId"
-                +" WHERE (Memberships.Inactive = 0) AND (Memberships.Access = '"+ s +"')"
-                +" AND (Memberships.ExpirationDate > SYSDATE())";
+            cmm.CommandText = "SELECT users.UserName, memberships.UserId"
+                +" FROM  users INNER JOIN"
+                +" memberships ON users.UserId = memberships.UserId"
+                +" WHERE (memberships.Inactive = 0) AND (memberships.Access = '"+ s +"')"
+                +" AND (memberships.ExpirationDate > SYSDATE())";
 
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
             if (oDB.openConnection(cmm)) {
@@ -96,10 +97,10 @@ namespace SIAO.SRV
         public string AddRede(string scn, Rede rede)
         {
             string msg = "";
-            cmm.CommandText = "INSERT INTO RedesFarmaceuticas (Descricao, UserId)"
+            cmm.CommandText = "INSERT INTO redesfarmaceuticas (Descricao, UserId)"
                 +" VALUES ('"+ rede.RedeName +"', '"+ rede.UserId +"')";
 
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
             try
@@ -122,10 +123,10 @@ namespace SIAO.SRV
         {
             DataSet ds = new DataSet();
 
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
-            cmm.CommandText = "SELECT Id, Descricao FROM RedesFarmaceuticas";
+            cmm.CommandText = "SELECT Id, Descricao FROM redesfarmaceuticas";
 
             if (oDB.openConnection(cmm)) {
                 ds = oDB.QueryDS(ref cmm, ref ds, "Redes");
@@ -139,10 +140,10 @@ namespace SIAO.SRV
         {
             DataSet ds = new DataSet();
 
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
-            cmm.CommandText = "SELECT * FROM UF";
+            cmm.CommandText = "SELECT * FROM uf";
 
             if (oDB.openConnection(cmm))
             {
@@ -157,14 +158,14 @@ namespace SIAO.SRV
         {
             string msg = "";
 
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
             string scnpj = ol.Cnpj.Replace(".", "");
             scnpj = scnpj.Replace("/", "");
             scnpj = scnpj.Replace("-", "");
 
-            cmm.CommandText = "INSERT INTO Farmacias (Proprietario, Gerente, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero, Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, "
+            cmm.CommandText = "INSERT INTO farmacias (Proprietario, Gerente, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero, Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, "
                 +" Msn, Ativo, idRede)"
                 +" VALUES ('"+ ol.Proprietario +"', '"+ ol.Gerente +"', '"+ ol.Email +"', '"+ ol.Email2 +"', '"
                 + ol.NomeFantasia +"', '"+ ol.Razao +"', '"+ scnpj +"', '"+ ol.Endereco +"', '"+ ol.EndNumero
@@ -189,7 +190,7 @@ namespace SIAO.SRV
 
         public string AddXml(string scn, XmlDocument xd, Usuario u)
         {
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
             DataSet ds = new DataSet();
@@ -202,18 +203,45 @@ namespace SIAO.SRV
                 {
                     if (oDB.openConnection(cmm))
                     {
-                        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                        cmm.CommandText = "SELECT arquivosenviados.id FROM arquivosenviados"
+                            + " WHERE arquivosenviados.cnpj = '" + ds.Tables[0].Rows[0]["cnpj"].ToString()
+                            + "' AND arquivosenviados.mes = " + ds.Tables[0].Rows[0]["mes"]
+                            + " AND arquivosenviados.ano = " + ds.Tables[0].Rows[0]["ano"];
+
+                        int id = 0;
+                        if (oDB.Query(id, ref cmm) == DBNull.Value)
                         {
-                            cmm.CommandText = "INSERT INTO base_clientes (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
-                                + " VALUES ('"+ ds.Tables[0].Rows[i]["cnpj"].ToString() +"', "
-                                + ds.Tables[0].Rows[i]["mes"] + ", " + ds.Tables[0].Rows[i]["ano"] + ", '" 
-                                + ds.Tables[0].Rows[i]["ean"].ToString() + "', '" 
-                                + ds.Tables[0].Rows[i]["nprod"].ToString() + "', '" 
-                                + ds.Tables[0].Rows[i]["fab"].ToString() + "', " + ds.Tables[0].Rows[i]["quant"] 
-                                + ", " + ds.Tables[0].Rows[i]["vbruto"] + ", " + ds.Tables[0].Rows[i]["vliquido"] 
-                                + ", " + ds.Tables[0].Rows[i]["desconto"] +")";
-                        
-                            oDB.Execute(ref cmm);
+                            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                            {
+                                cmm.CommandText = "INSERT INTO base_clientes (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
+                                    + " VALUES ('" + ds.Tables[0].Rows[i]["cnpj"].ToString() + "', "
+                                    + ds.Tables[0].Rows[i]["mes"] + ", " + ds.Tables[0].Rows[i]["ano"] + ", '"
+                                    + ds.Tables[0].Rows[i]["ean"].ToString() + "', '"
+                                    + ds.Tables[0].Rows[i]["nprod"].ToString() + "', '"
+                                    + ds.Tables[0].Rows[i]["fab"].ToString() + "', " + ds.Tables[0].Rows[i]["quant"]
+                                    + ", " + ds.Tables[0].Rows[i]["vbruto"] + ", " + ds.Tables[0].Rows[i]["vliquido"]
+                                    + ", " + ds.Tables[0].Rows[i]["desconto"] + ")";
+
+                                oDB.Execute(ref cmm);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                            {
+                                cmm.CommandText = "UPDATE base_clientes SET Barras = '" 
+                                    + ds.Tables[0].Rows[i]["ean"].ToString() 
+                                    + "', Descricao = '" + ds.Tables[0].Rows[i]["nprod"].ToString()
+                                    + "', Fabricante = '" + ds.Tables[0].Rows[i]["fab"].ToString()
+                                    + "', Quantidade = " + ds.Tables[0].Rows[i]["quant"] + ", Valor_Bruto = "
+                                    + ds.Tables[0].Rows[i]["vbruto"] + ", Valor_Liquido = "
+                                    + ds.Tables[0].Rows[i]["vliquido"] + ", Valor_Desconto = "
+                                    + ds.Tables[0].Rows[i]["desconto"] + " WHERE Cnpj = '"
+                                    + ds.Tables[0].Rows[i]["cnpj"].ToString() + "' AND Mes = "
+                                    + ds.Tables[0].Rows[i]["mes"] + " AND Ano = " + ds.Tables[0].Rows[i]["ano"];
+
+                                oDB.Execute(ref cmm);
+                            }
                         }
                     }
                 }
@@ -233,7 +261,7 @@ namespace SIAO.SRV
 
         private void AddXmlData(string scn, DataSet ds, Usuario u)
         {
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
             if (ds.Tables.Count > 0)
@@ -250,7 +278,7 @@ namespace SIAO.SRV
                         oDB.Execute(ref cmm);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
 
@@ -261,7 +289,7 @@ namespace SIAO.SRV
         public DataSet GetFarmacias(string scn)
         {
             DataSet ds = new DataSet();
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
 
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
@@ -277,7 +305,7 @@ namespace SIAO.SRV
         public string AddDbf(string scn, DataTable dt)
         {
             string msg = "";
-            SqlConnection msc = new SqlConnection(scn);
+            MySqlConnection msc = new MySqlConnection(scn);
             DataSet ds = new DataSet();
 
             cmm.Connection = msc;
@@ -346,9 +374,9 @@ namespace SIAO.SRV
             return msg;
         }
 
-        public string AddTxt(string scn, DataTable dt)
+        public string AddTxt(string scn, DataTable dt, Usuario u)
         {
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
             string msg = "";
@@ -359,30 +387,67 @@ namespace SIAO.SRV
                 {
                     if (oDB.openConnection(cmm))
                     {
-                        for (int i = 0; i < dt.Rows.Count; i++)
+                        cmm.CommandText = "SELECT arquivosenviados.id FROM arquivosenviados"
+                            + " WHERE arquivosenviados.cnpj = '" + dt.Rows[0]["cnpj"].ToString()
+                            + "' AND arquivosenviados.mes = " + dt.Rows[0][2]
+                            + " AND arquivosenviados.ano = " + dt.Rows[0]["ano"];
+
+                        int id = 0;
+                        if (oDB.Query(id, ref cmm) == DBNull.Value)
                         {
-                            string svb = "", svl = "", svd = "";
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                string svb = "", svl = "", svd = "";
 
-                            svb = dt.Rows[i][10].ToString().Replace(".", "");
-                            svb = svb.Replace(",", ".");
+                                svb = dt.Rows[i][10].ToString().Replace(".", "");
+                                svb = svb.Replace(",", ".");
 
-                            svl = dt.Rows[i][11].ToString().Replace(".", "");
-                            svl = svl.Replace(",", ".");
+                                svl = dt.Rows[i][11].ToString().Replace(".", "");
+                                svl = svl.Replace(",", ".");
 
-                            svd = dt.Rows[i][12].ToString().Replace(".", "");
-                            svd = svd.Replace(",", ".");
+                                svd = dt.Rows[i][12].ToString().Replace(".", "");
+                                svd = svd.Replace(",", ".");
 
-                            cmm.CommandText = "INSERT INTO base_clientes (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
-                                + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
-                                + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '" 
-                                + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3] 
-                                + ", '" + dt.Rows[i][4].ToString() + "', '" 
-                                + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
-                                + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", " 
-                                + svb + ", " + svl + ", " + svd + ")";
+                                cmm.CommandText = "INSERT INTO base_clientes (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
+                                    + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
+                                    + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
+                                    + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
+                                    + ", '" + dt.Rows[i][4].ToString() + "', '"
+                                    + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
+                                    + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", "
+                                    + svb + ", " + svl + ", " + svd + ")";
 
-                            oDB.Execute(ref cmm);
+                                oDB.Execute(ref cmm);
+                            }
                         }
+                        else {
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                string svb = "", svl = "", svd = "";
+
+                                svb = dt.Rows[i][10].ToString().Replace(".", "");
+                                svb = svb.Replace(",", ".");
+
+                                svl = dt.Rows[i][11].ToString().Replace(".", "");
+                                svl = svl.Replace(",", ".");
+
+                                svd = dt.Rows[i][12].ToString().Replace(".", "");
+                                svd = svd.Replace(",", ".");
+
+                                cmm.CommandText = "UPDATE base_clientes SET Razao_Social = '"
+                                    + dt.Rows[i][0].ToString().Replace("'", "''") + "', Barras = '" 
+                                    + dt.Rows[i][4].ToString()  + "', Descricao = '" 
+                                    + dt.Rows[i][5].ToString().Replace("'", "''") + "', Fabricante = '" 
+                                    + dt.Rows[i][6].ToString().Replace("'", "''") + "', Quantidade = " 
+                                    + dt.Rows[i][9] + ", Valor_Bruto = " + svb + ", Valor_Liquido = " + svl 
+                                    + ", Valor_Desconto = " + svd + " WHERE Cnpj = '" 
+                                    + dt.Rows[i][1].ToString() + "' AND Mes = " + dt.Rows[i][2] +" AND Ano = " 
+                                    + dt.Rows[i][3];
+
+                                oDB.Execute(ref cmm);
+                            }
+                        }
+                        
                     }
                 }
                 catch (Exception ex)
@@ -392,16 +457,44 @@ namespace SIAO.SRV
 
                 oDB.closeConnection(cmm);
 
+                this.AddTxtData(scn, dt, u);
+
             }
             else { msg = "Erro ao converter o txt."; }
 
             return msg; 
         }
 
+        private void AddTxtData(string scn, DataTable dt, Usuario u)
+        {
+            MySqlConnection cnn = new MySqlConnection(scn);
+            cmm.Connection = cnn;
+
+            if (dt.Rows.Count > 0)
+            {
+                try
+                {
+                    if (oDB.openConnection(cmm))
+                    {
+                        cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
+                            + " VALUES (" + u.UserId + ", '" + dt.Rows[0]["cnpj"].ToString() + "', 'TXT', " 
+                            + dt.Rows[0][2] + ", " + dt.Rows[0]["ano"] + ")";
+
+                        oDB.Execute(ref cmm);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                oDB.closeConnection(cmm);
+            }
+        }
+
         public List<clsRelat1> GetCross(string scn, Usuario ou, string ano)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
@@ -409,10 +502,10 @@ namespace SIAO.SRV
                 + " SELECT farmacias.RazaoSocial FROM farmacias WHERE farmacias.Cnpj = base_clientes.Cnpj"
                 + " ) ELSE base_clientes.Razao_Social END) AS Razao_Social, base_clientes.Cnpj, "
                 + " base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo,"
-                + " SUM(base_clientes.Quantidade) AS [Soma De Quantidade],"
-                + " SUM(base_clientes.Valor_Bruto) AS [Soma De Valor bruto],"
-                + " SUM(base_clientes.Valor_Liquido) AS [Soma De Valor liquido],"
-                + " SUM(base_clientes.Valor_Desconto) AS [Soma De Valor desconto]"
+                + " SUM(base_clientes.Quantidade) AS 'Soma De Quantidade',"
+                + " SUM(base_clientes.Valor_Bruto) AS 'Soma De Valor bruto',"
+                + " SUM(base_clientes.Valor_Liquido) AS 'Soma De Valor liquido',"
+                + " SUM(base_clientes.Valor_Desconto) AS 'Soma De Valor desconto'"
                 + " FROM"
                 + " base_clientes"
                 + " LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra"
@@ -548,13 +641,13 @@ namespace SIAO.SRV
         public DataSet GetUsers(string scn)
         {
             DataSet ds = new DataSet();
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
 
             cmm.Connection = cnn;
-            cmm.CommandText = "SELECT Users.UserId, Users.UserName"
-                + " FROM  Users INNER JOIN"
-                + " Memberships ON Users.UserId = Memberships.UserId"
-                + " WHERE Memberships.Inactive = 0";
+            cmm.CommandText = "SELECT users.UserId, users.UserName"
+                + " FROM  users INNER JOIN"
+                + " memberships ON users.UserId = memberships.UserId"
+                + " WHERE memberships.Inactive = 0";
 
             if (oDB.openConnection(cmm))
             {
@@ -568,17 +661,17 @@ namespace SIAO.SRV
         public Usuario GetUserEdit(string scn, string p)
         {
             DataSet ds = new DataSet();
-            SqlConnection cnn = new SqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(scn);
             Usuario u = new Usuario();
 
             cmm.Connection = cnn;
-            cmm.CommandText = "SELECT Users.UserId, Users.UserName, Memberships.Email,"
-                +" Memberships.Inactive, Memberships.ExpirationDate, Memberships.Access, "
-                +" Memberships.Name, Usuarios_Farmacias.FarmaciaId"
-                +" FROM  Users INNER JOIN"
-                +" Memberships ON Users.UserId = Memberships.UserId LEFT OUTER JOIN"
-                +" Usuarios_Farmacias ON Users.UserId = Usuarios_Farmacias.UserId"
-                +" WHERE (Memberships.Inactive = 0) AND (Users.UserId = "+ p +")";
+            cmm.CommandText = "SELECT users.UserId, users.UserName, memberships.Email,"
+                +" memberships.Inactive, memberships.ExpirationDate, memberships.Access, "
+                +" memberships.Name, usuarios_farmacias.FarmaciaId"
+                +" FROM  users INNER JOIN"
+                +" memberships ON users.UserId = memberships.UserId LEFT OUTER JOIN"
+                +" usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId"
+                +" WHERE (memberships.Inactive = 0) AND (users.UserId = "+ p +")";
 
             if (oDB.openConnection(cmm))
             {
@@ -589,7 +682,7 @@ namespace SIAO.SRV
             if (ds.Tables.Count > 0)
             {
                 u.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["UserId"].ToString());
-                u.Inactive = (bool)ds.Tables[0].Rows[0]["Inactive"];
+                u.Inactive = (bool)(ds.Tables[0].Rows[0]["Inactive"].ToString() == "0" ? false : true);
                 u.FarmaciaId = Convert.ToInt16(ds.Tables[0].Rows[0]["FarmaciaId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["FarmaciaId"]);
                 u.AcsName = o.denc(ds.Tables[0].Rows[0]["Name"].ToString());
                 u.Email = ds.Tables[0].Rows[0]["Email"].ToString();
@@ -611,28 +704,28 @@ namespace SIAO.SRV
                 string acs = o.encr(u.Access);
                 string nme = o.encr(u.AcsName.ToUpper());
 
-                SqlConnection cnn = new SqlConnection(scn);
+                MySqlConnection cnn = new MySqlConnection(scn);
                 cmm.Connection = cnn;
 
                 if (oDB.openConnection(cmm))
                 {
                     string lDate = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00";
 
-                    cmm.CommandText = "UPDATE Users SET UserName = '" + u.Name + "', LastActivityDate = '" 
+                    cmm.CommandText = "UPDATE users SET UserName = '" + u.Name + "', LastActivityDate = '" 
                         + lDate + "' WHERE UserId = "+ u.UserId;
 
                         oDB.Execute(ref cmm);
 
                         string eDate = u.ExpirationDate.Year + "-" + u.ExpirationDate.Month + "-" + u.ExpirationDate.Day + " 00:00:00";
 
-                        cmm.CommandText = "UPDATE Memberships SET Password = '" + pass + "', Email = '" 
+                        cmm.CommandText = "UPDATE memberships SET Password = '" + pass + "', Email = '" 
                             + u.Email + "', Inactive = " + (u.Inactive == false ? 0 : 1) 
                             + ", ExpirationDate = '" + eDate + "', Access = '" + acs + "', Name = '" + nme 
                             + "' WHERE UserId = "+ u.UserId;
 
                         oDB.Execute(ref cmm);
 
-                        cmm.CommandText = "UPDATE Usuarios_Farmacias SET FarmaciaId = " + u.FarmaciaId 
+                        cmm.CommandText = "UPDATE usuarios_farmacias SET FarmaciaId = " + u.FarmaciaId 
                             + " WHERE UserId = "+ u.UserId;
 
                         oDB.Execute(ref cmm);
