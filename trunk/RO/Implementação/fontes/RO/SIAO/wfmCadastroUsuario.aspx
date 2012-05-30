@@ -9,16 +9,16 @@
         <ContentTemplate>
             <div id="edUser">
                 <p>
-                    <input type="button" onClick="show()" value="Editar usuário." class="button gray">
+                    <input type="button" onclick="show()" value="Editar usuário." class="button gray">
                 </p>
-                <div id="user" style="visibility:hidden">
-                    <p>Usuário: 
+                <div id="user" style="visibility: hidden">
+                    <p>
+                        Usuário:
                         <asp:DropDownList ID="ddlUser" runat="server">
                         </asp:DropDownList>
-                    <div style="text-align:right">
-                        <asp:Button ID="btnEdit" runat="server" Text="Editar" CssClass="button gray" 
-                            onclick="btnEdit_Click" />
-                    </div>
+                        <div style="text-align: right">
+                            <asp:Button ID="btnEdit" runat="server" Text="Editar" CssClass="button gray" OnClick="btnEdit_Click" />
+                        </div>
                         <p>
                         </p>
                     </p>
@@ -32,7 +32,7 @@
                 if (window.navigator.userAgent.toLowerCase().match("gecko")) {
                     browserType = "gecko"
                 }
-                
+
                 function show() {
                     if (browserType == "gecko")
                         document.poppedLayer =
