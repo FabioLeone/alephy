@@ -516,7 +516,7 @@ namespace SIAO.SRV
             }
 
 
-            if (ou.Access == "nvp")
+            if (ou.Access == "nvg")
             {
                 cmm.CommandText += "SELECT"
                     + " farmacias.Cnpj"
@@ -550,7 +550,7 @@ namespace SIAO.SRV
                     SQL += "')";
                 }
             }
-            else if (ou.Access == "nvg")
+            else if (ou.Access == "nvp")
             {
                 cmm.CommandText += "SELECT"
                     + " farmacias.Cnpj"
@@ -737,6 +737,31 @@ namespace SIAO.SRV
             }
 
             return msg;
+        }
+
+        public Rede GetRedesEdit(string scn, string p)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection cnn = new MySqlConnection(scn);
+            Rede r = new Rede();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = "SELECT * FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + p + ")";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "RedeEd");
+            }
+            oDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
+                r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
+                r.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["UserId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["UserId"]);
+            }
+
+            return r;
         }
     }
 }
