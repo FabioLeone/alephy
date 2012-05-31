@@ -104,7 +104,7 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtCfrSenha" runat="server" TextMode="Password" Width="188px"></asp:TextBox>
-                                <asp:Label ID="lblCS" runat="server" ForeColor="Red"></asp:Label>
+                                <asp:Label ID="lblCS" runat="server" EnableViewState="false" ForeColor="Red"></asp:Label>
                             </td>
                         </tr>
                         <tr>

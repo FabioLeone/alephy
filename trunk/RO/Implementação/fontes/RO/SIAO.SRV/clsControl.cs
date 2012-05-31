@@ -119,6 +119,31 @@ namespace SIAO.SRV
             return msg;
         }
 
+        public string UpdateRede(string scn, Rede rede)
+        {
+            string msg = "";
+            cmm.CommandText = "UPDATE redesfarmaceuticas SET Descricao = '" + rede.RedeName
+                + "', UserId = '" + rede.UserId + "' WHERE Id = "+ rede.RedeId;
+
+            MySqlConnection cnn = new MySqlConnection(scn);
+            cmm.Connection = cnn;
+
+            try
+            {
+                if (oDB.openConnection(cmm))
+                {
+                    oDB.Execute(ref cmm);
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            oDB.closeConnection(cmm);
+
+            return msg;
+        }
+
         public DataSet GetRedes(string scn)
         {
             DataSet ds = new DataSet();
@@ -763,5 +788,6 @@ namespace SIAO.SRV
 
             return r;
         }
+
     }
 }
