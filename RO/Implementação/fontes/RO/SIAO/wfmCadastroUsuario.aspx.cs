@@ -17,11 +17,13 @@ namespace SIAO
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
-            
+
             if (Session["editU"] != null) { u.UserId = (int)Session["editU"]; }
-            
-            if (!IsPostBack) { getFarmacias();
-            getUsers();
+
+            if (!IsPostBack)
+            {
+                getFarmacias();
+                getUsers();
             }
             ddlFarmacia.Focus();
 
@@ -48,7 +50,8 @@ namespace SIAO
             DataSet ds = new DataSet();
             ds = oCtl.GetFarmacias(scn);
 
-            if (ds.Tables.Count > 0) {
+            if (ds.Tables.Count > 0)
+            {
                 ddlFarmacia.DataSource = ds.Tables[0];
                 ddlFarmacia.DataValueField = ds.Tables[0].Columns[0].ToString();
                 ddlFarmacia.DataTextField = ds.Tables[0].Columns[1].ToString();
@@ -60,78 +63,97 @@ namespace SIAO
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (ddlFarmacia.SelectedValue == "")
+            if (lblF.Visible) { lblF.Visible = false; }
+            if (txtNome.Text == "")
             {
-                if (lblF.Visible) { lblF.Text = "*"; } else { lblF.Text = "*"; lblF.Visible = true; }
-                
-                divErro("Selecione uma farmacia, se necessário, cadastre uma farmacia primeiro.");
-                return;
+                if (lblAN.Visible) { lblAN.Visible = false; }
+                if (lblN.Visible) { lblN.Text = "*"; } else { lblN.Text = "*"; lblN.Visible = true; }
+                divErro("Entre com o nome do usuário.");
             }
-            else {
-                if (lblF.Visible) { lblF.Visible = false; }
-                if (txtNome.Text == "")
+            else if (txtAcsName.Text == "")
+            {
+                if (lblN.Visible) { lblN.Visible = false; }
+                if (lblAN.Visible) { lblAN.Text = "*"; } else { lblAN.Text = "*"; lblAN.Visible = true; }
+                if (lblE.Visible) { lblE.Visible = false; }
+                divErro("Entre com o nome de acesso.");
+            }
+            else if (!of.isEmail(txtEmail.Text))
+            {
+                if (lblN.Visible) { lblN.Visible = false; }
+                if (lblAN.Visible) { lblAN.Visible = false; }
+                if (lblE.Visible) { lblE.Text = "*"; } else { lblE.Text = "*"; lblE.Visible = true; }
+                divErro("Entre com o e-mail do usuário.");
+            }
+            else if (txtSenha.Text == "")
+            {
+                if (lblV.Visible) { lblV.Visible = false; }
+                if (lblE.Visible) { lblE.Visible = false; }
+                if (lblS.Visible) { lblS.Text = "*"; } else { lblS.Text = "*"; lblS.Visible = true; }
+                divErro("Entre com a senha do usuário.");
+            }
+            else if (txtValidade.Text != "")
+            {
+                if (ddlFarmacia.SelectedValue == "")
                 {
-                    if (lblN.Visible) { lblN.Text = "*"; } else { lblN.Text = "*"; lblN.Visible = true; }
-                    divErro("Entre com o nome do usuário.");
+                    if (rblAccess.SelectedValue == "nvp")
+                    {
+                        if (lblF.Visible) { lblF.Text = "*"; } else { lblF.Text = "*"; lblF.Visible = true; }
+
+                        divErro("Selecione uma farmacia, se necessário, cadastre uma farmacia primeiro.");
+                        return;
+                    }
                 }
-                else if (txtAcsName.Text == "") {
-                    if (lblN.Visible) { lblN.Visible = false; }
-                    if (lblAN.Visible) { lblAN.Text = "*"; } else { lblAN.Text = "*"; lblAN.Visible = true; }
-                    divErro("Entre com o nome de acesso.");
-                }
-                else if (!of.isEmail(txtEmail.Text))
-                {
-                    if (lblN.Visible) { lblN.Visible = false; }
-                    if (lblAN.Visible) { lblAN.Visible = false; }
-                    if (lblE.Visible) { lblE.Text = "*"; } else { lblE.Text = "*"; lblE.Visible = true; }
-                    divErro("Entre com o e-mail do usuário.");
-                }
-                else if (txtSenha.Text == "")
+
+                if (lblS.Visible) { lblS.Visible = false; }
+                if (txtSenha.Text == txtCfrSenha.Text)
                 {
                     if (lblV.Visible) { lblV.Visible = false; }
-                    if (lblE.Visible) { lblE.Visible = false; }
-                    if (lblS.Visible) { lblS.Text = "*"; } else { lblS.Text = "*"; lblS.Visible = true; }
-                    divErro("Entre com a senha do usuário.");
-                }
-                else if (txtValidade.Text != "")
-                {
-                    if (lblS.Visible) { lblS.Visible = false; }
-                    if (txtSenha.Text == txtCfrSenha.Text)
+                    try
                     {
-                        if (lblV.Visible) { lblV.Visible = false; }
-                        try
+                        Convert.ToDateTime(txtValidade.Text);
+                    }
+                    catch
+                    {
+                        if (lblV.Visible) { lblE.Text = "*"; } else { lblV.Text = "*"; lblV.Visible = true; }
+                        divErro("Data inválida.");
+                        return;
+                    }
+
+                    string msg = "";
+
+                    bool ed = false;
+
+                    if (u.UserId > 0)
+                    {
+
+                        u.Access = rblAccess.SelectedValue;
+                        u.AcsName = txtAcsName.Text;
+                        u.CreateDate = DateTime.Today;
+                        u.Email = txtEmail.Text;
+                        u.Inactive = !cbxAtivo.Checked;
+                        u.Name = txtNome.Text;
+                        u.Password = txtSenha.Text;
+                        u.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
+                        if (ddlFarmacia.SelectedValue != "")
                         {
-                            Convert.ToDateTime(txtValidade.Text);
-                        }
-                        catch
-                        {
-                            if (lblV.Visible) { lblE.Text = "*"; } else { lblV.Text = "*"; lblV.Visible = true; }
-                            divErro("Data inválida.");
-                            return;
-                        }
-
-                        string msg = "";
-
-                        bool ed = false;
-
-                        if (u.UserId > 0)
-                        {
-
-                            u.Access = rblAccess.SelectedValue;
-                            u.AcsName = txtAcsName.Text;
-                            u.CreateDate = DateTime.Today;
-                            u.Email = txtEmail.Text;
-                            u.Inactive = !cbxAtivo.Checked;
-                            u.Name = txtNome.Text;
-                            u.Password = txtSenha.Text;
-                            u.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
                             u.FarmaciaId = Convert.ToInt16(ddlFarmacia.SelectedValue);
-
-                            msg = oCtl.UpdateUser(u, scn);
-                            ed = true;
                         }
-                        else { 
-                            u = new SRV.Usuario(){
+                        else {
+                            u.FarmaciaId = 0;
+                        }
+
+                        msg = oCtl.UpdateUser(u, scn);
+                        ed = true;
+                    }
+                    else
+                    {
+                        int intFarmaciaId = 0;
+                        if (ddlFarmacia.SelectedValue != "") { 
+                            intFarmaciaId = Convert.ToInt16(ddlFarmacia.SelectedValue);
+                        }
+
+                        u = new SRV.Usuario()
+                        {
                             Access = rblAccess.SelectedValue,
                             AcsName = txtAcsName.Text,
                             CreateDate = DateTime.Today,
@@ -140,39 +162,39 @@ namespace SIAO
                             Name = txtNome.Text,
                             Password = txtSenha.Text,
                             ExpirationDate = Convert.ToDateTime(txtValidade.Text),
-                            FarmaciaId = Convert.ToInt16(ddlFarmacia.SelectedValue),
+                            FarmaciaId = intFarmaciaId
                         };
-                            msg = oCtl.AddUser(u, scn); 
-                        }
+                        msg = oCtl.AddUser(u, scn);
+                    }
 
-                        if (msg != "")
-                        {
-                            divErro(msg);
-                        }
-                        else
-                        {
-                            clear();
-
-                            if (ed) { div("Alterações salvas com sucesso."); } else { div("Usuário cadastrado com sucesso."); }
-                            
-                        }
+                    if (msg != "")
+                    {
+                        divErro(msg);
                     }
                     else
                     {
-                        if (lblCS.Visible) { lblCS.Text = "*"; } else { lblCS.Text = "*"; lblCS.Visible = true; }
-                        divErro("Senha e confirmação, não conferem.");
+                        clear();
+
+                        if (ed) { div("Alterações salvas com sucesso."); } else { div("Usuário cadastrado com sucesso."); }
+
                     }
                 }
                 else
                 {
-                    if (lblS.Visible) { lblS.Visible = false; }
-                    if (lblV.Visible) { lblV.Text = "*"; } else { lblV.Text = "*"; lblV.Visible = true; }
-                    divErro("Entre com a data de validade da senha.");
+                    if (lblCS.Visible) { lblCS.Text = "*"; } else { lblCS.Text = "*"; lblCS.Visible = true; }
+                    divErro("Senha e confirmação, não conferem.");
                 }
+            }
+            else
+            {
+                if (lblS.Visible) { lblS.Visible = false; }
+                if (lblV.Visible) { lblV.Text = "*"; } else { lblV.Text = "*"; lblV.Visible = true; }
+                divErro("Entre com a data de validade da senha.");
             }
         }
 
-        protected void clear() {
+        protected void clear()
+        {
             txtNome.Text = "";
             txtSenha.Text = "";
             txtValidade.Text = "";
@@ -182,14 +204,15 @@ namespace SIAO
             Session["editU"] = null;
         }
 
-        private void div(string msg) {
+        private void div(string msg)
+        {
             System.Web.UI.HtmlControls.HtmlGenericControl divInfo = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
-            
+
             divInfo.ID = "msgInfo";
             divInfo.Attributes.Add("class", "success");
             divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "28%");
-            divInfo.InnerHtml = "<p>"+ msg +"</p>";
-            
+            divInfo.InnerHtml = "<p>" + msg + "</p>";
+
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
         }
 
@@ -200,7 +223,7 @@ namespace SIAO
             divInfo.ID = "msgError";
             divInfo.Attributes.Add("class", "error");
             divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "4%");
-            divInfo.InnerHtml = "<p>"+ msg +"</p>";
+            divInfo.InnerHtml = "<p>" + msg + "</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
         }
@@ -209,7 +232,8 @@ namespace SIAO
         {
             u = oCtl.GetUserEdit(scn, ddlUser.SelectedValue);
 
-            if (u.UserId > 0) {
+            if (u.UserId > 0)
+            {
                 cbxAtivo.Checked = (bool)(u.Inactive.ToString().ToUpper() == "FALSE" ? true : false);
                 ddlFarmacia.SelectedValue = u.FarmaciaId == 0 ? String.Empty : u.FarmaciaId.ToString();
                 txtAcsName.Text = u.AcsName;
