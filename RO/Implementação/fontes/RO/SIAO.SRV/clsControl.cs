@@ -4,6 +4,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Text;
 
 namespace SIAO.SRV
 {
@@ -201,6 +202,44 @@ namespace SIAO.SRV
             try
             {
                 if (oDB.openConnection(cmm)) {
+                    oDB.Execute(ref cmm);
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            oDB.closeConnection(cmm);
+
+            return msg;
+        }
+
+        public string UpdateLoja(string scn, Loja clsLoja)
+        {
+            string msg = "";
+
+            MySqlConnection cnn = new MySqlConnection(scn);
+            cmm.Connection = cnn;
+
+            string scnpj = clsLoja.Cnpj.Replace(".", "");
+            scnpj = scnpj.Replace("/", "");
+            scnpj = scnpj.Replace("-", "");
+
+            cmm.CommandText = "UPDATE farmacias SET Proprietario = '" + clsLoja.Proprietario + "', Gerente = '"
+                + clsLoja.Gerente + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2
+                + "', NomeFantasia = '" + clsLoja.NomeFantasia + "', RazaoSocial = '" + clsLoja.Razao
+                + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
+                + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '"
+                + clsLoja.Complemento + "', Cidade = '" + clsLoja.Cidade + "', UF = '" + clsLoja.Uf
+                + "', Tel1 = '" + clsLoja.Fone + "', Tel2 = '" + clsLoja.Fone2 + "', Celular = '"
+                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', "
+                + " Msn = " + " '" + clsLoja.Msn + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0)
+                + ", idRede = " + clsLoja.idRede + " WHERE Id = " + clsLoja.Id;
+
+            try
+            {
+                if (oDB.openConnection(cmm))
+                {
                     oDB.Execute(ref cmm);
                 }
             }
@@ -623,28 +662,36 @@ namespace SIAO.SRV
             }
             oDB.closeConnection(cmm);
 
-            if (ds.Tables.Count > 0) {
-                for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
+            try
+            {
+                if (ds.Tables.Count > 0)
                 {
-                    clsRelat1 or = new clsRelat1();
-
-                    or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                    or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
-                    or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
-                    or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
-                    or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
-                    or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
-                    or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
-                    or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
-                    or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
-                    if (or.SomaDeValorDesconto > 0)
+                    for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
                     {
-                        if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto)*100).ToString("N2")); }
-                    }
-                    else { or.PercentualDesconto = 0; }
+                        clsRelat1 or = new clsRelat1();
 
-                    lr.Add(or);
+                        or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                        or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                        or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
+                        or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
+                        or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
+                        or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
+                        or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
+                        or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
+                        or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
+                        if (or.SomaDeValorDesconto > 0)
+                        {
+                            if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
+                        }
+                        else { or.PercentualDesconto = 0; }
+
+                        lr.Add(or);
+                    }
                 }
+            }
+            finally
+            {
+
             }
 
             return lr;
@@ -653,14 +700,17 @@ namespace SIAO.SRV
         private string MaskCnpj(string p)
         {
             string cnpj = "";
+            if (string.IsNullOrEmpty(p))
+                return cnpj;
+            else {
+                cnpj = p.Substring(0, 2) + ".";
+                cnpj += p.Substring(2, 3) + ".";
+                cnpj += p.Substring(5, 3) + "/";
+                cnpj += p.Substring(8, 4) + "-";
+                cnpj += p.Substring(12, 2);
 
-            cnpj = p.Substring(0, 2) + ".";
-            cnpj += p.Substring(2, 3) + ".";
-            cnpj += p.Substring(5, 3) + "/";
-            cnpj += p.Substring(8, 4) + "-";
-            cnpj += p.Substring(12, 2);
-
-            return cnpj;
+                return cnpj;
+            }
         }
 
         public DataSet GetUsers(string scn)
@@ -787,6 +837,61 @@ namespace SIAO.SRV
             }
 
             return r;
+        }
+
+
+        public Loja GetLojaEdit(string scn, string p)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection cnn = new MySqlConnection(scn);
+            Loja clsLoja = new Loja();
+
+            cmm.Connection = cnn;
+            StringBuilder strSQL = new StringBuilder();
+            strSQL.Append("SELECT farmacias.Id, farmacias.Proprietario, farmacias.Gerente, farmacias.Email,");
+            strSQL.Append(" farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,");
+            strSQL.Append(" farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,");
+            strSQL.Append(" farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,");
+            strSQL.Append(" farmacias.Site, farmacias.Skype, farmacias.Msn, farmacias.Ativo, farmacias.idRede");
+            strSQL.Append(" FROM farmacias WHERE (farmacias.Id = @Id)");
+
+            cmm.CommandText = strSQL.ToString();
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@Id", MySqlDbType.Int32).Value = p;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "LojaEd");
+            }
+            oDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                clsLoja.Id = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
+                clsLoja.Proprietario = ds.Tables[0].Rows[0]["Proprietario"].ToString();
+                clsLoja.Gerente = ds.Tables[0].Rows[0]["Gerente"].ToString();
+                clsLoja.Email = ds.Tables[0].Rows[0]["Email"].ToString();
+                clsLoja.Email2 = ds.Tables[0].Rows[0]["Email2"].ToString();
+                clsLoja.NomeFantasia = ds.Tables[0].Rows[0]["NomeFantasia"].ToString();
+                clsLoja.Razao = ds.Tables[0].Rows[0]["RazaoSocial"].ToString();
+                clsLoja.Cnpj = ds.Tables[0].Rows[0]["Cnpj"].ToString();
+                clsLoja.Endereco = ds.Tables[0].Rows[0]["Endereco"].ToString();
+                clsLoja.EndNumero = Convert.ToInt32(ds.Tables[0].Rows[0]["Numero"].ToString());
+                clsLoja.Bairro = ds.Tables[0].Rows[0]["Bairro"].ToString();
+                clsLoja.Complemento = ds.Tables[0].Rows[0]["Complemento"].ToString();
+                clsLoja.Cidade = ds.Tables[0].Rows[0]["Cidade"].ToString();
+                clsLoja.Uf = ds.Tables[0].Rows[0]["UF"].ToString();
+                clsLoja.Fone = ds.Tables[0].Rows[0]["Tel1"].ToString();
+                clsLoja.Fone2 = ds.Tables[0].Rows[0]["Tel2"].ToString();
+                clsLoja.Celular = ds.Tables[0].Rows[0]["Celular"].ToString();
+                clsLoja.Site = ds.Tables[0].Rows[0]["Site"].ToString();
+                clsLoja.Skype = ds.Tables[0].Rows[0]["Skype"].ToString();
+                clsLoja.Msn = ds.Tables[0].Rows[0]["Msn"].ToString();
+                clsLoja.Ativo = (ds.Tables[0].Rows[0]["Ativo"].ToString() == "1" ? true : false );
+                clsLoja.idRede = Convert.ToInt32(ds.Tables[0].Rows[0]["idRede"].ToString());
+            }
+
+            return clsLoja;
         }
 
     }

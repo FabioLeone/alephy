@@ -1,13 +1,48 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Siao.Master" AutoEventWireup="true"
     CodeBehind="wfmCadastroLojas.aspx.cs" Inherits="SIAO.wfmCadastroLojas" %>
 
-<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="asp" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <table style="width:100%;">
+                <tr>
+                    <td style="width:50px;">
+                        <input type="button" onclick="show()" value="Editar loja." class="button gray">
+                    </td>
+                    <td>
+                        <div id="loja" style="visibility: hidden;">
+                            Loja:<asp:DropDownList ID="ddlLoja" Width="220px" runat="server" EnableViewState="true">
+                            </asp:DropDownList>
+                            <asp:Button ID="btnEdit" runat="server" Text="Editar" CssClass="button gray" OnClick="btnEdit_Click" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <script type="text/javascript">
+                var browserType;
+
+                if (document.layers) { browserType = "nn4" }
+                if (document.all) { browserType = "ie" }
+                if (window.navigator.userAgent.toLowerCase().match("gecko")) {
+                    browserType = "gecko"
+                }
+
+                function show() {
+                    if (browserType == "gecko")
+                        document.poppedLayer =
+         eval('document.getElementById("loja")');
+                    else if (browserType == "ie")
+                        document.poppedLayer =
+        eval('document.getElementById("loja")');
+                    else
+                        document.poppedLayer =
+         eval('document.layers["loja"]');
+                    document.poppedLayer.style.visibility = "visible";
+                }
+            </script>
             <fieldset style="width: 96.5%;">
                 <legend>
                     <h2>
@@ -16,13 +51,13 @@
                 <div id="divForm" style="height: 330px; width: 100%;">
                     <table>
                         <tr>
-                            <td style="width:140px; text-align:right;">
+                            <td style="width: 140px; text-align: right;">
                                 Nome Fantasia:
                             </td>
                             <td colspan="2">
                                 <asp:TextBox Width="255px" ID="txtNomeFantasia" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Razão:
                             </td>
                             <td colspan="2">
@@ -30,13 +65,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Proprietário:
                             </td>
                             <td colspan="2">
                                 <asp:TextBox Width="255px" ID="txtProprietario" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Gerente:
                             </td>
                             <td colspan="2">
@@ -44,45 +79,46 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Email:
                             </td>
                             <td colspan="2">
                                 <asp:TextBox Width="200px" ID="txtEmail" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Email 2:
                             </td>
                             <td colspan="2">
-                                <asp:TextBox Width="200px"  ID="txtEmail2" runat="server"></asp:TextBox>
+                                <asp:TextBox Width="200px" ID="txtEmail2" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Cnpj:
                             </td>
                             <td>
                                 <asp:TextBox ID="txtCnpj" runat="server"></asp:TextBox>
-                                <asp:MaskedEditExtender ID="txtCnpj_MaskedEditExtender" runat="server" 
-                                    CultureAMPMPlaceholder="" CultureCurrencySymbolPlaceholder="" 
-                                    CultureDateFormat="" CultureDatePlaceholder="" CultureDecimalPlaceholder="" 
-                                    CultureThousandsPlaceholder="" CultureTimePlaceholder="" Enabled="True" 
-                                    TargetControlID="txtCnpj" Mask="99,999,999/9999-99" ClearMaskOnLostFocus="false">
+                                <asp:MaskedEditExtender ID="txtCnpj_MaskedEditExtender" runat="server" CultureAMPMPlaceholder=""
+                                    CultureCurrencySymbolPlaceholder="" CultureDateFormat="" CultureDatePlaceholder=""
+                                    CultureDecimalPlaceholder="" CultureThousandsPlaceholder="" CultureTimePlaceholder=""
+                                    Enabled="True" TargetControlID="txtCnpj" Mask="99,999,999/9999-99" ClearMaskOnLostFocus="false">
                                 </asp:MaskedEditExtender>
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Endereço:
                             </td>
                             <td colspan="2">
                                 <asp:TextBox Width="255px" ID="txtEndereco" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">Nº:</td>
-                            <td>
-                                <asp:TextBox ID="txtNum" width="100px" runat="server"></asp:TextBox>
+                            <td style="text-align: right;">
+                                Nº:
                             </td>
-                            <td style="text-align:right;">
+                            <td>
+                                <asp:TextBox ID="txtNum" Width="100px" runat="server"></asp:TextBox>
+                            </td>
+                            <td style="text-align: right;">
                                 Comp.:
                             </td>
                             <td>
@@ -90,19 +126,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Bairro:
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtBairro" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Cidade:
                             </td>
                             <td>
                                 <asp:TextBox ID="txtCidade" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 UF:
                             </td>
                             <td>
@@ -111,19 +147,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Telefone:
                             </td>
                             <td colspan="2">
                                 <asp:TextBox ID="txtFone" runat="server"></asp:TextBox>
                             </td>
-                            <td style="width:100px;text-align:right;">
+                            <td style="width: 100px; text-align: right;">
                                 Telefone 2:
                             </td>
                             <td>
                                 <asp:TextBox ID="txtFone2" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Celular:
                             </td>
                             <td>
@@ -131,19 +167,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Site:
                             </td>
                             <td colspan="2">
                                 <asp:TextBox Width="200px" ID="txtSite" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Skype:
                             </td>
                             <td>
                                 <asp:TextBox ID="txtSkype" runat="server"></asp:TextBox>
                             </td>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Msn:
                             </td>
                             <td>
@@ -151,22 +187,21 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right;">
+                            <td style="text-align: right;">
                                 Rede:
                             </td>
                             <td>
                                 <asp:DropDownList ID="ddlRede" Width="255px" runat="server">
                                 </asp:DropDownList>
                             </td>
-                            <td colspan="2" style="text-align:right;">
-                                <asp:CheckBox ID="cbxAtivo" Text="Ativo:" TextAlign="Left" runat="server" 
-                                    Checked="True" />
+                            <td colspan="2" style="text-align: right;">
+                                <asp:CheckBox ID="cbxAtivo" Text="Ativo:" TextAlign="Left" runat="server" Checked="True" />
                             </td>
                         </tr>
                         <tr>
                             <td colspan="4" style="text-align: right;">
                                 <asp:Button ID="btnSave" CssClass="button gray" ToolTip="Salvar as informações da loja."
-                                    runat="server" Text="Salvar" onclick="btnSave_Click" />
+                                    runat="server" Text="Salvar" OnClick="btnSave_Click" />
                             </td>
                         </tr>
                     </table>

@@ -13,7 +13,7 @@
                 <div id="rede" style="visibility: hidden">
                     <p>
                         Rede:
-                        <asp:DropDownList ID="ddlRede" runat="server" EnableViewState="true">
+                        <asp:DropDownList ID="ddlRede" Width="220px" runat="server" EnableViewState="true">
                         </asp:DropDownList>
                         <div style="text-align: right">
                             <asp:Button ID="btnEdit" runat="server" Text="Editar" CssClass="button gray" OnClick="btnEdit_Click" />

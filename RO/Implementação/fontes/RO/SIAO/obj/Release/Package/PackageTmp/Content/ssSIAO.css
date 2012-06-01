@@ -177,7 +177,7 @@ h1, h2, h3 {
 }
 
 h2 {
-	font-size: 1.4em;
+	font-size: 1.2em;
 }
 
 a
@@ -222,4 +222,64 @@ section
     height:45px;
     margin-left:3%;
     vertical-align:middle;
+}
+
+.relat
+{
+    margin-left:10%;
+    border:1px solid blue;
+    border-radius:0 0 4pt 4pt;
+    width:80%;
+    border-left-color:#6666ff;
+    font-family:Raavi;
+    height:840px;
+}
+
+.back
+{
+    float:right;
+    margin-top:2.5%;
+    border-radius: 8pt 0 0 8pt;
+    margin-right:-1px;
+}
+
+.rightButton
+{
+    float:right;
+    margin-top:2.5%;
+    margin-right:1%;
+    margin-left:-1px;
+    border-radius:0 8pt 8pt 0;
+}
+
+#edUser
+{
+    float:left;
+    margin-left:1px;
+    position:relative;
+    width:200px;
+}
+
+.imgBtn
+{
+    background-image:url(report.png);
+    background-position:top;
+    background-size:90%;
+    background-repeat:no-repeat;
+    height:60px;
+    border:none;
+}
+
+#edRede
+{
+    float:left;
+    margin-left:1px;
+    position:relative;
+    width:200px;
+}
+
+#loja
+{
+    width:50%;
+    height:30px;
 }

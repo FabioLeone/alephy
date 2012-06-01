@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <fieldset style="width: 28%; margin-left:31%; margin-Top:7%;">
+            <fieldset style="width: 33%; margin-left:31%; margin-Top:7%;">
                 <legend>
                     <h2>
                         Envio de Arquivos</h2>
