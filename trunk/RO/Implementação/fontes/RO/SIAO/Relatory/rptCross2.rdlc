@@ -260,7 +260,6 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell>
@@ -296,7 +295,6 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell>
@@ -332,7 +330,6 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell>
@@ -368,7 +365,6 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
-                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
             </TablixCornerRow>
@@ -525,11 +521,13 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!PercentualDesconto.Value),2) + "%"</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PercentualDesconto</rd:DefaultName>
@@ -692,13 +690,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Avg(Fields!PercentualDesconto.Value),2) +"%"</Value>
                               <Style>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox60</rd:DefaultName>
@@ -862,13 +862,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Avg(Fields!PercentualDesconto.Value),2) +"%"</Value>
                               <Style>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox53</rd:DefaultName>
@@ -1032,13 +1034,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Avg(Fields!PercentualDesconto.Value),2) +"%"</Value>
                               <Style>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox45</rd:DefaultName>
@@ -1202,13 +1206,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Avg(Fields!PercentualDesconto.Value),2) +"%"</Value>
                               <Style>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox36</rd:DefaultName>
@@ -1321,7 +1327,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixHeader>
                               <TablixMembers>
@@ -1421,7 +1426,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixHeader>
                             </TablixMember>
@@ -1518,7 +1522,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixHeader>
                             </TablixMember>
@@ -1615,7 +1618,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixHeader>
                             </TablixMember>
@@ -1710,7 +1712,6 @@
                                   <PaddingBottom>2pt</PaddingBottom>
                                 </Style>
                               </Textbox>
-                              <rd:Selected>true</rd:Selected>
                             </CellContents>
                           </TablixHeader>
                         </TablixMember>

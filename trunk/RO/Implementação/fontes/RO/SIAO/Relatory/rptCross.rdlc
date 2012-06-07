@@ -521,11 +521,13 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!PercentualDesconto.Value),2) + "%"</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PercentualDesconto</rd:DefaultName>
@@ -688,13 +690,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Avg(Fields!PercentualDesconto.Value), 2) +"%"</Value>
                               <Style>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox60</rd:DefaultName>
@@ -858,13 +862,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Avg(Fields!PercentualDesconto.Value),2) +"%"</Value>
                               <Style>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox53</rd:DefaultName>
@@ -1028,13 +1034,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Avg(Fields!PercentualDesconto.Value),2) + "%"</Value>
                               <Style>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox45</rd:DefaultName>
@@ -1198,13 +1206,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!PercentualDesconto.Value)</Value>
+                              <Value>=FormatNumber(Avg(Fields!PercentualDesconto.Value),2) +"%"</Value>
                               <Style>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox36</rd:DefaultName>
@@ -1220,6 +1230,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -2268,8 +2279,8 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Height>4.2cm</Height>
-        <Width>19.79066cm</Width>
+        <Height>4.19999cm</Height>
+        <Width>19.79064cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
