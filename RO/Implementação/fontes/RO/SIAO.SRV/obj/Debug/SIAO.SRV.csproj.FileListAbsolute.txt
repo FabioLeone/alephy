@@ -8,3 +8,20 @@ D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO.SRV\bin\Debug\SIAO.
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO.SRV\obj\Debug\ResolveAssemblyReference.cache
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO.SRV\obj\Debug\SIAO.SRV.dll
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO.SRV\obj\Debug\SIAO.SRV.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\SIAO.SRV.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\SIAO.SRV.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Debug\ResolveAssemblyReference.cache
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Debug\SIAO.SRV.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Debug\SIAO.SRV.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.Unity.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.Unity.Interception.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.xml
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.xml
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.Unity.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Microsoft.Practices.Unity.Interception.pdb
