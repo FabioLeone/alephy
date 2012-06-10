@@ -1,5 +1,6 @@
 ﻿using System;
-using SIAO.SRV;
+using SIAO.SRV.BLL;
+using SIAO.SRV.TO;
 using System.Configuration;
 using System.Web.Security;
 
@@ -7,8 +8,6 @@ namespace SIAO
 {
     public partial class Logon : System.Web.UI.Page
     {
-        string cns = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             lblAlert.Visible = false;
@@ -17,8 +16,6 @@ namespace SIAO
 
         protected void btnEnter_Click(object sender, EventArgs e)
         {
-            Usuario u = new Usuario();
-
             if (txtNome.Text == "")
             {
                 lblAlert.Visible = true;
@@ -32,20 +29,15 @@ namespace SIAO
             }
             else
             {
-                clsAccess o = new clsAccess();
+                UsersTO clsUser = UsersBLL.GetByNameAndPassword(txtNome.Text, txtSenha.Text);
 
-                u.AcsName = txtNome.Text;
-                u.Password = txtSenha.Text;
-
-                u = o.VerifAcesso(u, cns);
-
-                if (u.UserId > 0)
+                if (clsUser.UserId > 0)
                 {
-                    if (!u.Inactive && u.ExpirationDate > DateTime.Today)
+                    if (!clsUser.Inactive && clsUser.ExpirationDate > DateTime.Today)
                     {
-                        Session["user"] = u;
-                        FormsAuthentication.SetAuthCookie(u.Name, false);
-                        Global.Acs = u.Access;
+                        Session["user"] = clsUser;
+                        FormsAuthentication.SetAuthCookie(clsUser.UserName, false);
+                        Global.Acs = clsUser.Access;
 
                         Response.Redirect("Default.aspx");
                     }

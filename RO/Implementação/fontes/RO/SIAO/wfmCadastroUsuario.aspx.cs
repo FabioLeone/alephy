@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Data;
 using System.Web.UI.WebControls;
+using SIAO.SRV.TO;
 
 namespace SIAO
 {
@@ -12,13 +13,13 @@ namespace SIAO
         string scn = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
         SRV.clsFuncs of = new SRV.clsFuncs();
         SRV.clsControl oCtl = new SRV.clsControl();
-        SRV.Usuario u = new SRV.Usuario();
+        UsersTO clsUser = new UsersTO();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
 
-            if (Session["editU"] != null) { u.UserId = (int)Session["editU"]; }
+            if (Session["editU"] != null) { clsUser.UserId = (int)Session["editU"]; }
 
             if (!IsPostBack)
             {
@@ -123,26 +124,26 @@ namespace SIAO
 
                     bool ed = false;
 
-                    if (u.UserId > 0)
+                    if (clsUser.UserId > 0)
                     {
 
-                        u.Access = rblAccess.SelectedValue;
-                        u.AcsName = txtAcsName.Text;
-                        u.CreateDate = DateTime.Today;
-                        u.Email = txtEmail.Text;
-                        u.Inactive = !cbxAtivo.Checked;
-                        u.Name = txtNome.Text;
-                        u.Password = txtSenha.Text;
-                        u.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
+                        clsUser.Access = rblAccess.SelectedValue;
+                        clsUser.Name = txtAcsName.Text;
+                        clsUser.CreateDate = DateTime.Today;
+                        clsUser.Email = txtEmail.Text;
+                        clsUser.Inactive = !cbxAtivo.Checked;
+                        clsUser.UserName = txtNome.Text;
+                        clsUser.Password = txtSenha.Text;
+                        clsUser.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
                         if (ddlFarmacia.SelectedValue != "")
                         {
-                            u.FarmaciaId = Convert.ToInt16(ddlFarmacia.SelectedValue);
+                            clsUser.FarmaciaId = Convert.ToInt16(ddlFarmacia.SelectedValue);
                         }
                         else {
-                            u.FarmaciaId = 0;
+                            clsUser.FarmaciaId = 0;
                         }
 
-                        msg = oCtl.UpdateUser(u, scn);
+                        msg = oCtl.UpdateUser(clsUser, scn);
                         ed = true;
                     }
                     else
@@ -152,19 +153,19 @@ namespace SIAO
                             intFarmaciaId = Convert.ToInt16(ddlFarmacia.SelectedValue);
                         }
 
-                        u = new SRV.Usuario()
+                        clsUser = new UsersTO()
                         {
                             Access = rblAccess.SelectedValue,
-                            AcsName = txtAcsName.Text,
+                            Name = txtAcsName.Text,
                             CreateDate = DateTime.Today,
                             Email = txtEmail.Text,
                             Inactive = !cbxAtivo.Checked,
-                            Name = txtNome.Text,
+                            UserName = txtNome.Text,
                             Password = txtSenha.Text,
                             ExpirationDate = Convert.ToDateTime(txtValidade.Text),
                             FarmaciaId = intFarmaciaId
                         };
-                        msg = oCtl.AddUser(u, scn);
+                        msg = oCtl.AddUser(clsUser, scn);
                     }
 
                     if (msg != "")
@@ -230,18 +231,18 @@ namespace SIAO
 
         protected void btnEdit_Click(object sender, EventArgs e)
         {
-            u = oCtl.GetUserEdit(scn, ddlUser.SelectedValue);
+            clsUser = oCtl.GetUserEdit(scn, ddlUser.SelectedValue);
 
-            if (u.UserId > 0)
+            if (clsUser.UserId > 0)
             {
-                cbxAtivo.Checked = (bool)(u.Inactive.ToString().ToUpper() == "FALSE" ? true : false);
-                ddlFarmacia.SelectedValue = u.FarmaciaId == 0 ? String.Empty : u.FarmaciaId.ToString();
-                txtAcsName.Text = u.AcsName;
-                txtEmail.Text = u.Email;
-                txtNome.Text = u.Name;
-                txtValidade.Text = u.ExpirationDate.ToShortDateString();
-                rblAccess.SelectedValue = u.Access;
-                Session["editU"] = u.UserId;
+                cbxAtivo.Checked = (bool)(clsUser.Inactive.ToString().ToUpper() == "FALSE" ? true : false);
+                ddlFarmacia.SelectedValue = clsUser.FarmaciaId == 0 ? String.Empty : clsUser.FarmaciaId.ToString();
+                txtAcsName.Text = clsUser.Name;
+                txtEmail.Text = clsUser.Email;
+                txtNome.Text = clsUser.UserName;
+                txtValidade.Text = clsUser.ExpirationDate.ToShortDateString();
+                rblAccess.SelectedValue = clsUser.Access;
+                Session["editU"] = clsUser.UserId;
             }
         }
     }
