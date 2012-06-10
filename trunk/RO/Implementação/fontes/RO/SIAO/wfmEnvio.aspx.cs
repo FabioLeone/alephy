@@ -3,6 +3,7 @@ using System.Web.UI;
 using System.Xml;
 using System.Configuration;
 using System.Data;
+using SIAO.SRV.TO;
 
 namespace SIAO
 {
@@ -10,13 +11,13 @@ namespace SIAO
     {
         SRV.clsFuncs of = new SRV.clsFuncs();
         SRV.clsControl oc = new SRV.clsControl();
-        SRV.Usuario ou = new SRV.Usuario();
+        UsersTO clsUser = new UsersTO();
         string scn = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); } else {
-                ou = (SRV.Usuario)Session["user"];
+                clsUser = (UsersTO)Session["user"];
             }
         }
 
@@ -57,7 +58,7 @@ namespace SIAO
 
                         xd.Load(fuArquivo.FileContent);
 
-                        string msg = oc.AddXml(scn, xd, ou);
+                        string msg = oc.AddXml(scn, xd, clsUser);
                         if (msg == "")
                         {
                             divSces();
@@ -68,7 +69,7 @@ namespace SIAO
                         DataTable dt = new DataTable();
                         dt = of.txtDtConvert(fuArquivo.FileContent);
 
-                        string msg = oc.AddTxt(scn, dt, ou);
+                        string msg = oc.AddTxt(scn, dt, clsUser);
                         if (msg == "")
                         {
                             divSces();

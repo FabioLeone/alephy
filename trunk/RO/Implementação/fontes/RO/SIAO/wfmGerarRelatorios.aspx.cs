@@ -6,19 +6,20 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
+using SIAO.SRV.TO;
 
 namespace SIAO
 {
     public partial class wfmGerarRelatorios : System.Web.UI.Page
     {
         string scn = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
-        SRV.Usuario ou = new SRV.Usuario();
+        UsersTO clsUser = new UsersTO();
         SRV.clsControl oc = new SRV.clsControl();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); } else {
-                ou = (SRV.Usuario)Session["user"];
+                clsUser = (UsersTO)Session["user"];
             }
 
             if (!IsPostBack) { getAno(); }
@@ -62,7 +63,7 @@ namespace SIAO
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
 
-            lr1 = oc.GetCross(scn, ou, ddlAno.SelectedItem.Value);
+            lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value);
 
             Session["cross"] = lr1;
 
@@ -73,7 +74,7 @@ namespace SIAO
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
 
-            lr1 = oc.GetCross(scn, ou, ddlAno.SelectedItem.Value);
+            lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value);
 
             Session["cross"] = lr1;
 

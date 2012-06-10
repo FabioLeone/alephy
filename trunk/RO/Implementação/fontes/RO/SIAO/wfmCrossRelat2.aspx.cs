@@ -6,13 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Web.Security;
+using SIAO.SRV.TO;
 
 namespace SIAO
 {
     public partial class wfmCrossRelat2 : System.Web.UI.Page
     {
         List<SRV.clsRelat1> lr = new List<SRV.clsRelat1>();
-        SRV.Usuario ou = new SRV.Usuario();
+        UsersTO clsUser = new UsersTO();
         SRV.clsControl oc = new SRV.clsControl();
         string scn = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
 
@@ -21,19 +22,19 @@ namespace SIAO
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
             else
             {
-                ou = (SRV.Usuario)Session["user"];
+                clsUser = (UsersTO)Session["user"];
             }
 
             if (!IsPostBack)
             {
                 lr = (List<SRV.clsRelat1>)Session["cross"];
-                loadRelat(lr, ou);
+                loadRelat(lr, clsUser);
             }
         }
 
-        private void loadRelat(List<SRV.clsRelat1> lr, SRV.Usuario ou)
+        private void loadRelat(List<SRV.clsRelat1> lr, UsersTO clsUser)
         {
-            if (lr.Count == 0) { lr = oc.GetCross(scn, ou, ""); }
+            if (lr.Count == 0) { lr = oc.GetCross(scn, clsUser, ""); }
 
             Microsoft.Reporting.WebForms.ReportDataSource Rds = new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", lr);
             ReportViewer1.Reset();
