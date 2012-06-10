@@ -269,3 +269,17 @@ section
     height:60px;
     border:none;
 }
+
+#edRede
+{
+    float:left;
+    margin-left:1px;
+    position:relative;
+    width:200px;
+}
+
+#loja
+{
+    width:50%;
+    height:30px;
+}
