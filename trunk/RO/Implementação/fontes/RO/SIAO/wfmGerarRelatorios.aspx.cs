@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
 using SIAO.SRV.TO;
+using SIAO.SRV.BLL;
 
 namespace SIAO
 {
@@ -79,6 +80,20 @@ namespace SIAO
             Session["cross"] = lr1;
 
             Response.Redirect("wfmCrossRelat2.aspx");
+        }
+
+        protected void ibtnGrafic1_Click(object sender, ImageClickEventArgs e)
+        {
+            List<GraficTO> clsGrafic;
+
+            if(ddlMes.SelectedValue != "")
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue));
+            else
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month));
+
+            Session["grafic"] = clsGrafic;
+
+            Response.Redirect("wfmRelatorios.aspx");
         }
 
     }
