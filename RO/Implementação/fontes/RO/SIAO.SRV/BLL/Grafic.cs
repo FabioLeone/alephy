@@ -21,6 +21,8 @@ namespace SIAO.SRV.BLL
             
             });
 
+            decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
+
             clsGrafic.ForEach(delegate(GraficTO _Grafic) {
                 clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic) {
                     if (_Grafic.Sub_Consultoria == _IndicesGrafic.categoria && _Grafic.Grupo == _IndicesGrafic.grupo) {
@@ -28,7 +30,7 @@ namespace SIAO.SRV.BLL
                             Sub_Consultoria = _Grafic.Sub_Consultoria,
                             Razao_Social = _Grafic.Razao_Social,
                             Mes = _Grafic.Mes,
-                            Liquido = (_Grafic.Liquido / _IndicesGrafic.venda),
+                            Liquido = ((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100,
                             Grupo = _Grafic.Grupo,
                             Desconto = (_Grafic.Desconto / _IndicesGrafic.desconto)
                         });
