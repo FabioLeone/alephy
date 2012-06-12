@@ -262,12 +262,20 @@ section
 
 .imgBtn
 {
-    background-image:url(report.png);
-    background-position:top;
-    background-size:90%;
-    background-repeat:no-repeat;
-    height:60px;
-    border:none;
+    height:70px;
+    width:52px;
+    text-align:center;
+}
+
+.iconList
+{
+    list-style-type:none;
+}
+
+.iconList li
+{
+    margin-left:18px;
+    float:left;
 }
 
 #edRede
