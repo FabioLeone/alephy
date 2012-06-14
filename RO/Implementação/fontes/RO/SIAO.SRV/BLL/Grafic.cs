@@ -11,11 +11,11 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static List<GraficTO> GraficList(int intMes)
+        public static List<GraficTO> GraficList(int intMes, string strConnection)
         {
             List<GraficTO> clsList = new List<GraficTO>();
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes);
-            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
+            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, strConnection);
+            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll(strConnection);
 
             clsGrafic.ForEach(delegate(GraficTO _Grafic) { 
             
@@ -46,32 +46,36 @@ namespace SIAO.SRV.BLL
         
         #region .: Search :.
 
-        public static List<GraficTO> GetGraficMes(int intMes) {
-            return GraficDAL.GetGraficMes(intMes);
+        public static List<GraficTO> GetGraficMes(int intMes, string strConnection) {
+            return GraficDAL.GetGraficMes(intMes, strConnection);
         }
 
-        public static TotaisGraficMesTO GetTotalMes(int intMes) {
-            return GraficDAL.GetTotalMes(intMes);
+        public static TotaisGraficMesTO GetTotalMes(int intMes, string strConnection)
+        {
+            return GraficDAL.GetTotalMes(intMes, strConnection);
         }
 
-        public static List<IndicesGraficTO> GetIndicesAll() {
-            return GraficDAL.GetIndicesALL();
+        public static List<IndicesGraficTO> GetIndicesAll(string strConnection)
+        {
+            return GraficDAL.GetIndicesALL(strConnection);
         }
 
         #endregion
 
         #region .: Persistence :.
 
-        public static IndicesGraficTO InsertIndice(IndicesGraficTO clsIndiceGrafic) {
-            return GraficDAL.InsetIndices(clsIndiceGrafic);
+        public static IndicesGraficTO InsertIndice(IndicesGraficTO clsIndiceGrafic, string strConnection) {
+            return GraficDAL.InsetIndices(clsIndiceGrafic, strConnection);
         }
 
-        public static Boolean UpdateIndiceGrafic(IndicesGraficTO clsIndiceGrafic) {
-            return GraficDAL.UpdateIndices(clsIndiceGrafic);
+        public static Boolean UpdateIndiceGrafic(IndicesGraficTO clsIndiceGrafic, string strConnection)
+        {
+            return GraficDAL.UpdateIndices(clsIndiceGrafic, strConnection);
         }
 
-        public static Boolean DeleteIndiceGrafic(IndicesGraficTO clsIndiceGrafic) {
-            return GraficDAL.DeleteIndice(clsIndiceGrafic);
+        public static Boolean DeleteIndiceGrafic(IndicesGraficTO clsIndiceGrafic, string strConnection)
+        {
+            return GraficDAL.DeleteIndice(clsIndiceGrafic, strConnection);
         }
 
         #endregion

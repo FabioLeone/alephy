@@ -236,7 +236,14 @@ namespace SIAO
             if (clsUser.UserId > 0)
             {
                 cbxAtivo.Checked = (bool)(clsUser.Inactive.ToString().ToUpper() == "FALSE" ? true : false);
-                ddlFarmacia.SelectedValue = clsUser.FarmaciaId == 0 ? String.Empty : clsUser.FarmaciaId.ToString();
+                try
+                {
+                    ddlFarmacia.SelectedValue = clsUser.FarmaciaId == 0 ? String.Empty : clsUser.FarmaciaId.ToString();
+                }
+                finally
+                {
+
+                }
                 txtAcsName.Text = clsUser.Name;
                 txtEmail.Text = clsUser.Email;
                 txtNome.Text = clsUser.UserName;

@@ -8,6 +8,11 @@ namespace SIAO
 {
     public partial class Logon : System.Web.UI.Page
     {
+        #region .: Varables :.
+        private string strConnectionString = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
+        #endregion
+
+        #region .: Eventos :.
         protected void Page_Load(object sender, EventArgs e)
         {
             lblAlert.Visible = false;
@@ -29,7 +34,7 @@ namespace SIAO
             }
             else
             {
-                UsersTO clsUser = UsersBLL.GetByNameAndPassword(txtNome.Text, txtSenha.Text);
+                UsersTO clsUser = UsersBLL.GetByNameAndPassword(txtNome.Text, txtSenha.Text, strConnectionString);
 
                 if (clsUser.UserId > 0)
                 {
@@ -54,5 +59,6 @@ namespace SIAO
                 }
             }
         }
+        #endregion
     }
 }

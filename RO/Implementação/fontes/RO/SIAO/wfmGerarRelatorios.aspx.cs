@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
-using System.Data;
 using SIAO.SRV.TO;
 using SIAO.SRV.BLL;
 
@@ -87,9 +84,9 @@ namespace SIAO
             List<GraficTO> clsGrafic;
 
             if(ddlMes.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue));
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), scn);
             else
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month));
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), scn);
 
             Session["grafic"] = clsGrafic;
 
