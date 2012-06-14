@@ -11,12 +11,12 @@ namespace SIAO.SRV.BLL
     public class UsersBLL
     {
         #region .: Métodos :.
-        
-        public static List<HtmlGenericControl> GetMenu(int intUserId)
+
+        public static List<HtmlGenericControl> GetMenu(int intUserId, string strConnection)
         {
             List<HtmlGenericControl> lhgc = new List<HtmlGenericControl>();
 
-            if (UsersDAL.GetById(intUserId).Access == "adm") {
+            if (UsersDAL.GetById(intUserId, strConnection).Access == "adm") {
                 HtmlGenericControl h1 = new HtmlGenericControl();
                 h1.InnerHtml = "<h2>Cadastros</h2>";
                 lhgc.Add(h1);
@@ -54,41 +54,44 @@ namespace SIAO.SRV.BLL
         
         #region .: Search :.
 
-        public static List<UsersTO> GetAll() {
-            return UsersDAL.GetAll();
+        public static List<UsersTO> GetAll(string strConnection) {
+            return UsersDAL.GetAll(strConnection);
         }
 
-        public static UsersTO GetById(int intUserId) {
-            return UsersDAL.GetById(intUserId);
+        public static UsersTO GetById(int intUserId, string strConnection) {
+            return UsersDAL.GetById(intUserId, strConnection);
         }
 
         #endregion
 
         #region .: Custom Search :.
 
-        public static UsersTO GetByNameAndPassword(string strName, string strPassword) {
-            return UsersDAL.GetByNameAndPassword(strName, strPassword);
+        public static UsersTO GetByNameAndPassword(string strName, string strPassword, string strConnectionString)
+        {
+            return UsersDAL.GetByNameAndPassword(strName, strPassword, strConnectionString);
         }
 
-        public static object GetByName(string strNome)
+        public static object GetByName(string strNome, string strConnection)
         {
-            return UsersDAL.GetByName(strNome);
+            return UsersDAL.GetByName(strNome, strConnection);
         }
 
         #endregion
 
         #region .: Persistence :.
 
-        public static UsersTO Insert(UsersTO clsUsers) {
-            return UsersDAL.Insert(clsUsers);
+        public static UsersTO Insert(UsersTO clsUsers, string strConnection) {
+            return UsersDAL.Insert(clsUsers, strConnection);
         }
 
-        public static Boolean Update(UsersTO clsUsers) {
-            return UsersDAL.Update(clsUsers);
+        public static Boolean Update(UsersTO clsUsers, string strConnection)
+        {
+            return UsersDAL.Update(clsUsers, strConnection);
         }
 
-        public static Boolean Delete(UsersTO clsUsers) {
-            return UsersDAL.Delete(clsUsers);
+        public static Boolean Delete(UsersTO clsUsers, string strConnection)
+        {
+            return UsersDAL.Delete(clsUsers, strConnection);
         }
 
         #endregion

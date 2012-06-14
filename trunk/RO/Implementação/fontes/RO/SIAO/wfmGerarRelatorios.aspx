@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table style="width: 100%;">
+            <table style="width: 98%; margin-left:1%;">
                 <tr>
                     <td style="width: 50%;">
                         <fieldset style="width: 93%;">

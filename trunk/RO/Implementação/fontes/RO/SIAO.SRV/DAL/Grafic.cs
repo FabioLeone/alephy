@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Microsoft.Practices.EnterpriseLibrary.Data;
-using MySql.Data;
 using SIAO.SRV.TO;
 using System.Data;
+using MySql.Data.MySqlClient;
 using System.Data.Common;
 
 namespace SIAO.SRV.DAL
@@ -56,9 +54,10 @@ namespace SIAO.SRV.DAL
 
         #region .: Search :.
 
-        public static List<GraficTO> GetGraficMes(int intMes) {
+        public static List<GraficTO> GetGraficMes(int intMes, string strConnection)
+        {
             List<GraficTO> clsGrafic = new List<GraficTO>();
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -104,11 +103,16 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes) AS xTemp ");
                 strSQL.Append(" ORDER BY Grupo, Sub_Consultoria ");
 
-                DbCommand cmdGrafic = db.GetSqlStringCommand(strSQL.ToString());
+                DbCommand cmdGrafic = msc.CreateCommand();
+                cmdGrafic.CommandText = strSQL.ToString();
 
-                db.AddInParameter(cmdGrafic, "@Mes", DbType.Int32, intMes);
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@Mes", intMes));
 
-                using (IDataReader drdGrafic = db.ExecuteReader(cmdGrafic)) {
+                msc.Open();
+
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
                     while (drdGrafic.Read())
                     {
                         clsGrafic.Add(LoadGrfic(drdGrafic));
@@ -117,16 +121,17 @@ namespace SIAO.SRV.DAL
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsGrafic;
         }
 
-        public static TotaisGraficMesTO GetTotalMes(int intMes) {
+        public static TotaisGraficMesTO GetTotalMes(int intMes, string strConnection)
+        {
             TotaisGraficMesTO clsTotalMes = new TotaisGraficMesTO();
 
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -138,25 +143,31 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes");
                 strSQL.Append(" GROUP BY base_clientes.Mes;");
 
-                DbCommand cmdTotalMes = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdTotalMes, "@Mes", DbType.Int32, intMes);
+                DbCommand cmdTotalMes = msc.CreateCommand();
+                cmdTotalMes.CommandText = strSQL.ToString();
+                cmdTotalMes.Parameters.Clear();
+                cmdTotalMes.Parameters.Add(DbHelper.GetParameter(cmdTotalMes, DbType.Int32, "@Mes", intMes));
 
-                using (IDataReader drdTotalMes = db.ExecuteReader(cmdTotalMes)) {
+                msc.Open();
+
+                using (IDataReader drdTotalMes = cmdTotalMes.ExecuteReader())
+                {
                     if (drdTotalMes.Read()) { clsTotalMes = LoadTotal(drdTotalMes); }
                 }
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsTotalMes;
         }
 
-        public static List<IndicesGraficTO> GetIndicesALL() {
+        public static List<IndicesGraficTO> GetIndicesALL(string strConnection)
+        {
             List<IndicesGraficTO> clsIndicesGrafic = new List<IndicesGraficTO>();
 
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -164,9 +175,13 @@ namespace SIAO.SRV.DAL
                 strSQL.Append("SELECT indice_relatorios.id, indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto");
                 strSQL.Append(" FROM indice_relatorios;");
 
-                DbCommand cmdIndicesGrafic = db.GetSqlStringCommand(strSQL.ToString());
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
 
-                using (IDataReader drdIndicesGrafic = db.ExecuteReader(cmdIndicesGrafic)) {
+                msc.Open();
+
+                using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
+                {
                     while (drdIndicesGrafic.Read())
                     {
                         clsIndicesGrafic.Add(LoadIndicesGrafic(drdIndicesGrafic));
@@ -175,7 +190,7 @@ namespace SIAO.SRV.DAL
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsIndicesGrafic;
@@ -185,9 +200,9 @@ namespace SIAO.SRV.DAL
 
         #region .: Persistence :.
 
-        public static IndicesGraficTO InsetIndices(IndicesGraficTO clsIndicesGrafic)
+        public static IndicesGraficTO InsetIndices(IndicesGraficTO clsIndicesGrafic, string strConnection)
         {
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -198,13 +213,18 @@ namespace SIAO.SRV.DAL
                 strSQL.Append("SELECT indice_relatorios.id, indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto");
                 strSQL.Append(" FROM indice_relatorios WHERE indice_relatorios.id=@@IDENTITY;");
 
-                DbCommand cmdIndicesGrafic = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdIndicesGrafic, "@grupo", DbType.String, clsIndicesGrafic.grupo);
-                db.AddInParameter(cmdIndicesGrafic, "@categoria", DbType.String, clsIndicesGrafic.categoria);
-                db.AddInParameter(cmdIndicesGrafic, "@venda", DbType.Decimal, clsIndicesGrafic.venda);
-                db.AddInParameter(cmdIndicesGrafic, "@desconto", DbType.Decimal, clsIndicesGrafic.desconto);
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
 
-                using (IDataReader drdIndicesGrafic = db.ExecuteReader(cmdIndicesGrafic))
+                cmdIndicesGrafic.Parameters.Clear();
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@grupo", clsIndicesGrafic.grupo));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@categoria", clsIndicesGrafic.categoria));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@venda", clsIndicesGrafic.venda));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@desconto", clsIndicesGrafic.desconto));
+
+                msc.Open();
+
+                using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
                 {
                     while (drdIndicesGrafic.Read())
                     {
@@ -214,14 +234,15 @@ namespace SIAO.SRV.DAL
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsIndicesGrafic;
         }
 
-        public static Boolean UpdateIndices(IndicesGraficTO clsIndicesGrafic) {
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+        public static Boolean UpdateIndices(IndicesGraficTO clsIndicesGrafic, string strConnection)
+        {
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -230,14 +251,18 @@ namespace SIAO.SRV.DAL
                 strSQL.Append("UPDATE indice_relatorios SET indice_relatorios.grupo=@grupo, indice_relatorios.categoria=@categoria, indice_relatorios.venda=@venda, indice_relatorios.desconto=@desconto");
                 strSQL.Append(" WHERE indice_relatorios.id=@id;");
 
-                DbCommand cmdIndicesGrafic = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdIndicesGrafic, "@id", DbType.Int32, clsIndicesGrafic.id);
-                db.AddInParameter(cmdIndicesGrafic, "@grupo", DbType.String, clsIndicesGrafic.grupo);
-                db.AddInParameter(cmdIndicesGrafic, "@categoria", DbType.String, clsIndicesGrafic.categoria);
-                db.AddInParameter(cmdIndicesGrafic, "@venda", DbType.Decimal, clsIndicesGrafic.venda);
-                db.AddInParameter(cmdIndicesGrafic, "@desconto", DbType.Decimal, clsIndicesGrafic.desconto);
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+                cmdIndicesGrafic.Parameters.Clear();
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Int32, "@id", clsIndicesGrafic.id));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@grupo", clsIndicesGrafic.grupo));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@categoria", clsIndicesGrafic.categoria));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@venda", clsIndicesGrafic.venda));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@desconto", clsIndicesGrafic.desconto));
 
-                db.ExecuteNonQuery(cmdIndicesGrafic);
+                msc.Open();
+
+                cmdIndicesGrafic.ExecuteNonQuery();
 
                 return true;
             }
@@ -245,10 +270,15 @@ namespace SIAO.SRV.DAL
             {
                 return false;
             }
+            finally
+            {
+                msc.Close();
+            }
         }
 
-        public static Boolean DeleteIndice(IndicesGraficTO clsIndicesGrafic) {
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+        public static Boolean DeleteIndice(IndicesGraficTO clsIndicesGrafic, string strConnection)
+        {
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -257,16 +287,26 @@ namespace SIAO.SRV.DAL
                 strSQL.Append("DELETE FROM indice_relatorios");
                 strSQL.Append(" WHERE indice_relatorios.id=@id;");
 
-                DbCommand cmdIndicesGrafic = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdIndicesGrafic, "@id", DbType.Int32, clsIndicesGrafic.id);
 
-                db.ExecuteNonQuery(cmdIndicesGrafic);
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+
+                cmdIndicesGrafic.Parameters.Clear();
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Int32, "@id", clsIndicesGrafic.id));
+
+                msc.Open();
+
+                cmdIndicesGrafic.ExecuteNonQuery();
 
                 return true;
             }
             catch
             {
                 return false;
+            }
+            finally
+            {
+                msc.Close();
             }
         }
 

@@ -810,7 +810,7 @@ namespace SIAO.SRV
                 clsUser.FarmaciaId = Convert.ToInt16(ds.Tables[0].Rows[0]["FarmaciaId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["FarmaciaId"]);
                 clsUser.Name = o.denc(ds.Tables[0].Rows[0]["Name"].ToString());
                 clsUser.Email = ds.Tables[0].Rows[0]["Email"].ToString();
-                clsUser.Name = ds.Tables[0].Rows[0]["UserName"].ToString();
+                clsUser.UserName = ds.Tables[0].Rows[0]["UserName"].ToString();
                 clsUser.ExpirationDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["ExpirationDate"].ToString());
                 clsUser.Access = o.denc(ds.Tables[0].Rows[0]["Access"].ToString());
             }

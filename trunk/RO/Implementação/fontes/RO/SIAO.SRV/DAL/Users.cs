@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Practices.EnterpriseLibrary.Data;
 using SIAO.SRV.TO;
 using System.Data.Common;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace SIAO.SRV.DAL
 {
@@ -35,11 +35,11 @@ namespace SIAO.SRV.DAL
 
         #region .: Search :.
 
-        public static List<UsersTO> GetAll()
+        public static List<UsersTO> GetAll(string strConnection)
         {
             List<UsersTO> clsUsers = new List<UsersTO>();
 
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -50,8 +50,12 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
                 strSQL.Append(" ORDER BY users.UserName");
 
-                DbCommand cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                using (IDataReader drdUsers = db.ExecuteReader(cmdUsers)) {
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader()) {
                     while (drdUsers.Read())
                     {
                         clsUsers.Add(Load(drdUsers));
@@ -60,16 +64,16 @@ namespace SIAO.SRV.DAL
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsUsers;
         }
 
-        public static UsersTO GetById(int intUserId) {
+        public static UsersTO GetById(int intUserId, string strConnection) {
             UsersTO clsUsers = new UsersTO();
 
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -80,10 +84,13 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
                 strSQL.Append(" WHERE users.UserId=@UserId");
 
-                DbCommand cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, intUserId);
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
 
-                using (IDataReader drdUsers = db.ExecuteReader(cmdUsers))
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", intUserId));
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
                 {
                     if (drdUsers.Read())
                     {
@@ -93,7 +100,7 @@ namespace SIAO.SRV.DAL
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsUsers;
@@ -103,11 +110,11 @@ namespace SIAO.SRV.DAL
 
         #region .: Custom Search :.
 
-        public static UsersTO GetByNameAndPassword(string strName, string strPassword)
+        internal static UsersTO GetByNameAndPassword(string strName, string strPassword, string strConnectionString)
         {
             UsersTO clsUsers = new UsersTO();
 
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnectionString);
 
             try
             {
@@ -118,11 +125,16 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
                 strSQL.Append(" WHERE memberships.`Name`=@Name AND memberships.`Password`=@Password");
 
-                DbCommand cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@Name", DbType.String, CDM.Cript(strName.ToUpper()));
-                db.AddInParameter(cmdUsers, "@Password", DbType.String, CDM.Cript(strPassword));
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
 
-                using (IDataReader drdUsers = db.ExecuteReader(cmdUsers))
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", CDM.Cript(strName.ToUpper())));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Password", CDM.Cript(strPassword)));
+
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
                 {
                     if (drdUsers.Read())
                     {
@@ -132,17 +144,17 @@ namespace SIAO.SRV.DAL
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsUsers;
         }
 
-        public static object GetByName(string strNome)
+        public static object GetByName(string strNome, string strConnection)
         {
             List<UsersTO> clsUsers = new List<UsersTO>();
 
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -154,10 +166,15 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" WHERE users.UserName LIKE @UserName");
                 strSQL.Append(" ORDER BY users.UserName");
 
-                DbCommand cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserName", DbType.String, string.Format("%{0}%", strNome));
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
 
-                using (IDataReader drdUsers = db.ExecuteReader(cmdUsers))
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@UserName", string.Format("%{0}%", strNome)));
+
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
                 {
                     while (drdUsers.Read())
                     {
@@ -167,7 +184,7 @@ namespace SIAO.SRV.DAL
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsUsers;
@@ -177,8 +194,8 @@ namespace SIAO.SRV.DAL
 
         #region .: Persistence :.
 
-        public static UsersTO Insert(UsersTO clsUsers) {
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+        public static UsersTO Insert(UsersTO clsUsers, string strConnection) {
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -191,11 +208,16 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
                 strSQL.Append(" WHERE users.UserId=@@IDENTITY");
 
-                DbCommand cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserName", DbType.String, clsUsers.UserName);
-                db.AddInParameter(cmdUsers, "@LastActivityDate", DbType.DateTime, clsUsers.LastActivityDate);
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
 
-                using (IDataReader drdUsers = db.ExecuteReader(cmdUsers))
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@UserName", clsUsers.UserName));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@LastActivityDate", clsUsers.LastActivityDate));
+
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
                 {
                     if (drdUsers.Read())
                     {
@@ -208,37 +230,39 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" ExpirationDate, Access, Name) VALUES ( @UserId, @Password, @Email, @Inactive,");
                 strSQL.Append(" @CreateDate, @ExpirationDate, @Access, @Name)");
 
-                cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, clsUsers.UserId);
-                db.AddInParameter(cmdUsers, "@Password", DbType.String, CDM.Cript(clsUsers.Password));
-                db.AddInParameter(cmdUsers, "@Email", DbType.String, clsUsers.Email);
-                db.AddInParameter(cmdUsers, "@Inactive", DbType.Int32, (clsUsers.Inactive == false ? 0 : 1));
-                db.AddInParameter(cmdUsers, "@CreateDate", DbType.DateTime, clsUsers.CreateDate);
-                db.AddInParameter(cmdUsers, "@ExpirationDate", DbType.DateTime, clsUsers.ExpirationDate);
-                db.AddInParameter(cmdUsers, "@Access", DbType.String, CDM.Cript(clsUsers.Access));
-                db.AddInParameter(cmdUsers, "@Name", DbType.String, CDM.Cript(clsUsers.Name));
-                db.ExecuteNonQuery(cmdUsers);
+                cmdUsers.CommandText = strSQL.ToString();
+
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Password", CDM.Cript(clsUsers.Password)));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Email", clsUsers.Email));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@Inactive", (clsUsers.Inactive == false ? 0 : 1)));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@CreateDate", clsUsers.CreateDate));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@ExpirationDate", clsUsers.ExpirationDate));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript(clsUsers.Access)));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", CDM.Cript(clsUsers.Name)));
+                cmdUsers.ExecuteNonQuery();
 
                 strSQL.Clear();
                 strSQL.Append("INSERT INTO usuarios_farmacias (UserId, FarmaciaId) VALUES ( @UserId, @FarmaciaId)");
 
-                cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, clsUsers.UserId);
-                db.AddInParameter(cmdUsers, "@FarmaciaId", DbType.Int32, clsUsers.FarmaciaId);
-                db.ExecuteNonQuery(cmdUsers);
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@FarmaciaId", clsUsers.FarmaciaId));
+                cmdUsers.ExecuteNonQuery();
 
             }
             finally
             {
-
+                msc.Close();
             }
 
             return clsUsers;
         }
 
-        public static Boolean Update(UsersTO clsUsers)
+        public static Boolean Update(UsersTO clsUsers, string strConnection)
         {
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -247,45 +271,57 @@ namespace SIAO.SRV.DAL
                 strSQL.Append("UPDATE users SET UserName = @UserName, LastActivityDate = @LastActivityDate");
                 strSQL.Append(" WHERE users.UserId=@UserId");
 
-                DbCommand cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, clsUsers.UserId);
-                db.AddInParameter(cmdUsers, "@UserName", DbType.String, clsUsers.UserName);
-                db.AddInParameter(cmdUsers, "@LastActivityDate", DbType.DateTime, clsUsers.LastActivityDate);
-                db.ExecuteNonQuery(cmdUsers);
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@UserName", clsUsers.UserName));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@LastActivityDate", clsUsers.LastActivityDate));
+
+                msc.Open();
+
+                cmdUsers.ExecuteNonQuery();
 
                 strSQL.Clear();
                 strSQL.Append("UPDATE memberships SET Password = @Password, Email = @Email, ");
                 strSQL.Append(" Inactive = @Inactive, CreateDate = @CreateDate, ExpirationDate = @ExpirationDate,");
                 strSQL.Append(" Access = @Access, Name = @Name WHERE UserId = @UserId");
 
-                cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, clsUsers.UserId);
-                db.AddInParameter(cmdUsers, "@Password", DbType.String, CDM.Cript(clsUsers.Password));
-                db.AddInParameter(cmdUsers, "@Email", DbType.String, clsUsers.Email);
-                db.AddInParameter(cmdUsers, "@Inactive", DbType.Int32, (clsUsers.Inactive == false ? 0 : 1));
-                db.AddInParameter(cmdUsers, "@CreateDate", DbType.DateTime, clsUsers.CreateDate);
-                db.AddInParameter(cmdUsers, "@ExpirationDate", DbType.DateTime, clsUsers.ExpirationDate);
-                db.AddInParameter(cmdUsers, "@Access", DbType.String, CDM.Cript(clsUsers.Access));
-                db.AddInParameter(cmdUsers, "@Name", DbType.String, CDM.Cript(clsUsers.Name));
-                db.ExecuteNonQuery(cmdUsers);
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Password", CDM.Cript(clsUsers.Password)));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Email", clsUsers.Email));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@Inactive", (clsUsers.Inactive == false ? 0 : 1)));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@CreateDate", clsUsers.CreateDate));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@ExpirationDate", clsUsers.ExpirationDate));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript(clsUsers.Access)));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", CDM.Cript(clsUsers.Name)));
+                cmdUsers.ExecuteNonQuery();
 
                 strSQL.Clear();
                 strSQL.Append("UPDATE usuarios_farmacias SET FarmaciaId = @FarmaciaId WHERE UserId = @UserId");
 
-                cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, clsUsers.UserId);
-                db.AddInParameter(cmdUsers, "@FarmaciaId", DbType.Int32, clsUsers.FarmaciaId);
-                db.ExecuteNonQuery(cmdUsers);
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@FarmaciaId", clsUsers.FarmaciaId));
+                cmdUsers.ExecuteNonQuery();
                 return true;
             }
             catch
             {
                 return false;
             }
+            finally
+            {
+                msc.Close();
+            }
         }
 
-        public static Boolean Delete(UsersTO clsUsers) {
-            Database db = DatabaseFactory.CreateDatabase("SIAOConnectionString");
+        public static Boolean Delete(UsersTO clsUsers, string strConnection) {
+            MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
             {
@@ -293,30 +329,40 @@ namespace SIAO.SRV.DAL
                 strSQL.Append("SET NOCOUNT=ON;");
                 strSQL.Append("DELETE FROM usuarios_farmacias WHERE UserId = @UserId");
 
-                DbCommand cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
 
-                cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, clsUsers.UserId);
-                db.ExecuteNonQuery(cmdUsers);
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+
+                msc.Open();
+
+                cmdUsers.ExecuteNonQuery();
 
                 strSQL.Clear();
                 strSQL.Append("DELETE FROM memberships WHERE UserId = @UserId");
 
-                cmdUsers = db.GetSqlStringCommand(strSQL.ToString());
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, clsUsers.UserId);
-                db.ExecuteNonQuery(cmdUsers);
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+                cmdUsers.ExecuteNonQuery();
 
                 strSQL.Clear();
                 strSQL.Append("DELETE FROM users WHERE users.UserId=@UserId");
 
-                db.AddInParameter(cmdUsers, "@UserId", DbType.Int32, clsUsers.UserId);
-                db.ExecuteNonQuery(cmdUsers);
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+                cmdUsers.ExecuteNonQuery();
 
                 return true;
             }
             catch
             {
                 return false;
+            }
+            finally {
+                msc.Close();
             }
         }
         #endregion

@@ -1,31 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="ftp://casbrasil.com.br/ro" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="ROcasBr" publishMethod="FTP" replaceMatchingFiles="True" userName="castreina" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA2UWWYaM5q0a7y9kN8aUBOQAAAAACAAAAAAAQZgAAAAEAACAAAAArrc/mF4DlPt7hPy6ic8pd1UHG9kZKwUb1O7qL5VwFlAAAAAAOgAAAAAIAACAAAACt7/yzOB5stahQ72Xo9EVeWgZ8oEpjiVYCVqwTP1QqXyAAAAClbruosrvM1khpAzen+xjmNQQbtdPc/TlZDi67uCly50AAAABPFXxElJLgwcUVVdnk5i+mzSe5ZeZsqtlYNcpepHCd0Qr6wGf3AJ2uV8EaySnULgHNSMCfszeqiiEYOIvGPfk2" SelectedForPublish="False">
-    <file relUrl="Web.config" publishTime="05/28/2012 00:06:36" />
-    <file relUrl="Logon.aspx" publishTime="04/16/2012 12:41:02" />
-    <file relUrl="wfmBanco.aspx" publishTime="05/23/2012 13:58:35" />
-    <file relUrl="wfmGerarRelatorios.aspx" publishTime="05/26/2012 23:00:04" />
-    <file relUrl="wfmCrossRelat2.aspx" publishTime="05/26/2012 22:11:11" />
-    <file relUrl="wfmCadastroUsuario.aspx" publishTime="05/26/2012 18:33:47" />
-    <file relUrl="Content/report.gif" publishTime="05/26/2012 22:47:18" />
-    <file relUrl="Default.aspx" publishTime="04/09/2012 17:20:29" />
-    <file relUrl="wfmEnvio.aspx" publishTime="05/23/2012 13:57:44" />
-    <file relUrl="bin/SIAO.dll" publishTime="05/28/2012 00:06:22" />
-    <file relUrl="bin/SIAO.pdb" publishTime="05/28/2012 00:06:22" />
-    <file relUrl="wfmCadastroLojas.aspx" publishTime="04/16/2012 11:16:02" />
-    <file relUrl="Content/success.png" publishTime="04/13/2012 11:55:23" />
-    <file relUrl="bin/SIAO.SRV.pdb" publishTime="05/28/2012 00:06:22" />
-    <file relUrl="bin/SIAO.SRV.dll" publishTime="05/28/2012 00:06:22" />
-    <file relUrl="Content/a_Logo.jpg" publishTime="04/05/2012 16:28:53" />
+  <publishProfile publishUrl="http://localhost/RO" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="ROcasBr" publishMethod="FileSystem" replaceMatchingFiles="False" userName="castreina" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA2UWWYaM5q0a7y9kN8aUBOQAAAAACAAAAAAAQZgAAAAEAACAAAAArrc/mF4DlPt7hPy6ic8pd1UHG9kZKwUb1O7qL5VwFlAAAAAAOgAAAAAIAACAAAACt7/yzOB5stahQ72Xo9EVeWgZ8oEpjiVYCVqwTP1QqXyAAAAClbruosrvM1khpAzen+xjmNQQbtdPc/TlZDi67uCly50AAAABPFXxElJLgwcUVVdnk5i+mzSe5ZeZsqtlYNcpepHCd0Qr6wGf3AJ2uV8EaySnULgHNSMCfszeqiiEYOIvGPfk2" SelectedForPublish="True">
+    <file relUrl="Siao.Master" publishTime="06/13/2012 22:10:03" />
+    <file relUrl="wfmCadastroLojas.aspx" publishTime="05/31/2012 22:24:43" />
     <file relUrl="Content/report.png" publishTime="05/26/2012 23:14:46" />
-    <file relUrl="Content/ssSIAO.css" publishTime="05/26/2012 23:14:58" />
-    <file relUrl="wfmCadastroRede.aspx" publishTime="04/12/2012 17:03:50" />
-    <file relUrl="wfmCrossRelat.aspx" publishTime="05/24/2012 16:35:18" />
-    <file relUrl="Siao.Master" publishTime="05/24/2012 16:32:54" />
-    <file relUrl="bin/AjaxControlToolkit.dll" publishTime="12/24/2011 17:19:20" />
+    <file relUrl="Content/graphic.png" publishTime="06/09/2012 23:25:05" />
+    <file relUrl="bin/SIAO.SRV.dll" publishTime="06/13/2012 23:31:42" />
+    <file relUrl="Logon.aspx" publishTime="04/16/2012 12:41:02" />
+    <file relUrl="Content/report.gif" publishTime="05/26/2012 22:47:18" />
     <file relUrl="Content/important.png" publishTime="04/13/2012 11:55:23" />
+    <file relUrl="Content/ssSIAO.css" publishTime="06/09/2012 23:53:20" />
+    <file relUrl="wfmCrossRelat.aspx" publishTime="05/30/2012 22:10:34" />
+    <file relUrl="Controls/wucCadastroIndices.ascx" publishTime="06/10/2012 21:06:19" />
+    <file relUrl="wfmGerarRelatorios.aspx" publishTime="06/10/2012 00:27:09" />
+    <file relUrl="bin/AjaxControlToolkit.dll" publishTime="12/24/2011 17:19:20" />
+    <file relUrl="bin/SIAO.dll" publishTime="06/13/2012 23:38:57" />
+    <file relUrl="Default.aspx" publishTime="04/09/2012 17:20:29" />
+    <file relUrl="Content/a_Logo.jpg" publishTime="04/05/2012 16:28:53" />
+    <file relUrl="wfmCadastroUsuario.aspx" publishTime="05/31/2012 00:29:44" />
+    <file relUrl="wfmBanco.aspx" publishTime="05/23/2012 13:58:35" />
+    <file relUrl="wfmCrossRelat2.aspx" publishTime="05/26/2012 22:11:11" />
+    <file relUrl="wfmRelatorios.aspx" publishTime="06/11/2012 00:30:07" />
+    <file relUrl="Content/document.png" publishTime="06/09/2012 23:25:05" />
+    <file relUrl="Content/success.png" publishTime="04/13/2012 11:55:23" />
+    <file relUrl="wfmCadastroRede.aspx" publishTime="05/31/2012 20:23:35" />
+    <file relUrl="Web.config" publishTime="06/13/2012 01:32:06" />
+    <file relUrl="bin/SIAO.pdb" publishTime="06/13/2012 23:38:57" />
+    <file relUrl="Controls/wucListaIndices.ascx" publishTime="06/10/2012 22:38:56" />
+    <file relUrl="bin/SIAO.SRV.pdb" publishTime="06/13/2012 23:31:42" />
+    <file relUrl="wfmEnvio.aspx" publishTime="05/23/2012 13:57:44" />
   </publishProfile>
-  <publishProfile publishUrl="http://localhost/RO" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="CasbrRo" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+  <publishProfile publishUrl="http://localhost/RO" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="CasbrRo" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="False">
     <file relUrl="bin/ru/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:08" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Data.dll" publishTime="04/16/2010 14:16:58" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.pdb" publishTime="04/16/2010 14:11:48" />
@@ -33,7 +38,7 @@
     <file relUrl="Siao.Master" publishTime="05/24/2012 16:32:54" />
     <file relUrl="bin/cs/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:09" />
     <file relUrl="wfmCadastroLojas.aspx" publishTime="05/31/2012 22:24:43" />
-    <file relUrl="Content/report.png" publishTime="05/26/2012 23:14:46" />
+    <file relUrl="Default.aspx" publishTime="04/09/2012 17:20:29" />
     <file relUrl="Content/graphic.png" publishTime="06/09/2012 23:25:05" />
     <file relUrl="bin/hi/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:09" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Data.xml" publishTime="04/16/2010 14:11:56" />
@@ -51,9 +56,9 @@
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.dll" publishTime="04/16/2010 14:16:58" />
     <file relUrl="bin/zh-CHS/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:08" />
     <file relUrl="bin/AjaxControlToolkit.dll" publishTime="12/24/2011 17:19:20" />
-    <file relUrl="bin/SIAO.dll" publishTime="06/13/2012 00:52:16" />
     <file relUrl="bin/fr/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:10" />
-    <file relUrl="Default.aspx" publishTime="04/09/2012 17:20:29" />
+    <file relUrl="bin/SIAO.SRV.pdb" publishTime="06/13/2012 00:52:13" />
+    <file relUrl="Controls/wucListaIndices.ascx" publishTime="06/10/2012 22:38:56" />
     <file relUrl="bin/Microsoft.Practices.Unity.dll" publishTime="04/16/2010 13:42:32" />
     <file relUrl="Content/a_Logo.jpg" publishTime="04/05/2012 16:28:53" />
     <file relUrl="bin/he/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:08" />
@@ -74,13 +79,13 @@
     <file relUrl="Web.config" publishTime="06/13/2012 00:53:04" />
     <file relUrl="bin/SIAO.pdb" publishTime="06/13/2012 00:52:16" />
     <file relUrl="bin/Microsoft.Practices.Unity.Interception.pdb" publishTime="04/16/2010 13:42:32" />
-    <file relUrl="Controls/wucListaIndices.ascx" publishTime="06/10/2012 22:38:56" />
+    <file relUrl="bin/SIAO.dll" publishTime="06/13/2012 00:52:16" />
     <file relUrl="bin/ar/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:09" />
     <file relUrl="bin/it/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:10" />
     <file relUrl="bin/ko/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:10" />
     <file relUrl="bin/ja/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:08" />
     <file relUrl="bin/pt/AjaxControlToolkit.resources.dll" publishTime="05/31/2012 22:42:08" />
-    <file relUrl="bin/SIAO.SRV.pdb" publishTime="06/13/2012 00:52:13" />
+    <file relUrl="Content/report.png" publishTime="05/26/2012 23:14:46" />
     <file relUrl="wfmEnvio.aspx" publishTime="05/23/2012 13:57:44" />
   </publishProfile>
 </publishData>
