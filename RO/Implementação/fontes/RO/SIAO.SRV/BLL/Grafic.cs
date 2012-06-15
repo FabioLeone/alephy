@@ -79,5 +79,10 @@ namespace SIAO.SRV.BLL
         }
 
         #endregion
+
+        public static object GetIndicesById(int intId, string strConnection)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
