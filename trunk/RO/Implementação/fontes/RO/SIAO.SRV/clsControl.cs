@@ -2,7 +2,6 @@
 using System.Data;
 using System.Xml;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using System.Text;
 using SIAO.SRV.TO;
@@ -475,11 +474,9 @@ namespace SIAO.SRV
                     if (oDB.openConnection(cmm))
                     {
                         cmm.CommandText = "SELECT arquivosenviados.id FROM arquivosenviados"
-                            + " WHERE arquivosenviados.cnpj = @cnpj' AND arquivosenviados.mes = @mes AND arquivosenviados.ano = @ano";
-                        cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@cnpj", MySqlDbType.String).Value = dt.Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@mes", MySqlDbType.Int32).Value = dt.Rows[0][2];
-                        cmm.Parameters.Add("@ano", MySqlDbType.Int32).Value = dt.Rows[0]["ano"];
+                            + " WHERE arquivosenviados.cnpj = '" + dt.Rows[0]["cnpj"].ToString()
+                            + "' AND arquivosenviados.mes = " + dt.Rows[0][2]
+                            + " AND arquivosenviados.ano = " + dt.Rows[0]["ano"];
 
                         int id = 0;
                         if (oDB.Query(id, ref cmm) == DBNull.Value)
@@ -499,25 +496,18 @@ namespace SIAO.SRV
 
                                 cmm.CommandText = "INSERT INTO base_clientes (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
                                     + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
-                                    + " VALUES (@Razao_Social, @Cnpj, @Mes, @Ano, @Barras, @Descricao, "
-                                    + " @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
-                                cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Razao_Social", MySqlDbType.String).Value = dt.Rows[i][0].ToString().Replace("'", "''");
-                                cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = dt.Rows[i][1].ToString();
-                                cmm.Parameters.Add("@Mes", MySqlDbType.Int32).Value = dt.Rows[i][2];
-                                cmm.Parameters.Add("@Ano", MySqlDbType.Int32).Value = dt.Rows[i][3];
-                                cmm.Parameters.Add("@Barras", MySqlDbType.String).Value = dt.Rows[i][4].ToString();
-                                cmm.Parameters.Add("@Descricao", MySqlDbType.String).Value = dt.Rows[i][5].ToString().Replace("'", "''");
-                                cmm.Parameters.Add("@Fabricante", MySqlDbType.String).Value = dt.Rows[i][6].ToString().Replace("'", "''");
-                                cmm.Parameters.Add("@Quantidade", MySqlDbType.Int32).Value = dt.Rows[i][9];
-                                cmm.Parameters.Add("@Valor_Bruto", MySqlDbType.Decimal).Value = svb;
-                                cmm.Parameters.Add("@Valor_Liquido", MySqlDbType.Decimal).Value = svl;
-                                cmm.Parameters.Add("@Valor_Desconto", MySqlDbType.Decimal).Value = svd;
+                                    + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
+                                    + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
+                                    + ", '" + dt.Rows[i][4].ToString() + "', '"
+                                    + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
+                                    + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", "
+                                    + svb + ", " + svl + ", " + svd + ")";
 
                                 oDB.Execute(ref cmm);
                             }
                         }
-                        else {
+                        else
+                        {
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 string svb = "", svl = "", svd = "";
@@ -531,28 +521,20 @@ namespace SIAO.SRV
                                 svd = dt.Rows[i][12].ToString().Replace(".", "");
                                 svd = svd.Replace(",", ".");
 
-                                cmm.CommandText = "UPDATE base_clientes SET Razao_Social = @Razao_Social, "
-                                    + " Barras = @Barras, Descricao = @Descricao, Fabricante = @Fabricante,"
-                                    + " Quantidade = @Quantidade, Valor_Bruto = @Valor_Bruto, Valor_Liquido = @Valor_Liquido,"
-                                    + " Valor_Desconto = @Valor_Desconto WHERE Cnpj = @Cnpj AND Mes = @Mes"
-                                    + " AND Ano = @Ano";
-                                cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Razao_Social", MySqlDbType.String).Value = dt.Rows[i][0].ToString().Replace("'", "''");
-                                cmm.Parameters.Add("@Barras", MySqlDbType.String).Value = dt.Rows[i][4].ToString();
-                                cmm.Parameters.Add("@Descricao", MySqlDbType.String).Value = dt.Rows[i][5].ToString().Replace("'", "''");
-                                cmm.Parameters.Add("@Fabricante", MySqlDbType.String).Value = dt.Rows[i][6].ToString().Replace("'", "''");
-                                cmm.Parameters.Add("@Quantidade", MySqlDbType.Int32).Value = dt.Rows[i][9];
-                                cmm.Parameters.Add("@Valor_Bruto", MySqlDbType.Decimal).Value = svb;
-                                cmm.Parameters.Add("@Valor_Liquido", MySqlDbType.Decimal).Value = svl;
-                                cmm.Parameters.Add("@Valor_Desconto", MySqlDbType.Decimal).Value = svd;
-                                cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = dt.Rows[i][1].ToString();
-                                cmm.Parameters.Add("@Mes", MySqlDbType.Int32).Value = dt.Rows[i][2];
-                                cmm.Parameters.Add("@Ano", MySqlDbType.Int32).Value = dt.Rows[i][3];
+                                cmm.CommandText = "UPDATE base_clientes SET Razao_Social = '"
+                                    + dt.Rows[i][0].ToString().Replace("'", "''") + "', Barras = '"
+                                    + dt.Rows[i][4].ToString() + "', Descricao = '"
+                                    + dt.Rows[i][5].ToString().Replace("'", "''") + "', Fabricante = '"
+                                    + dt.Rows[i][6].ToString().Replace("'", "''") + "', Quantidade = "
+                                    + dt.Rows[i][9] + ", Valor_Bruto = " + svb + ", Valor_Liquido = " + svl
+                                    + ", Valor_Desconto = " + svd + " WHERE Cnpj = '"
+                                    + dt.Rows[i][1].ToString() + "' AND Mes = " + dt.Rows[i][2] + " AND Ano = "
+                                    + dt.Rows[i][3];
 
                                 oDB.Execute(ref cmm);
                             }
                         }
-                        
+
                     }
                 }
                 catch (Exception ex)

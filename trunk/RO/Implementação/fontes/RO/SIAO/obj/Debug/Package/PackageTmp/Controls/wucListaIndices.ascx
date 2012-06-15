@@ -13,8 +13,10 @@
             </asp:DropDownList>
         </td>
         <td>
-            <asp:Button ID="btnFiltro" runat="server" Text="Filtrar" CssClass="leftButton gray" />
-            <asp:Button ID="btnMostrarTodos" runat="server" Text="Mostrar Todos" CssClass="rightButton gray" />
+            <asp:Button ID="btnFiltro" runat="server" Text="Filtrar" 
+                CssClass="leftButton gray" onclick="btnFiltro_Click" />
+            <asp:Button ID="btnMostrarTodos" runat="server" Text="Mostrar Todos" 
+                CssClass="rightButton gray" onclick="btnMostrarTodos_Click" />
         </td>
     </tr>
     <tr>
@@ -48,6 +50,11 @@
                     <asp:CommandField ShowDeleteButton="true" />
                 </Columns>
             </asp:GridView>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <asp:Button ID="btnNovo" runat="server" Text="Novo" onclick="btnNovo_Click" />
         </td>
     </tr>
 </table>
