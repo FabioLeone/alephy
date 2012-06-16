@@ -466,6 +466,7 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
 
             string msg = "";
+            int itest = 0;
 
             if (dt.Rows.Count > 0)
             {
@@ -473,68 +474,38 @@ namespace SIAO.SRV
                 {
                     if (oDB.openConnection(cmm))
                     {
-                        cmm.CommandText = "SELECT arquivosenviados.id FROM arquivosenviados"
-                            + " WHERE arquivosenviados.cnpj = '" + dt.Rows[0]["cnpj"].ToString()
-                            + "' AND arquivosenviados.mes = " + dt.Rows[0][2]
-                            + " AND arquivosenviados.ano = " + dt.Rows[0]["ano"];
+                        cmm.CommandText = "DELETE FROM base_clientes"
+                            + " WHERE Cnpj = '" + dt.Rows[0]["cnpj"].ToString()
+                            + "' AND Mes = " + dt.Rows[0][2]
+                            + " AND Ano = " + dt.Rows[0]["ano"];
 
-                        int id = 0;
-                        if (oDB.Query(id, ref cmm) == DBNull.Value)
+                        for (int i = 0; i < dt.Rows.Count; i++)
                         {
-                            for (int i = 0; i < dt.Rows.Count; i++)
-                            {
-                                string svb = "", svl = "", svd = "";
+                            string svb = "", svl = "", svd = "";
 
-                                svb = dt.Rows[i][10].ToString().Replace(".", "");
-                                svb = svb.Replace(",", ".");
+                            svb = dt.Rows[i][10].ToString().Replace(".", "");
+                            svb = svb.Replace(",", ".");
 
-                                svl = dt.Rows[i][11].ToString().Replace(".", "");
-                                svl = svl.Replace(",", ".");
+                            svl = dt.Rows[i][11].ToString().Replace(".", "");
+                            svl = svl.Replace(",", ".");
 
-                                svd = dt.Rows[i][12].ToString().Replace(".", "");
-                                svd = svd.Replace(",", ".");
+                            svd = dt.Rows[i][12].ToString().Replace(".", "");
+                            svd = svd.Replace(",", ".");
 
-                                cmm.CommandText = "INSERT INTO base_clientes (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
-                                    + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
-                                    + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
-                                    + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
-                                    + ", '" + dt.Rows[i][4].ToString() + "', '"
-                                    + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
-                                    + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", "
-                                    + svb + ", " + svl + ", " + svd + ")";
+                            cmm.CommandText = string.Empty;
+                            cmm.CommandText = "INSERT INTO base_clientes (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
+                                + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
+                                + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
+                                + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
+                                + ", '" + dt.Rows[i][4].ToString() + "', '"
+                                + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
+                                + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", "
+                                + svb + ", " + svl + ", " + svd + ")";
 
-                                oDB.Execute(ref cmm);
-                            }
+                            itest = i;
+
+                            oDB.Execute(ref cmm);
                         }
-                        else
-                        {
-                            for (int i = 0; i < dt.Rows.Count; i++)
-                            {
-                                string svb = "", svl = "", svd = "";
-
-                                svb = dt.Rows[i][10].ToString().Replace(".", "");
-                                svb = svb.Replace(",", ".");
-
-                                svl = dt.Rows[i][11].ToString().Replace(".", "");
-                                svl = svl.Replace(",", ".");
-
-                                svd = dt.Rows[i][12].ToString().Replace(".", "");
-                                svd = svd.Replace(",", ".");
-
-                                cmm.CommandText = "UPDATE base_clientes SET Razao_Social = '"
-                                    + dt.Rows[i][0].ToString().Replace("'", "''") + "', Barras = '"
-                                    + dt.Rows[i][4].ToString() + "', Descricao = '"
-                                    + dt.Rows[i][5].ToString().Replace("'", "''") + "', Fabricante = '"
-                                    + dt.Rows[i][6].ToString().Replace("'", "''") + "', Quantidade = "
-                                    + dt.Rows[i][9] + ", Valor_Bruto = " + svb + ", Valor_Liquido = " + svl
-                                    + ", Valor_Desconto = " + svd + " WHERE Cnpj = '"
-                                    + dt.Rows[i][1].ToString() + "' AND Mes = " + dt.Rows[i][2] + " AND Ano = "
-                                    + dt.Rows[i][3];
-
-                                oDB.Execute(ref cmm);
-                            }
-                        }
-
                     }
                 }
                 catch (Exception ex)
