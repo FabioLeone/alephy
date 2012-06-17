@@ -13,6 +13,24 @@ namespace SIAO.Controls {
     public partial class wucListaIndices {
         
         /// <summary>
+        /// mvwIndices control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.MultiView mvwIndices;
+        
+        /// <summary>
+        /// vwIndicesList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View vwIndicesList;
+        
+        /// <summary>
         /// lblCategoria control.
         /// </summary>
         /// <remarks>
@@ -83,5 +101,14 @@ namespace SIAO.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnNovo;
+        
+        /// <summary>
+        /// vwIndicesCadastro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View vwIndicesCadastro;
     }
 }

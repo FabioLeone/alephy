@@ -7,13 +7,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table style="width:100%;">
+            <table style="width: 99%;">
                 <tr>
-                    <td style="width:50px;">
-                        <input type="button" onclick="show()" value="Editar loja." class="button gray">
-                    </td>
                     <td>
-                        <div id="loja" style="visibility: hidden;">
+                        <div id="loja">
+                            Redes:<asp:DropDownList ID="ddlEdRedes" Width="220px" runat="server">
+                            </asp:DropDownList>
+                            <asp:Button ID="btnLoadLoja" runat="server" Text=">" CssClass="button gray" 
+                                onclick="btnLoadLoja_Click" />
+                            &nbsp;
                             Loja:<asp:DropDownList ID="ddlLoja" Width="220px" runat="server" EnableViewState="true">
                             </asp:DropDownList>
                             <asp:Button ID="btnEdit" runat="server" Text="Editar" CssClass="button gray" OnClick="btnEdit_Click" />
@@ -21,34 +23,12 @@
                     </td>
                 </tr>
             </table>
-            <script type="text/javascript">
-                var browserType;
-
-                if (document.layers) { browserType = "nn4" }
-                if (document.all) { browserType = "ie" }
-                if (window.navigator.userAgent.toLowerCase().match("gecko")) {
-                    browserType = "gecko"
-                }
-
-                function show() {
-                    if (browserType == "gecko")
-                        document.poppedLayer =
-         eval('document.getElementById("loja")');
-                    else if (browserType == "ie")
-                        document.poppedLayer =
-        eval('document.getElementById("loja")');
-                    else
-                        document.poppedLayer =
-         eval('document.layers["loja"]');
-                    document.poppedLayer.style.visibility = "visible";
-                }
-            </script>
             <fieldset style="width: 96.5%;">
                 <legend>
                     <h2>
                         Cadastro de Lojas</h2>
                 </legend>
-                <div id="divForm" style="height: 330px; width: 100%;">
+                <div id="divForm" style="min-height: 330px; width: 100%;">
                     <table>
                         <tr>
                             <td style="width: 140px; text-align: right;">
@@ -69,13 +49,18 @@
                                 Proprietário:
                             </td>
                             <td colspan="2">
-                                <asp:TextBox Width="255px" ID="txtProprietario" runat="server"></asp:TextBox>
+                                <asp:DropDownList ID="ddlProprietario" Width="246px" runat="server">
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="rfvProprietario" ControlToValidate="ddlProprietario"
+                                    runat="server" ErrorMessage="Selecione o Proprietário" ForeColor="Red" ToolTip="Selecione o Proprietário"
+                                    ValidationGroup="Cadastro">*</asp:RequiredFieldValidator>
                             </td>
                             <td style="text-align: right;">
                                 Gerente:
                             </td>
                             <td colspan="2">
-                                <asp:TextBox Width="255px" ID="txtGerente" runat="server"></asp:TextBox>
+                                <asp:DropDownList ID="ddlGerente" Width="246px" runat="server">
+                                </asp:DropDownList>
                             </td>
                         </tr>
                         <tr>
@@ -200,13 +185,17 @@
                         </tr>
                         <tr>
                             <td colspan="4" style="text-align: right;">
-                                <asp:Button ID="btnSave" CssClass="button gray" ToolTip="Salvar as informações da loja."
+                                <asp:Button ID="btnSave" CssClass="rightButton gray" ValidationGroup="Cadastro" ToolTip="Salvar as informações da loja."
                                     runat="server" Text="Salvar" OnClick="btnSave_Click" />
+                                <asp:Button ID="btnLimpar" CssClass="LeftButton gray" runat="server" Text="Limpar"
+                                    ToolTip="Limpa todos os campos" OnClick="btnLimpar_Click" />
                             </td>
                         </tr>
                     </table>
                 </div>
             </fieldset>
+            <asp:ValidationSummary ID="vsCadastro" ValidationGroup="Cadastro" CssClass="vsError"
+                runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

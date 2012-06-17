@@ -62,12 +62,6 @@ namespace SIAO.SRV
                             + acs + "','"+ nme +"')";
 
                         oDB.Execute(ref cmm);
-
-                        cmm.CommandText = "INSERT INTO usuarios_farmacias"
-                            +" (UserId, FarmaciaId)"
-                            +" VALUES ("+ id +", "+ clsUser.FarmaciaId +")";
-
-                        oDB.Execute(ref cmm);
                     }
                     else { msg = "Usuário já cadastrado."; }
                 }
@@ -198,9 +192,9 @@ namespace SIAO.SRV
             scnpj = scnpj.Replace("/", "");
             scnpj = scnpj.Replace("-", "");
 
-            cmm.CommandText = "INSERT INTO farmacias (Proprietario, Gerente, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero, Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, "
+            cmm.CommandText = "INSERT INTO farmacias (ProprietarioId, GerenteId, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero, Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, "
                 +" Msn, Ativo, idRede)"
-                +" VALUES ('"+ ol.Proprietario +"', '"+ ol.Gerente +"', '"+ ol.Email +"', '"+ ol.Email2 +"', '"
+                +" VALUES ("+ ol.ProprietarioId +", "+ ol.GerenteId +", '"+ ol.Email +"', '"+ ol.Email2 +"', '"
                 + ol.NomeFantasia +"', '"+ ol.Razao +"', '"+ scnpj +"', '"+ ol.Endereco +"', '"+ ol.EndNumero
                 +"', '"+ ol.Bairro +"', '"+ ol.Complemento +"', '"+ ol.Cidade +"', '"+ ol.Uf +"', '"+ ol.Fone 
                 +"', '"+ ol.Fone2 +"', '"+ ol.Celular +"', '"+ ol.Site +"', '"+ ol.Skype +"', "
@@ -232,8 +226,8 @@ namespace SIAO.SRV
             scnpj = scnpj.Replace("/", "");
             scnpj = scnpj.Replace("-", "");
 
-            cmm.CommandText = "UPDATE farmacias SET Proprietario = '" + clsLoja.Proprietario + "', Gerente = '"
-                + clsLoja.Gerente + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2
+            cmm.CommandText = "UPDATE farmacias SET ProprietarioId = " + clsLoja.ProprietarioId 
+                + ", GerenteId = " + clsLoja.GerenteId + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2
                 + "', NomeFantasia = '" + clsLoja.NomeFantasia + "', RazaoSocial = '" + clsLoja.Razao
                 + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
                 + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '"
@@ -385,6 +379,24 @@ namespace SIAO.SRV
             }
             oDB.closeConnection(cmm);
             
+            return ds;
+        }
+
+        public object GetFarmaciasByRedeId(string scn, string redeId)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection cnn = new MySqlConnection(scn);
+
+            cmm.Connection = cnn;
+            cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
+            cmm.CommandText += " WHERE idRede = " + redeId;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            oDB.closeConnection(cmm);
+
             return ds;
         }
 
@@ -577,7 +589,6 @@ namespace SIAO.SRV
                 SQL += ano;
             }
 
-
             if (clsUser.Access == "nvg")
             {
                 cmm.CommandText += "SELECT"
@@ -622,7 +633,7 @@ namespace SIAO.SRV
                     + " usuarios_farmacias"
                     + " INNER JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
                     + " INNER JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
-                    + " WHERE memberships.UserId = @UserId";
+                    + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
                 cmm.Parameters.Clear();
                 cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
 
@@ -801,11 +812,6 @@ namespace SIAO.SRV
                             + "' WHERE UserId = "+ clsUser.UserId;
 
                         oDB.Execute(ref cmm);
-
-                        cmm.CommandText = "UPDATE usuarios_farmacias SET FarmaciaId = " + clsUser.FarmaciaId 
-                            + " WHERE UserId = "+ clsUser.UserId;
-
-                        oDB.Execute(ref cmm);
                 }
             }
             catch (Exception ex)
@@ -840,7 +846,6 @@ namespace SIAO.SRV
 
             return r;
         }
-
 
         public Loja GetLojaEdit(string scn, string p)
         {

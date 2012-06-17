@@ -55,7 +55,8 @@ namespace SIAO.SRV.DAL
 
                 msc.Open();
 
-                using (IDataReader drdUsers = cmdUsers.ExecuteReader()) {
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
+                {
                     while (drdUsers.Read())
                     {
                         clsUsers.Add(Load(drdUsers));
@@ -70,7 +71,8 @@ namespace SIAO.SRV.DAL
             return clsUsers;
         }
 
-        public static UsersTO GetById(int intUserId, string strConnection) {
+        public static UsersTO GetById(int intUserId, string strConnection)
+        {
             UsersTO clsUsers = new UsersTO();
 
             MySqlConnection msc = new MySqlConnection(strConnection);
@@ -190,11 +192,64 @@ namespace SIAO.SRV.DAL
             return clsUsers;
         }
 
+        internal static List<UsersTO> GetByAccessType(string strAccess, string strConnection)
+        {
+            List<UsersTO> clsUsers = new List<UsersTO>();
+
+            MySqlConnection msc = new MySqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,");
+                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
+                strSQL.Append(" memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId");
+                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
+                strSQL.Append(" WHERE memberships.Access=@Access");
+                strSQL.Append(" ORDER BY users.UserName");
+
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+
+                cmdUsers.Parameters.Clear();
+
+                switch (strAccess)
+                {
+                    case "gerente":
+                        cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript("nvg")));
+                        break;
+                    case "proprietario":
+                        cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript("nvp")));
+                        break;
+                    case "administrador":
+                        cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript("adm")));
+                        break;
+                }
+                
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
+                {
+                    while (drdUsers.Read())
+                    {
+                        clsUsers.Add(Load(drdUsers));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsUsers;
+        }
+
         #endregion
 
         #region .: Persistence :.
 
-        public static UsersTO Insert(UsersTO clsUsers, string strConnection) {
+        public static UsersTO Insert(UsersTO clsUsers, string strConnection)
+        {
             MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
@@ -320,7 +375,8 @@ namespace SIAO.SRV.DAL
             }
         }
 
-        public static Boolean Delete(UsersTO clsUsers, string strConnection) {
+        public static Boolean Delete(UsersTO clsUsers, string strConnection)
+        {
             MySqlConnection msc = new MySqlConnection(strConnection);
 
             try
@@ -361,7 +417,8 @@ namespace SIAO.SRV.DAL
             {
                 return false;
             }
-            finally {
+            finally
+            {
                 msc.Close();
             }
         }

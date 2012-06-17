@@ -22,6 +22,24 @@ namespace SIAO {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
+        /// ddlEdRedes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEdRedes;
+        
+        /// <summary>
+        /// btnLoadLoja control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLoadLoja;
+        
+        /// <summary>
         /// ddlLoja control.
         /// </summary>
         /// <remarks>
@@ -58,22 +76,31 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.TextBox txtRazao;
         
         /// <summary>
-        /// txtProprietario control.
+        /// ddlProprietario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProprietario;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProprietario;
         
         /// <summary>
-        /// txtGerente control.
+        /// rfvProprietario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGerente;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProprietario;
+        
+        /// <summary>
+        /// ddlGerente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlGerente;
         
         /// <summary>
         /// txtEmail control.
@@ -245,5 +272,23 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
+        
+        /// <summary>
+        /// btnLimpar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimpar;
+        
+        /// <summary>
+        /// vsCadastro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary vsCadastro;
     }
 }

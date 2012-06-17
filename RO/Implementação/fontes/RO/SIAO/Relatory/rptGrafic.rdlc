@@ -56,37 +56,32 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Label>Liquido</Label>
-            </ChartMember>
-          </ChartMembers>
-        </ChartCategoryHierarchy>
-        <ChartSeriesHierarchy>
-          <ChartMembers>
-            <ChartMember>
-              <Group Name="Chart2_SeriesGroup1">
+              <Group Name="Chart2_CategoryGroup1">
                 <GroupExpressions>
                   <GroupExpression>=Fields!Grupo.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
               <ChartMembers>
                 <ChartMember>
-                  <Group Name="Chart2_SeriesGroup2">
+                  <Group Name="Chart2_CategoryGroup2">
                     <GroupExpressions>
                       <GroupExpression>=Fields!Sub_Consultoria.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
-                  <ChartMembers>
-                    <ChartMember>
-                      <Label>Liquido</Label>
-                    </ChartMember>
-                    <ChartMember>
-                      <Label>Desconto</Label>
-                    </ChartMember>
-                  </ChartMembers>
                   <Label>=Fields!Sub_Consultoria.Value</Label>
                 </ChartMember>
               </ChartMembers>
               <Label>=Fields!Grupo.Value</Label>
+            </ChartMember>
+          </ChartMembers>
+        </ChartCategoryHierarchy>
+        <ChartSeriesHierarchy>
+          <ChartMembers>
+            <ChartMember>
+              <Label>Liquido</Label>
+            </ChartMember>
+            <ChartMember>
+              <Label>Desconto</Label>
             </ChartMember>
           </ChartMembers>
         </ChartSeriesHierarchy>
@@ -165,7 +160,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Axis Title</Caption>
+                  <Caption>Grupo / Sub Grupo</Caption>
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>
@@ -234,7 +229,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Axis Title</Caption>
+                  <Caption>Percentual de aproveitamento</Caption>
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>
@@ -346,8 +341,8 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <Height>7.6797cm</Height>
-        <Width>16.51cm</Width>
+        <Height>11.38387cm</Height>
+        <Width>21.06083cm</Width>
         <Style>
           <Border>
             <Color>LightGrey</Color>
@@ -358,10 +353,10 @@
         </Style>
       </Chart>
     </ReportItems>
-    <Height>3.0235in</Height>
+    <Height>4.48184in</Height>
     <Style />
   </Body>
-  <Width>6.5in</Width>
+  <Width>8.29167in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

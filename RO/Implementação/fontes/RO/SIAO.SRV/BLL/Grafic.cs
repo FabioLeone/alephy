@@ -11,15 +11,11 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static List<GraficTO> GraficList(int intMes, string strConnection)
+        public static List<GraficTO> GraficList(int intMes, UsersTO clsUsers, string strConnection)
         {
             List<GraficTO> clsList = new List<GraficTO>();
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, strConnection);
+            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, clsUsers, strConnection);
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll(strConnection);
-
-            clsGrafic.ForEach(delegate(GraficTO _Grafic) { 
-            
-            });
 
             decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
 
@@ -30,13 +26,13 @@ namespace SIAO.SRV.BLL
                             Sub_Consultoria = _Grafic.Sub_Consultoria,
                             Razao_Social = _Grafic.Razao_Social,
                             Mes = _Grafic.Mes,
-                            Liquido = ((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100,
+                            Liquido = ((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda),
                             Grupo = _Grafic.Grupo,
                             Desconto = (_Grafic.Desconto / _IndicesGrafic.desconto)
                         });
                     }
                 });
-                if (_Grafic.Grupo == "zzzzzz") { clsList.Add(_Grafic); }  
+                //if (_Grafic.Grupo == "zzzzzz") { clsList.Add(_Grafic); }  
             });
 
             return clsList;
@@ -46,8 +42,9 @@ namespace SIAO.SRV.BLL
         
         #region .: Search :.
 
-        public static List<GraficTO> GetGraficMes(int intMes, string strConnection) {
-            return GraficDAL.GetGraficMes(intMes, strConnection);
+        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUsers, string strConnection)
+        {
+            return GraficDAL.GetGraficMes(intMes, clsUsers, strConnection);
         }
 
         public static TotaisGraficMesTO GetTotalMes(int intMes, string strConnection)

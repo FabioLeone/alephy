@@ -40,33 +40,6 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.Button btnEdit;
         
         /// <summary>
-        /// ddlFarmacia control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFarmacia;
-        
-        /// <summary>
-        /// lblF control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblF;
-        
-        /// <summary>
-        /// hl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hl;
-        
-        /// <summary>
         /// txtNome control.
         /// </summary>
         /// <remarks>
@@ -209,5 +182,14 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
+        
+        /// <summary>
+        /// btnLimpar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimpar;
     }
 }

@@ -30,7 +30,7 @@ namespace SIAO
 
         private void loadRelat(List<GraficTO> clsGrafic, UsersTO clsUser)
         {
-            if (clsGrafic.Count == 0) { clsGrafic = GraficBLL.GraficList(DateTime.Now.Month, strConnection); }
+            if (clsGrafic.Count == 0) { clsGrafic = GraficBLL.GraficList(DateTime.Now.Month, clsUser, strConnection); }
 
             Microsoft.Reporting.WebForms.ReportDataSource Rds = new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", clsGrafic);
             ReportViewer1.Reset();

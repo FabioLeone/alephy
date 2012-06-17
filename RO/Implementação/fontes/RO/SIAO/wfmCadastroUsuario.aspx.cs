@@ -23,11 +23,9 @@ namespace SIAO
 
             if (!IsPostBack)
             {
-                getFarmacias();
                 getUsers();
             }
-            ddlFarmacia.Focus();
-
+            txtNome.Focus();
         }
 
         private void getUsers()
@@ -46,25 +44,8 @@ namespace SIAO
             }
         }
 
-        private void getFarmacias()
-        {
-            DataSet ds = new DataSet();
-            ds = oCtl.GetFarmacias(scn);
-
-            if (ds.Tables.Count > 0)
-            {
-                ddlFarmacia.DataSource = ds.Tables[0];
-                ddlFarmacia.DataValueField = ds.Tables[0].Columns[0].ToString();
-                ddlFarmacia.DataTextField = ds.Tables[0].Columns[1].ToString();
-                ddlFarmacia.DataBind();
-                ddlFarmacia.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-                ddlFarmacia.SelectedIndex = 0;
-            }
-        }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (lblF.Visible) { lblF.Visible = false; }
             if (txtNome.Text == "")
             {
                 if (lblAN.Visible) { lblAN.Visible = false; }
@@ -94,17 +75,6 @@ namespace SIAO
             }
             else if (txtValidade.Text != "")
             {
-                if (ddlFarmacia.SelectedValue == "")
-                {
-                    if (rblAccess.SelectedValue == "nvp")
-                    {
-                        if (lblF.Visible) { lblF.Text = "*"; } else { lblF.Text = "*"; lblF.Visible = true; }
-
-                        divErro("Selecione uma farmacia, se necessário, cadastre uma farmacia primeiro.");
-                        return;
-                    }
-                }
-
                 if (lblS.Visible) { lblS.Visible = false; }
                 if (txtSenha.Text == txtCfrSenha.Text)
                 {
@@ -135,24 +105,12 @@ namespace SIAO
                         clsUser.UserName = txtNome.Text;
                         clsUser.Password = txtSenha.Text;
                         clsUser.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
-                        if (ddlFarmacia.SelectedValue != "")
-                        {
-                            clsUser.FarmaciaId = Convert.ToInt16(ddlFarmacia.SelectedValue);
-                        }
-                        else {
-                            clsUser.FarmaciaId = 0;
-                        }
-
+                        
                         msg = oCtl.UpdateUser(clsUser, scn);
                         ed = true;
                     }
                     else
                     {
-                        int intFarmaciaId = 0;
-                        if (ddlFarmacia.SelectedValue != "") { 
-                            intFarmaciaId = Convert.ToInt16(ddlFarmacia.SelectedValue);
-                        }
-
                         clsUser = new UsersTO()
                         {
                             Access = rblAccess.SelectedValue,
@@ -163,7 +121,6 @@ namespace SIAO
                             UserName = txtNome.Text,
                             Password = txtSenha.Text,
                             ExpirationDate = Convert.ToDateTime(txtValidade.Text),
-                            FarmaciaId = intFarmaciaId
                         };
                         msg = oCtl.AddUser(clsUser, scn);
                     }
@@ -177,7 +134,6 @@ namespace SIAO
                         clear();
 
                         if (ed) { div("Alterações salvas com sucesso."); } else { div("Usuário cadastrado com sucesso."); }
-
                     }
                 }
                 else
@@ -201,8 +157,8 @@ namespace SIAO
             txtValidade.Text = "";
             txtCfrSenha.Text = "";
             txtEmail.Text = "";
-            ddlFarmacia.SelectedIndex = 0;
             Session["editU"] = null;
+            ddlUser.SelectedIndex = 0;
         }
 
         private void div(string msg)
@@ -236,14 +192,6 @@ namespace SIAO
             if (clsUser.UserId > 0)
             {
                 cbxAtivo.Checked = (bool)(clsUser.Inactive.ToString().ToUpper() == "FALSE" ? true : false);
-                try
-                {
-                    ddlFarmacia.SelectedValue = clsUser.FarmaciaId == 0 ? String.Empty : clsUser.FarmaciaId.ToString();
-                }
-                finally
-                {
-
-                }
                 txtAcsName.Text = clsUser.Name;
                 txtEmail.Text = clsUser.Email;
                 txtNome.Text = clsUser.UserName;
@@ -251,6 +199,11 @@ namespace SIAO
                 rblAccess.SelectedValue = clsUser.Access;
                 Session["editU"] = clsUser.UserId;
             }
+        }
+
+        protected void btnLimpar_Click(object sender, EventArgs e)
+        {
+            clear();   
         }
     }
 }
