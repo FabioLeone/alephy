@@ -76,6 +76,10 @@ namespace SIAO.SRV.BLL
             return UsersDAL.GetByName(strNome, strConnection);
         }
 
+        public static List<UsersTO> GetByAccessType(string strAccess, string strConnection)
+        {
+            return UsersDAL.GetByAccessType(strAccess, strConnection);
+        }
         #endregion
 
         #region .: Persistence :.

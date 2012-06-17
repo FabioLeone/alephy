@@ -1,10 +1,10 @@
 ﻿#divHome
 {
-    background-image:url(a_Logo.jpg);
-    background-position:center;
-    background-repeat:no-repeat;
-    width:100%;
-    height:450px;
+    background-image: url(a_Logo.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 450px;
 }
 
 #frmLogon
@@ -30,11 +30,11 @@
 
 .blue
 {
-    color:#fff;
-    border-top-color:#8888ff;
-    border-left-color:#7777ff;
-    border-right-color:#5555ff;
-    border-bottom-color:#0000ee;
+    color: #fff;
+    border-top-color: #8888ff;
+    border-left-color: #7777ff;
+    border-right-color: #5555ff;
+    border-bottom-color: #0000ee;
     background: #0000FF;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#5555ff, endColorstr=#0000FF);
     background: -webkit-gradient(linear, left top, left bottom, from(#5555ff), to(#0000FF));
@@ -43,11 +43,11 @@
 
 .blue:active
 {
-    color:#fff;
-    border-top-color:#0000ee;
-    border-left-color:#5555ff;
-    border-right-color:#7777ff;
-    border-bottom-color:#8888ff;
+    color: #fff;
+    border-top-color: #0000ee;
+    border-left-color: #5555ff;
+    border-right-color: #7777ff;
+    border-bottom-color: #8888ff;
     background: #5555ff;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#0000FF, endColorstr=#5555ff);
     background: -webkit-gradient(linear, left top, left bottom, from(#0000FF), to(#5555ff));
@@ -56,7 +56,7 @@
 
 .gray
 {
-    color:#666;
+    color: #666;
     border-top-color: #888;
     border-left-color: #777;
     border-right-color: #555;
@@ -68,7 +68,7 @@
 
 .gray:active
 {
-    color:#666;
+    color: #666;
     border-top-color: #888;
     border-left-color: #777;
     border-right-color: #555;
@@ -80,9 +80,9 @@
 
 .logoff
 {
-    float:right;
-    margin-top:2.5%;
-    margin-right:1%;
+    float: right;
+    margin-top: 2.5%;
+    margin-right: 1%;
 }
 
 fieldset
@@ -101,7 +101,7 @@ header
     margin: 42px 10% 0 10%;
     padding-top: 10px;
     padding-left: 20px;
-    border-radius:4pt 4pt 0 0;
+    border-radius: 4pt 4pt 0 0;
 }
 
 header h1, header p
@@ -122,172 +122,192 @@ header p
 
 nav
 {
-    float:left;
-    margin-top:-0.9px;
-    margin-left:-7.6%;
+    float: left;
+    margin-top: -0.9px;
+    margin-left: -7.6%;
     width: 190px;
-	font-size: 12px;
+    font-size: 12px;
 }
 
-nav ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+nav ul
+{
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-nav li {
-	padding: 0 0 20px 0;
+nav li
+{
+    padding: 0 0 20px 0;
 }
 
-nav li h2 {
-	height: 30px;
-	margin: 0 0 0 0;
-	padding: 0px 15px 0px 15px;
-	background: #2222ff;
-	letter-spacing: -1px;
-	font-size: 22px;
-	color: #FFFFFF;
+nav li h2
+{
+    height: 30px;
+    margin: 0 0 0 0;
+    padding: 0px 15px 0px 15px;
+    background: #2222ff;
+    letter-spacing: -1px;
+    font-size: 22px;
+    color: #FFFFFF;
 }
 
-nav li ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+nav li ul
+{
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-nav li ul li {
-	display: inline;
+nav li ul li
+{
+    display: inline;
 }
 
-nav li ul li a {
-	display: block;
-	margin: 0;
-	padding: 2px 2px 0 16px;
-	text-decoration: none;
-	text-transform: capitalize;
-	background-color:#8888ff;
-	font-size: 14px;
-	color: #FFFFFF;
+nav li ul li a
+{
+    display: block;
+    margin: 0;
+    padding: 2px 2px 0 16px;
+    text-decoration: none;
+    text-transform: capitalize;
+    background-color: #8888ff;
+    font-size: 14px;
+    color: #FFFFFF;
 }
 
-h1, h2, h3 {
-	margin-top: 0;
-	color: #19000c;
-	font-family:Raavi;
+h1, h2, h3
+{
+    margin-top: 0;
+    color: #19000c;
+    font-family: Raavi;
 }
 
-h2 {
-	font-size: 1.2em;
+h2
+{
+    font-size: 1.2em;
 }
 
 a
 {
-    font-family:Raavi;
-    font-size:0.8em;
+    font-family: Raavi;
+    font-size: 0.8em;
 }
 
 section
 {
-    margin-left:24.12%;
-    border:1px solid blue;
-    border-radius:0 0 4pt 0;
-    min-height:466px;
-    width:67.3%;
-    border-left-color:#6666ff;
-    font-family:Raavi;
+    margin-left: 24.12%;
+    border: 1px solid blue;
+    border-radius: 0 0 4pt 0;
+    min-height: 472px;
+    width: 67.3%;
+    border-left-color: #6666ff;
+    font-family: Raavi;
 }
 
 .success
 {
-    border:1px solid;
-    margin:10px 0px;
-    padding:1px 10px 10px 12px;
-    color:#4f8a10;
-    background:#dff2bf url(success.png) no-repeat 5px center;
-    width:310px;
-    height:45px;
-    margin-left:3%;
-    vertical-align:middle;
-    text-align:right;
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 1px 10px 10px 12px;
+    color: #4f8a10;
+    background: #dff2bf url(success.png) no-repeat 5px center;
+    width: 310px;
+    height: 45px;
+    margin-left: 3%;
+    vertical-align: middle;
+    text-align: right;
 }
 
 .error
 {
-    border:1px solid;
-    margin:10px 0px;
-    padding:1px 10px 10px 55px;
-    color:#d8000c;
-    background:#ffbaba url(important.png) no-repeat 5px center;
-    max-width:85%;
-    height:45px;
-    margin-left:3%;
-    vertical-align:middle;
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 1px 10px 10px 55px;
+    color: #d8000c;
+    background: #ffbaba url(important.png) no-repeat 5px center;
+    max-width: 85%;
+    height: 45px;
+    margin-left: 3%;
+    vertical-align: middle;
+}
+
+.vsError
+{
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 1px 10px 10px 55px;
+    color: #d8000c;
+    background: #ffbaba url(important.png) no-repeat 5px center;
+    vertical-align: middle;
 }
 
 .relat
 {
-    margin-left:10%;
-    border:1px solid blue;
-    border-radius:0 0 4pt 4pt;
-    width:80%;
-    border-left-color:#6666ff;
-    font-family:Raavi;
-    height:840px;
+    margin-left: 10%;
+    border: 1px solid blue;
+    border-radius: 0 0 4pt 4pt;
+    width: 80%;
+    border-left-color: #6666ff;
+    font-family: Raavi;
+    height: 840px;
 }
 
-.back
+.LeftButton
 {
-    float:right;
-    margin-top:2.5%;
+    border: 1px solid;
+    float: right;
+    margin-top: 2.5%;
     border-radius: 8pt 0 0 8pt;
-    margin-right:-1px;
+    margin-right: -1px;
 }
 
 .rightButton
 {
-    float:right;
-    margin-top:2.5%;
-    margin-right:1%;
-    margin-left:-1px;
-    border-radius:0 8pt 8pt 0;
+    border: 1px solid;
+    float: right;
+    margin-top: 2.5%;
+    margin-right: 1%;
+    margin-left: -1px;
+    border-radius: 0 8pt 8pt 0;
 }
 
 #edUser
 {
-    float:left;
-    margin-left:1px;
-    position:relative;
-    width:200px;
+    float: left;
+    margin-left: 1px;
+    position: relative;
+    width: 200px;
 }
 
 .imgBtn
 {
-    height:70px;
-    width:52px;
-    text-align:center;
+    height: 70px;
+    width: 52px;
+    text-align: center;
 }
 
 .iconList
 {
-    list-style-type:none;
+    list-style-type: none;
 }
 
 .iconList li
 {
-    margin-left:18px;
-    float:left;
+    margin-left: 18px;
+    float: left;
 }
 
 #edRede
 {
-    float:left;
-    margin-left:1px;
-    position:relative;
-    width:200px;
+    float: left;
+    margin-left: 1px;
+    position: relative;
+    width: 200px;
 }
 
 #loja
 {
-    width:50%;
-    height:30px;
+    width: 100%;
+    height: 30px;
 }

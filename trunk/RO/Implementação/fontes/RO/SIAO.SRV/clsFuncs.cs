@@ -55,6 +55,7 @@ namespace SIAO.SRV
             return c;
         }
 
+        #region .: Validações :.
         public bool isEmail(string inputEmail)
         {
             string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
@@ -67,9 +68,9 @@ namespace SIAO.SRV
                 return (false);
         }
 
-
         public bool ValidaCnpj(string cnpj)
         {
+            if (cnpj.Equals("__.___.___/____-__")) { return false; }
 
             int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
@@ -143,7 +144,9 @@ namespace SIAO.SRV
         {
             if (System.IO.Path.GetExtension(arq).ToUpper() == ".DBF") { return true; } else { return false; }
         }
+        #endregion
 
+        #region .: Converções :.
         public System.Data.DataTable txtDtConvert(System.IO.Stream stream)
         {
             DataTable dt = new DataTable();
@@ -175,5 +178,7 @@ namespace SIAO.SRV
 
             return dt;
         }
+        #endregion
+
     }
 }

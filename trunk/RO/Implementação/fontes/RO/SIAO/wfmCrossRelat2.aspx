@@ -20,9 +20,10 @@
         <h1>R.O.</h1>
                 <p>
                     CasBrasil RELATÓRIO ONLINE</p>
-                    <asp:Button ID="btnLogoff" CssClass="button blue rightButton" 
+                    <asp:Button ID="btnLogoff" CssClass="rightButton blue" 
         runat="server" Text="Logoff" onclick="btnLogoff_Click" />
-                    <input type="button" onclick="window.location = 'wfmGerarRelatorios.aspx'" value="Voltar" class="button blue back" title="Voltar" />
+                    <input type="button" onclick="window.location = 'wfmGerarRelatorios.aspx'" 
+                    value="Voltar" class="LeftButton blue" title="Voltar" />
     </header>
         <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" 
             Font-Size="8pt" InteractiveDeviceInfos="(Collection)" CssClass="relat"

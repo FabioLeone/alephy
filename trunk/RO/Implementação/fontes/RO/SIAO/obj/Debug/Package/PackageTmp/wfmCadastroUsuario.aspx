@@ -21,6 +21,8 @@
                         </div>
                         <p>
                         </p>
+                        <p>
+                        </p>
                     </p>
                 </div>
             </div>
@@ -35,14 +37,11 @@
 
                 function show() {
                     if (browserType == "gecko")
-                        document.poppedLayer =
-         eval('document.getElementById("user")');
+                        document.poppedLayer = eval('document.getElementById("user")');
                     else if (browserType == "ie")
-                        document.poppedLayer =
-        eval('document.getElementById("user")');
+                        document.poppedLayer = eval('document.getElementById("user")');
                     else
-                        document.poppedLayer =
-         eval('document.layers["user"]');
+                        document.poppedLayer = eval('document.layers["user"]');
                     document.poppedLayer.style.visibility = "visible";
                 }
             </script>
@@ -51,26 +50,8 @@
                     <h2>
                         Cadastro de Usuários</h2>
                 </legend>
-                <div id="divForm" style="height: 356px; width: 366px; margin-left: 24px;">
+                <div id="divForm" style="height: 288px; width: 366px; margin-left: 24px;">
                     <table>
-                        <tr>
-                            <td>
-                                Farmacia:
-                            </td>
-                            <td>
-                                <asp:DropDownList ID="ddlFarmacia" runat="server" Width="188px">
-                                </asp:DropDownList>
-                                <asp:Label ID="lblF" runat="server" ForeColor="Red"></asp:Label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                &nbsp;
-                            </td>
-                            <td>
-                                <asp:HyperLink ID="hl" NavigateUrl="~/wfmCadastroLojas.aspx" runat="server">Cadastrar uma nova Farmacia.</asp:HyperLink>
-                            </td>
-                        </tr>
                         <tr>
                             <td>
                                 Nome:
@@ -147,8 +128,10 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: right;">
-                                <asp:Button ID="btnSave" CssClass="button gray" ToolTip="Salvar as informações do usuário."
+                                <asp:Button ID="btnSave" CssClass="rightButton gray" ToolTip="Salvar as informações do usuário."
                                     runat="server" Text="Salvar" OnClick="btnSave_Click" />
+                                <asp:Button ID="btnLimpar" runat="server" Text="Limpar" CssClass="LeftButton gray" 
+                                ToolTip="Limpar todos os campos" onclick="btnLimpar_Click" />
                             </td>
                         </tr>
                     </table>

@@ -43,12 +43,12 @@ namespace SIAO.Controls
 
         protected void btnMostrarTodos_Click(object sender, EventArgs e)
         {
-
+            LoadDados();
         }
 
         protected void btnNovo_Click(object sender, EventArgs e)
         {
-
+            mvwIndices.ActiveViewIndex = 1;
         }
         #endregion
 
@@ -73,6 +73,7 @@ namespace SIAO.Controls
             ddlGrupos.SelectedIndex = 0;
 
             gvwIndices.DataSource = clsIndicesGrafic;
+            gvwIndices.EmptyDataText = "Nenhum registro encontrado.";
             gvwIndices.DataBind();
         }
 

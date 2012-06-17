@@ -157,5 +157,10 @@ namespace SIAO
                 Session["editR"] = or.RedeId;
             }
         }
+
+        protected void btnLimpar_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
     }
 }
