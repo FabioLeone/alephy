@@ -176,7 +176,7 @@ namespace SIAO
                     clsLoja.Fone = txtFone.Text;
                     clsLoja.Fone2 = txtFone2.Text;
                     clsLoja.GerenteId = ddlGerente.SelectedValue == "0" ? 0 : Convert.ToInt32(ddlGerente.SelectedValue);
-                    clsLoja.idRede = Convert.ToInt32(ddlRede.SelectedValue);
+                    clsLoja.idRede = ddlRede.SelectedValue == "" ? 0 : Convert.ToInt32(ddlRede.SelectedValue);
                     clsLoja.Msn = txtMsn.Text;
                     clsLoja.NomeFantasia = txtNomeFantasia.Text;
                     clsLoja.ProprietarioId = ddlProprietario.SelectedValue == "0" ? 0 : Convert.ToInt32(ddlProprietario.SelectedValue);

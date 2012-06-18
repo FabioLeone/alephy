@@ -227,7 +227,7 @@ namespace SIAO.SRV
             scnpj = scnpj.Replace("-", "");
 
             cmm.CommandText = "UPDATE farmacias SET ProprietarioId = " + clsLoja.ProprietarioId 
-                + ", GerenteId = " + clsLoja.GerenteId + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2
+                + ", GerenteId = " + clsLoja.GerenteId + ", Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2
                 + "', NomeFantasia = '" + clsLoja.NomeFantasia + "', RazaoSocial = '" + clsLoja.Razao
                 + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
                 + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '"
@@ -855,7 +855,7 @@ namespace SIAO.SRV
 
             cmm.Connection = cnn;
             StringBuilder strSQL = new StringBuilder();
-            strSQL.Append("SELECT farmacias.Id, farmacias.Proprietario, farmacias.Gerente, farmacias.Email,");
+            strSQL.Append("SELECT farmacias.Id, farmacias.ProprietarioID, farmacias.GerenteId, farmacias.Email,");
             strSQL.Append(" farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,");
             strSQL.Append(" farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,");
             strSQL.Append(" farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,");
@@ -874,28 +874,28 @@ namespace SIAO.SRV
 
             if (ds.Tables.Count > 0)
             {
-                clsLoja.Id = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
-                clsLoja.Proprietario = ds.Tables[0].Rows[0]["Proprietario"].ToString();
-                clsLoja.Gerente = ds.Tables[0].Rows[0]["Gerente"].ToString();
-                clsLoja.Email = ds.Tables[0].Rows[0]["Email"].ToString();
-                clsLoja.Email2 = ds.Tables[0].Rows[0]["Email2"].ToString();
-                clsLoja.NomeFantasia = ds.Tables[0].Rows[0]["NomeFantasia"].ToString();
-                clsLoja.Razao = ds.Tables[0].Rows[0]["RazaoSocial"].ToString();
-                clsLoja.Cnpj = ds.Tables[0].Rows[0]["Cnpj"].ToString();
-                clsLoja.Endereco = ds.Tables[0].Rows[0]["Endereco"].ToString();
-                clsLoja.EndNumero = Convert.ToInt32(ds.Tables[0].Rows[0]["Numero"].ToString());
-                clsLoja.Bairro = ds.Tables[0].Rows[0]["Bairro"].ToString();
-                clsLoja.Complemento = ds.Tables[0].Rows[0]["Complemento"].ToString();
-                clsLoja.Cidade = ds.Tables[0].Rows[0]["Cidade"].ToString();
-                clsLoja.Uf = ds.Tables[0].Rows[0]["UF"].ToString();
-                clsLoja.Fone = ds.Tables[0].Rows[0]["Tel1"].ToString();
-                clsLoja.Fone2 = ds.Tables[0].Rows[0]["Tel2"].ToString();
-                clsLoja.Celular = ds.Tables[0].Rows[0]["Celular"].ToString();
-                clsLoja.Site = ds.Tables[0].Rows[0]["Site"].ToString();
-                clsLoja.Skype = ds.Tables[0].Rows[0]["Skype"].ToString();
-                clsLoja.Msn = ds.Tables[0].Rows[0]["Msn"].ToString();
-                clsLoja.Ativo = (ds.Tables[0].Rows[0]["Ativo"].ToString() == "1" ? true : false );
-                clsLoja.idRede = Convert.ToInt32(ds.Tables[0].Rows[0]["idRede"].ToString());
+                clsLoja.Id = Convert.ToInt16(ds.Tables["LojaEd"].Rows[0]["Id"].ToString());
+                clsLoja.ProprietarioId = ds.Tables["LojaEd"].Rows[0]["ProprietarioID"].ToString() == "" ? 0 : Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["ProprietarioID"].ToString());
+                clsLoja.GerenteId = ds.Tables["LojaEd"].Rows[0]["GerenteId"].ToString() == "" ? 0 : Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["GerenteId"].ToString());
+                clsLoja.Email = ds.Tables["LojaEd"].Rows[0]["Email"].ToString();
+                clsLoja.Email2 = ds.Tables["LojaEd"].Rows[0]["Email2"].ToString();
+                clsLoja.NomeFantasia = ds.Tables["LojaEd"].Rows[0]["NomeFantasia"].ToString();
+                clsLoja.Razao = ds.Tables["LojaEd"].Rows[0]["RazaoSocial"].ToString();
+                clsLoja.Cnpj = ds.Tables["LojaEd"].Rows[0]["Cnpj"].ToString();
+                clsLoja.Endereco = ds.Tables["LojaEd"].Rows[0]["Endereco"].ToString();
+                clsLoja.EndNumero = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["Numero"].ToString());
+                clsLoja.Bairro = ds.Tables["LojaEd"].Rows[0]["Bairro"].ToString();
+                clsLoja.Complemento = ds.Tables["LojaEd"].Rows[0]["Complemento"].ToString();
+                clsLoja.Cidade = ds.Tables["LojaEd"].Rows[0]["Cidade"].ToString();
+                clsLoja.Uf = ds.Tables["LojaEd"].Rows[0]["UF"].ToString();
+                clsLoja.Fone = ds.Tables["LojaEd"].Rows[0]["Tel1"].ToString();
+                clsLoja.Fone2 = ds.Tables["LojaEd"].Rows[0]["Tel2"].ToString();
+                clsLoja.Celular = ds.Tables["LojaEd"].Rows[0]["Celular"].ToString();
+                clsLoja.Site = ds.Tables["LojaEd"].Rows[0]["Site"].ToString();
+                clsLoja.Skype = ds.Tables["LojaEd"].Rows[0]["Skype"].ToString();
+                clsLoja.Msn = ds.Tables["LojaEd"].Rows[0]["Msn"].ToString();
+                clsLoja.Ativo = (ds.Tables["LojaEd"].Rows[0]["Ativo"].ToString() == "1" ? true : false);
+                clsLoja.idRede = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["idRede"].ToString());
             }
 
             return clsLoja;
