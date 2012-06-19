@@ -30,3 +30,12 @@ D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\SIAO.dl
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\SIAO.pdb
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\RdlCompile.cache
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\RdlCompile.compiled
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\SIAO.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\SIAO.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\SIAO.SRV.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\SIAO.SRV.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\ResolveAssemblyReference.cache
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\RdlCompile.cache
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\RdlCompile.compiled
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\SIAO.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\SIAO.pdb

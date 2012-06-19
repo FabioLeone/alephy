@@ -6,9 +6,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt"
+    <rsweb:ReportViewer ID="ReportViewer2" runat="server" Font-Names="Verdana" Font-Size="8pt"
         InteractiveDeviceInfos="(Collection)" CssClass="relat" WaitMessageFont-Names="Verdana"
-        WaitMessageFont-Size="14pt" Width="100%">
+        WaitMessageFont-Size="14pt" Width="100%" Height="100%">
         <LocalReport ReportPath="Relatory\rptGrafic.rdlc">
         </LocalReport>
     </rsweb:ReportViewer>

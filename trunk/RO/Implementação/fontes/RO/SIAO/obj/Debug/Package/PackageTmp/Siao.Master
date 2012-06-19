@@ -17,7 +17,7 @@
         <ContentTemplate>
             <div id="navigation">
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="Default.aspx">Home</a></li>
                     <li id="active"><a href="#">Investigador CasBrasil</a></li>
                     <%if (SIAO.Global.Acs == "adm")
                       { %>
