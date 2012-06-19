@@ -315,7 +315,7 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>Chart Title</Caption>
+            <Caption>Participação por Grupo</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -342,7 +342,7 @@
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
         <Height>11.38387cm</Height>
-        <Width>21.06083cm</Width>
+        <Width>24.64cm</Width>
         <Style>
           <Border>
             <Color>LightGrey</Color>
@@ -356,7 +356,7 @@
     <Height>4.48184in</Height>
     <Style />
   </Body>
-  <Width>8.29167in</Width>
+  <Width>9.70472in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -367,6 +367,11 @@
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
+  <CodeModules>
+    <CodeModule>Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
+    <CodeModule>Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
+    <CodeModule>Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
+  </CodeModules>
   <rd:ReportID>56ae5009-3f7d-45f6-b18c-92e8315f43d9</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
 </Report>

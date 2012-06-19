@@ -18,6 +18,8 @@
                         <div style="text-align: right">
                             <asp:Button ID="btnEdit" runat="server" Text="Editar" CssClass="button gray" OnClick="btnEdit_Click" />
                         </div>
+                        <p>
+                        </p>
                     </p>
                 </div>
             </div>
@@ -77,8 +79,10 @@
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: right;">
-                                <asp:Button ID="btnSave" CssClass="button gray" ToolTip="Salvar as informações da rede."
+                                <asp:Button ID="btnSave" CssClass="rightButton gray" ToolTip="Salvar as informações da rede."
                                     runat="server" Text="Salvar" OnClick="btnSave_Click" />
+                                <asp:Button ID="btnLimpar" CssClass="LeftButton gray" ToolTip="Limpa todos os campos" runat="server" 
+                                Text="Limpar" onclick="btnLimpar_Click" />
                             </td>
                         </tr>
                     </table>

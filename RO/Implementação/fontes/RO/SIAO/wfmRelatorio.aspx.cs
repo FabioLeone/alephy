@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SIAO.SRV.TO;
 using System.Configuration;
+using Microsoft.Reporting;
 
 namespace SIAO
 {
@@ -33,11 +34,11 @@ namespace SIAO
         private void loadRelat(List<GraficTO> clsGrafic, UsersTO clsUser)
         {
             Microsoft.Reporting.WebForms.ReportDataSource Rds = new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", clsGrafic);
-            ReportViewer1.Reset();
-            ReportViewer1.LocalReport.Dispose();
-            ReportViewer1.LocalReport.DataSources.Add(Rds);
-            ReportViewer1.LocalReport.ReportPath = "Relatory/rptGrafic.rdlc";
-            ReportViewer1.DataBind();
+            ReportViewer2.Reset();
+            ReportViewer2.LocalReport.Dispose();
+            ReportViewer2.LocalReport.DataSources.Add(Rds);
+            ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic.rdlc";
+            ReportViewer2.DataBind();
         }
     }
 }

@@ -8,3 +8,8 @@ D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO.SRV\bin\Release\SIA
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO.SRV\obj\Release\ResolveAssemblyReference.cache
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO.SRV\obj\Release\SIAO.SRV.dll
 D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO.SRV\obj\Release\SIAO.SRV.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Release\SIAO.SRV.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Release\SIAO.SRV.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Release\ResolveAssemblyReference.cache
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Release\SIAO.SRV.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Release\SIAO.SRV.pdb
