@@ -20,7 +20,19 @@ namespace SIAO
                 clsUser = (UsersTO)Session["user"];
             }
 
-            if (!IsPostBack) { getAno(); }
+            if (!IsPostBack) { getAno(); getLojas(); }
+            Global.LocalPage = "";
+
+        }
+
+        private void getLojas()
+        {
+            ddlLojas.DataSource = oc.GetLojaByUserId(scn, clsUser);
+            ddlLojas.DataTextField = "NomeFantasia";
+            ddlLojas.DataValueField = "Cnpj";
+            ddlLojas.DataBind();
+            ddlLojas.Items.Insert(0, new ListItem("Selecione", string.Empty));
+            ddlLojas.SelectedIndex = 0;
         }
 
         private void getAno()
@@ -65,7 +77,9 @@ namespace SIAO
 
             Session["cross"] = lr1;
 
-            Response.Redirect("wfmCrossRelat.aspx");
+            Global.LocalPage = "Relat";
+
+            Response.Redirect("wfmRelatMod1.aspx");
         }
 
         protected void btnRelat2_Click(object sender, EventArgs e)
@@ -76,7 +90,9 @@ namespace SIAO
 
             Session["cross"] = lr1;
 
-            Response.Redirect("wfmCrossRelat2.aspx");
+            Global.LocalPage = "Relat";
+
+            Response.Redirect("wfmRelatMod2.aspx");
         }
 
         protected void ibtnGrafic1_Click(object sender, ImageClickEventArgs e)
@@ -84,13 +100,15 @@ namespace SIAO
             List<GraficTO> clsGrafic;
 
             if(ddlMes.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn);
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojas.SelectedValue);
             else
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn);
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojas.SelectedValue);
 
             Session["grafic"] = clsGrafic;
 
-            Response.Redirect("wfmRelatorios.aspx");
+            Global.LocalPage = "Relat";
+
+            Response.Redirect("wfmRelatorio.aspx");
         }
 
     }

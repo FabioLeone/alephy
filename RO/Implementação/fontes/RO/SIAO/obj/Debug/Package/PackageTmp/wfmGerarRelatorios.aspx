@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table style="width: 98%; margin-left:1%;">
+            <table style="width: 100%; margin-left:1.25%;">
                 <tr>
                     <td style="width: 50%;">
                         <fieldset style="width: 93%;">
@@ -66,6 +66,9 @@
                                         <asp:ListItem Value="10">Out</asp:ListItem>
                                         <asp:ListItem Value="11">Nov</asp:ListItem>
                                         <asp:ListItem Value="12">Dez</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <br />Loja:
+                                    <asp:DropDownList ID="ddlLojas" runat="server">
                                     </asp:DropDownList>
                                     <ul class="iconList">
                                         <li>

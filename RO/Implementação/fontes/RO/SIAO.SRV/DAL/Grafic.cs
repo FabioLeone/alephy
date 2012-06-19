@@ -54,7 +54,7 @@ namespace SIAO.SRV.DAL
 
         #region .: Search :.
 
-        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUser, string strConnection)
+        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUser, string strConnection, string strLoja)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             MySqlConnection msc = new MySqlConnection(strConnection);
@@ -105,81 +105,99 @@ namespace SIAO.SRV.DAL
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (clsUser.Access == "nvg")
+                if (strLoja != "")
                 {
-                    cmdGrafic.CommandText += "SELECT farmacias.Cnpj FROM memberships"
-                        + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
-                        + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
-                        + " WHERE memberships.UserId = @UserId";
-                    cmdGrafic.Parameters.Clear();
-                    cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UserId", clsUser.UserId));
-
-                    msc.Open();
-                    using (IDataReader drdCnpj = cmdGrafic.ExecuteReader())
+                    strSQL.Append(" AND Cnpj IN ('" + strLoja + "')");
+                }
+                else
+                {
+                    if (clsUser.Access == "nvg")
                     {
-                        while (drdCnpj.Read())
+                        cmdGrafic.CommandText += "SELECT farmacias.Cnpj FROM memberships"
+                            + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
+                            + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
+                            + " WHERE memberships.UserId = @UserId";
+                        cmdGrafic.Parameters.Clear();
+                        cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UserId", clsUser.UserId));
+
+                        msc.Open();
+                        using (IDataReader drdCnpj = cmdGrafic.ExecuteReader())
                         {
-                            lstCnpj.Add(!drdCnpj.IsDBNull(drdCnpj.GetOrdinal("Cnpj"))? drdCnpj.GetString(drdCnpj.GetOrdinal("Cnpj")) : string.Empty );
+                            while (drdCnpj.Read())
+                            {
+                                lstCnpj.Add(!drdCnpj.IsDBNull(drdCnpj.GetOrdinal("Cnpj")) ? drdCnpj.GetString(drdCnpj.GetOrdinal("Cnpj")) : string.Empty);
+                            }
+                        }
+                        msc.Close();
+
+                        if (lstCnpj.Count > 0)
+                        {
+                            clsUser.Cnpj = new List<string>();
+                            lstCnpj.ForEach(delegate(string _cnpj)
+                            {
+                                clsUser.Cnpj.Add(_cnpj);
+                            });
+                        }
+
+                        if (clsUser.Cnpj != null)
+                        {
+                            if (clsUser.Cnpj.Count > 0)
+                            {
+                                strSQL.Append(" AND Cnpj IN ('");
+
+                                int i = 0;
+                                clsUser.Cnpj.ForEach(delegate(string _cnpj)
+                                {
+                                    if (i == 0) { strSQL.Append(_cnpj); i++; } else { strSQL.Append("', '" + _cnpj); i++; }
+                                });
+                                strSQL.Append("')");
+                            }
                         }
                     }
-                    msc.Close();
-
-                    if (lstCnpj.Count > 0)
+                    else if (clsUser.Access == "nvp")
                     {
-                        clsUser.Cnpj = new List<string>();
-                        lstCnpj.ForEach(delegate(string _cnpj) {
-                            clsUser.Cnpj.Add(_cnpj);   
-                        });
-                    }
+                        cmdGrafic.CommandText += "SELECT farmacias.Cnpj FROM usuarios_farmacias"
+                            + " INNER JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
+                            + " INNER JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
+                            + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
+                        cmdGrafic.Parameters.Clear();
+                        cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UserId", clsUser.UserId));
 
-                    if (clsUser.Cnpj.Count > 0)
-                    {
-                        strSQL.Append( " AND Cnpj IN ('");
-
-                        int i = 0;
-                        clsUser.Cnpj.ForEach(delegate(string _cnpj){
-                            if (i == 0) { strSQL.Append(_cnpj); i++; } else { strSQL.Append("', '" + _cnpj); i++; }
-                        });
-                        strSQL.Append("')");
-                    }
-                }
-                else if (clsUser.Access == "nvp")
-                {
-                    cmdGrafic.CommandText += "SELECT farmacias.Cnpj FROM usuarios_farmacias"
-                        + " INNER JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
-                        + " INNER JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
-                        + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
-                    cmdGrafic.Parameters.Clear();
-                    cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UserId", clsUser.UserId));
-
-                    msc.Open();
-                    using (IDataReader drdCnpj = cmdGrafic.ExecuteReader())
-                    {
-                        while (drdCnpj.Read())
+                        msc.Open();
+                        using (IDataReader drdCnpj = cmdGrafic.ExecuteReader())
                         {
-                            lstCnpj.Add(!drdCnpj.IsDBNull(drdCnpj.GetOrdinal("Cnpj")) ? drdCnpj.GetString(drdCnpj.GetOrdinal("Cnpj")) : string.Empty);
+                            while (drdCnpj.Read())
+                            {
+                                lstCnpj.Add(!drdCnpj.IsDBNull(drdCnpj.GetOrdinal("Cnpj")) ? drdCnpj.GetString(drdCnpj.GetOrdinal("Cnpj")) : string.Empty);
+                            }
+                        }
+                        msc.Close();
+
+                        if (lstCnpj.Count > 0)
+                        {
+                            clsUser.Cnpj = new List<string>();
+                            lstCnpj.ForEach(delegate(string _cnpj)
+                            {
+                                clsUser.Cnpj.Add(_cnpj);
+                            });
+                        }
+
+                        if (clsUser.Cnpj != null)
+                        {
+                            if (clsUser.Cnpj.Count > 0)
+                            {
+                                strSQL.Append(" AND Cnpj IN ('");
+                                int i = 0;
+                                clsUser.Cnpj.ForEach(delegate(string _cnpj)
+                                {
+                                    if (i == 0) { strSQL.Append(_cnpj); i++; } else { strSQL.Append("', '" + _cnpj); i++; }
+                                });
+                                strSQL.Append("')");
+                            }
                         }
                     }
-                    msc.Close();
-
-                    if (lstCnpj.Count > 0)
-                    {
-                        clsUser.Cnpj = new List<string>();
-                        lstCnpj.ForEach(delegate(string _cnpj){
-                            clsUser.Cnpj.Add(_cnpj);   
-                        });
-                    }
-
-                    if (clsUser.Cnpj.Count > 0)
-                    {
-                        strSQL.Append(" AND Cnpj IN ('");
-                        int i = 0;
-                        clsUser.Cnpj.ForEach(delegate(string _cnpj) {
-                            if (i == 0) { strSQL.Append(_cnpj); i++; } else { strSQL.Append("', '" + _cnpj); i++; }
-                        });
-                        strSQL.Append("')");
-                    }
                 }
+
 
                 strSQL.Append(" ORDER BY Grupo, Sub_Consultoria ");
                 
@@ -389,5 +407,6 @@ namespace SIAO.SRV.DAL
         }
 
         #endregion
+
     }
 }
