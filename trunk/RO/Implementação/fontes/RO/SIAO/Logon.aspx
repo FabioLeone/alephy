@@ -8,40 +8,33 @@
 </head>
 <body>
     <form id="frmLogon" runat="server">
-    <div>
-        <fieldset>
-            <legend>Login</legend>
-            <table>
-                <tr>
-                    <td style="text-align: right;">
-                        <label>
-                            Nome:</label>
-                    </td>
-                    <td style="text-align: left;">
-                        <asp:TextBox ID="txtNome" runat="server" Width="152px"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right;">
-                        <label>
-                            Senha:</label>
-                    </td>
-                    <td style="text-align: left;">
-                        <asp:TextBox ID="txtSenha" runat="server" Width="152px" TextMode="Password"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align: center;">
-                        <asp:Label ID="lblAlert" runat="server" ForeColor="Red"></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align: right;">
-                        <asp:Button ID="btnEnter" runat="server" Text="Entrar" OnClick="btnEnter_Click" CssClass="button gray" />
-                    </td>
-                </tr>
-            </table>
-        </fieldset>
+    <div style="margin: auto; vertical-align: middle;">
+        <div id="login-box">
+            <h2>
+                Login</h2>
+            Seja bem-vindo ao Investigador CasBrasil. Digite seu usu&aacute;rio e senha para
+            entrar!<br />
+            <br />
+            <div class="login-box-name" style="margin-top: 20px;">
+                Usu&aacute;rio:</div>
+            <div class="login-box-field" style="margin-top: 20px;">
+                <asp:TextBox name="q" class="form-login"  ID="txtNome" runat="server" size="30" maxlength="2048"></asp:TextBox>
+                </div>
+            <div class="login-box-name">
+                Senha:</div>
+            <div class="login-box-field">
+                <asp:TextBox ID="txtSenha" runat="server" TextMode="Password" size="30"
+                    maxlength="2048" name="q" class="form-login"></asp:TextBox>
+                    </div>
+            <p>
+                <br />
+            </p>
+            <p>
+                <br />
+                <br />
+                <asp:LinkButton ID="lbtnLogin" runat="server" onclick="lbtnLogin_Click"><img src="Content/login-btn.png" width="103" height="42" alt="" style="margin-left: 90px;" /></asp:LinkButton>
+                </p>
+        </div>
     </div>
     </form>
 </body>

@@ -7,16 +7,66 @@
     height: 450px;
 }
 
-#frmLogon
-{
-    width: 256px;
-    height: 142px;
-    padding-left: 2px;
-    font-family: Verdana;
-    font-size: 12pt;
-    position: absolute;
-    top: 37%;
-    left: 41%;
+#login-box {
+	width:333px;
+	height: 352px;
+	margin:auto;
+	vertical-align:middle;
+	padding: 58px 76px 0 76px;
+	color: #ebebeb;
+	font: 12px Arial, Helvetica, sans-serif;
+	background: url(login-box-backg.png) no-repeat left top;
+}
+
+#login-box img {
+	border:none;
+}
+
+#login-box h2 {
+	padding:0;
+	margin:0;
+	color: #ebebeb;
+	font: bold 44px "Calibri", Arial;
+}
+
+
+.login-box-name {
+	float: left;
+	display:inline;
+	width:80px;
+	text-align: right;
+	padding: 14px 10px 0 0;
+	margin:0 0 7px 0;
+}
+
+.login-box-field {
+	float: left;
+	display:inline;
+	width:230px;
+	margin:0;
+	margin:0 0 7px 0;
+}
+
+
+.form-login  {
+	width: 205px;
+	padding: 10px 4px 6px 3px;
+	border: 1px solid #0d2c52;
+	background-color:#1e4f8a;
+	font-size: 16px;
+	color: #ebebeb;
+}
+
+
+.login-box-options  {
+	clear:both;
+	padding-left:87px;
+	font-size: 11px;
+}
+
+.login-box-options a {
+	color: #ebebeb;
+	font-size: 11px;
 }
 
 .button
@@ -78,103 +128,89 @@
     background: -moz-linear-gradient(top,  #999,  #eee);
 }
 
-.logoff
-{
-    float: right;
-    margin-top: 2.5%;
-    margin-right: 1%;
-}
-
 fieldset
 {
     border-radius: 4pt;
 }
 
-header
-{
-    background: #0000FF;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#5555ff, endColorstr=#0000FF);
-    background: -webkit-gradient(linear, left top, left bottom, from(#5555ff), to(#0000FF));
-    background: -moz-linear-gradient(top,  #5555ff,  #0000FF);
-    width: 80%;
-    height: 84px;
-    margin: 42px 10% 0 10%;
-    padding-top: 10px;
-    padding-left: 20px;
-    border-radius: 4pt 4pt 0 0;
+#navigation {
+	width: 950px;
+	height: 50px;
+	margin: auto;
+	padding: 0;
+	background: url(navigation-bg.jpg) no-repeat left top;
+} 
+#navigation ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+} 
+#navigation ul li {
+	display: block;
+	margin: auto;
+	float:left;
+} 
+#navigation ul li a {
+	height:33px;
+	display: block;
+	float: left;
+	padding: 17px 15px 0 15px;
+	font: bold 12px Arial;
+	color: #FFF;
+	text-decoration: none;
+	background: url(navigation-separator.png) no-repeat right center;
+} 
+
+#navigation ul li a:hover {
+	color:#363636;
+	background: url(navigation-hover.png) repeat-x left top;
 }
 
-header h1, header p
-{
-    color: AntiqueWhite;
-    font-family: Raavi;
-    float: left;
-    font-weight: normal;
-    font-size: 32pt;
+#navigation ul li#active a {
+	color:#363636;
+	background: url(navigation-hover.png) repeat-x left top;
+	box-shadow:inset;
+	text-shadow:inherit;
 }
 
-header p
-{
-    text-transform: uppercase;
-    padding: 24px 0 0 6px;
-    font-size: 11px;
+#navigation li ul{
+	border-radius: 4pt;
+	background: url(navigation-bg.jpg) no-repeat left top;
+	display:none;
+	position:absolute;
+	float:none;
+	width:auto;
+	z-index:9999;
+	/*top:1em;
+	/*left:0;*/
+	}
+#navigation ul li:hover ul{
+	top: 55px;
+	display:block;
+	
+	}
+	
+	#navigation a {
+	height:33px;
+	float: left;
+	padding: 17px 15px 0 15px;
+	font: bold 12px Arial;
+	color: #FFF;
+	text-decoration: none;
 }
 
-nav
-{
-    float: left;
-    margin-top: -0.9px;
-    margin-left: -7.6%;
-    width: 190px;
-    font-size: 12px;
+
+#botoes{
+	float:right !important;
+	padding: 2px;
 }
 
-nav ul
+#botoes a
 {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    color: #fff !important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-nav li
-{
-    padding: 0 0 20px 0;
-}
-
-nav li h2
-{
-    height: 30px;
-    margin: 0 0 0 0;
-    padding: 0px 15px 0px 15px;
-    background: #2222ff;
-    letter-spacing: -1px;
-    font-size: 22px;
-    color: #FFFFFF;
-}
-
-nav li ul
-{
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-nav li ul li
-{
-    display: inline;
-}
-
-nav li ul li a
-{
-    display: block;
-    margin: 0;
-    padding: 2px 2px 0 16px;
-    text-decoration: none;
-    text-transform: capitalize;
-    background-color: #8888ff;
-    font-size: 14px;
-    color: #FFFFFF;
-}
 
 h1, h2, h3
 {
@@ -196,12 +232,9 @@ a
 
 section
 {
-    margin-left: 24.12%;
-    border: 1px solid blue;
-    border-radius: 0 0 4pt 0;
-    min-height: 472px;
-    width: 67.3%;
-    border-left-color: #6666ff;
+    margin-left: 14.2%;
+    min-height: 474px;
+    width: 950px;
     font-family: Raavi;
 }
 
@@ -244,13 +277,9 @@ section
 
 .relat
 {
-    margin-left: 10%;
-    border: 1px solid blue;
-    border-radius: 0 0 4pt 4pt;
-    width: 80%;
-    border-left-color: #6666ff;
+    min-width: 900px;
     font-family: Raavi;
-    height: 840px;
+    min-height: 840px;
 }
 
 .LeftButton

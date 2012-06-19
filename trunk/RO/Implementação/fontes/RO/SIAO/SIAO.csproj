@@ -60,6 +60,11 @@
     <Content Include="Content\document.png" />
     <Content Include="Content\graphic.png" />
     <Content Include="Content\important.png" />
+    <Content Include="Content\login-box-backg.png" />
+    <Content Include="Content\login-btn.png" />
+    <Content Include="Content\navigation-bg.jpg" />
+    <Content Include="Content\navigation-hover.png" />
+    <Content Include="Content\navigation-separator.png" />
     <Content Include="Content\report.gif" />
     <Content Include="Content\report.png" />
     <Content Include="Content\ssSIAO.css" />
@@ -81,11 +86,11 @@
     <Content Include="wfmCadastroLojas.aspx" />
     <Content Include="wfmCadastroRede.aspx" />
     <Content Include="wfmCadastroUsuario.aspx" />
-    <Content Include="wfmCrossRelat.aspx" />
-    <Content Include="wfmCrossRelat2.aspx" />
     <Content Include="wfmEnvio.aspx" />
     <Content Include="wfmGerarRelatorios.aspx" />
-    <Content Include="wfmRelatorios.aspx" />
+    <Content Include="wfmRelatMod1.aspx" />
+    <Content Include="wfmRelatMod2.aspx" />
+    <Content Include="wfmRelatorio.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\wucCadastroIndices.ascx.cs">
@@ -153,20 +158,6 @@
     <Compile Include="wfmCadastroUsuario.aspx.designer.cs">
       <DependentUpon>wfmCadastroUsuario.aspx</DependentUpon>
     </Compile>
-    <Compile Include="wfmCrossRelat.aspx.cs">
-      <DependentUpon>wfmCrossRelat.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="wfmCrossRelat.aspx.designer.cs">
-      <DependentUpon>wfmCrossRelat.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="wfmCrossRelat2.aspx.cs">
-      <DependentUpon>wfmCrossRelat2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="wfmCrossRelat2.aspx.designer.cs">
-      <DependentUpon>wfmCrossRelat2.aspx</DependentUpon>
-    </Compile>
     <Compile Include="wfmEnvio.aspx.cs">
       <DependentUpon>wfmEnvio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -181,12 +172,26 @@
     <Compile Include="wfmGerarRelatorios.aspx.designer.cs">
       <DependentUpon>wfmGerarRelatorios.aspx</DependentUpon>
     </Compile>
-    <Compile Include="wfmRelatorios.aspx.cs">
-      <DependentUpon>wfmRelatorios.aspx</DependentUpon>
+    <Compile Include="wfmRelatMod1.aspx.cs">
+      <DependentUpon>wfmRelatMod1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="wfmRelatorios.aspx.designer.cs">
-      <DependentUpon>wfmRelatorios.aspx</DependentUpon>
+    <Compile Include="wfmRelatMod1.aspx.designer.cs">
+      <DependentUpon>wfmRelatMod1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfmRelatMod2.aspx.cs">
+      <DependentUpon>wfmRelatMod2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmRelatMod2.aspx.designer.cs">
+      <DependentUpon>wfmRelatMod2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfmRelatorio.aspx.cs">
+      <DependentUpon>wfmRelatorio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmRelatorio.aspx.designer.cs">
+      <DependentUpon>wfmRelatorio.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +207,9 @@
     <EmbeddedResource Include="Relatory\rptCross.rdlc" />
     <EmbeddedResource Include="Relatory\rptCross2.rdlc" />
     <EmbeddedResource Include="Relatory\rptGrafic.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\navigation-bg.psd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

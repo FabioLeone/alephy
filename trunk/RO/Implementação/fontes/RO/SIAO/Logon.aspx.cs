@@ -15,21 +15,20 @@ namespace SIAO
         #region .: Eventos :.
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblAlert.Visible = false;
             txtNome.Focus();
         }
 
-        protected void btnEnter_Click(object sender, EventArgs e)
+        protected void lbtnLogin_Click(object sender, EventArgs e)
         {
             if (txtNome.Text == "")
             {
-                lblAlert.Visible = true;
-                lblAlert.Text = "Entre com o nome.";
+                //lblAlert.Visible = true;
+                //lblAlert.Text = "Entre com o nome.";
             }
             else if (txtSenha.Text == "")
             {
-                lblAlert.Visible = true;
-                lblAlert.Text = "Entre com a senha.";
+                //lblAlert.Visible = true;
+                //lblAlert.Text = "Entre com a senha.";
                 txtSenha.Focus();
             }
             else
@@ -48,17 +47,18 @@ namespace SIAO
                     }
                     else
                     {
-                        lblAlert.Visible = true;
-                        lblAlert.Text = "Prazo da senha expirou.";
+                        //lblAlert.Visible = true;
+                        //lblAlert.Text = "Prazo da senha expirou.";
                     }
                 }
                 else
                 {
-                    lblAlert.Visible = true;
-                    lblAlert.Text = "Usuário e/ou senha invalido(s).";
+                    //lblAlert.Visible = true;
+                    //lblAlert.Text = "Usuário e/ou senha invalido(s).";
                 }
             }
         }
         #endregion
+
     }
 }

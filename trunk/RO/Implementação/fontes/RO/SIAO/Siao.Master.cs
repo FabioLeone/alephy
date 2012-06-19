@@ -10,12 +10,13 @@ namespace SIAO
 
         }
 
-        protected void btnLogoff_Click(object sender, EventArgs e)
+        protected void lbtnLogoff_Click1(object sender, EventArgs e)
         {
             Session["user"] = null;
             FormsAuthentication.SignOut();
             Global.Acs = "";
             Response.Redirect("Logon.aspx");
         }
+
     }
 }

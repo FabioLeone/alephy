@@ -901,5 +901,24 @@ namespace SIAO.SRV
             return clsLoja;
         }
 
+        public object GetLojaByUserId(string scn, UsersTO clsUser)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection cnn = new MySqlConnection(scn);
+
+            cmm.Connection = cnn;
+            cmm.CommandText = "SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID FROM farmacias WHERE GerenteId = @GerenteId OR ProprietarioID = @ProprietarioID";
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@GerenteId", MySqlDbType.Int32).Value = clsUser.UserId;
+            cmm.Parameters.Add("@ProprietarioID", MySqlDbType.Int32).Value = clsUser.UserId;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
     }
 }
