@@ -7,8 +7,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt"
-        InteractiveDeviceInfos="(Collection)" CssClass="relat" WaitMessageFont-Names="Verdana"
-        WaitMessageFont-Size="14pt" Width="100%" Height="100%">
+        InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana"
+        WaitMessageFont-Size="14pt" Width="100%" Height="560px">
         <LocalReport ReportPath="Relatory\rptCross.rdlc">
         </LocalReport>
     </rsweb:ReportViewer>
