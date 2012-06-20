@@ -18,24 +18,30 @@
             <div class="login-box-name" style="margin-top: 20px;">
                 Usu&aacute;rio:</div>
             <div class="login-box-field" style="margin-top: 20px;">
-                <asp:TextBox name="q" class="form-login"  ID="txtNome" runat="server" size="30" maxlength="2048"></asp:TextBox>
-                </div>
+                <asp:TextBox name="q" class="form-login" ID="txtNome" runat="server" size="30" MaxLength="2048"></asp:TextBox>
+                <asp:RequiredFieldValidator ControlToValidate="txtNome" ValidationGroup="Login" ID="rfvNome"
+                    runat="server" ErrorMessage="Entre com o nome.">*</asp:RequiredFieldValidator>
+            </div>
             <div class="login-box-name">
                 Senha:</div>
             <div class="login-box-field">
-                <asp:TextBox ID="txtSenha" runat="server" TextMode="Password" size="30"
-                    maxlength="2048" name="q" class="form-login"></asp:TextBox>
-                    </div>
+                <asp:TextBox ID="txtSenha" runat="server" TextMode="Password" size="30" MaxLength="2048"
+                    name="q" class="form-login"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvSenha" ValidationGroup="Login" runat="server"
+                    ControlToValidate="txtSenha" ErrorMessage="Entre com a senha."></asp:RequiredFieldValidator>
+            </div>
             <p>
                 <br />
             </p>
             <p>
                 <br />
                 <br />
-                <asp:LinkButton ID="lbtnLogin" runat="server" onclick="lbtnLogin_Click"><img src="Content/login-btn.png" width="103" height="42" alt="" style="margin-left: 90px;" /></asp:LinkButton>
-                </p>
+                <asp:LinkButton ID="lbtnLogin" runat="server" OnClick="lbtnLogin_Click" ValidationGroup="Login"><img src="Content/login-btn.png" width="103" height="42" alt="" style="margin-left: 90px;" /></asp:LinkButton>
+            </p>
         </div>
     </div>
+        <asp:ValidationSummary ID="vsmLogin" ValidationGroup="Login" CssClass="error" Width="400px"
+            runat="server" />
     </form>
 </body>
 </html>

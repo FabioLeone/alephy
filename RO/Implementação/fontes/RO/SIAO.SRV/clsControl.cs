@@ -799,7 +799,7 @@ namespace SIAO.SRV
                 {
                     string lDate = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00";
 
-                    cmm.CommandText = "UPDATE users SET UserName = '" + clsUser.Name + "', LastActivityDate = '" 
+                    cmm.CommandText = "UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '" 
                         + lDate + "' WHERE UserId = "+ clsUser.UserId;
 
                         oDB.Execute(ref cmm);
