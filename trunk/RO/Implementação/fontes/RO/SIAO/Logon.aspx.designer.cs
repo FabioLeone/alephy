@@ -31,6 +31,15 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.TextBox txtNome;
         
         /// <summary>
+        /// rfvNome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNome;
+        
+        /// <summary>
         /// txtSenha control.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.TextBox txtSenha;
         
         /// <summary>
+        /// rfvSenha control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSenha;
+        
+        /// <summary>
         /// lbtnLogin control.
         /// </summary>
         /// <remarks>
@@ -47,5 +65,14 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lbtnLogin;
+        
+        /// <summary>
+        /// vsmLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary vsmLogin;
     }
 }
