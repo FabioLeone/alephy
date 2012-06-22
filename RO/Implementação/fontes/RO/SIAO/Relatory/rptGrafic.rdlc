@@ -56,32 +56,22 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Group Name="Chart2_CategoryGroup4">
+              <Group Name="Chart2_CategoryGroup1">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!Razao_Social.Value</GroupExpression>
+                  <GroupExpression>=Fields!Grupo.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
               <ChartMembers>
                 <ChartMember>
-                  <Group Name="Chart2_CategoryGroup1">
+                  <Group Name="Chart2_CategoryGroup2">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Grupo.Value</GroupExpression>
+                      <GroupExpression>=Fields!Sub_Consultoria.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
-                  <ChartMembers>
-                    <ChartMember>
-                      <Group Name="Chart2_CategoryGroup2">
-                        <GroupExpressions>
-                          <GroupExpression>=Fields!Sub_Consultoria.Value</GroupExpression>
-                        </GroupExpressions>
-                      </Group>
-                      <Label>=Fields!Sub_Consultoria.Value</Label>
-                    </ChartMember>
-                  </ChartMembers>
-                  <Label>=Fields!Grupo.Value</Label>
+                  <Label>=Fields!Sub_Consultoria.Value</Label>
                 </ChartMember>
               </ChartMembers>
-              <Label>=Fields!Razao_Social.Value</Label>
+              <Label>=Fields!Grupo.Value</Label>
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
