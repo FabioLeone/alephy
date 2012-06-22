@@ -32,9 +32,9 @@ namespace SIAO.SRV.BLL
                                 Sub_Consultoria = _Grafic.Sub_Consultoria,
                                 Razao_Social = _Grafic.Razao_Social,
                                 Mes = _Grafic.Mes,
-                                Liquido = ((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda),
+                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda)*100,2),
                                 Grupo = _Grafic.Grupo,
-                                Desconto = (_Grafic.Desconto / _IndicesGrafic.desconto)
+                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto)*100,2)
                             });
                         }
                     });
