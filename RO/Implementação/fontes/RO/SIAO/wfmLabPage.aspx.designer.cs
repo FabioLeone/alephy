@@ -7,37 +7,64 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SIAO.Controls {
+namespace SIAO {
     
     
-    public partial class wucCadastroIndices {
+    public partial class wfmLabPage {
         
         /// <summary>
-        /// lblGrupo control.
+        /// pnl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGrupo;
+        protected global::System.Web.UI.WebControls.Panel pnl;
         
         /// <summary>
-        /// rfvGrupo control.
+        /// ddlRede control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvGrupo;
+        protected global::System.Web.UI.WebControls.DropDownList ddlRede;
         
         /// <summary>
-        /// ddlGrupo control.
+        /// rfvRede control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlGrupo;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvRede;
+        
+        /// <summary>
+        /// ddlAno control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAno;
+        
+        /// <summary>
+        /// lblSelecioneGrupo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSelecioneGrupo;
+        
+        /// <summary>
+        /// cblGrupos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList cblGrupos;
         
         /// <summary>
         /// lblCategoria control.
@@ -49,93 +76,30 @@ namespace SIAO.Controls {
         protected global::System.Web.UI.WebControls.Label lblCategoria;
         
         /// <summary>
-        /// rfvCategoria control.
+        /// cblCategoria control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCategoria;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblCategoria;
         
         /// <summary>
-        /// ddlCadastro control.
+        /// btnGerarGrafico control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCadastro;
+        protected global::System.Web.UI.WebControls.Button btnGerarGrafico;
         
         /// <summary>
-        /// lblVenda control.
+        /// vsFiltro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblVenda;
-        
-        /// <summary>
-        /// rfvVenda control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvVenda;
-        
-        /// <summary>
-        /// revValor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revValor;
-        
-        /// <summary>
-        /// txtVenda control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVenda;
-        
-        /// <summary>
-        /// lblDesconto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDesconto;
-        
-        /// <summary>
-        /// rfvDesconto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDesconto;
-        
-        /// <summary>
-        /// revDesconto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revDesconto;
-        
-        /// <summary>
-        /// txtDesconto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDesconto;
+        protected global::System.Web.UI.WebControls.ValidationSummary vsFiltro;
     }
 }

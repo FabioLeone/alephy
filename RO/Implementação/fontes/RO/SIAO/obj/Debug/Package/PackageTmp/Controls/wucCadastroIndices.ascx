@@ -3,32 +3,42 @@
 <table>
     <tr>
         <td>
-            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
-            <asp:DropDownList ID="DropDownList1" runat="server">
+            <asp:Label ID="lblGrupo" runat="server" Text="Grupo" AssociatedControlID="ddlGrupo"></asp:Label>
+            <asp:RequiredFieldValidator ID="rfvGrupo" runat="server" ErrorMessage="Selecione o grupo."
+            ControlToValidate="ddlGrupo" ValidationGroup="Cadastro">*</asp:RequiredFieldValidator>
+            <asp:DropDownList ID="ddlGrupo" runat="server">
             </asp:DropDownList>
         </td>
     </tr>
     <tr>
         <td>
-            <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
-            <asp:DropDownList ID="DropDownList2" runat="server">
+            <asp:Label ID="lblCategoria" runat="server" Text="Categoria" AssociatedControlID="ddlCategoria"></asp:Label>
+            <asp:RequiredFieldValidator ID="rfvCategoria" runat="server" 
+            ErrorMessage="Selecione a categoria." ControlToValidate="ddlCategoria" ValidationGroup="Cadastro">*</asp:RequiredFieldValidator>
+            <asp:DropDownList ID="ddlCadastro" runat="server">
             </asp:DropDownList>
         </td>
     </tr>
     <tr>
         <td>
-            <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
-            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+            <asp:Label ID="lblVenda" runat="server" Text="Venda" AssociatedControlID="txtVenda"></asp:Label>
+            <asp:RequiredFieldValidator ID="rfvVenda" runat="server" ErrorMessage="Entre com a porcentagem referente a venda."
+            ControlToValidate="txtVenda" ValidationGroup="Cadastro">*</asp:RequiredFieldValidator>
+            <asp:RegularExpressionValidator ID="revValor" ControlToValidate="txtValor" ValidationExpression="^\$[0-9]+(\.[0-9][0-9])?$" 
+            ValidationGroup="Cadastro" runat="server" ErrorMessage="Apenas números">*</asp:RegularExpressionValidator>
+            <asp:TextBox ID="txtVenda" runat="server"></asp:TextBox>
         </td>
     </tr>
     <tr>
         <td>
-            <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
-            <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+            <asp:Label ID="lblDesconto" runat="server" Text="Desconto"></asp:Label>
+            <asp:RequiredFieldValidator ID="rfvDesconto" runat="server" 
+            ErrorMessage="Entre com a pocentagem referente ao desconto" ControlToValidate="txtDesconto"
+            ValidationGroup="Cadastro">*</asp:RequiredFieldValidator>
+            <asp:RegularExpressionValidator ID="revDesconto" ControlToValidate="txtDesconto" 
+            ValidationExpression="^\$[0-9]+(\.[0-9][0-9])?$" 
+            ValidationGroup="Cadastro" runat="server" ErrorMessage="Apenas números">*</asp:RegularExpressionValidator>
+            <asp:TextBox ID="txtDesconto" runat="server"></asp:TextBox>
         </td>
     </tr>
 </table>

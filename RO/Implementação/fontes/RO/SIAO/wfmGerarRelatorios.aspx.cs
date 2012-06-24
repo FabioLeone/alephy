@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using SIAO.SRV.TO;
 using SIAO.SRV.BLL;
+using System.Data;
 
 namespace SIAO
 {
@@ -16,7 +17,9 @@ namespace SIAO
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); } else {
+            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
+            else
+            {
                 clsUser = (UsersTO)Session["user"];
             }
 
@@ -77,7 +80,7 @@ namespace SIAO
 
             Session["cross"] = lr1;
 
-            Global.LocalPage = "Relat";
+            Global.LocalPage = "wfmGerarRelatorios.aspx";
 
             Response.Redirect("wfmRelatMod1.aspx");
         }
@@ -90,7 +93,7 @@ namespace SIAO
 
             Session["cross"] = lr1;
 
-            Global.LocalPage = "Relat";
+            Global.LocalPage = "wfmGerarRelatorios.aspx";
 
             Response.Redirect("wfmRelatMod2.aspx");
         }
@@ -99,17 +102,16 @@ namespace SIAO
         {
             List<GraficTO> clsGrafic;
 
-            if(ddlMes.SelectedValue != "")
+            if (ddlMes.SelectedValue != "")
                 clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojas.SelectedValue);
             else
                 clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojas.SelectedValue);
 
             Session["grafic"] = clsGrafic;
 
-            Global.LocalPage = "Relat";
+            Global.LocalPage = "wfmGerarRelatorios.aspx";
 
             Response.Redirect("wfmRelatorio.aspx");
         }
-
     }
 }

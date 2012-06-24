@@ -148,11 +148,13 @@ namespace SIAO.SRV
             return msg;
         }
 
-        public DataSet GetRedes(string scn)
+        public static DataSet GetRedes(string scn)
         {
             DataSet ds = new DataSet();
-
+            MySqlCommand cmm = new MySqlCommand();
             MySqlConnection cnn = new MySqlConnection(scn);
+            clsDB oDB = new clsDB();
+
             cmm.Connection = cnn;
 
             cmm.CommandText = "SELECT Id, Descricao FROM redesfarmaceuticas";
@@ -935,6 +937,43 @@ namespace SIAO.SRV
             if (oDB.openConnection(cmm))
             {
                 ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public static DataSet GetGrupos(string scn)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection msc = new MySqlConnection(scn);
+            clsDB oDB = new clsDB();
+            MySqlCommand cmm = new MySqlCommand();
+            
+            cmm.Connection = msc;
+            cmm.CommandText = "SELECT DISTINCT Grupo FROM produtos_base WHERE Grupo NOT IN ('Fitoterápicos', 'DERMOCOSMETICOS') ORDER BY Grupo";
+
+            if (oDB.openConnection(cmm)) {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Grupos");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public static DataSet GetSubCategorias(string scn)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection msc = new MySqlConnection(scn);
+            clsDB oDB = new clsDB();
+            MySqlCommand cmm = new MySqlCommand();
+
+            cmm.Connection = msc;
+            cmm.CommandText = "SELECT DISTINCT Sub_Consultoria FROM produtos_base WHERE Sub_Consultoria <> '' ORDER BY Sub_Consultoria";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Sub_Consultoria");
             }
             oDB.closeConnection(cmm);
 
