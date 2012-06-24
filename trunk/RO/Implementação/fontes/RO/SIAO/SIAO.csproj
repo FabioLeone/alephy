@@ -60,6 +60,7 @@
   <ItemGroup>
     <Content Include="Content\a_Logo.jpg" />
     <Content Include="Content\document.png" />
+    <Content Include="Content\easyscroll.js" />
     <Content Include="Content\graphic.png" />
     <Content Include="Content\important.png" />
     <Content Include="Content\login-box-backg.png" />
@@ -71,6 +72,7 @@
     <Content Include="Content\report.png" />
     <Content Include="Content\ssSIAO.css" />
     <Content Include="Content\success.png" />
+    <Content Include="wfmLabRelat.aspx" />
     <Content Include="Controls\wucCadastroIndices.ascx" />
     <Content Include="Controls\wucListaIndices.ascx" />
     <Content Include="Default.aspx" />
@@ -90,11 +92,19 @@
     <Content Include="wfmCadastroUsuario.aspx" />
     <Content Include="wfmEnvio.aspx" />
     <Content Include="wfmGerarRelatorios.aspx" />
+    <Content Include="wfmLabPage.aspx" />
     <Content Include="wfmRelatMod1.aspx" />
     <Content Include="wfmRelatMod2.aspx" />
     <Content Include="wfmRelatorio.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="wfmLabRelat.aspx.cs">
+      <DependentUpon>wfmLabRelat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmLabRelat.aspx.designer.cs">
+      <DependentUpon>wfmLabRelat.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\wucCadastroIndices.ascx.cs">
       <DependentUpon>wucCadastroIndices.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -174,6 +184,13 @@
     <Compile Include="wfmGerarRelatorios.aspx.designer.cs">
       <DependentUpon>wfmGerarRelatorios.aspx</DependentUpon>
     </Compile>
+    <Compile Include="wfmLabPage.aspx.cs">
+      <DependentUpon>wfmLabPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmLabPage.aspx.designer.cs">
+      <DependentUpon>wfmLabPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="wfmRelatMod1.aspx.cs">
       <DependentUpon>wfmRelatMod1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -209,6 +226,7 @@
     <EmbeddedResource Include="Relatory\rptCross.rdlc" />
     <EmbeddedResource Include="Relatory\rptCross2.rdlc" />
     <EmbeddedResource Include="Relatory\rptGrafic.rdlc" />
+    <EmbeddedResource Include="Relatory\rptGraficoLab.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\navigation-bg.psd" />
@@ -221,7 +239,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>5573</DevelopmentServerPort>
+          <DevelopmentServerPort>4325</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

@@ -3,6 +3,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
+using SIAO.SRV;
 
 namespace SIAO
 {
@@ -28,7 +29,7 @@ namespace SIAO
         {
             DataSet ds = new DataSet();
 
-            ds = o.GetRedes(scn);
+            ds = clsControl.GetRedes(scn);
 
             if (ds.Tables.Count > 0)
             {

@@ -36,11 +36,19 @@
                             <li><a href="wfmGerarRelatorios.aspx" class="link">Gerar relatórios</a></li>
                         </ul>
                     </li>
+                    <%if (SIAO.Global.Acs == "adm")
+                      { %>
+                      <li><a href="#">Beta</a>
+                        <ul>
+                            <li><a href="wfmLabPage.aspx" class="link">Porcentagem de Participação</a></li>
+                        </ul>
+                      </li>
+                      <%} %>
                 </ul>
                 <ul id="botoes">
-                    <% if (SIAO.Global.LocalPage == "Relat")
+                    <% if (!String.IsNullOrEmpty(SIAO.Global.LocalPage))
                        { %>
-                    <li><a href="wfmGerarRelatorios.aspx">Voltar</a></li>
+                    <li><a href='<%= SIAO.Global.LocalPage %>'>Voltar</a></li>
                     <% } %>
                     <li>
                         <asp:LinkButton ID="lbtnLogoff" runat="server" onclick="lbtnLogoff_Click1">Logoff</asp:LinkButton></li>

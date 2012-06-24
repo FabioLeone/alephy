@@ -6,6 +6,7 @@ using System.Data;
 using SIAO.SRV.BLL;
 using SIAO.SRV.TO;
 using System.Collections.Generic;
+using SIAO.SRV;
 
 namespace SIAO
 {
@@ -60,7 +61,7 @@ namespace SIAO
         private void LoadRedes()
         {
             DataSet ds = new DataSet();
-            ds = o.GetRedes(scn);
+            ds = clsControl.GetRedes(scn);
 
             if (ds.Tables.Count > 0)
             {
