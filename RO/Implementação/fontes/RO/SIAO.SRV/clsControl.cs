@@ -648,7 +648,7 @@ namespace SIAO.SRV
                     + " farmacias.Cnpj"
                     + " FROM"
                     + " usuarios_farmacias"
-                    + " LEFT JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
+                    + " RIGHT JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
                     + " LEFT JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
                     + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
                 cmm.Parameters.Clear();

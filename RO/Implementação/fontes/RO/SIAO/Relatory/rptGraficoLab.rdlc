@@ -88,6 +88,7 @@
                   <ChartDataLabel>
                     <Style />
                   </ChartDataLabel>
+                  <ToolTip>=Fields!NomeLab.Value</ToolTip>
                   <Style />
                   <ChartMarker>
                     <Style />
@@ -264,6 +265,9 @@
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontSize>8pt</FontSize>
             </Style>
+            <Position>BottomCenter</Position>
+            <Layout>WideTable</Layout>
+            <DockOutsideChartArea>true</DockOutsideChartArea>
             <ChartLegendTitle>
               <Caption />
               <Style>
@@ -304,8 +308,8 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <Height>11.38387cm</Height>
-        <Width>24.64cm</Width>
+        <Height>21cm</Height>
+        <Width>29.7cm</Width>
         <Style>
           <Border>
             <Color>LightGrey</Color>
@@ -439,7 +443,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -592,11 +595,12 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Top>11.73903cm</Top>
-        <Left>0.56303cm</Left>
+        <Top>21cm</Top>
         <Height>1.8cm</Height>
-        <Width>5.127cm</Width>
+        <Width>5.12699cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -605,19 +609,19 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>6.27521in</Height>
+    <Height>11.69291in</Height>
     <Style />
   </Body>
-  <Width>9.70079in</Width>
+  <Width>11.69291in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
     <InteractiveHeight>21cm</InteractiveHeight>
     <InteractiveWidth>29.7cm</InteractiveWidth>
-    <LeftMargin>0.5cm</LeftMargin>
-    <RightMargin>0.5cm</RightMargin>
-    <TopMargin>0.5cm</TopMargin>
-    <BottomMargin>0.5cm</BottomMargin>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
