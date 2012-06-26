@@ -80,3 +80,7 @@ C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\RdlCompile.cache
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\RdlCompile.compiled
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\SIAO.dll
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\SIAO.pdb
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\Relatory\rptCross.rdlc
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\Relatory\rptCross2.rdlc
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\Relatory\rptGrafic.rdlc
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\Relatory\rptGraficoLab.rdlc

@@ -223,10 +223,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Relatory\rptCross.rdlc" />
-    <EmbeddedResource Include="Relatory\rptCross2.rdlc" />
-    <EmbeddedResource Include="Relatory\rptGrafic.rdlc" />
-    <EmbeddedResource Include="Relatory\rptGraficoLab.rdlc" />
+    <EmbeddedResource Include="Relatory\rptCross.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatory\rptCross2.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatory\rptGrafic.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatory\rptGraficoLab.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\navigation-bg.psd" />

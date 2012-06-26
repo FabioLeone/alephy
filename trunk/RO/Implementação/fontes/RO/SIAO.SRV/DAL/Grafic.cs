@@ -69,7 +69,7 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" FROM base_clientes ");
                 strSQL.Append(" INNER JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra");
                 strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes");
-                strSQL.Append(" AND (produtos_base.Grupo = 'Propagados' AND produtos_base.Sub_Consultoria = 'PDE 2-2 (FPB)') OR ((produtos_base.Sub_Consultoria = 'PDE 2 (trata)') AND base_clientes.Mes = @Mes)");
+                strSQL.Append(" AND (produtos_base.Grupo = 'Genéricos' AND produtos_base.Sub_Consultoria = 'PDE 2-2 (FPB)') OR ((produtos_base.Sub_Consultoria = 'PDE 2 (trata)') AND base_clientes.Mes = @Mes)");
                 strSQL.Append(" OR ((produtos_base.Grupo = 'Propagados' AND produtos_base.Sub_Consultoria = 'PDE 1 (Anti - RH)') AND base_clientes.Mes = @Mes)");
                 strSQL.Append(" GROUP BY base_clientes.Razao_Social, base_clientes.Mes, produtos_base.Grupo, produtos_base.Sub_Consultoria ");
                 strSQL.Append(" UNION ");
