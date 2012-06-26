@@ -299,7 +299,13 @@ namespace SIAO
                 txtMsn.Text = ol.Msn;
                 txtNomeFantasia.Text = ol.NomeFantasia;
                 txtNum.Text = ol.EndNumero.ToString();
-                ddlProprietario.SelectedValue = ol.ProprietarioId.ToString();
+                try
+                {
+                    ddlProprietario.SelectedValue = ol.ProprietarioId.ToString();
+                }
+                catch 
+                {
+                }
                 txtRazao.Text = ol.Razao;
                 txtSite.Text = ol.Site;
                 txtSkype.Text = ol.Skype;

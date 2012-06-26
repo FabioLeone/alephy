@@ -55,3 +55,28 @@ D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\ru\AjaxControlToolkit.reso
 D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\tr-TR\AjaxControlToolkit.resources.dll
 D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\zh-CHS\AjaxControlToolkit.resources.dll
 D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\zh-CHT\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\SIAO.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\SIAO.pdb
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\SIAO.SRV.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\SIAO.SRV.pdb
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\ar\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\cs\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\de\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\es\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\fr\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\he\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\hi\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\it\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\ja\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\ko\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\nl\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\pt\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\ru\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\tr-TR\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\zh-CHS\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\zh-CHT\AjaxControlToolkit.resources.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\RdlCompile.cache
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\RdlCompile.compiled
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\SIAO.dll
+C:\Users\uvf\Desktop\Ro versions\RO\SIAO\obj\Debug\SIAO.pdb
