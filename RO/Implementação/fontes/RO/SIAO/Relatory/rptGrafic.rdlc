@@ -94,10 +94,13 @@
                     <Y>=Sum(Fields!Liquido.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                     <Label>=Fields!Liquido.Value.ToString() &amp; " %"</Label>
                     <Visible>true</Visible>
                   </ChartDataLabel>
+                  <ToolTip>=Fields!Grupo.Value + " " + Fields!Sub_Consultoria.Value</ToolTip>
                   <Style />
                   <ChartMarker>
                     <Style />
@@ -126,10 +129,13 @@
                     <Y>=Sum(Fields!Desconto.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
-                    <Style />
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
                     <Label>=Fields!Desconto.Value.ToString() &amp; " %"</Label>
                     <Visible>true</Visible>
                   </ChartDataLabel>
+                  <ToolTip>=Fields!Grupo.Value + " " + Fields!Sub_Consultoria.Value</ToolTip>
                   <Style />
                   <ChartMarker>
                     <Style />
@@ -312,6 +318,7 @@
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontSize>8pt</FontSize>
             </Style>
+            <Position>BottomCenter</Position>
             <ChartLegendTitle>
               <Caption />
               <Style>
@@ -335,7 +342,7 @@
             </Style>
           </ChartTitle>
         </ChartTitles>
-        <Palette>SeaGreen</Palette>
+        <Palette>BrightPastel</Palette>
         <ChartBorderSkin>
           <Style>
             <BackgroundColor>Gray</BackgroundColor>
@@ -352,8 +359,8 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <Height>11.38387cm</Height>
-        <Width>24.64cm</Width>
+        <Height>21cm</Height>
+        <Width>29.7cm</Width>
         <Style>
           <Border>
             <Color>LightGrey</Color>
@@ -364,10 +371,10 @@
         </Style>
       </Chart>
     </ReportItems>
-    <Height>4.48184in</Height>
+    <Height>8.26772in</Height>
     <Style />
   </Body>
-  <Width>9.70472in</Width>
+  <Width>11.69291in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
