@@ -69,7 +69,7 @@ namespace SIAO
                         DataTable dt = new DataTable();
                         dt = of.txtDtConvert(fuArquivo.FileContent);
 
-                        string msg = oc.AddTxt(scn, dt, clsUser);
+                        string msg = oc.AddTxt(scn, dt, clsUser, of.Meses());
                         if (msg == "")
                         {
                             divSces();
