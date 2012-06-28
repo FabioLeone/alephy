@@ -486,7 +486,7 @@ namespace SIAO.SRV
             return msg;
         }
 
-        public string AddTxt(string scn, DataTable dt, UsersTO clsUser)
+        public string AddTxt(string scn, DataTable dt, UsersTO clsUser, List<int> lstMeses)
         {
             MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
@@ -501,9 +501,16 @@ namespace SIAO.SRV
                     if (oDB.openConnection(cmm))
                     {
                         cmm.CommandText = "DELETE FROM base_clientes"
-                            + " WHERE Cnpj = '" + dt.Rows[0]["cnpj"].ToString()
-                            + "' AND Mes = " + dt.Rows[0][2]
-                            + " AND Ano = " + dt.Rows[0]["ano"];
+                            + " WHERE Cnpj = '" + dt.Rows[0]["cnpj"].ToString() + "'";
+                        string strMeses = "";
+                        int j = 0;
+                        lstMeses.ForEach(delegate(int _mes)
+                        {
+                            if (j == 0) { strMeses = _mes.ToString(); j++; } else { strMeses += ", " + _mes.ToString(); j++; }
+                        });
+                        cmm.CommandText += " AND Mes IN (" + strMeses + ") AND Ano = " + dt.Rows[0]["ano"];
+
+                        oDB.Execute(ref cmm);
 
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
@@ -949,11 +956,12 @@ namespace SIAO.SRV
             MySqlConnection msc = new MySqlConnection(scn);
             clsDB oDB = new clsDB();
             MySqlCommand cmm = new MySqlCommand();
-            
+
             cmm.Connection = msc;
             cmm.CommandText = "SELECT DISTINCT Grupo FROM produtos_base WHERE Grupo NOT IN ('Fitoterápicos', 'DERMOCOSMETICOS') ORDER BY Grupo";
 
-            if (oDB.openConnection(cmm)) {
+            if (oDB.openConnection(cmm))
+            {
                 ds = oDB.QueryDS(ref cmm, ref ds, "Grupos");
             }
             oDB.closeConnection(cmm);

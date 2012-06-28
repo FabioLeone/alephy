@@ -3,11 +3,14 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Data;
 using System.IO;
+using System.Collections.Generic;
 
 namespace SIAO.SRV
 {
     public class clsFuncs
     {
+        private List<int> lstMeses = new List<int>();
+
         public string encr(string text)
         {
             Char[] a;
@@ -153,6 +156,7 @@ namespace SIAO.SRV
             StreamReader sr = new StreamReader(stream);
             string[] line;
             int i = 0;
+            int intMes = 0;
 
             while (! sr.EndOfStream)
             {
@@ -168,15 +172,28 @@ namespace SIAO.SRV
                 }
                 else {
                     DataRow dr = dt.NewRow();
+                  
                     for (int j = 0; j < line.Length; j++)
                     {
                         dr[j] = line[j];
+
+                        if (j.Equals(2)) {
+                            if (!intMes.Equals(Convert.ToInt32(line[j])))
+                            {
+                                intMes = Convert.ToInt32(line[j]);
+                                lstMeses.Add(Convert.ToInt32(line[j]));
+                            }
+                        }
                     }
                     dt.Rows.Add(dr);
                 }
             }
 
             return dt;
+        }
+
+        public List<int> Meses() {
+            return lstMeses;
         }
         #endregion
 
