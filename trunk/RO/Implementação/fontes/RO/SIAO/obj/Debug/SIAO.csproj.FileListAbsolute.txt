@@ -84,3 +84,7 @@ C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\Relatory\rptCross.rdlc
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\Relatory\rptCross2.rdlc
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\Relatory\rptGrafic.rdlc
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO\bin\Relatory\rptGraficoLab.rdlc
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\Relatory\rptCross.rdlc
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\Relatory\rptCross2.rdlc
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\Relatory\rptGrafic.rdlc
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\Relatory\rptGraficoLab.rdlc
