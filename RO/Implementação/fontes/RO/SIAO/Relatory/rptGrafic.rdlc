@@ -95,10 +95,11 @@
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontSize>12pt</FontSize>
                     </Style>
                     <Label>=Fields!Liquido.Value.ToString() &amp; " %"</Label>
                     <Visible>true</Visible>
+                    <Rotation>-90</Rotation>
                   </ChartDataLabel>
                   <ToolTip>=Fields!Grupo.Value + " " + Fields!Sub_Consultoria.Value</ToolTip>
                   <Style />
@@ -107,7 +108,9 @@
                   </ChartMarker>
                 </ChartDataPoint>
               </ChartDataPoints>
-              <Style />
+              <Style>
+                <ShadowColor>Black</ShadowColor>
+              </Style>
               <ChartEmptyPoints>
                 <Style />
                 <ChartMarker>
@@ -118,6 +121,7 @@
                 </ChartDataLabel>
               </ChartEmptyPoints>
               <ChartSmartLabel>
+                <Disabled>true</Disabled>
                 <CalloutLineColor>Black</CalloutLineColor>
                 <MinMovingDistance>0pt</MinMovingDistance>
               </ChartSmartLabel>
@@ -130,10 +134,14 @@
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <Border>
+                        <Width>1.5pt</Width>
+                      </Border>
+                      <FontSize>12pt</FontSize>
                     </Style>
                     <Label>=Fields!Desconto.Value.ToString() &amp; " %"</Label>
                     <Visible>true</Visible>
+                    <Rotation>-90</Rotation>
                   </ChartDataLabel>
                   <ToolTip>=Fields!Grupo.Value + " " + Fields!Sub_Consultoria.Value</ToolTip>
                   <Style />
@@ -156,6 +164,7 @@
               <ValueAxisName>Primary</ValueAxisName>
               <CategoryAxisName>Primary</CategoryAxisName>
               <ChartSmartLabel>
+                <Disabled>true</Disabled>
                 <CalloutLineColor>Black</CalloutLineColor>
                 <MinMovingDistance>0pt</MinMovingDistance>
               </ChartSmartLabel>
@@ -172,7 +181,7 @@
                 <ChartAxisTitle>
                   <Caption>Grupo / Sub Grupo</Caption>
                   <Style>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>14pt</FontSize>
                   </Style>
                 </ChartAxisTitle>
                 <ChartMajorGridLines>
@@ -197,6 +206,7 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <MaxFontSize>23pt</MaxFontSize>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -241,17 +251,19 @@
                 <ChartAxisTitle>
                   <Caption>Percentual de aproveitamento</Caption>
                   <Style>
-                    <FontSize>8pt</FontSize>
+                    <FontSize>14pt</FontSize>
                   </Style>
                 </ChartAxisTitle>
                 <ChartMajorGridLines>
                   <Style>
                     <Border>
-                      <Color>Gainsboro</Color>
+                      <Color>Silver</Color>
                     </Border>
                   </Style>
+                  <IntervalType>Auto</IntervalType>
                 </ChartMajorGridLines>
                 <ChartMinorGridLines>
+                  <Enabled>True</Enabled>
                   <Style>
                     <Border>
                       <Color>Gainsboro</Color>
@@ -301,13 +313,12 @@
               </ChartAxis>
             </ChartValueAxes>
             <ChartThreeDProperties>
-              <Enabled>true</Enabled>
               <Clustered>true</Clustered>
             </ChartThreeDProperties>
             <Style>
-              <BackgroundColor>LightSteelBlue</BackgroundColor>
+              <BackgroundColor>#00ffffff</BackgroundColor>
               <BackgroundGradientType>LeftRight</BackgroundGradientType>
-              <BackgroundGradientEndColor>CornflowerBlue</BackgroundGradientEndColor>
+              <BackgroundGradientEndColor>#00ffffff</BackgroundGradientEndColor>
               <BackgroundHatchType>None</BackgroundHatchType>
             </Style>
           </ChartArea>
@@ -316,7 +327,7 @@
           <ChartLegend Name="Default">
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
-              <FontSize>8pt</FontSize>
+              <FontSize>14pt</FontSize>
             </Style>
             <Position>BottomCenter</Position>
             <ChartLegendTitle>
@@ -327,19 +338,21 @@
                 <TextAlign>Center</TextAlign>
               </Style>
             </ChartLegendTitle>
+            <AutoFitTextDisabled>true</AutoFitTextDisabled>
             <HeaderSeparatorColor>Black</HeaderSeparatorColor>
             <ColumnSeparatorColor>Black</ColumnSeparatorColor>
           </ChartLegend>
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>Participação por Grupo</Caption>
+            <Caption>="Participação por Grupo - \n" + "Loja - " + Fields!Razao_Social.Value + " \n " + "Mês - " + Fields!Mes.Value.ToString</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
               <TextAlign>General</TextAlign>
               <VerticalAlign>Top</VerticalAlign>
             </Style>
+            <DockOutsideChartArea>true</DockOutsideChartArea>
           </ChartTitle>
         </ChartTitles>
         <Palette>BrightPastel</Palette>
@@ -376,12 +389,12 @@
   </Body>
   <Width>11.69291in</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
