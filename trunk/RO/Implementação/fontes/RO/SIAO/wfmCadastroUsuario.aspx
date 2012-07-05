@@ -130,8 +130,8 @@
                             <td colspan="2" style="text-align: right;">
                                 <asp:Button ID="btnSave" CssClass="rightButton gray" ToolTip="Salvar as informações do usuário."
                                     runat="server" Text="Salvar" OnClick="btnSave_Click" />
-                                <asp:Button ID="btnLimpar" runat="server" Text="Limpar" CssClass="LeftButton gray" 
-                                ToolTip="Limpar todos os campos" onclick="btnLimpar_Click" />
+                                <asp:Button ID="btnLimpar" runat="server" Text="Limpar" CssClass="LeftButton gray"
+                                    ToolTip="Limpar todos os campos" OnClick="btnLimpar_Click" />
                             </td>
                         </tr>
                     </table>

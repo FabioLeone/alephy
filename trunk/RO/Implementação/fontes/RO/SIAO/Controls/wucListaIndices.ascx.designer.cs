@@ -31,24 +31,6 @@ namespace SIAO.Controls {
         protected global::System.Web.UI.WebControls.View vwIndicesList;
         
         /// <summary>
-        /// lblCategoria control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCategoria;
-        
-        /// <summary>
-        /// ddlCategorias control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCategorias;
-        
-        /// <summary>
         /// lblGrupo control.
         /// </summary>
         /// <remarks>
@@ -67,13 +49,22 @@ namespace SIAO.Controls {
         protected global::System.Web.UI.WebControls.DropDownList ddlGrupos;
         
         /// <summary>
-        /// btnFiltro control.
+        /// lblCategoria control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFiltro;
+        protected global::System.Web.UI.WebControls.Label lblCategoria;
+        
+        /// <summary>
+        /// ddlCategorias control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCategorias;
         
         /// <summary>
         /// btnMostrarTodos control.
@@ -83,6 +74,15 @@ namespace SIAO.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnMostrarTodos;
+        
+        /// <summary>
+        /// btnFiltro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltro;
         
         /// <summary>
         /// gvwIndices control.
@@ -110,5 +110,14 @@ namespace SIAO.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View vwIndicesCadastro;
+        
+        /// <summary>
+        /// wucCadastroIndices1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SIAO.Controls.wucCadastroIndices wucCadastroIndices1;
     }
 }

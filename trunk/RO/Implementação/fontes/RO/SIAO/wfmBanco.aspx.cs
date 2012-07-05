@@ -104,5 +104,11 @@ namespace SIAO
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
         }
 
+        protected void btnIndices_Click(object sender, EventArgs e)
+        {
+            Global.LocalPage = "wfmBanco.aspx";
+            Response.Redirect("wfmIndices.aspx");
+        }
+
     }
 }

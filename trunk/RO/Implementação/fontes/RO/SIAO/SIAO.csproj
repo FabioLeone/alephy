@@ -59,8 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\a_Logo.jpg" />
+    <Content Include="Content\delete.png" />
     <Content Include="Content\document.png" />
-    <Content Include="Content\easyscroll.js" />
+    <Content Include="Content\edit.png" />
     <Content Include="Content\graphic.png" />
     <Content Include="Content\important.png" />
     <Content Include="Content\login-box-backg.png" />
@@ -72,6 +73,7 @@
     <Content Include="Content\report.png" />
     <Content Include="Content\ssSIAO.css" />
     <Content Include="Content\success.png" />
+    <Content Include="wfmIndices.aspx" />
     <Content Include="wfmLabRelat.aspx" />
     <Content Include="Controls\wucCadastroIndices.ascx" />
     <Content Include="Controls\wucListaIndices.ascx" />
@@ -98,6 +100,13 @@
     <Content Include="wfmRelatorio.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="wfmIndices.aspx.cs">
+      <DependentUpon>wfmIndices.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmIndices.aspx.designer.cs">
+      <DependentUpon>wfmIndices.aspx</DependentUpon>
+    </Compile>
     <Compile Include="wfmLabRelat.aspx.cs">
       <DependentUpon>wfmLabRelat.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -247,7 +256,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>4325</DevelopmentServerPort>
+          <DevelopmentServerPort>5508</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

@@ -27,16 +27,7 @@ namespace SIAO.Controls
 
         protected void btnFiltro_Click(object sender, EventArgs e)
         {
-            int intId = 0;
-            if (Convert.ToInt32(ddlGrupos.SelectedValue) > 0)
-            {
-                intId = Convert.ToInt32(ddlGrupos.SelectedValue);
-            }
-            else if (Convert.ToInt32(ddlCategorias.SelectedValue) > 0) {
-                intId = Convert.ToInt32(ddlCategorias.SelectedValue);
-            }
-
-            gvwIndices.DataSource = GraficBLL.GetIndicesById(intId, strConnection);
+            gvwIndices.DataSource = GraficBLL.GetIndicesByFiltro(ddlGrupos.SelectedValue, ddlCategorias.SelectedValue, strConnection);
             gvwIndices.EmptyDataText = "Nenhum registro encontrado.";
             gvwIndices.DataBind();
         }
@@ -48,6 +39,24 @@ namespace SIAO.Controls
 
         protected void btnNovo_Click(object sender, EventArgs e)
         {
+            IndicesGraficTO clsIndices = new IndicesGraficTO();
+            wucCadastroIndices1.PopulaDados(clsIndices);
+            Global.LocalPage = "wfmIndices.aspx";
+            mvwIndices.ActiveViewIndex = 1;
+        }
+
+        protected void gvwIndices_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int intId = Convert.ToInt32(gvwIndices.DataKeys[e.RowIndex].Value);
+            GraficBLL.DeleteIndiceGrafic(GraficBLL.GetIndicesById(intId, strConnection), strConnection);
+            LoadDados();
+        }
+
+        protected void gvwIndices_OnRowEditing(object sender, GridViewEditEventArgs e)
+        {
+            int intId = Convert.ToInt32(gvwIndices.DataKeys[e.NewEditIndex].Value);
+            wucCadastroIndices1.PopulaDados(GraficBLL.GetIndicesById(intId, strConnection));
+            Global.LocalPage = "wfmIndices.aspx";
             mvwIndices.ActiveViewIndex = 1;
         }
         #endregion
@@ -56,27 +65,22 @@ namespace SIAO.Controls
 
         private void LoadDados()
         {
-            List<IndicesGraficTO> clsIndicesGrafic = GraficBLL.GetIndicesAll(strConnection);
-
-            ddlCategorias.DataSource = clsIndicesGrafic;
-            ddlCategorias.DataTextField = "categoria";
-            ddlCategorias.DataValueField = "id";
+            ddlCategorias.DataSource = GraficBLL.GetCategorias(strConnection);
             ddlCategorias.DataBind();
-            ddlCategorias.Items.Insert(0, new ListItem(string.Empty, "0"));
+            ddlCategorias.Items.Insert(0, new ListItem(string.Empty, ""));
             ddlCategorias.SelectedIndex = 0;
 
-            ddlGrupos.DataSource = clsIndicesGrafic;
-            ddlGrupos.DataTextField = "grupo";
-            ddlGrupos.DataValueField = "id";
+            ddlGrupos.DataSource = GraficBLL.GetGrupos(strConnection);
             ddlGrupos.DataBind();
-            ddlGrupos.Items.Insert(0, new ListItem(string.Empty, "0"));
+            ddlGrupos.Items.Insert(0, new ListItem(string.Empty, ""));
             ddlGrupos.SelectedIndex = 0;
 
-            gvwIndices.DataSource = clsIndicesGrafic;
+            gvwIndices.DataSource = GraficBLL.GetIndicesAll(strConnection);
             gvwIndices.EmptyDataText = "Nenhum registro encontrado.";
             gvwIndices.DataBind();
         }
 
         #endregion
+
     }
 }

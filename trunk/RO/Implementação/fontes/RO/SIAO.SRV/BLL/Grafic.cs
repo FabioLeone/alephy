@@ -32,9 +32,9 @@ namespace SIAO.SRV.BLL
                                 Sub_Consultoria = _Grafic.Sub_Consultoria,
                                 Razao_Social = _Grafic.Razao_Social,
                                 Mes = _Grafic.Mes,
-                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda)*100,2),
+                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Grupo = _Grafic.Grupo,
-                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto)*100,2)
+                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2)
                             });
                         }
                     });
@@ -43,9 +43,9 @@ namespace SIAO.SRV.BLL
 
             return clsList;
         }
-        
+
         #endregion
-        
+
         #region .: Search :.
 
         public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUsers, string strConnection, string strLoja)
@@ -62,12 +62,31 @@ namespace SIAO.SRV.BLL
         {
             return GraficDAL.GetIndicesALL(strConnection);
         }
+        public static IndicesGraficTO GetIndicesById(int intId, string strConnection)
+        {
+            return GraficDAL.GetIndicesById(intId, strConnection);
+        }
+        public static List<IndicesGraficTO> GetIndicesByFiltro(string strGrupo, string strSub_Categoria, string strConnection)
+        {
+            return GraficDAL.GetIndicesByFiltro(strGrupo, strSub_Categoria, strConnection);
+        }
+
+        public static List<string> GetCategorias(string strConnection)
+        {
+            return GraficDAL.GetCategorias(strConnection);
+        }
+
+        public static List<string> GetGrupos(string strConnection)
+        {
+            return GraficDAL.GetGrupos(strConnection);
+        }
 
         #endregion
 
         #region .: Persistence :.
 
-        public static IndicesGraficTO InsertIndice(IndicesGraficTO clsIndiceGrafic, string strConnection) {
+        public static IndicesGraficTO InsertIndice(IndicesGraficTO clsIndiceGrafic, string strConnection)
+        {
             return GraficDAL.InsetIndices(clsIndiceGrafic, strConnection);
         }
 
@@ -82,11 +101,6 @@ namespace SIAO.SRV.BLL
         }
 
         #endregion
-
-        public static object GetIndicesById(int intId, string strConnection)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

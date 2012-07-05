@@ -408,5 +408,146 @@ namespace SIAO.SRV.DAL
 
         #endregion
 
+
+        internal static IndicesGraficTO GetIndicesById(int intId, string strConnection)
+        {
+            IndicesGraficTO clsIndicesGrafic = new IndicesGraficTO();
+
+            MySqlConnection msc = new MySqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT indice_relatorios.id, indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto");
+                strSQL.Append(" FROM indice_relatorios");
+                strSQL.Append(" WHERE indice_relatorios.id = @id");
+
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+                cmdIndicesGrafic.Parameters.Clear();
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Int32, "id", intId));
+
+                msc.Open();
+
+                using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
+                {
+                    if (drdIndicesGrafic.Read())
+                    {
+                        clsIndicesGrafic = LoadIndicesGrafic(drdIndicesGrafic);
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsIndicesGrafic;
+        }
+
+        internal static List<IndicesGraficTO> GetIndicesByFiltro(string strGrupo, string strSub_Categoria, string strConnection)
+        {
+            List<IndicesGraficTO> clsIndicesGrafic = new List<IndicesGraficTO>();
+
+            MySqlConnection msc = new MySqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT indice_relatorios.id, indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto");
+                strSQL.Append(" FROM indice_relatorios");
+                strSQL.Append(" WHERE indice_relatorios.id > 0");
+
+                if (!string.IsNullOrEmpty(strGrupo)) { strSQL.Append(" AND indice_relatorios.grupo = @grupo"); }
+                if (!string.IsNullOrEmpty(strSub_Categoria)) { strSQL.Append(" AND indice_relatorios.categoria = @categoria"); }
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+                cmdIndicesGrafic.Parameters.Clear();
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "grupo", strGrupo));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "categoria", strSub_Categoria));
+
+                msc.Open();
+
+                using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
+                {
+                    while (drdIndicesGrafic.Read())
+                    {
+                        clsIndicesGrafic.Add(LoadIndicesGrafic(drdIndicesGrafic));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsIndicesGrafic;
+        }
+
+        internal static List<string> GetCategorias(string strConnection)
+        {
+            List<string> clsCategorias = new List<string>();
+
+            MySqlConnection msc = new MySqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT DISTINCT indice_relatorios.categoria");
+                strSQL.Append(" FROM indice_relatorios");
+
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+
+                msc.Open();
+
+                using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
+                {
+                    while (drdIndicesGrafic.Read())
+                    {
+                        if (!drdIndicesGrafic.IsDBNull(drdIndicesGrafic.GetOrdinal("categoria"))) { clsCategorias.Add(drdIndicesGrafic.GetString(drdIndicesGrafic.GetOrdinal("categoria"))); } else { clsCategorias.Add(string.Empty); }
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsCategorias;
+        }
+
+        internal static List<string> GetGrupos(string strConnection)
+        {
+            List<string> clsGrupos = new List<string>();
+
+            MySqlConnection msc = new MySqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT DISTINCT indice_relatorios.grupo");
+                strSQL.Append(" FROM indice_relatorios");
+
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+
+                msc.Open();
+
+                using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
+                {
+                    while (drdIndicesGrafic.Read())
+                    {
+                        if (!drdIndicesGrafic.IsDBNull(drdIndicesGrafic.GetOrdinal("grupo"))) { clsGrupos.Add(drdIndicesGrafic.GetString(drdIndicesGrafic.GetOrdinal("grupo"))); } else { clsGrupos.Add(string.Empty); }
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsGrupos;
+        }
     }
 }

@@ -31,6 +31,15 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.DropDownList ddlUser;
         
         /// <summary>
+        /// ddlUser_ListSearchExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ListSearchExtender ddlUser_ListSearchExtender;
+        
+        /// <summary>
         /// btnEdit control.
         /// </summary>
         /// <remarks>

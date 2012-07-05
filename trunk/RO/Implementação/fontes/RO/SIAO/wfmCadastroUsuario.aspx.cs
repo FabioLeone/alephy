@@ -66,17 +66,18 @@ namespace SIAO
                 if (lblE.Visible) { lblE.Text = "*"; } else { lblE.Text = "*"; lblE.Visible = true; }
                 divErro("Entre com o e-mail do usuário.");
             }
-            else if (txtSenha.Text == "")
-            {
-                if (lblV.Visible) { lblV.Visible = false; }
-                if (lblE.Visible) { lblE.Visible = false; }
-                if (lblS.Visible) { lblS.Text = "*"; } else { lblS.Text = "*"; lblS.Visible = true; }
-                divErro("Entre com a senha do usuário.");
-            }
             else if (txtValidade.Text != "")
             {
                 if (lblS.Visible) { lblS.Visible = false; }
-                if (txtSenha.Text == txtCfrSenha.Text)
+                
+                if (clsUser.UserId == 0 && txtSenha.Text == "")
+                {
+                    if (lblV.Visible) { lblV.Visible = false; }
+                    if (lblE.Visible) { lblE.Visible = false; }
+                    if (lblS.Visible) { lblS.Text = "*"; } else { lblS.Text = "*"; lblS.Visible = true; }
+                    divErro("Entre com a senha do usuário.");
+                }
+                else if (txtSenha.Text == txtCfrSenha.Text)
                 {
                     if (lblV.Visible) { lblV.Visible = false; }
                     try
@@ -103,7 +104,12 @@ namespace SIAO
                         clsUser.Email = txtEmail.Text;
                         clsUser.Inactive = !cbxAtivo.Checked;
                         clsUser.UserName = txtNome.Text;
-                        clsUser.Password = txtSenha.Text;
+
+                        if (!string.IsNullOrEmpty(txtSenha.Text))
+                            clsUser.Password = txtSenha.Text;
+                        else
+                            clsUser.Password = Session["editUP"].ToString();
+                        
                         clsUser.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
                         
                         msg = oCtl.UpdateUser(clsUser, scn);
@@ -159,6 +165,7 @@ namespace SIAO
             txtEmail.Text = "";
             Session["editU"] = null;
             ddlUser.SelectedIndex = 0;
+            Session["editUP"] = null;
         }
 
         private void div(string msg)
@@ -198,6 +205,7 @@ namespace SIAO
                 txtValidade.Text = clsUser.ExpirationDate.ToShortDateString();
                 rblAccess.SelectedValue = clsUser.Access;
                 Session["editU"] = clsUser.UserId;
+                Session["editUP"] = clsUser.Password;
             }
         }
 

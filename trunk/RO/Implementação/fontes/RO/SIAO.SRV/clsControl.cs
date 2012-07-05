@@ -781,7 +781,7 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT users.UserId, users.UserName, memberships.Email,"
                 + " memberships.Inactive, memberships.ExpirationDate, memberships.Access, "
-                + " memberships.Name, usuarios_farmacias.FarmaciaId"
+                + " memberships.Name, usuarios_farmacias.FarmaciaId, memberships.`Password`"
                 + " FROM  users INNER JOIN"
                 + " memberships ON users.UserId = memberships.UserId LEFT OUTER JOIN"
                 + " usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId"
@@ -803,6 +803,7 @@ namespace SIAO.SRV
                 clsUser.UserName = ds.Tables[0].Rows[0]["UserName"].ToString();
                 clsUser.ExpirationDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["ExpirationDate"].ToString());
                 clsUser.Access = o.denc(ds.Tables[0].Rows[0]["Access"].ToString());
+                clsUser.Password = o.denc(ds.Tables[0].Rows[0]["Password"].ToString());
             }
 
             return clsUser;

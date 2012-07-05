@@ -31,13 +31,31 @@ namespace SIAO.Controls {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvGrupo;
         
         /// <summary>
-        /// ddlGrupo control.
+        /// txtGrupo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlGrupo;
+        protected global::System.Web.UI.WebControls.TextBox txtGrupo;
+        
+        /// <summary>
+        /// txtGrupo_DropDownExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.DropDownExtender txtGrupo_DropDownExtender;
+        
+        /// <summary>
+        /// lbxGrupo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbxGrupo;
         
         /// <summary>
         /// lblCategoria control.
@@ -58,13 +76,31 @@ namespace SIAO.Controls {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCategoria;
         
         /// <summary>
-        /// ddlCadastro control.
+        /// txtCategoria control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCadastro;
+        protected global::System.Web.UI.WebControls.TextBox txtCategoria;
+        
+        /// <summary>
+        /// txtCategoria_DropDownExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.DropDownExtender txtCategoria_DropDownExtender;
+        
+        /// <summary>
+        /// lbxCategoria control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbxCategoria;
         
         /// <summary>
         /// lblVenda control.
@@ -137,5 +173,23 @@ namespace SIAO.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDesconto;
+        
+        /// <summary>
+        /// btnSalvar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSalvar;
+        
+        /// <summary>
+        /// vsIndices control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary vsIndices;
     }
 }
