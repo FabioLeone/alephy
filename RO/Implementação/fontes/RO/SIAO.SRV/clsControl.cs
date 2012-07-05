@@ -605,7 +605,7 @@ namespace SIAO.SRV
                 + " FROM"
                 + " base_clientes"
                 + " LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra"
-                + " WHERE Ano = ";
+                + " WHERE produtos_base.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND Ano = ";
 
             if (ano == "") { SQL += DateTime.Now.Year; }
             else

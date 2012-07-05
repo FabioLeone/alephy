@@ -67,16 +67,16 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" SELECT base_clientes.Razao_Social,base_clientes.Cnpj, base_clientes.Mes, produtos_base.Grupo, produtos_base.Sub_Consultoria, ");
                 strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto");
                 strSQL.Append(" FROM base_clientes ");
-                strSQL.Append(" INNER JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra");
                 strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes");
                 strSQL.Append(" AND (produtos_base.Grupo = 'Genéricos' AND produtos_base.Sub_Consultoria = 'PDE 2-2 (FPB)') OR ((produtos_base.Sub_Consultoria = 'PDE 2 (trata)') AND base_clientes.Mes = @Mes)");
-                strSQL.Append(" OR ((produtos_base.Grupo = 'Propagados' AND produtos_base.Sub_Consultoria = 'PDE 1 (Anti - RH)') AND base_clientes.Mes = @Mes)");
+                strSQL.Append(" OR ((produtos_base.Grupo = 'Propagados' AND produtos_base.Sub_Consultoria LIKE 'PDE 1 %') AND base_clientes.Mes = @Mes)");
                 strSQL.Append(" GROUP BY base_clientes.Razao_Social, base_clientes.Mes, produtos_base.Grupo, produtos_base.Sub_Consultoria ");
                 strSQL.Append(" UNION ");
                 strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'Total' AS Grupo, 'RELAC (PBM)'AS Sub_Consultoria,  ");
                 strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto ");
                 strSQL.Append(" FROM base_clientes ");
-                strSQL.Append(" INNER JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
                 strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes ");
                 strSQL.Append(" AND produtos_base.Sub_Consultoria LIKE 'RELAC (PBM)' ");
                 strSQL.Append(" GROUP BY base_clientes.Mes,base_clientes.Cnpj ");
@@ -84,7 +84,7 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'Total' AS Grupo, 'PDE 2 (trata)'AS Sub_Consultoria,  ");
                 strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto ");
                 strSQL.Append(" FROM base_clientes ");
-                strSQL.Append(" INNER JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
                 strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes ");
                 strSQL.Append(" AND produtos_base.Sub_Consultoria LIKE 'PDE 2 %' ");
                 strSQL.Append(" GROUP BY base_clientes.Mes,base_clientes.Cnpj ");
@@ -92,7 +92,7 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'Total' AS Grupo, 'PORT (PSICO)'AS Sub_Consultoria,  ");
                 strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto ");
                 strSQL.Append(" FROM base_clientes ");
-                strSQL.Append(" INNER JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
                 strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes ");
                 strSQL.Append(" AND produtos_base.Sub_Consultoria LIKE 'PORT (PSICO)' ");
                 strSQL.Append(" GROUP BY base_clientes.Mes,base_clientes.Cnpj  ");
@@ -100,8 +100,8 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'zzzzzz' AS Grupo, 'zzzzzz'AS Sub_Consultoria, ");
                 strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto ");
                 strSQL.Append(" FROM base_clientes ");
-                strSQL.Append(" INNER JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
-                strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes GROUP BY base_clientes.Cnpj) AS xTemp WHERE Mes > 0");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
+                strSQL.Append(" WHERE base_clientes.Mes = @Mes GROUP BY base_clientes.Cnpj) AS xTemp WHERE Mes > 0");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 

@@ -18,3 +18,13 @@ C:\Users\uvf\Desktop\Ro versions\RO\SIAO.SRV\bin\Debug\SIAO.SRV.pdb
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO.SRV\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO.SRV\obj\Debug\SIAO.SRV.dll
 C:\Users\uvf\Desktop\Ro versions\RO\SIAO.SRV\obj\Debug\SIAO.SRV.pdb
+C:\Users\Foster Silva\Desktop\Detecta\RO\SIAO.SRV\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Foster Silva\Desktop\Detecta\RO\SIAO.SRV\obj\Debug\SIAO.SRV.dll
+C:\Users\Foster Silva\Desktop\Detecta\RO\SIAO.SRV\obj\Debug\SIAO.SRV.pdb
+C:\Users\Foster Silva\Desktop\Detecta\RO\SIAO.SRV\bin\Debug\SIAO.SRV.dll
+C:\Users\Foster Silva\Desktop\Detecta\RO\SIAO.SRV\bin\Debug\SIAO.SRV.pdb
+C:\Users\Foster Silva\Desktop\Detecta\Mysql\RO\SIAO.SRV\bin\Debug\SIAO.SRV.dll
+C:\Users\Foster Silva\Desktop\Detecta\Mysql\RO\SIAO.SRV\bin\Debug\SIAO.SRV.pdb
+C:\Users\Foster Silva\Desktop\Detecta\Mysql\RO\SIAO.SRV\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Foster Silva\Desktop\Detecta\Mysql\RO\SIAO.SRV\obj\Debug\SIAO.SRV.dll
+C:\Users\Foster Silva\Desktop\Detecta\Mysql\RO\SIAO.SRV\obj\Debug\SIAO.SRV.pdb
