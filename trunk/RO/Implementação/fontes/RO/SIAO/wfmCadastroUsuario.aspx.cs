@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Data;
 using System.Web.UI.WebControls;
 using SIAO.SRV.TO;
+using System.Text;
 
 namespace SIAO
 {
@@ -23,6 +24,7 @@ namespace SIAO
 
             if (!IsPostBack)
             {
+                clear();
                 getUsers();
             }
             txtNome.Focus();
@@ -159,6 +161,7 @@ namespace SIAO
         protected void clear()
         {
             txtNome.Text = "";
+            txtAcsName.Text = string.Empty;
             txtSenha.Text = "";
             txtValidade.Text = "";
             txtCfrSenha.Text = "";
@@ -177,7 +180,7 @@ namespace SIAO
             divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "28%");
             divInfo.InnerHtml = "<p>" + msg + "</p>";
 
-            UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
+            Panel1.Controls.Add(divInfo);
         }
 
         private void divErro(string msg)
@@ -189,7 +192,7 @@ namespace SIAO
             divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "4%");
             divInfo.InnerHtml = "<p>" + msg + "</p>";
 
-            UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
+            Panel1.Controls.Add(divInfo);
         }
 
         protected void btnEdit_Click(object sender, EventArgs e)
@@ -207,11 +210,14 @@ namespace SIAO
                 Session["editU"] = clsUser.UserId;
                 Session["editUP"] = clsUser.Password;
             }
+            txtSearch.Text = string.Empty;
+            ddlUser.SelectedIndex = 0;
         }
 
         protected void btnLimpar_Click(object sender, EventArgs e)
         {
             clear();   
         }
+
     }
 }
