@@ -69,8 +69,8 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" FROM base_clientes ");
                 strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra");
                 strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes");
-                strSQL.Append(" AND (produtos_base.Grupo = 'Genéricos' AND produtos_base.Sub_Consultoria = 'PDE 2-2 (FPB)') OR ((produtos_base.Sub_Consultoria = 'PDE 2 (trata)') AND base_clientes.Mes = @Mes)");
-                strSQL.Append(" OR ((produtos_base.Grupo = 'Propagados' AND produtos_base.Sub_Consultoria LIKE 'PDE 1 %') AND base_clientes.Mes = @Mes)");
+                strSQL.Append(" AND (produtos_base.Grupo = 'Genéricos' AND produtos_base.Sub_Consultoria = 'PDE 2-2 (FPB)') OR ((produtos_base.Sub_Consultoria = 'PDE 2 (trata)') AND base_clientes.Mes = @Mes AND #CNPJ)");
+                strSQL.Append(" OR ((produtos_base.Grupo = 'Propagados' AND produtos_base.Sub_Consultoria LIKE 'PDE 1 %') AND base_clientes.Mes = @Mes AND #CNPJ)");
                 strSQL.Append(" GROUP BY base_clientes.Razao_Social, base_clientes.Mes, produtos_base.Grupo, produtos_base.Sub_Consultoria ");
                 strSQL.Append(" UNION ");
                 strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'Total' AS Grupo, 'RELAC (PBM)'AS Sub_Consultoria,  ");
@@ -105,9 +105,12 @@ namespace SIAO.SRV.DAL
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
+                string strCnpj = string.Empty;
+
                 if (strLoja != "")
                 {
-                    strSQL.Append(" AND Cnpj IN ('" + strLoja + "')");
+                    strCnpj = " AND Cnpj IN ('" + strLoja + "')";
+                    strSQL.Append(strCnpj);
                 }
                 else
                 {
@@ -143,14 +146,15 @@ namespace SIAO.SRV.DAL
                         {
                             if (clsUser.Cnpj.Count > 0)
                             {
-                                strSQL.Append(" AND Cnpj IN ('");
+                                strCnpj = " AND Cnpj IN ('";
 
                                 int i = 0;
                                 clsUser.Cnpj.ForEach(delegate(string _cnpj)
                                 {
-                                    if (i == 0) { strSQL.Append(_cnpj); i++; } else { strSQL.Append("', '" + _cnpj); i++; }
+                                    if (i == 0) { strCnpj += _cnpj; i++; } else { strCnpj += "', '" + _cnpj; i++; }
                                 });
-                                strSQL.Append("')");
+                                strCnpj += "')";
+                                strSQL.Append(strCnpj);
                             }
                         }
                     }
@@ -186,13 +190,15 @@ namespace SIAO.SRV.DAL
                         {
                             if (clsUser.Cnpj.Count > 0)
                             {
-                                strSQL.Append(" AND Cnpj IN ('");
+                                strCnpj = " AND Cnpj IN ('";
                                 int i = 0;
                                 clsUser.Cnpj.ForEach(delegate(string _cnpj)
                                 {
-                                    if (i == 0) { strSQL.Append(_cnpj); i++; } else { strSQL.Append("', '" + _cnpj); i++; }
+                                    if (i == 0) { strCnpj += _cnpj; i++; } else { strCnpj += "', '" + _cnpj; i++; }
                                 });
-                                strSQL.Append("')");
+                                strCnpj += "')";
+                                strSQL.Append(strCnpj);
+
                             }
                         }
                     }
@@ -200,8 +206,8 @@ namespace SIAO.SRV.DAL
 
 
                 strSQL.Append(" ORDER BY Grupo, Sub_Consultoria ");
-                
-                cmdGrafic.CommandText = strSQL.ToString();
+
+                cmdGrafic.CommandText = strSQL.ToString().Replace("#CNPJ", strCnpj.Replace("AND ", "base_clientes."));
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@Mes", intMes));
 

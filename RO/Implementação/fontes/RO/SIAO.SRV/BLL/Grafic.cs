@@ -25,7 +25,7 @@ namespace SIAO.SRV.BLL
                 {
                     clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
                     {
-                        if (_Grafic.Sub_Consultoria == _IndicesGrafic.categoria && _Grafic.Grupo == _IndicesGrafic.grupo)
+                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
                         {
                             clsList.Add(new GraficTO()
                             {
