@@ -19,6 +19,10 @@
                                     Selecione o ano, para consulta.
                                     <asp:DropDownList ID="ddlAno" runat="server">
                                     </asp:DropDownList>
+                                    <br />
+                                    Loja:
+                                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server">
+                                    </asp:DropDownList>
                                     <ul class="iconList">
                                         <li>
                                             <p class="imgBtn">

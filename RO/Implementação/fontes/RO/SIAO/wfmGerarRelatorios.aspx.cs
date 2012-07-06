@@ -36,6 +36,13 @@ namespace SIAO
             ddlLojas.DataBind();
             ddlLojas.Items.Insert(0, new ListItem("Selecione", string.Empty));
             ddlLojas.SelectedIndex = 0;
+
+            ddlLojaRelatorios.DataSource = oc.GetLojaByUserId(scn, clsUser);
+            ddlLojaRelatorios.DataTextField = "NomeFantasia";
+            ddlLojaRelatorios.DataValueField = "Cnpj";
+            ddlLojaRelatorios.DataBind();
+            ddlLojaRelatorios.Items.Insert(0, new ListItem("Todas", string.Empty));
+            ddlLojaRelatorios.SelectedIndex = 0;
         }
 
         private void getAno()
@@ -76,7 +83,7 @@ namespace SIAO
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
 
-            lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value);
+            lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
 
             Session["cross"] = lr1;
 
@@ -89,7 +96,7 @@ namespace SIAO
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
 
-            lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value);
+            lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
 
             Session["cross"] = lr1;
 

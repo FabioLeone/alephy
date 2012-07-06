@@ -303,7 +303,6 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SET NOCOUNT=ON;");
                 strSQL.Append("INSERT INTO indice_relatorios (indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto)");
                 strSQL.Append(" VALUES (@grupo, @categoria, @venda, @desconto);");
                 strSQL.Append("SELECT indice_relatorios.id, indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto");
@@ -343,7 +342,6 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SET NOCOUNT=ON;");
                 strSQL.Append("UPDATE indice_relatorios SET indice_relatorios.grupo=@grupo, indice_relatorios.categoria=@categoria, indice_relatorios.venda=@venda, indice_relatorios.desconto=@desconto");
                 strSQL.Append(" WHERE indice_relatorios.id=@id;");
 
@@ -379,7 +377,6 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SET NOCOUNT=ON;");
                 strSQL.Append("DELETE FROM indice_relatorios");
                 strSQL.Append(" WHERE indice_relatorios.id=@id;");
 
