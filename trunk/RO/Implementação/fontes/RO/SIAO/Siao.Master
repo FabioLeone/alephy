@@ -23,7 +23,7 @@
                       { %>
                     <li><a href='#'><span>Cadastro</span></a>
                         <ul>
-                            <li><a href="wfmCadastroUsuario.aspx"><span>Cadastro de Usuários</span></a></li>
+                            <li><a href="wfmUsers.aspx"><span>Usuários</span></a></li>
                             <li><a href="wfmCadastroRede.aspx"><span>Cadastro de Redes</span></a></li>
                             <li><a href="wfmCadastroLojas.aspx"><span>Cadastro de Lojas</span></a></li>
                             <li><a href="wfmBanco.aspx"><span>Manutenção do Banco de Dados</span></a></li>

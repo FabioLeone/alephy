@@ -36,7 +36,7 @@
             <p>
                 <br />
                 <br />
-                <asp:LinkButton ID="lbtnLogin" runat="server" OnClick="lbtnLogin_Click" ValidationGroup="Login"><img src="Content/login-btn.png" width="103" height="42" alt="" style="margin-left: 90px;" /></asp:LinkButton>
+                <asp:ImageButton ID="ibtnLogin" OnClick="lbtnLogin_Click" ValidationGroup="Login" runat="server" ImageUrl="~/Content/login-btn.png" Width="103" Height="42" style="margin-left: 90px;" />
             </p>
         </div>
     </div>

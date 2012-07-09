@@ -73,6 +73,8 @@
     <Content Include="Content\report.png" />
     <Content Include="Content\ssSIAO.css" />
     <Content Include="Content\success.png" />
+    <Content Include="Controls\wucCadastroUser.ascx" />
+    <Content Include="Controls\wucListaUsers.ascx" />
     <Content Include="wfmIndices.aspx" />
     <Content Include="wfmLabRelat.aspx" />
     <Content Include="Controls\wucCadastroIndices.ascx" />
@@ -98,8 +100,23 @@
     <Content Include="wfmRelatMod1.aspx" />
     <Content Include="wfmRelatMod2.aspx" />
     <Content Include="wfmRelatorio.aspx" />
+    <Content Include="wfmUsers.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\wucCadastroUser.ascx.cs">
+      <DependentUpon>wucCadastroUser.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\wucCadastroUser.ascx.designer.cs">
+      <DependentUpon>wucCadastroUser.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\wucListaUsers.ascx.cs">
+      <DependentUpon>wucListaUsers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\wucListaUsers.ascx.designer.cs">
+      <DependentUpon>wucListaUsers.ascx</DependentUpon>
+    </Compile>
     <Compile Include="wfmIndices.aspx.cs">
       <DependentUpon>wfmIndices.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -220,6 +237,13 @@
     </Compile>
     <Compile Include="wfmRelatorio.aspx.designer.cs">
       <DependentUpon>wfmRelatorio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfmUsers.aspx.cs">
+      <DependentUpon>wfmUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmUsers.aspx.designer.cs">
+      <DependentUpon>wfmUsers.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -80,6 +80,11 @@ namespace SIAO.SRV.BLL
         {
             return UsersDAL.GetByAccessType(strAccess, strConnection);
         }
+
+        public static object GetIndicesByFiltro(string strNome, string strConnection)
+        {
+            return UsersDAL.GetIndicesByFiltro(strNome, strConnection);
+        }
         #endregion
 
         #region .: Persistence :.
