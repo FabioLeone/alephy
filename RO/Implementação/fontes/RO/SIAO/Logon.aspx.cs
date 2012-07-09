@@ -3,6 +3,8 @@ using SIAO.SRV.BLL;
 using SIAO.SRV.TO;
 using System.Configuration;
 using System.Web.Security;
+using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace SIAO
 {
@@ -20,45 +22,43 @@ namespace SIAO
 
         protected void lbtnLogin_Click(object sender, EventArgs e)
         {
-            if (txtNome.Text == "")
-            {
-                //lblAlert.Visible = true;
-                //lblAlert.Text = "Entre com o nome.";
-            }
-            else if (txtSenha.Text == "")
-            {
-                //lblAlert.Visible = true;
-                //lblAlert.Text = "Entre com a senha.";
-                txtSenha.Focus();
-            }
-            else
-            {
-                UsersTO clsUser = UsersBLL.GetByNameAndPassword(txtNome.Text, txtSenha.Text, strConnectionString);
+            UsersTO clsUser = UsersBLL.GetByNameAndPassword(txtNome.Text, txtSenha.Text, strConnectionString);
 
-                if (clsUser.UserId > 0)
+            if (clsUser.UserId > 0)
+            {
+                if (!clsUser.Inactive && clsUser.ExpirationDate > DateTime.Today)
                 {
-                    if (!clsUser.Inactive && clsUser.ExpirationDate > DateTime.Today)
-                    {
-                        Session["user"] = clsUser;
-                        FormsAuthentication.SetAuthCookie(clsUser.UserName, false);
-                        Global.Acs = clsUser.Access;
+                    Session["user"] = clsUser;
+                    FormsAuthentication.SetAuthCookie(clsUser.UserName, false);
+                    Global.Acs = clsUser.Access;
 
-                        Response.Redirect("Default.aspx");
-                    }
-                    else
-                    {
-                        //lblAlert.Visible = true;
-                        //lblAlert.Text = "Prazo da senha expirou.";
-                    }
+                    Response.Redirect("Default.aspx");
                 }
                 else
                 {
-                    //lblAlert.Visible = true;
-                    //lblAlert.Text = "Usuário e/ou senha invalido(s).";
+                    divErro("Prazo da senha expirou.");
                 }
+            }
+            else
+            {
+                divErro("Usuário e/ou senha invalido(s).");
             }
         }
         #endregion
 
+        #region .: Metodos :.
+        private void divErro(string msg)
+        {
+            System.Web.UI.HtmlControls.HtmlGenericControl divError = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
+
+            divError.ID = "msgError";
+            divError.Attributes.Add("class", "error");
+            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "35%");
+            divError.Style.Add(HtmlTextWriterStyle.Width, "360px");
+            divError.InnerHtml = "<p>" + msg + "</p>";
+
+            frmLogon.Controls.Add(divError);
+        }
+        #endregion
     }
 }

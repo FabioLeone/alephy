@@ -91,6 +91,7 @@ namespace SIAO.SRV.DAL
 
                 cmdUsers.Parameters.Clear();
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", intUserId));
+                msc.Open();
 
                 using (IDataReader drdUsers = cmdUsers.ExecuteReader())
                 {
@@ -226,6 +227,45 @@ namespace SIAO.SRV.DAL
                         break;
                 }
                 
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
+                {
+                    while (drdUsers.Read())
+                    {
+                        clsUsers.Add(Load(drdUsers));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsUsers;
+        }
+
+        internal static List<UsersTO> GetIndicesByFiltro(string strNome, string strConnection)
+        {
+            List<UsersTO> clsUsers = new List<UsersTO>();
+
+            MySqlConnection msc = new MySqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,");
+                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
+                strSQL.Append(" memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId");
+                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
+                strSQL.Append(" WHERE users.UserName LIKE @Name");
+                strSQL.Append(" ORDER BY users.UserName");
+
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", string.Format("%{0}%", strNome)));
+
                 msc.Open();
 
                 using (IDataReader drdUsers = cmdUsers.ExecuteReader())
@@ -382,7 +422,6 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SET NOCOUNT=ON;");
                 strSQL.Append("DELETE FROM usuarios_farmacias WHERE UserId = @UserId");
 
                 DbCommand cmdUsers = msc.CreateCommand();

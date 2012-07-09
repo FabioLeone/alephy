@@ -7,19 +7,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SIAO {
+namespace SIAO.Controls {
     
     
-    public partial class Logon {
+    public partial class wucListaUsers {
         
         /// <summary>
-        /// frmLogon control.
+        /// mvwUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmLogon;
+        protected global::System.Web.UI.WebControls.MultiView mvwUsers;
+        
+        /// <summary>
+        /// vwUserList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View vwUserList;
+        
+        /// <summary>
+        /// lblNome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNome;
         
         /// <summary>
         /// txtNome control.
@@ -31,48 +49,57 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.TextBox txtNome;
         
         /// <summary>
-        /// rfvNome control.
+        /// btnMostrarTodos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNome;
+        protected global::System.Web.UI.WebControls.Button btnMostrarTodos;
         
         /// <summary>
-        /// txtSenha control.
+        /// btnFiltro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSenha;
+        protected global::System.Web.UI.WebControls.Button btnFiltro;
         
         /// <summary>
-        /// rfvSenha control.
+        /// gvwUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSenha;
+        protected global::System.Web.UI.WebControls.GridView gvwUsers;
         
         /// <summary>
-        /// ibtnLogin control.
+        /// btnNovo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ibtnLogin;
+        protected global::System.Web.UI.WebControls.Button btnNovo;
         
         /// <summary>
-        /// vsmLogin control.
+        /// vwUserCadastro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary vsmLogin;
+        protected global::System.Web.UI.WebControls.View vwUserCadastro;
+        
+        /// <summary>
+        /// wucCadastroUser1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SIAO.Controls.wucCadastroUser wucCadastroUser1;
     }
 }
