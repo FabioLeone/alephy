@@ -10,6 +10,7 @@ namespace SIAO.SRV
     public class clsFuncs
     {
         private List<int> lstMeses = new List<int>();
+        private List<string> lstCnpj = new List<string>();
 
         public string encr(string text)
         {
@@ -157,6 +158,7 @@ namespace SIAO.SRV
             string[] line;
             int i = 0;
             int intMes = 0;
+            string strCnpj = string.Empty;
 
             while (! sr.EndOfStream)
             {
@@ -184,6 +186,12 @@ namespace SIAO.SRV
                                 lstMeses.Add(Convert.ToInt32(line[j]));
                             }
                         }
+                        if (j.Equals(1)) {
+                            if (!strCnpj.Equals(line[j])) {
+                                strCnpj = line[j];
+                                lstCnpj.Add(strCnpj);
+                            }
+                        }
                     }
                     dt.Rows.Add(dr);
                 }
@@ -192,9 +200,8 @@ namespace SIAO.SRV
             return dt;
         }
 
-        public List<int> Meses() {
-            return lstMeses;
-        }
+        public List<int> Meses() { return lstMeses; }
+        public List<string> Cnpj() { return lstCnpj; }
         #endregion
 
     }

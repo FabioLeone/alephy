@@ -487,7 +487,7 @@ namespace SIAO.SRV
             return msg;
         }
 
-        public string AddTxt(string scn, DataTable dt, UsersTO clsUser, List<int> lstMeses)
+        public string AddTxt(string scn, DataTable dt, UsersTO clsUser, List<int> lstMeses, List<string> lstCnpj)
         {
             MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
@@ -501,8 +501,14 @@ namespace SIAO.SRV
                 {
                     if (oDB.openConnection(cmm))
                     {
-                        cmm.CommandText = "DELETE FROM base_clientes"
-                            + " WHERE Cnpj = '" + dt.Rows[0]["cnpj"].ToString() + "'";
+                        cmm.CommandText = "DELETE FROM base_clientes";
+                        string strCnpj = string.Empty;
+                        int k = 0;
+                        lstCnpj.ForEach(delegate(string _cnpj)
+                        {
+                            if (k == 0) { strCnpj = "'" + _cnpj + "'"; k++; } else { strCnpj += ",'" + _cnpj + "'"; k++; }
+                        });
+                            cmm.CommandText += " WHERE Cnpj IN (" + strCnpj + ")";
                         string strMeses = "";
                         int j = 0;
                         lstMeses.ForEach(delegate(int _mes)
