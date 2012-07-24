@@ -71,12 +71,23 @@
                                     Loja:
                                     <asp:DropDownList ID="ddlLojas" runat="server">
                                     </asp:DropDownList>
+                                    <br />
+                                    Selecione o ano, para consulta (válido apenas para o Grafico2).
+                                    <asp:DropDownList ID="ddlAnoG" runat="server">
+                                    </asp:DropDownList>
                                     <ul class="iconList">
                                         <li>
                                             <p class="imgBtn">
                                                 <asp:ImageButton ID="ibtnGrafic1" runat="server" AlternateText="Grafico1" ImageUrl="~/Content/graphic.png"
                                                     ToolTip="Grafico1" OnClick="ibtnGrafic1_Click" />
                                                 <asp:Label ID="lblGrafic1" runat="server" AssociatedControlID="ibtnGrafic1">Grafico1</asp:Label>
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="imgBtn">
+                                                <asp:ImageButton ID="ibtnGrafic2" runat="server" AlternateText="Grafico2" ImageUrl="~/Content/graphic.png"
+                                                    ToolTip="Grafico2" OnClick="ibtnGrafic2_Click" />
+                                                <asp:Label ID="lblGrafic2" runat="server" AssociatedControlID="ibtnGrafic2">Grafico2</asp:Label>
                                             </p>
                                         </li>
                                     </ul>

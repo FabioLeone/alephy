@@ -53,6 +53,13 @@ namespace SIAO
                 ddlAno.Items.Add(new ListItem(System.DateTime.Now.AddYears(-i).Year.ToString(), System.DateTime.Now.AddYears(-i).Year.ToString()));
             }
             ddlAno.SelectedIndex = 0;
+
+            ddlAnoG.Items.Add(new ListItem(String.Empty, String.Empty));
+            for (int i = 0; i < 3; i++)
+            {
+                ddlAnoG.Items.Add(new ListItem(System.DateTime.Now.AddYears(-i).Year.ToString(), System.DateTime.Now.AddYears(-i).Year.ToString()));
+            }
+            ddlAnoG.SelectedIndex = 0;
         }
 
         private void divErro(string msg)
@@ -115,6 +122,23 @@ namespace SIAO
                 clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojas.SelectedValue);
 
             Session["grafic"] = clsGrafic;
+
+            Global.LocalPage = "wfmGerarRelatorios.aspx";
+
+            Response.Redirect("wfmRelatorio.aspx");
+        }
+
+        protected void ibtnGrafic2_Click(object sender, ImageClickEventArgs e)
+        {
+            List<GraficTO> clsGrafic;
+
+            if (ddlAnoG.SelectedValue != "")
+                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(ddlAnoG.SelectedValue), clsUser, scn, ddlLojas.SelectedValue);
+            else
+                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(DateTime.Now.Year), clsUser, scn, ddlLojas.SelectedValue);
+
+            Session["grafic"] = null;
+            Session["grafic2"] = clsGrafic;
 
             Global.LocalPage = "wfmGerarRelatorios.aspx";
 

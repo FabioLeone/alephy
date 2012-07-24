@@ -298,6 +298,181 @@ namespace SIAO.SRV.DAL
             return clsIndicesGrafic;
         }
 
+        public static List<GraficTO> GetGraficAno(int intAno, UsersTO clsUser, string strConnection, string strLoja)
+        {
+            List<GraficTO> clsGrafic = new List<GraficTO>();
+            MySqlConnection msc = new MySqlConnection(strConnection);
+            List<string> lstCnpj = new List<string>();
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(" SELECT * FROM ( ");
+                strSQL.Append(" SELECT base_clientes.Razao_Social,base_clientes.Cnpj, base_clientes.Mes, produtos_base.Grupo, produtos_base.Sub_Consultoria, ");
+                strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto");
+                strSQL.Append(" FROM base_clientes ");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra");
+                strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Ano = @Ano");
+                strSQL.Append(" AND (produtos_base.Grupo = 'Genéricos' AND produtos_base.Sub_Consultoria = 'PDE 2-2 (FPB)') OR ((produtos_base.Sub_Consultoria = 'PDE 2 (trata)') AND base_clientes.Ano = @Ano AND #CNPJ)");
+                strSQL.Append(" OR ((produtos_base.Grupo = 'Propagados' AND produtos_base.Sub_Consultoria LIKE 'PDE 1 %') AND base_clientes.Ano = @Ano AND #CNPJ)");
+                strSQL.Append(" GROUP BY base_clientes.Razao_Social, base_clientes.Mes, produtos_base.Grupo, produtos_base.Sub_Consultoria ");
+                strSQL.Append(" UNION ");
+                strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'Total' AS Grupo, 'RELAC (PBM)'AS Sub_Consultoria,  ");
+                strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto ");
+                strSQL.Append(" FROM base_clientes ");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
+                strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Ano = @Ano ");
+                strSQL.Append(" AND produtos_base.Sub_Consultoria LIKE 'RELAC (PBM)' ");
+                strSQL.Append(" GROUP BY base_clientes.Mes,base_clientes.Cnpj ");
+                strSQL.Append(" UNION ");
+                strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'Total' AS Grupo, 'PDE 2 (trata)'AS Sub_Consultoria,  ");
+                strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto ");
+                strSQL.Append(" FROM base_clientes ");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
+                strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Ano = @Ano ");
+                strSQL.Append(" AND produtos_base.Sub_Consultoria LIKE 'PDE 2 %' ");
+                strSQL.Append(" GROUP BY base_clientes.Mes,base_clientes.Cnpj ");
+                strSQL.Append(" UNION ");
+                strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'Total' AS Grupo, 'PORT (PSICO)'AS Sub_Consultoria,  ");
+                strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto ");
+                strSQL.Append(" FROM base_clientes ");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
+                strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Ano = @Ano ");
+                strSQL.Append(" AND produtos_base.Sub_Consultoria LIKE 'PORT (PSICO)' ");
+                strSQL.Append(" GROUP BY base_clientes.Mes,base_clientes.Cnpj  ");
+                strSQL.Append(" UNION ");
+                strSQL.Append(" SELECT '' AS Razao_Social,base_clientes.Cnpj, base_clientes.Mes, 'zzzzzz' AS Grupo, 'zzzzzz'AS Sub_Consultoria, ");
+                strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, 1-(SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto ");
+                strSQL.Append(" FROM base_clientes ");
+                strSQL.Append(" LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra ");
+                strSQL.Append(" WHERE base_clientes.Ano = @Ano GROUP BY base_clientes.Cnpj) AS xTemp WHERE Mes > 0");
+
+                DbCommand cmdGrafic = msc.CreateCommand();
+
+                string strCnpj = string.Empty;
+
+                if (strLoja != "")
+                {
+                    strCnpj = " AND Cnpj IN ('" + strLoja + "')";
+                    strSQL.Append(strCnpj);
+                }
+                else
+                {
+                    if (clsUser.Access == "nvg")
+                    {
+                        cmdGrafic.CommandText += "SELECT farmacias.Cnpj FROM memberships"
+                            + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
+                            + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
+                            + " WHERE memberships.UserId = @UserId";
+                        cmdGrafic.Parameters.Clear();
+                        cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UserId", clsUser.UserId));
+
+                        msc.Open();
+                        using (IDataReader drdCnpj = cmdGrafic.ExecuteReader())
+                        {
+                            while (drdCnpj.Read())
+                            {
+                                lstCnpj.Add(!drdCnpj.IsDBNull(drdCnpj.GetOrdinal("Cnpj")) ? drdCnpj.GetString(drdCnpj.GetOrdinal("Cnpj")) : string.Empty);
+                            }
+                        }
+                        msc.Close();
+
+                        if (lstCnpj.Count > 0)
+                        {
+                            clsUser.Cnpj = new List<string>();
+                            lstCnpj.ForEach(delegate(string _cnpj)
+                            {
+                                clsUser.Cnpj.Add(_cnpj);
+                            });
+                        }
+
+                        if (clsUser.Cnpj != null)
+                        {
+                            if (clsUser.Cnpj.Count > 0)
+                            {
+                                strCnpj = " AND Cnpj IN ('";
+
+                                int i = 0;
+                                clsUser.Cnpj.ForEach(delegate(string _cnpj)
+                                {
+                                    if (i == 0) { strCnpj += _cnpj; i++; } else { strCnpj += "', '" + _cnpj; i++; }
+                                });
+                                strCnpj += "')";
+                                strSQL.Append(strCnpj);
+                            }
+                        }
+                    }
+                    else if (clsUser.Access == "nvp")
+                    {
+                        cmdGrafic.CommandText += "SELECT farmacias.Cnpj FROM usuarios_farmacias"
+                            + " INNER JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
+                            + " INNER JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
+                            + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
+                        cmdGrafic.Parameters.Clear();
+                        cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UserId", clsUser.UserId));
+
+                        msc.Open();
+                        using (IDataReader drdCnpj = cmdGrafic.ExecuteReader())
+                        {
+                            while (drdCnpj.Read())
+                            {
+                                lstCnpj.Add(!drdCnpj.IsDBNull(drdCnpj.GetOrdinal("Cnpj")) ? drdCnpj.GetString(drdCnpj.GetOrdinal("Cnpj")) : string.Empty);
+                            }
+                        }
+                        msc.Close();
+
+                        if (lstCnpj.Count > 0)
+                        {
+                            clsUser.Cnpj = new List<string>();
+                            lstCnpj.ForEach(delegate(string _cnpj)
+                            {
+                                clsUser.Cnpj.Add(_cnpj);
+                            });
+                        }
+
+                        if (clsUser.Cnpj != null)
+                        {
+                            if (clsUser.Cnpj.Count > 0)
+                            {
+                                strCnpj = " AND Cnpj IN ('";
+                                int i = 0;
+                                clsUser.Cnpj.ForEach(delegate(string _cnpj)
+                                {
+                                    if (i == 0) { strCnpj += _cnpj; i++; } else { strCnpj += "', '" + _cnpj; i++; }
+                                });
+                                strCnpj += "')";
+                                strSQL.Append(strCnpj);
+
+                            }
+                        }
+                    }
+                }
+
+
+                strSQL.Append(" ORDER BY Grupo, Sub_Consultoria ");
+
+                cmdGrafic.CommandText = strSQL.ToString().Replace("#CNPJ", strCnpj.Replace("AND ", "base_clientes."));
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@Ano", intAno));
+
+                msc.Open();
+
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
+                    while (drdGrafic.Read())
+                    {
+                        clsGrafic.Add(LoadGrfic(drdGrafic));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsGrafic;
+        }
+
         #endregion
 
         #region .: Persistence :.
