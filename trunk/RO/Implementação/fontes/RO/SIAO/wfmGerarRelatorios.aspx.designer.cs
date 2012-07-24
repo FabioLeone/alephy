@@ -94,6 +94,15 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.DropDownList ddlLojas;
         
         /// <summary>
+        /// ddlAnoG control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAnoG;
+        
+        /// <summary>
         /// ibtnGrafic1 control.
         /// </summary>
         /// <remarks>
@@ -110,5 +119,23 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblGrafic1;
+        
+        /// <summary>
+        /// ibtnGrafic2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ibtnGrafic2;
+        
+        /// <summary>
+        /// lblGrafic2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGrafic2;
     }
 }

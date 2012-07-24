@@ -26,8 +26,15 @@ namespace SIAO
 
             if (!IsPostBack)
             {
-                clsGrafic = (List<GraficTO>)Session["grafic"];
-                loadRelat(clsGrafic, clsUser);
+                if (Session["grafic"] != null)
+                {
+                    clsGrafic = (List<GraficTO>)Session["grafic"];
+                    loadRelat(clsGrafic, clsUser);
+                }
+                else if (Session["grafic2"] != null) {
+                    clsGrafic = (List<GraficTO>)Session["grafic2"];
+                    loadRelat2(clsGrafic, clsUser);
+                }
             }
         }
 
@@ -37,7 +44,19 @@ namespace SIAO
             ReportViewer2.Reset();
             ReportViewer2.LocalReport.Dispose();
             ReportViewer2.LocalReport.DataSources.Add(Rds);
+
             ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic.rdlc";
+            ReportViewer2.DataBind();
+        }
+
+        private void loadRelat2(List<GraficTO> clsGrafic, UsersTO clsUser)
+        {
+            Microsoft.Reporting.WebForms.ReportDataSource Rds = new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", clsGrafic);
+            ReportViewer2.Reset();
+            ReportViewer2.LocalReport.Dispose();
+            ReportViewer2.LocalReport.DataSources.Add(Rds);
+
+            ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic2.rdlc";
             ReportViewer2.DataBind();
         }
     }
