@@ -1,0 +1,41 @@
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\SIAO.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\SIAO.pdb
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\SIAO.SRV.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\SIAO.SRV.pdb
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\ar\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\cs\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\de\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\es\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\fr\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\he\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\hi\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\it\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\ja\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\ko\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\nl\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\pt\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\ru\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\tr-TR\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\zh-CHS\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\bin\zh-CHT\AjaxControlToolkit.resources.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\obj\Release\ResolveAssemblyReference.cache
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\obj\Release\SIAO.dll
+d:\users\fabio\documents\visual studio 2010\Projects\SIAO\SIAO\obj\Release\SIAO.pdb
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\bin\SIAO.dll
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\bin\SIAO.pdb
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\bin\SIAO.SRV.dll
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\bin\SIAO.SRV.pdb
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\ResolveAssemblyReference.cache
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\SIAO.dll
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\SIAO.pdb
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\RdlCompile.cache
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\RO\SIAO\obj\Release\RdlCompile.compiled
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\SIAO.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\SIAO.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\SIAO.SRV.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\bin\SIAO.SRV.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\ResolveAssemblyReference.cache
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\RdlCompile.cache
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\RdlCompile.compiled
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\SIAO.dll
+D:\Alephy\trunk\RO\Implementação\fontes\RO\SIAO\obj\Release\SIAO.pdb
