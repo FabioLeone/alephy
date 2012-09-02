@@ -25,14 +25,14 @@
                                     </asp:DropDownList>
                                     <ul class="iconList">
                                         <li>
-                                            <p class="imgBtn">
+                                            <p id="M1" runat="server" class="imgBtn">
                                                 <asp:ImageButton ID="ibtnRelat1" runat="server" OnClick="btnAdm_Click" AlternateText="Modelo1"
                                                     ImageUrl="~/Content/document.png" ToolTip="Modelo1" />
                                                 <asp:Label ID="lblRelat1" runat="server" AssociatedControlID="ibtnRelat1">Modelo1</asp:Label>
                                             </p>
                                         </li>
                                         <li>
-                                            <p class="imgBtn">
+                                            <p id="M2" runat="server" class="imgBtn">
                                                 <asp:ImageButton ID="ibtnRelat2" runat="server" OnClick="btnRelat2_Click" AlternateText="Modelo2"
                                                     ImageUrl="~/Content/document.png" ToolTip="Modelo2" />
                                                 <asp:Label ID="Label1" runat="server" AssociatedControlID="ibtnRelat2">Modelo2</asp:Label>
@@ -77,14 +77,14 @@
                                     </asp:DropDownList>
                                     <ul class="iconList">
                                         <li>
-                                            <p class="imgBtn">
+                                            <p id="G1" runat="server" class="imgBtn">
                                                 <asp:ImageButton ID="ibtnGrafic1" runat="server" AlternateText="Grafico1" ImageUrl="~/Content/graphic.png"
                                                     ToolTip="Grafico1" OnClick="ibtnGrafic1_Click" />
                                                 <asp:Label ID="lblGrafic1" runat="server" AssociatedControlID="ibtnGrafic1">Grafico1</asp:Label>
                                             </p>
                                         </li>
                                         <li>
-                                            <p class="imgBtn">
+                                            <p id="G2" runat="server" class="imgBtn">
                                                 <asp:ImageButton ID="ibtnGrafic2" runat="server" AlternateText="Grafico2" ImageUrl="~/Content/graphic.png"
                                                     ToolTip="Grafico2" OnClick="ibtnGrafic2_Click" />
                                                 <asp:Label ID="lblGrafic2" runat="server" AssociatedControlID="ibtnGrafic2">Grafico2</asp:Label>

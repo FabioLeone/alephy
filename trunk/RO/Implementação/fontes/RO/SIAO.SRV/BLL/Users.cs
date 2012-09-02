@@ -85,6 +85,11 @@ namespace SIAO.SRV.BLL
         {
             return UsersDAL.GetIndicesByFiltro(strNome, strConnection);
         }
+
+        public static List<UsersTO> GetByRedeId(int intRedeId, string strConnection)
+        {
+            return UsersDAL.GetByRedeId(intRedeId, strConnection);
+        }
         #endregion
 
         #region .: Persistence :.

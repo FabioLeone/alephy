@@ -40,6 +40,15 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.DropDownList ddlLojaRelatorios;
         
         /// <summary>
+        /// M1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl M1;
+        
+        /// <summary>
         /// ibtnRelat1 control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRelat1;
+        
+        /// <summary>
+        /// M2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl M2;
         
         /// <summary>
         /// ibtnRelat2 control.
@@ -103,6 +121,15 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.DropDownList ddlAnoG;
         
         /// <summary>
+        /// G1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl G1;
+        
+        /// <summary>
         /// ibtnGrafic1 control.
         /// </summary>
         /// <remarks>
@@ -119,6 +146,15 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblGrafic1;
+        
+        /// <summary>
+        /// G2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl G2;
         
         /// <summary>
         /// ibtnGrafic2 control.

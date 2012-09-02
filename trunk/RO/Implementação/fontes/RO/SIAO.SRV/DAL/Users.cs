@@ -284,6 +284,40 @@ namespace SIAO.SRV.DAL
             return clsUsers;
         }
 
+        internal static List<UsersTO> GetByRedeId(int intRedeId, string strConnection)
+        {
+            List<UsersTO> clsUsers = new List<UsersTO>();
+
+            MySqlConnection msc = new MySqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name`,farmacias.Id AS farmaciaId FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN farmacias ON farmacias.ProprietarioID = users.UserId WHERE farmacias.idRede = @idRede");
+
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@idRede", intRedeId));
+
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
+                {
+                    while (drdUsers.Read())
+                    {
+                        clsUsers.Add(Load(drdUsers));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsUsers;
+        }
+
         #endregion
 
         #region .: Persistence :.

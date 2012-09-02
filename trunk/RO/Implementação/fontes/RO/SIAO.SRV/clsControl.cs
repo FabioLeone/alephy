@@ -508,7 +508,7 @@ namespace SIAO.SRV
                         {
                             if (k == 0) { strCnpj = "'" + _cnpj + "'"; k++; } else { strCnpj += ",'" + _cnpj + "'"; k++; }
                         });
-                            cmm.CommandText += " WHERE Cnpj IN (" + strCnpj + ")";
+                        cmm.CommandText += " WHERE Cnpj IN (" + strCnpj + ")";
                         string strMeses = "";
                         int j = 0;
                         lstMeses.ForEach(delegate(int _mes)
@@ -710,27 +710,28 @@ namespace SIAO.SRV
             {
                 if (ds.Tables.Count > 0)
                 {
-                    for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
-                    {
-                        clsRelat1 or = new clsRelat1();
-
-                        or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                        or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
-                        or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
-                        or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
-                        or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
-                        or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
-                        or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
-                        or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
-                        or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
-                        if (or.SomaDeValorDesconto > 0)
+                    if (!String.IsNullOrEmpty(ds.Tables["CrossR1"].Rows[0][0].ToString()))
+                        for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
                         {
-                            if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
-                        }
-                        else { or.PercentualDesconto = 0; }
+                            clsRelat1 or = new clsRelat1();
 
-                        lr.Add(or);
-                    }
+                            or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
+                            or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
+                            or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
+                            or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
+                            or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
+                            or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
+                            or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
+                            if (or.SomaDeValorDesconto > 0)
+                            {
+                                if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
+                            }
+                            else { or.PercentualDesconto = 0; }
+
+                            lr.Add(or);
+                        }
                 }
             }
             finally
@@ -831,19 +832,20 @@ namespace SIAO.SRV
                     }
                 }
 
-                if (!string.IsNullOrEmpty(strCnpj)) {
+                if (!string.IsNullOrEmpty(strCnpj))
+                {
                     SQL += " AND base_clientes.Cnpj = '" + strCnpj + "'";
                 }
                 else
-                if (clsUser.Cnpj.Count > 0)
-                {
-                    SQL += " AND base_clientes.Cnpj IN ('";
-                    for (int i = 0; i < clsUser.Cnpj.Count; i++)
+                    if (clsUser.Cnpj.Count > 0)
                     {
-                        if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                        SQL += " AND base_clientes.Cnpj IN ('";
+                        for (int i = 0; i < clsUser.Cnpj.Count; i++)
+                        {
+                            if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                        }
+                        SQL += "')";
                     }
-                    SQL += "')";
-                }
             }
 
             SQL += " GROUP BY Razao_Social, base_clientes.Razao_Social, base_clientes.Cnpj, produtos_base.Sub_Consultoria, base_clientes.Mes, produtos_base.Grupo"
@@ -862,27 +864,28 @@ namespace SIAO.SRV
             {
                 if (ds.Tables.Count > 0)
                 {
-                    for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
-                    {
-                        clsRelat1 or = new clsRelat1();
-
-                        or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                        or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
-                        or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
-                        or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
-                        or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
-                        or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
-                        or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
-                        or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
-                        or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
-                        if (or.SomaDeValorDesconto > 0)
+                    if (!String.IsNullOrEmpty(ds.Tables["CrossR1"].Rows[0][0].ToString()))
+                        for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
                         {
-                            if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
-                        }
-                        else { or.PercentualDesconto = 0; }
+                            clsRelat1 or = new clsRelat1();
 
-                        lr.Add(or);
-                    }
+                            or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
+                            or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
+                            or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
+                            or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
+                            or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
+                            or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
+                            or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
+                            if (or.SomaDeValorDesconto > 0)
+                            {
+                                if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
+                            }
+                            else { or.PercentualDesconto = 0; }
+
+                            lr.Add(or);
+                        }
                 }
             }
             finally
