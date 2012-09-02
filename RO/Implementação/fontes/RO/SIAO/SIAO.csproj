@@ -75,6 +75,8 @@
     <Content Include="Content\success.png" />
     <Content Include="Controls\wucCadastroUser.ascx" />
     <Content Include="Controls\wucListaUsers.ascx" />
+    <Content Include="Controls\wucRoles.ascx" />
+    <Content Include="wfmAcesso.aspx" />
     <Content Include="wfmIndices.aspx" />
     <Content Include="wfmLabRelat.aspx" />
     <Content Include="Controls\wucCadastroIndices.ascx" />
@@ -116,6 +118,20 @@
     </Compile>
     <Compile Include="Controls\wucListaUsers.ascx.designer.cs">
       <DependentUpon>wucListaUsers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\wucRoles.ascx.cs">
+      <DependentUpon>wucRoles.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\wucRoles.ascx.designer.cs">
+      <DependentUpon>wucRoles.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="wfmAcesso.aspx.cs">
+      <DependentUpon>wfmAcesso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmAcesso.aspx.designer.cs">
+      <DependentUpon>wfmAcesso.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfmIndices.aspx.cs">
       <DependentUpon>wfmIndices.aspx</DependentUpon>

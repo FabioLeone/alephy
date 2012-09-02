@@ -11,9 +11,42 @@ namespace SIAO
 {
     public partial class wfmGerarRelatorios : System.Web.UI.Page
     {
+        #region .: Variables :.
         string scn = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
         UsersTO clsUser = new UsersTO();
         SRV.clsControl oc = new SRV.clsControl();
+        Boolean blnTodos;
+        List<RelatoriosTO> clsRelatorios = new List<RelatoriosTO>();
+        #endregion
+
+        #region .: Properties :.
+        public Boolean Todos
+        {
+            get
+            {
+                if (this.ViewState["todos"] == null) return this.blnTodos;
+                else return (Boolean)this.ViewState["todos"];
+            }
+            set
+            {
+                this.ViewState["todos"] = value;
+                this.blnTodos = value;
+            }
+        }
+        public List<RelatoriosTO> Relatorios
+        {
+            get
+            {
+                if (this.ViewState["relatorios"] == null) return this.clsRelatorios;
+                else return (List<RelatoriosTO>)this.ViewState["relatorios"];
+            }
+            set
+            {
+                this.ViewState["relatorios"] = value;
+                this.clsRelatorios = value;
+            }
+        }
+        #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,9 +56,72 @@ namespace SIAO
                 clsUser = (UsersTO)Session["user"];
             }
 
-            if (!IsPostBack) { getAno(); getLojas(); }
+            if (!IsPostBack)
+            {
+                getAno();
+                getLojas();
+                if(!clsUser.Access.Equals("adm"))
+                    ValidaAcesso();
+            }
             Global.LocalPage = "";
 
+        }
+
+        private void ValidaAcesso()
+        {
+            Block();
+            this.Relatorios = RolesBLL.GetRelatoriosByUserId(clsUser.UserId, scn);
+            this.Todos = RolesBLL.GetByUserId(clsUser.UserId, scn).RelatoriosTodos;
+            if (this.Todos)
+            {
+                M1.Disabled = false;
+                M1.Visible = true;
+                M2.Disabled = false;
+                M2.Visible = true;
+                G1.Disabled = false;
+                G1.Visible = true;
+                G2.Disabled = false;
+                G2.Visible = true;
+            }
+            else if (this.Relatorios.Count > 0)
+            {
+                this.Relatorios.ForEach(delegate(RelatoriosTO _relatorio)
+                {
+                    switch (_relatorio.RelatorioTipoId)
+                    {
+                        case (int)RolesBLL.Relatorio.Grafico1:
+                            G1.Disabled = false;
+                            G1.Visible = true;
+                            break;
+                        case (int)RolesBLL.Relatorio.Grafico2:
+                            G2.Disabled = false;
+                            G2.Visible = true;
+                            break;
+                        case (int)RolesBLL.Relatorio.Modelo1:
+                            M1.Disabled = false;
+                            M1.Visible = true;
+                            break;
+                        case (int)RolesBLL.Relatorio.Modelo2:
+                            M2.Disabled = false;
+                            M2.Visible = true;
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+        }
+
+        private void Block()
+        {
+            M1.Disabled = true;
+            M1.Visible = false;
+            M2.Disabled = true;
+            M2.Visible = false;
+            G1.Disabled = false;
+            G1.Visible = false;
+            G2.Disabled = false;
+            G2.Visible = false;
         }
 
         private void getLojas()
