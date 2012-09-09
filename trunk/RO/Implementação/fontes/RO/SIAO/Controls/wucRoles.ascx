@@ -3,11 +3,19 @@
 <asp:UpdatePanel ID="upAcesso" runat="server">
     <ContentTemplate>
         <div>
-            <asp:Label ID="Label1" runat="server" Text="Redes" AssociatedControlID="ddlRedes"></asp:Label>
-            <asp:DropDownList ID="ddlRedes" runat="server">
-            </asp:DropDownList>
-            <asp:Button ID="btnOk" runat="server" Text="&#x25BC;" OnClick="btnOk_Click" />
-            <asp:Button ID="btnPlus" runat="server" Text="+" OnClick="btnPlus_Click" />
+            <table style="width:230px;">
+                <tr>
+                    <td>
+                        <asp:Label ID="Label1" runat="server" Text="Redes" AssociatedControlID="ddlRedes"></asp:Label>
+                        <asp:DropDownList ID="ddlRedes" runat="server">
+                        </asp:DropDownList>
+                    </td>
+                    <td>
+                        <asp:Button ID="btnPlus" runat="server" Text="+" OnClick="btnPlus_Click" CssClass="rightButton gray" />
+                        <asp:Button ID="btnOk" runat="server" Text="&#x25BC;" OnClick="btnOk_Click" CssClass="LeftButton gray" />
+                    </td>
+                </tr>
+            </table>
         </div>
         <asp:ListView ID="lvwRole" runat="server" OnItemDataBound="lvwRole_ItemDataBound">
             <LayoutTemplate>
@@ -53,7 +61,8 @@
             </ItemTemplate>
         </asp:ListView>
         <div>
-            <asp:Button ID="btnSalvar" runat="server" Text="Salvar" OnClick="btnSalvar_Click" />
+            <asp:Button ID="btnSalvar" runat="server" Text="Salvar" OnClick="btnSalvar_Click"
+                CssClass="button gray" />
         </div>
     </ContentTemplate>
 </asp:UpdatePanel>
