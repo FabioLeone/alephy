@@ -40,15 +40,6 @@ namespace SIAO.Controls {
         protected global::System.Web.UI.WebControls.DropDownList ddlRedes;
         
         /// <summary>
-        /// btnOk control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOk;
-        
-        /// <summary>
         /// btnPlus control.
         /// </summary>
         /// <remarks>
@@ -56,6 +47,15 @@ namespace SIAO.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPlus;
+        
+        /// <summary>
+        /// btnOk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOk;
         
         /// <summary>
         /// lvwRole control.
