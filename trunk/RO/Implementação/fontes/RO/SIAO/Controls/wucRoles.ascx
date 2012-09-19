@@ -3,7 +3,7 @@
 <asp:UpdatePanel ID="upAcesso" runat="server">
     <ContentTemplate>
         <div>
-            <table style="width:230px;">
+            <table style="width:300px;">
                 <tr>
                     <td>
                         <asp:Label ID="Label1" runat="server" Text="Redes" AssociatedControlID="ddlRedes"></asp:Label>

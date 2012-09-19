@@ -52,6 +52,9 @@ namespace SIAO
         #region .: Metodos :.
         public bool VerificaEnvio() {
             bool blnOk = false;
+            if(Global.Acs == null)
+                Response.Redirect("Logon.aspx");
+
             if (Global.Acs.Equals("adm"))
                 blnOk = true;
             else if (Session["user"] != null)
