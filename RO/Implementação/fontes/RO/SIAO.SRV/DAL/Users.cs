@@ -31,6 +31,23 @@ namespace SIAO.SRV.DAL
             return clsUsers;
         }
 
+        private static UsersTO LoadII(IDataReader drdUsers)
+        {
+            UsersTO clsUsers = new UsersTO();
+
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("UserId"))) { clsUsers.UserId = drdUsers.GetInt32(drdUsers.GetOrdinal("UserId")); } else { clsUsers.UserId = 0; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("UserName"))) { clsUsers.UserName = drdUsers.GetString(drdUsers.GetOrdinal("UserName")); } else { clsUsers.UserName = ""; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("LastActivityDate"))) { clsUsers.LastActivityDate = drdUsers.GetDateTime(drdUsers.GetOrdinal("LastActivityDate")); } else { clsUsers.LastActivityDate = DateTime.Now; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Password"))) { clsUsers.Password = CDM.Desc(drdUsers.GetString(drdUsers.GetOrdinal("Password"))); } else { clsUsers.Password = ""; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Email"))) { clsUsers.Email = drdUsers.GetString(drdUsers.GetOrdinal("Email")); } else { clsUsers.Email = ""; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Inactive"))) { clsUsers.Inactive = (drdUsers.GetInt32(drdUsers.GetOrdinal("Inactive")) == 1 ? true : false); } else { clsUsers.Inactive = true; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("CreateDate"))) { clsUsers.CreateDate = drdUsers.GetDateTime(drdUsers.GetOrdinal("CreateDate")); } else { clsUsers.CreateDate = DateTime.Now; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("ExpirationDate"))) { clsUsers.ExpirationDate = drdUsers.GetDateTime(drdUsers.GetOrdinal("ExpirationDate")); } else { clsUsers.ExpirationDate = DateTime.Now; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Access"))) { clsUsers.Access = CDM.Desc(drdUsers.GetString(drdUsers.GetOrdinal("Access"))); } else { clsUsers.Access = ""; }
+            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Name"))) { clsUsers.Name = CDM.Desc(drdUsers.GetString(drdUsers.GetOrdinal("Name"))); } else { clsUsers.Name = ""; }
+
+            return clsUsers;
+        }
         #endregion
 
         #region .: Search :.
@@ -293,7 +310,8 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name`,farmacias.Id AS farmaciaId FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN farmacias ON farmacias.ProprietarioID = users.UserId WHERE farmacias.idRede = @idRede");
+                strSQL.Append("SELECT users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name` FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN farmacias ON farmacias.ProprietarioID = users.UserId WHERE farmacias.idRede = @idRede");
+                strSQL.Append(" GROUP BY users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name`");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
@@ -306,7 +324,7 @@ namespace SIAO.SRV.DAL
                 {
                     while (drdUsers.Read())
                     {
-                        clsUsers.Add(Load(drdUsers));
+                        clsUsers.Add(LoadII(drdUsers));
                     }
                 }
             }
