@@ -176,7 +176,7 @@ namespace SIAO.SRV
             MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
 
-            cmm.CommandText = "SELECT * FROM uf";
+            cmm.CommandText = "SELECT id,UF FROM uf";
 
             if (oDB.openConnection(cmm))
             {
@@ -424,7 +424,7 @@ namespace SIAO.SRV
                 {
                     if (oDB.openConnection(cmm))
                     {
-                        cmm.CommandText = "SELECT * FROM produtos_base";
+                        cmm.CommandText = "SELECT produtos_base.CodBarra,produtos_base.CodProd,produtos_base.NomeProd,produtos_base.Apresenta,produtos_base.CodLab,produtos_base.NomeLab,produtos_base.CodPat,produtos_base.NomePat,produtos_base.Grupo,produtos_base.Sub_Consultoria,produtos_base.Sub_Divisao,produtos_base.NCM,produtos_base.`NomePat-NCM`,produtos_base.Descricao_NCM,produtos_base.Lista,produtos_base.ALiq,produtos_base.St FROM produtos_base";
                         cmm.CommandText += " WHERE CodBarra IN (";
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
@@ -1017,7 +1017,7 @@ namespace SIAO.SRV
             Rede r = new Rede();
 
             cmm.Connection = cnn;
-            cmm.CommandText = "SELECT * FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + p + ")";
+            cmm.CommandText = "SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + p + ")";
 
             if (oDB.openConnection(cmm))
             {
