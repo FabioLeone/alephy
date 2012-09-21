@@ -63,7 +63,7 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(" SELECT * FROM ( ");
+                strSQL.Append(" SELECT Razao_Social,Cnpj,Mes,Grupo,Sub_Consultoria,Liquido,Desconto FROM ( ");
                 strSQL.Append(" SELECT base_clientes.Razao_Social,base_clientes.Cnpj, base_clientes.Mes, produtos_base.Grupo, produtos_base.Sub_Consultoria, ");
                 strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, SUM(base_clientes.Valor_Desconto) / SUM(base_clientes.Valor_Bruto) AS Desconto");
                 strSQL.Append(" FROM base_clientes ");
@@ -307,7 +307,7 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(" SELECT * FROM ( ");
+                strSQL.Append(" SELECT Razao_Social,Cnpj,Mes,Grupo,Sub_Consultoria,Liquido,Desconto FROM ( ");
                 strSQL.Append(" SELECT base_clientes.Razao_Social,base_clientes.Cnpj, base_clientes.Mes, produtos_base.Grupo, produtos_base.Sub_Consultoria, ");
                 strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, SUM(base_clientes.Valor_Desconto) / SUM(base_clientes.Valor_Bruto) AS Desconto");
                 strSQL.Append(" FROM base_clientes ");

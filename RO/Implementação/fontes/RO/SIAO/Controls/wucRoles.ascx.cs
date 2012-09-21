@@ -194,6 +194,7 @@ namespace SIAO.Controls
                 ddlRedes.DataValueField = ds.Tables[0].Columns[0].ToString();
                 ddlRedes.DataBind();
                 ddlRedes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                ddlRedes.Items.Insert(1, new ListItem("Independentes", "0"));
                 ddlRedes.SelectedIndex = 0;
             }
 
