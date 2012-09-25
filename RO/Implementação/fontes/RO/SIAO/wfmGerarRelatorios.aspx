@@ -16,9 +16,15 @@
                             </legend>
                             <div id="divForm" style="height: 330px; width: 100%;">
                                 <p>
-                                    Selecione o ano, para consulta.
+                                    Filtrar por:
+                                    <asp:RadioButton ID="rbtAno" GroupName="filtro" Text="ano" runat="server" 
+                                        AutoPostBack="true" oncheckedchanged="rbtAno_CheckedChanged" />
                                     <asp:DropDownList ID="ddlAno" runat="server">
                                     </asp:DropDownList>
+                                    
+                                    <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" 
+                                        Text="ultimos 6 meses" runat="server" 
+                                        oncheckedchanged="rbtMes_CheckedChanged" />
                                     <br />
                                     Loja:
                                     <asp:DropDownList ID="ddlLojaRelatorios" runat="server">
@@ -39,6 +45,10 @@
                                             </p>
                                         </li>
                                     </ul>
+                                    <p>
+                                    </p>
+                                    <p>
+                                    </p>
                                 </p>
                             </div>
                         </fieldset>
@@ -91,6 +101,10 @@
                                             </p>
                                         </li>
                                     </ul>
+                                    <p>
+                                    </p>
+                                    <p>
+                                    </p>
                                 </p>
                             </div>
                         </fieldset>
