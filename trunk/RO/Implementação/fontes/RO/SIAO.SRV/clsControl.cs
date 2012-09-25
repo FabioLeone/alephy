@@ -896,6 +896,161 @@ namespace SIAO.SRV
             return lr;
         }
 
+        public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string strCnpj, bool blnMes)
+        {
+            List<clsRelat1> lr = new List<clsRelat1>();
+            MySqlConnection cnn = new MySqlConnection(scn);
+            DataSet ds = new DataSet();
+
+            cmm.Connection = cnn;
+            string SQL = "SELECT (CASE WHEN base_clientes.Razao_Social IS NULL THEN ("
+                + " SELECT farmacias.RazaoSocial FROM farmacias WHERE farmacias.Cnpj = base_clientes.Cnpj"
+                + " ) ELSE base_clientes.Razao_Social END) AS Razao_Social, base_clientes.Cnpj, "
+                + " base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo,"
+                + " SUM(base_clientes.Quantidade) AS 'Soma De Quantidade',"
+                + " SUM(base_clientes.Valor_Bruto) AS 'Soma De Valor bruto',"
+                + " SUM(base_clientes.Valor_Liquido) AS 'Soma De Valor liquido',"
+                + " SUM(base_clientes.Valor_Desconto) AS 'Soma De Valor desconto'"
+                + " FROM"
+                + " base_clientes"
+                + " LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra"
+                + " WHERE produtos_base.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND (Mes >= {0} AND Ano = {1}) AND (Mes <= {2} AND Ano = {3})";
+
+            string strMF = DateTime.Now.Month.ToString();
+            string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
+
+            string strAF = DateTime.Now.Year.ToString();
+            string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
+
+            SQL = String.Format(SQL,strMI,strAI,strMF,strAF);
+
+            if (clsUser.Access == "nvg")
+            {
+                cmm.CommandText += "SELECT"
+                    + " farmacias.Cnpj"
+                    + " FROM"
+                    + " memberships"
+                    + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
+                    + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
+                    + " WHERE memberships.UserId = @UserId";
+                cmm.Parameters.Clear();
+                cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
+
+                if (oDB.openConnection(cmm))
+                {
+                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
+                }
+                oDB.closeConnection(cmm);
+
+                if (ds.Tables.Count > 0)
+                {
+                    clsUser.Cnpj = new List<string>();
+                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
+                    {
+                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
+                    }
+                }
+
+                if (clsUser.Cnpj.Count > 0)
+                {
+                    SQL += " AND base_clientes.Cnpj IN ('";
+                    for (int i = 0; i < clsUser.Cnpj.Count; i++)
+                    {
+                        if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                    }
+                    SQL += "')";
+                }
+            }
+            else if (clsUser.Access == "nvp")
+            {
+                cmm.CommandText += "SELECT"
+                    + " farmacias.Cnpj"
+                    + " FROM"
+                    + " usuarios_farmacias"
+                    + " RIGHT JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
+                    + " LEFT JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
+                    + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
+                cmm.Parameters.Clear();
+                cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
+
+                if (oDB.openConnection(cmm))
+                {
+                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
+                }
+                oDB.closeConnection(cmm);
+
+                if (ds.Tables.Count > 0)
+                {
+                    clsUser.Cnpj = new List<string>();
+                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
+                    {
+                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(strCnpj))
+                {
+                    SQL += " AND base_clientes.Cnpj = '" + strCnpj + "'";
+                }
+                else
+                    if (clsUser.Cnpj.Count > 0)
+                    {
+                        SQL += " AND base_clientes.Cnpj IN ('";
+                        for (int i = 0; i < clsUser.Cnpj.Count; i++)
+                        {
+                            if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                        }
+                        SQL += "')";
+                    }
+            }
+
+            SQL += " GROUP BY Razao_Social, base_clientes.Razao_Social, base_clientes.Cnpj, produtos_base.Sub_Consultoria, base_clientes.Mes, produtos_base.Grupo"
+                + " ORDER BY Razao_Social, base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo";
+
+            cmm.CommandText = SQL;
+            cmm.CommandTimeout = 9999;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "CrossR1");
+            }
+            oDB.closeConnection(cmm);
+
+            try
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    if (!String.IsNullOrEmpty(ds.Tables["CrossR1"].Rows[0][0].ToString()))
+                        for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
+                        {
+                            clsRelat1 or = new clsRelat1();
+
+                            or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
+                            or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
+                            or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
+                            or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
+                            or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
+                            or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
+                            or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
+                            if (or.SomaDeValorDesconto > 0)
+                            {
+                                if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
+                            }
+                            else { or.PercentualDesconto = 0; }
+
+                            lr.Add(or);
+                        }
+                }
+            }
+            finally
+            {
+
+            }
+
+            return lr;
+        }
         private string MaskCnpj(string p)
         {
             string cnpj = "";

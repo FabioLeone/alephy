@@ -60,8 +60,9 @@ namespace SIAO
             {
                 getAno();
                 getLojas();
-                if(!clsUser.Access.Equals("adm"))
+                if (!clsUser.Access.Equals("adm"))
                     ValidaAcesso();
+                ddlAno.Enabled = false;
             }
             Global.LocalPage = "";
 
@@ -185,27 +186,37 @@ namespace SIAO
         protected void btnAdm_Click(object sender, EventArgs e)
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
+            if (rbtAno.Checked)
+                lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+            else if (rbtMes.Checked)
+                lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
 
-            lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+            if (lr1.Count > 0)
+            {
+                Session["cross"] = lr1;
 
-            Session["cross"] = lr1;
+                Global.LocalPage = "wfmGerarRelatorios.aspx";
 
-            Global.LocalPage = "wfmGerarRelatorios.aspx";
-
-            Response.Redirect("wfmRelatMod1.aspx");
+                Response.Redirect("wfmRelatMod1.aspx");
+            }
         }
 
         protected void btnRelat2_Click(object sender, EventArgs e)
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
+            if (rbtAno.Checked)
+                lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+            else if (rbtMes.Checked)
+                lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
 
-            lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+            if (lr1.Count > 0)
+            {
+                Session["cross"] = lr1;
 
-            Session["cross"] = lr1;
+                Global.LocalPage = "wfmGerarRelatorios.aspx";
 
-            Global.LocalPage = "wfmGerarRelatorios.aspx";
-
-            Response.Redirect("wfmRelatMod2.aspx");
+                Response.Redirect("wfmRelatMod2.aspx");
+            }
         }
 
         protected void ibtnGrafic1_Click(object sender, ImageClickEventArgs e)
@@ -239,6 +250,21 @@ namespace SIAO
             Global.LocalPage = "wfmGerarRelatorios.aspx";
 
             Response.Redirect("wfmRelatorio.aspx");
+        }
+
+        protected void rbtAno_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtAno.Checked)
+                ddlAno.Enabled = true;
+            else
+                ddlAno.Enabled = false;
+        }
+        protected void rbtMes_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtMes.Checked)
+                ddlAno.Enabled = false;
+            else
+                ddlAno.Enabled = true;
         }
     }
 }
