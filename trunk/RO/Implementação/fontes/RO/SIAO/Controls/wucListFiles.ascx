@@ -28,44 +28,44 @@
         onitemdatabound="lvwFiles_ItemDataBound">
         <LayoutTemplate>
             <table>
-                <tr>
+                <tr class="header">
                     <th>
                         Loja
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     1
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     2
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     3
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     4
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     5
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     6
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     7
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     8
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     9
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     10
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     11
                     </th>
-                    <th>
+                    <th style="width:30px;">
                     12
                     </th>
                 </tr>
@@ -73,7 +73,7 @@
             </table>
         </LayoutTemplate>
         <ItemTemplate>
-            <tr>
+            <tr class="rows">
                 <td>
                     <asp:HiddenField ID="hfCnpj" Value='<%# Eval("cnpj") %>' runat="server" />
                     <asp:Label ID="lblLojaNome" runat="server" Text='<%# Eval("NomeFantasia") %>'></asp:Label>
@@ -85,7 +85,7 @@
                     <ItemTemplate>
                         <td>
                             <asp:HiddenField ID="hfMes" runat="server" Value='<%# Eval("mes") %>' />
-                            <asp:Label ID="lblCheck" runat="server"></asp:Label>
+                            <asp:Label ID="lblCheck" CssClass="check" runat="server"></asp:Label>
                         </td>
                     </ItemTemplate>
                 </asp:ListView>
