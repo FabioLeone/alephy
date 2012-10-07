@@ -158,7 +158,7 @@ namespace SIAO.SRV
 
             cmm.Connection = cnn;
 
-            cmm.CommandText = "SELECT Id, Descricao FROM redesfarmaceuticas";
+            cmm.CommandText = "SELECT Id, Descricao FROM redesfarmaceuticas ORDER BY Descricao";
 
             if (oDB.openConnection(cmm))
             {
@@ -400,6 +400,7 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
             cmm.CommandText += " WHERE idRede = " + redeId;
+            cmm.CommandText += " ORDER BY NomeFantasia";
 
             if (oDB.openConnection(cmm))
             {

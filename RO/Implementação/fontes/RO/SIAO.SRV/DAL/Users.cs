@@ -5,6 +5,7 @@ using SIAO.SRV.TO;
 using System.Data.Common;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Linq;
 
 namespace SIAO.SRV.DAL
 {
@@ -316,7 +317,7 @@ namespace SIAO.SRV.DAL
                 else
                     strSQL.Append(String.Format(" WHERE (farmacias.idRede = 0 Or farmacias.idRede IS NULL) AND memberships.Access <> '{0}'", CDM.Cript("adm")));
                 strSQL.Append(" GROUP BY users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name`");
-
+                
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
                 cmdUsers.Parameters.Clear();
@@ -337,7 +338,7 @@ namespace SIAO.SRV.DAL
                 msc.Close();
             }
 
-            return clsUsers;
+            return clsUsers.OrderBy(u=>u.Name).ToList();
         }
 
         #endregion

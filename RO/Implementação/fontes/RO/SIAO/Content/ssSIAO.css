@@ -340,7 +340,26 @@ section
 
 .CheckBoxDiv
 {
-    height:325px;
-    overflow:auto;
-    width:100%;
+    height: 325px;
+    overflow: auto;
+    width: 100%;
+}
+
+.header
+{
+    background-color: #0d87df;
+    font-weight: bold;
+    color: White;
+    font-size: 1.1em;
+}
+.rows
+{
+    background-color: #F7F6F3;
+    color: #333333;
+}
+.check
+{
+    font-family:Verdana;
+    font-weight:bold;
+    color:Green;
 }
