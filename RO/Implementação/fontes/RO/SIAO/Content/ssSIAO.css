@@ -363,3 +363,10 @@ section
     font-weight:bold;
     color:Green;
 }
+#lblVersion
+{
+    color: #ebebeb;
+    font: 8px Verdana;
+    font-style:italic;
+    float:right;
+}
