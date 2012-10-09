@@ -210,6 +210,7 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.CommandText = strSQL.ToString().Replace("#CNPJ", strCnpj.Replace("AND ", "base_clientes."));
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@Mes", intMes));
+                cmdGrafic.CommandTimeout = 9999;
 
                 msc.Open();
 
@@ -279,7 +280,7 @@ namespace SIAO.SRV.DAL
 
                 DbCommand cmdIndicesGrafic = msc.CreateCommand();
                 cmdIndicesGrafic.CommandText = strSQL.ToString();
-
+                cmdIndicesGrafic.CommandTimeout = 9999;
                 msc.Open();
 
                 using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
@@ -454,7 +455,7 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.CommandText = strSQL.ToString().Replace("#CNPJ", strCnpj.Replace("AND ", "base_clientes."));
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@Ano", intAno));
-
+                cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
                 using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
