@@ -70,9 +70,9 @@
                                         <asp:ListItem Value="4">Abr</asp:ListItem>
                                         <asp:ListItem Value="5">Mai</asp:ListItem>
                                         <asp:ListItem Value="6">Jun</asp:ListItem>
-                                        <asp:ListItem Value="7">Set</asp:ListItem>
-                                        <asp:ListItem Value="8">Ago</asp:ListItem>
                                         <asp:ListItem Value="7">Jul</asp:ListItem>
+                                        <asp:ListItem Value="8">Ago</asp:ListItem>
+                                        <asp:ListItem Value="9">Set</asp:ListItem>
                                         <asp:ListItem Value="10">Out</asp:ListItem>
                                         <asp:ListItem Value="11">Nov</asp:ListItem>
                                         <asp:ListItem Value="12">Dez</asp:ListItem>
