@@ -96,7 +96,10 @@ namespace SIAO.SRV.BLL
 
         private static void Delete(RelatoriosTO clsRelatorios, string strConnection)
         {
-            RolesDAL.Delete(clsRelatorios, strConnection);
+            if (clsRelatorios == null)
+                return;
+            else
+                RolesDAL.Delete(clsRelatorios, strConnection);
         }
 
         private static void Update(RelatoriosTO clsRelatorio, string strConnection)
