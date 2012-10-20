@@ -59,8 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\a_Logo.jpg" />
+    <Content Include="Content\delete.png" />
     <Content Include="Content\document.png" />
     <Content Include="Content\easyscroll.js" />
+    <Content Include="Content\edit.png" />
     <Content Include="Content\graphic.png" />
     <Content Include="Content\important.png" />
     <Content Include="Content\login-box-backg.png" />
