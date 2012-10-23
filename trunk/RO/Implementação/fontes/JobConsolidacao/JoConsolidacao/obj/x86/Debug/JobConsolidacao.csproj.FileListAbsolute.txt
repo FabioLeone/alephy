@@ -1,0 +1,12 @@
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\JoConsolidacao\JoConsolidacao\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\JoConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe.config
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\JoConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\JoConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\JoConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.exe
+D:\Users\Fabio\Documents\Visual Studio 2010\Projects\JoConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe.config
+D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.exe
+D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe
+D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
+D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\ResolveAssemblyReference.cache
