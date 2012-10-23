@@ -289,7 +289,7 @@ namespace SIAO.SRV
                         {
                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                             {
-                                cmm.CommandText = "INSERT INTO base_clientes (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
+                                cmm.CommandText = "INSERT INTO base_cliente_espera (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
                                     + " VALUES ( @Cnpj, @Mes, @Ano, @Barras, @Descricao, @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
                                 cmm.Parameters.Clear();
                                 cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
@@ -310,7 +310,7 @@ namespace SIAO.SRV
                         {
                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                             {
-                                cmm.CommandText = "UPDATE base_clientes SET Barras = @Barras, Descricao = @Descricao,"
+                                cmm.CommandText = "UPDATE base_cliente_espera SET Barras = @Barras, Descricao = @Descricao,"
                                     + " Fabricante = @Fabricante, Quantidade = @Quantidade, Valor_Bruto = "
                                     + "@Valor_Bruto, Valor_Liquido = @Valor_Liquido, Valor_Desconto = @Valor_Desconto WHERE Cnpj = @Cnpj AND Mes = @Mes AND Ano = @Ano";
                                 cmm.Parameters.Clear();
@@ -502,7 +502,7 @@ namespace SIAO.SRV
                 {
                     if (oDB.openConnection(cmm))
                     {
-                        cmm.CommandText = "DELETE FROM base_clientes";
+                        cmm.CommandText = "DELETE FROM base_cliente_espera";
                         string strCnpj = string.Empty;
                         int k = 0;
                         lstCnpj.ForEach(delegate(string _cnpj)
@@ -534,7 +534,7 @@ namespace SIAO.SRV
                             svd = svd.Replace(",", ".");
 
                             cmm.CommandText = string.Empty;
-                            cmm.CommandText = "INSERT INTO base_clientes (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
+                            cmm.CommandText = "INSERT INTO base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
                                 + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
                                 + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
                                 + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
