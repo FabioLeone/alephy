@@ -750,23 +750,18 @@ namespace SIAO.SRV
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
-            string SQL = "SELECT (CASE WHEN base_clientes.Razao_Social IS NULL THEN ("
-                + " SELECT farmacias.RazaoSocial FROM farmacias WHERE farmacias.Cnpj = base_clientes.Cnpj"
-                + " ) ELSE base_clientes.Razao_Social END) AS Razao_Social, base_clientes.Cnpj, "
-                + " base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo,"
-                + " SUM(base_clientes.Quantidade) AS 'Soma De Quantidade',"
-                + " SUM(base_clientes.Valor_Bruto) AS 'Soma De Valor bruto',"
-                + " SUM(base_clientes.Valor_Liquido) AS 'Soma De Valor liquido',"
-                + " SUM(base_clientes.Valor_Desconto) AS 'Soma De Valor desconto'"
-                + " FROM"
-                + " base_clientes"
-                + " LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra"
-                + " WHERE produtos_base.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND Ano = ";
+            StringBuilder SQL = new StringBuilder();
+            SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,consolidado.CNPJ,consolidado.Mes,
+                    consolidado.Sub_Consultoria,consolidado.Grupo,consolidado.Quantidade AS 'Soma De Quantidade',
+                    consolidado.Valor_Bruto AS 'Soma De Valor bruto', consolidado.Valor_Liquido AS 'Soma De Valor liquido',
+                    consolidado.Valor_Desconto AS 'Soma De Valor desconto' FROM consolidado
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                    WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND consolidado.Ano = ");
 
-            if (ano == "") { SQL += DateTime.Now.Year; }
+            if (ano == "") { SQL.Append( DateTime.Now.Year); }
             else
             {
-                SQL += ano;
+                SQL.Append(ano);
             }
 
             if (clsUser.Access == "nvg")
@@ -798,12 +793,12 @@ namespace SIAO.SRV
 
                 if (clsUser.Cnpj.Count > 0)
                 {
-                    SQL += " AND base_clientes.Cnpj IN ('";
+                    SQL.Append(" AND consolidado.Cnpj IN ('");
                     for (int i = 0; i < clsUser.Cnpj.Count; i++)
                     {
-                        if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                        if (i == 0) { SQL.Append(clsUser.Cnpj[i]); } else { SQL.Append("', '" + clsUser.Cnpj[i]); }
                     }
-                    SQL += "')";
+                    SQL.Append("')");
                 }
             }
             else if (clsUser.Access == "nvp")
@@ -835,24 +830,23 @@ namespace SIAO.SRV
 
                 if (!string.IsNullOrEmpty(strCnpj))
                 {
-                    SQL += " AND base_clientes.Cnpj = '" + strCnpj + "'";
+                    SQL.Append(" AND consolidado.Cnpj = '" + strCnpj + "'");
                 }
                 else
                     if (clsUser.Cnpj.Count > 0)
                     {
-                        SQL += " AND base_clientes.Cnpj IN ('";
+                        SQL.Append(" AND consolidado.Cnpj IN ('");
                         for (int i = 0; i < clsUser.Cnpj.Count; i++)
                         {
-                            if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                            if (i == 0) { SQL.Append(clsUser.Cnpj[i]); } else { SQL.Append("', '" + clsUser.Cnpj[i]); }
                         }
-                        SQL += "')";
+                        SQL.Append("')");
                     }
             }
 
-            SQL += " GROUP BY Razao_Social, base_clientes.Razao_Social, base_clientes.Cnpj, produtos_base.Sub_Consultoria, base_clientes.Mes, produtos_base.Grupo"
-                + " ORDER BY Razao_Social, base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo";
+            SQL.Append(" ORDER BY consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
-            cmm.CommandText = SQL;
+            cmm.CommandText = SQL.ToString();
             cmm.CommandTimeout = 9999;
 
             if (oDB.openConnection(cmm))
@@ -904,26 +898,23 @@ namespace SIAO.SRV
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
-            string SQL = "SELECT (CASE WHEN base_clientes.Razao_Social IS NULL THEN ("
-                + " SELECT farmacias.RazaoSocial FROM farmacias WHERE farmacias.Cnpj = base_clientes.Cnpj"
-                + " ) ELSE base_clientes.Razao_Social END) AS Razao_Social, base_clientes.Cnpj, "
-                + " base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo,"
-                + " SUM(base_clientes.Quantidade) AS 'Soma De Quantidade',"
-                + " SUM(base_clientes.Valor_Bruto) AS 'Soma De Valor bruto',"
-                + " SUM(base_clientes.Valor_Liquido) AS 'Soma De Valor liquido',"
-                + " SUM(base_clientes.Valor_Desconto) AS 'Soma De Valor desconto'"
-                + " FROM"
-                + " base_clientes"
-                + " LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra"
-                + " WHERE produtos_base.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND (Mes >= {0} AND Ano = {1}) AND (Mes <= {2} AND Ano = {3})";
-
             string strMF = DateTime.Now.Month.ToString();
             string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
 
             string strAF = DateTime.Now.Year.ToString();
             string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
 
-            SQL = String.Format(SQL,strMI,strAI,strMF,strAF);
+            StringBuilder SQL = new StringBuilder();
+            SQL.Append(String.Format(@"SELECT farmacias.RazaoSocial AS Razao_Social, consolidado.CNPJ,
+                        consolidado.Mes, consolidado.Sub_Consultoria, consolidado.Grupo,
+                        consolidado.Quantidade AS `Soma De Quantidade`,
+                        consolidado.Valor_Bruto AS `Soma De Valor bruto`,
+                        consolidado.Valor_Liquido AS `Soma De Valor liquido`,
+                        consolidado.Valor_Desconto AS `Soma De Valor desconto` FROM consolidado
+                        INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                        WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
+                        AND (consolidado.Mes >= {0} AND consolidado.Ano = {1}) 
+                        AND (consolidado.Mes <= {2} AND consolidado.Ano = {3})",strMI,strAI,strMF,strAF));
 
             if (clsUser.Access == "nvg")
             {
@@ -954,12 +945,12 @@ namespace SIAO.SRV
 
                 if (clsUser.Cnpj.Count > 0)
                 {
-                    SQL += " AND base_clientes.Cnpj IN ('";
+                    SQL.Append(" AND consolidado.Cnpj IN ('");
                     for (int i = 0; i < clsUser.Cnpj.Count; i++)
                     {
-                        if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                        if (i == 0) { SQL.Append(clsUser.Cnpj[i]); } else { SQL.Append("', '" + clsUser.Cnpj[i]); }
                     }
-                    SQL += "')";
+                    SQL.Append("')");
                 }
             }
             else if (clsUser.Access == "nvp")
@@ -991,24 +982,23 @@ namespace SIAO.SRV
 
                 if (!string.IsNullOrEmpty(strCnpj))
                 {
-                    SQL += " AND base_clientes.Cnpj = '" + strCnpj + "'";
+                    SQL.Append(" AND consolidado.Cnpj = '" + strCnpj + "'");
                 }
                 else
                     if (clsUser.Cnpj.Count > 0)
                     {
-                        SQL += " AND base_clientes.Cnpj IN ('";
+                        SQL.Append(" AND consolidado.Cnpj IN ('");
                         for (int i = 0; i < clsUser.Cnpj.Count; i++)
                         {
-                            if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                            if (i == 0) { SQL.Append(clsUser.Cnpj[i]); } else { SQL.Append("', '" + clsUser.Cnpj[i]); }
                         }
-                        SQL += "')";
+                        SQL.Append("')");
                     }
             }
 
-            SQL += " GROUP BY Razao_Social, base_clientes.Razao_Social, base_clientes.Cnpj, produtos_base.Sub_Consultoria, base_clientes.Mes, produtos_base.Grupo"
-                + " ORDER BY Razao_Social, base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo";
+            SQL.Append(" ORDER BY consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
-            cmm.CommandText = SQL;
+            cmm.CommandText = SQL.ToString();
             cmm.CommandTimeout = 9999;
 
             if (oDB.openConnection(cmm))
