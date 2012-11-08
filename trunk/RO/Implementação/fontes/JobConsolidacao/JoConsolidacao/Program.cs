@@ -178,6 +178,16 @@ namespace JobConsolidacao
                     cmd.CommandText = strSQL.ToString();
 
                     cmd.ExecuteNonQuery();
+
+                    strSQL = new StringBuilder();
+                    strSQL.Append("DELETE FROM consolidado");
+                    strSQL.Append(" WHERE CNPJ = '" + _file.Cnpj + "'");
+                    strSQL.Append(" AND Mes = " + _file.Mes + " AND Ano = " + _file.Ano);
+
+                    cmd.CommandText = String.Empty;
+                    cmd.CommandText = strSQL.ToString();
+
+                    cmd.ExecuteNonQuery();
                 });
             }
             finally
