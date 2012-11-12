@@ -10,3 +10,9 @@ D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86
 D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe
 D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
 D:\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe.config
+C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.exe
+C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.pdb
+C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe
+C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
+C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\ResolveAssemblyReference.cache
