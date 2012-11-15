@@ -29,6 +29,10 @@
                                     Loja:
                                     <asp:DropDownList ID="ddlLojaRelatorios" runat="server">
                                     </asp:DropDownList>
+                                    <div id="dvRedes" runat="server">
+                                        Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server">
+                                        </asp:DropDownList>
+                                    </div>
                                     <ul class="iconList">
                                         <li>
                                             <p id="M1" runat="server" class="imgBtn">

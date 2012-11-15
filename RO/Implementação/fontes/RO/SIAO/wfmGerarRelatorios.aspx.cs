@@ -6,6 +6,7 @@ using System.Configuration;
 using SIAO.SRV.TO;
 using SIAO.SRV.BLL;
 using System.Data;
+using SIAO.SRV;
 
 namespace SIAO
 {
@@ -46,6 +47,19 @@ namespace SIAO
                 this.clsRelatorios = value;
             }
         }
+        public UsersTO User
+        {
+            get
+            {
+                if (this.ViewState["user"] == null) return this.clsUser;
+                else return (UsersTO)this.ViewState["user"];
+            }
+            set
+            {
+                this.ViewState["user"] = value;
+                this.clsUser = value;
+            }
+        }
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -53,19 +67,36 @@ namespace SIAO
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
             else
             {
-                clsUser = (UsersTO)Session["user"];
+                this.User = clsUser = (UsersTO)Session["user"];
             }
 
             if (!IsPostBack)
             {
                 getAno();
                 getLojas();
+                getRedes();
                 if (!clsUser.Access.Equals("adm"))
                     ValidaAcesso();
                 ddlAno.Enabled = false;
             }
             Global.LocalPage = "";
 
+        }
+
+        private void getRedes()
+        {
+            DataSet ds = new DataSet();
+            ds = clsControl.GetRedes(scn);
+
+            if (ds.Tables.Count > 0)
+            {
+                ddlRedesRelatorios.DataSource = ds.Tables[0];
+                ddlRedesRelatorios.DataTextField = ds.Tables[0].Columns[1].ToString();
+                ddlRedesRelatorios.DataValueField = ds.Tables[0].Columns[0].ToString();
+                ddlRedesRelatorios.DataBind();
+                ddlRedesRelatorios.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                ddlRedesRelatorios.SelectedIndex = 0;
+            }
         }
 
         private void ValidaAcesso()
@@ -123,6 +154,8 @@ namespace SIAO
             G1.Visible = false;
             G2.Disabled = false;
             G2.Visible = false;
+
+            dvRedes.Visible = false;
         }
 
         private void getLojas()
@@ -197,6 +230,12 @@ namespace SIAO
 
                 Global.LocalPage = "wfmGerarRelatorios.aspx";
 
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Modelo1",
+                    UserId = this.User.UserId
+                }, scn);
+
                 Response.Redirect("wfmRelatMod1.aspx");
             }
         }
@@ -205,15 +244,32 @@ namespace SIAO
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
             if (rbtAno.Checked)
-                lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+            {
+                if(ddlRedesRelatorios.SelectedIndex > 0)
+                    lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
+                else
+                    lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+
+            }
             else if (rbtMes.Checked)
-                lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
+            {
+                if(ddlRedesRelatorios.SelectedIndex > 0)
+                    lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
+                else
+                    lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
+            }
 
             if (lr1.Count > 0)
             {
                 Session["cross"] = lr1;
 
                 Global.LocalPage = "wfmGerarRelatorios.aspx";
+
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Modelo2",
+                    UserId = this.User.UserId
+                }, scn);
 
                 Response.Redirect("wfmRelatMod2.aspx");
             }
@@ -231,6 +287,12 @@ namespace SIAO
             Session["grafic"] = clsGrafic;
 
             Global.LocalPage = "wfmGerarRelatorios.aspx";
+            if(clsGrafic.Count > 0)
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Grafico1",
+                    UserId = this.User.UserId
+                }, scn);
 
             Response.Redirect("wfmRelatorio.aspx");
         }
@@ -248,6 +310,13 @@ namespace SIAO
             Session["grafic2"] = clsGrafic;
 
             Global.LocalPage = "wfmGerarRelatorios.aspx";
+            
+            if (clsGrafic.Count > 0)
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Grafico2",
+                    UserId = this.User.UserId
+                }, scn);
 
             Response.Redirect("wfmRelatorio.aspx");
         }
