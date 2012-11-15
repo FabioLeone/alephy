@@ -575,15 +575,18 @@ namespace SIAO.SRV
                 {
                     if (oDB.openConnection(cmm))
                     {
-                        cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
-                            + " VALUES (@UserId, @cnpj, 'TXT', @mes, @ano)";
-                        cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
-                        cmm.Parameters.Add("@cnpj", MySqlDbType.String).Value = dt.Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@mes", MySqlDbType.Int32).Value = dt.Rows[0][2];
-                        cmm.Parameters.Add("@ano", MySqlDbType.Int32).Value = dt.Rows[0]["ano"];
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
+                                + " VALUES (@UserId, @cnpj, 'TXT', @mes, @ano)";
+                            cmm.Parameters.Clear();
+                            cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
+                            cmm.Parameters.Add("@cnpj", MySqlDbType.String).Value = dt.Rows[i]["cnpj"].ToString();
+                            cmm.Parameters.Add("@mes", MySqlDbType.Int32).Value = dt.Rows[i][2];
+                            cmm.Parameters.Add("@ano", MySqlDbType.Int32).Value = dt.Rows[i]["ano"];
 
-                        oDB.Execute(ref cmm);
+                            oDB.Execute(ref cmm);
+                        }
                     }
                 }
                 catch (Exception)
@@ -758,7 +761,7 @@ namespace SIAO.SRV
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                     WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND consolidado.Ano = ");
 
-            if (ano == "") { SQL.Append( DateTime.Now.Year); }
+            if (ano == "") { SQL.Append(DateTime.Now.Year); }
             else
             {
                 SQL.Append(ano);
@@ -914,7 +917,7 @@ namespace SIAO.SRV
                         INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                         WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
                         AND (consolidado.Mes >= {0} AND consolidado.Ano = {1}) 
-                        AND (consolidado.Mes <= {2} AND consolidado.Ano = {3})",strMI,strAI,strMF,strAF));
+                        AND (consolidado.Mes <= {2} AND consolidado.Ano = {3})", strMI, strAI, strMF, strAF));
 
             if (clsUser.Access == "nvg")
             {
@@ -999,6 +1002,89 @@ namespace SIAO.SRV
             SQL.Append(" ORDER BY consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
             cmm.CommandText = SQL.ToString();
+            cmm.CommandTimeout = 9999;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "CrossR1");
+            }
+            oDB.closeConnection(cmm);
+
+            try
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    if (!String.IsNullOrEmpty(ds.Tables["CrossR1"].Rows[0][0].ToString()))
+                        for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
+                        {
+                            clsRelat1 or = new clsRelat1();
+
+                            or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
+                            or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
+                            or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
+                            or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
+                            or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
+                            or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
+                            or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
+                            if (or.SomaDeValorDesconto > 0)
+                            {
+                                if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
+                            }
+                            else { or.PercentualDesconto = 0; }
+
+                            lr.Add(or);
+                        }
+                }
+            }
+            finally
+            {
+
+            }
+
+            return lr;
+        }
+        public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string ano, int intRedeId, Boolean blnMes)
+        {
+            List<clsRelat1> lr = new List<clsRelat1>();
+            MySqlConnection cnn = new MySqlConnection(scn);
+            DataSet ds = new DataSet();
+
+            cmm.Connection = cnn;
+            StringBuilder SQL = new StringBuilder();
+            SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,consolidado.CNPJ,consolidado.Mes,
+                    consolidado.Sub_Consultoria,consolidado.Grupo,consolidado.Quantidade AS 'Soma De Quantidade',
+                    consolidado.Valor_Bruto AS 'Soma De Valor bruto', consolidado.Valor_Liquido AS 'Soma De Valor liquido',
+                    consolidado.Valor_Desconto AS 'Soma De Valor desconto' FROM consolidado
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                    WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
+                    AND farmacias.idRede = @idRede");
+
+            if (blnMes)
+            {
+                string strMF = DateTime.Now.Month.ToString();
+                string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
+
+                string strAF = DateTime.Now.Year.ToString();
+                string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
+
+                SQL.Append(String.Format(@" AND (consolidado.Mes >= {0} AND consolidado.Ano = {1}) 
+                        AND (consolidado.Mes <= {2} AND consolidado.Ano = {3})",strMI,strAI,strMF,strAF));
+            }
+            else if (String.IsNullOrEmpty(ano)) { 
+                SQL.Append(String.Format(" AND consolidado.Ano = {0}", DateTime.Now.Year));
+            }
+            else
+            {
+                SQL.Append(String.Format(" AND consolidado.Ano = {0}",ano));
+            }
+
+
+            SQL.Append(" ORDER BY consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+
+            cmm.CommandText = SQL.ToString();
+            cmm.Parameters.Add("@idRede ", MySqlDbType.Int32).Value = intRedeId;
             cmm.CommandTimeout = 9999;
 
             if (oDB.openConnection(cmm))
