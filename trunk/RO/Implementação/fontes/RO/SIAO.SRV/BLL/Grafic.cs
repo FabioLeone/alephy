@@ -11,10 +11,10 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static List<GraficTO> GraficList(int intMes, UsersTO clsUsers, string strConnection, string strLoja)
+        public static List<GraficTO> GraficList(int intMes, UsersTO clsUsers, string strConnection, string strLoja, int intAno)
         {
             List<GraficTO> clsList = new List<GraficTO>();
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, clsUsers, strConnection, strLoja);
+            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, clsUsers, strConnection, strLoja,intAno);
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll(strConnection);
 
             if (clsGrafic.Count > 0)
@@ -81,9 +81,9 @@ namespace SIAO.SRV.BLL
 
         #region .: Search :.
 
-        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUsers, string strConnection, string strLoja)
+        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUsers, string strConnection, string strLoja, int intAno)
         {
-            return GraficDAL.GetGraficMes(intMes, clsUsers, strConnection, strLoja);
+            return GraficDAL.GetGraficMes(intMes, clsUsers, strConnection, strLoja, intAno);
         }
 
         public static TotaisGraficMesTO GetTotalMes(int intMes, string strConnection)

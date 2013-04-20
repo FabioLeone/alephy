@@ -278,11 +278,16 @@ namespace SIAO
         protected void ibtnGrafic1_Click(object sender, ImageClickEventArgs e)
         {
             List<GraficTO> clsGrafic;
+            int intAno = 0;
+            if (ddlAnoG.SelectedValue != "")
+                intAno = Convert.ToInt32(ddlAnoG.SelectedValue);
+            else
+                intAno = Convert.ToInt32(DateTime.Now.Year);
 
             if (ddlMes.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojas.SelectedValue);
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojas.SelectedValue, intAno);
             else
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojas.SelectedValue);
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojas.SelectedValue, intAno);
 
             Session["grafic"] = clsGrafic;
 

@@ -54,7 +54,7 @@ namespace SIAO.SRV.DAL
 
         #region .: Search :.
 
-        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUser, string strConnection, string strLoja)
+        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUser, string strConnection, string strLoja, int intAno)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             MySqlConnection msc = new MySqlConnection(strConnection);
@@ -67,24 +67,24 @@ namespace SIAO.SRV.DAL
                     SELECT farmacias.RazaoSocial AS Razao_Social,consolidado.CNPJ,consolidado.Mes,consolidado.Grupo,consolidado.Sub_Consultoria,
                     consolidado.Valor_Liquido AS Liquido,consolidado.Valor_Desconto / consolidado.Valor_Bruto AS Desconto
                     FROM consolidado INNER JOIN farmacias ON consolidado.CNPJ = farmacias.Cnpj 
-                    WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Mes = @Mes 
+                    WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Mes = @Mes AND consolidado.Ano = @Ano
                     AND ((consolidado.Grupo = 'Genéricos' AND consolidado.Sub_Consultoria = 'PDE 2-2 (FPB)') OR (consolidado.Sub_Consultoria = 'PDE 2 (trata)') OR (consolidado.Grupo = 'Propagados' AND consolidado.Sub_Consultoria LIKE 'PDE 1 %')) 
                     AND  #CNPJ GROUP BY farmacias.RazaoSocial, consolidado.Mes, consolidado.Grupo, consolidado.Sub_Consultoria
                     UNION SELECT '' AS Razao_Social,consolidado.Cnpj, consolidado.Mes, 'Total' AS Grupo, 'RELAC (PBM)'AS Sub_Consultoria,   
                     consolidado.Valor_Liquido AS Liquido, consolidado.Valor_Desconto / consolidado.Valor_Bruto AS Desconto  
-                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Mes = @Mes
+                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Mes = @Mes AND consolidado.Ano = @Ano
                     AND consolidado.Sub_Consultoria LIKE 'RELAC (PBM)'  GROUP BY consolidado.Mes,consolidado.Cnpj  
                     UNION SELECT '' AS Razao_Social,consolidado.Cnpj, consolidado.Mes, 'Total' AS Grupo, 'PDE 2 (trata)'AS Sub_Consultoria,   
                     SUM(consolidado.Valor_Liquido) AS Liquido, SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) AS Desconto
-                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Mes = @Mes
+                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Mes = @Mes AND consolidado.Ano = @Ano
                     AND consolidado.Sub_Consultoria LIKE 'PDE 2 %'  GROUP BY consolidado.Mes,consolidado.Cnpj 
                     UNION SELECT '' AS Razao_Social,consolidado.Cnpj, consolidado.Mes, 'Total' AS Grupo, 'PORT (PSICO)'AS Sub_Consultoria,
                     SUM(consolidado.Valor_Liquido) AS Liquido, SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) AS Desconto
-                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Mes = @Mes
+                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Mes = @Mes AND consolidado.Ano = @Ano
                     AND consolidado.Sub_Consultoria LIKE 'PORT (PSICO)' GROUP BY consolidado.Mes,consolidado.Cnpj 
                     UNION SELECT '' AS Razao_Social,consolidado.Cnpj, consolidado.Mes, 'zzzzzz' AS Grupo, 'zzzzzz'AS Sub_Consultoria,  
                     SUM(consolidado.Valor_Liquido) AS Liquido, SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) AS Desconto  
-                    FROM consolidado WHERE consolidado.Mes = @Mes AND consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') 
+                    FROM consolidado WHERE consolidado.Mes = @Mes AND consolidado.Ano = @Ano AND consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') 
                     GROUP BY consolidado.Cnpj) AS xTemp WHERE Mes > 0");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
@@ -194,6 +194,7 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.CommandText = strSQL.ToString().Replace("#CNPJ", strCnpj.Replace("AND ", "consolidado."));
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@Mes", intMes));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@Ano", intAno));
                 cmdGrafic.CommandTimeout = 9999;
 
                 msc.Open();
