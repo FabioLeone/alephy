@@ -16,3 +16,9 @@ C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobCons
 C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe
 C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
 C:\Users\Foster Silva\Desktop\SVN\alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Projects\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe.config
+D:\Projects\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.exe
+D:\Projects\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.pdb
+D:\Projects\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe
+D:\Projects\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
+D:\Projects\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.csprojResolveAssemblyReference.cache

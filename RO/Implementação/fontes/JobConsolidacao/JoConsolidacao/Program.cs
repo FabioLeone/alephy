@@ -28,11 +28,12 @@ namespace JobConsolidacao
                 try
                 {
                     StringBuilder strSQL = new StringBuilder();
-                    strSQL.Append(@"INSERT INTO consolidado (consolidado.CNPJ,consolidado.Mes,consolidado.Ano,consolidado.Grupo,consolidado.Sub_Consultoria,consolidado.Quantidade,consolidado.Valor_Bruto,consolidado.Valor_Liquido,consolidado.Valor_Desconto) 
-                                SELECT base_cliente_espera.Cnpj,base_cliente_espera.Mes,base_cliente_espera.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,Sum(base_cliente_espera.Quantidade),Sum(base_cliente_espera.Valor_Bruto),Sum(base_cliente_espera.Valor_Liquido),Sum(base_cliente_espera.Valor_Desconto)
+                    strSQL.Append(@"INSERT INTO consolidado (consolidado.CNPJ,consolidado.Mes,consolidado.Ano,consolidado.Grupo,consolidado.Sub_Consultoria,consolidado.Quantidade,consolidado.Valor_Bruto,consolidado.Valor_Liquido,consolidado.Valor_Desconto,consolidado.Importado) 
+                                SELECT base_cliente_espera.Cnpj,base_cliente_espera.Mes,base_cliente_espera.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,Sum(base_cliente_espera.Quantidade),Sum(base_cliente_espera.Valor_Bruto),Sum(base_cliente_espera.Valor_Liquido),Sum(base_cliente_espera.Valor_Desconto),
+                                produtos_base.Importado
                                 FROM base_cliente_espera
                                 INNER JOIN produtos_base ON base_cliente_espera.Barras = produtos_base.CodBarra
-                                GROUP BY base_cliente_espera.Cnpj,base_cliente_espera.Mes,base_cliente_espera.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria");
+                                GROUP BY base_cliente_espera.Cnpj,base_cliente_espera.Mes,base_cliente_espera.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,produtos_base.Importado");
 
                     DbCommand cmdUsers = msc.CreateCommand();
 
