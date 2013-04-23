@@ -1069,8 +1069,8 @@ namespace SIAO.SRV
                 string strAF = DateTime.Now.Year.ToString();
                 string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
 
-                SQL.Append(String.Format(@" AND (consolidado.Mes >= {0} AND consolidado.Ano = {1}) 
-                        AND (consolidado.Mes <= {2} AND consolidado.Ano = {3})",strMI,strAI,strMF,strAF));
+                SQL.Append(String.Format(@" AND (MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) >= MAKEDATE({1},(({0}*360)/12)) AND
+                MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) <= MAKEDATE({3},(({2}*360)/12)))", strMI,strAI,strMF,strAF));
             }
             else if (String.IsNullOrEmpty(ano)) { 
                 SQL.Append(String.Format(" AND consolidado.Ano = {0}", DateTime.Now.Year));
@@ -1081,7 +1081,7 @@ namespace SIAO.SRV
             }
 
 
-            SQL.Append(" ORDER BY consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+            SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
             cmm.CommandText = SQL.ToString();
             cmm.Parameters.Add("@idRede ", MySqlDbType.Int32).Value = intRedeId;
