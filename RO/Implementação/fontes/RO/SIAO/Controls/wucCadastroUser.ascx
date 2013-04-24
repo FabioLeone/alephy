@@ -69,13 +69,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <asp:RadioButtonList ID="rblAccess" runat="server" RepeatDirection="Horizontal" ToolTip="Tipo de acesso."
-                            Font-Size="Smaller">
-                            <asp:ListItem Value="adm">Administrador</asp:ListItem>
-                            <asp:ListItem Value="nvg">Gerente de Rede</asp:ListItem>
-                            <asp:ListItem Selected="True" Value="nvp">Propietário</asp:ListItem>
-                        </asp:RadioButtonList>
+                    <td>
+                        Tipo de Acesso:
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="ddlAcess" runat="server" ToolTip="Tipo de acesso." Width="194px"></asp:DropDownList>
+                        <asp:Label ID="lblAcs" runat="server" ForeColor="Red"></asp:Label>
                     </td>
                 </tr>
                 <tr>

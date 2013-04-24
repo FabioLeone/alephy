@@ -90,6 +90,11 @@ namespace SIAO.SRV.BLL
         {
             return UsersDAL.GetByRedeId(intRedeId, strConnection);
         }
+
+        public static List<Usuarios_TiposTO> GetTiposAll()
+        {
+            return UsersDAL.GetTiposAll();
+        }
         #endregion
 
         #region .: Persistence :.

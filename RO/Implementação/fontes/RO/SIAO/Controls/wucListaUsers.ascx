@@ -39,7 +39,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Tipo">
                                 <ItemTemplate>
-                                    <asp:Literal ID="ltlTipo" runat="server"></asp:Literal>
+                                    <asp:Literal ID="ltlTipo" runat="server" Text='<%# Eval("Tipo") %>'></asp:Literal>
                                 </ItemTemplate>
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:TemplateField>
@@ -60,7 +60,9 @@
                                 ItemStyle-HorizontalAlign="Right" EditImageUrl="~/Content/edit.png" >
                             <ItemStyle HorizontalAlign="Right" />
                             </asp:CommandField>
-                            <asp:CommandField ShowDeleteButton="true" ButtonType="Image" DeleteImageUrl="~/Content/delete.png" />
+                            <asp:CommandField ShowDeleteButton="true" ButtonType="Image" DeleteImageUrl="~/Content/delete.png">
+                                <ItemStyle HorizontalAlign="Right" />
+                            </asp:CommandField>
                         </Columns>
                         <EditRowStyle BackColor="#999999" />
                         <HeaderStyle BackColor="#0d87df" Font-Bold="True" ForeColor="White" />

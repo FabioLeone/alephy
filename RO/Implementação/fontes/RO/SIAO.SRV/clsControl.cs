@@ -22,7 +22,6 @@ namespace SIAO.SRV
             try
             {
                 string pass = o.encr(clsUser.Password);
-                string acs = o.encr(clsUser.Access);
                 string nme = o.encr(clsUser.Name.ToUpper());
 
                 MySqlConnection cnn = new MySqlConnection(scn);
@@ -39,12 +38,11 @@ namespace SIAO.SRV
                     {
                         string lDate = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00";
 
-                        cmm.CommandText = "INSERT INTO users"
-                            + " (UserName, LastActivityDate)"
-                            + " VALUES (@UserName, @LastActivityDate)";
+                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId) VALUES (@UserName, @LastActivityDate, @TipoId)";
                         cmm.Parameters.Clear();
                         cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.Name;
                         cmm.Parameters.Add("@LastActivityDate", MySqlDbType.DateTime).Value = lDate;
+                        cmm.Parameters.Add("@TipoId", MySqlDbType.Int32).Value = clsUser.TipoId;
 
                         oDB.Execute(ref cmm);
 
@@ -58,10 +56,10 @@ namespace SIAO.SRV
                         string eDate = clsUser.ExpirationDate.Year + "-" + clsUser.ExpirationDate.Month + "-" + clsUser.ExpirationDate.Day + " 00:00:00";
 
                         cmm.CommandText = "INSERT INTO memberships"
-                            + " (UserId, Password, Email, Inactive, CreateDate, ExpirationDate, Access, Name)"
+                            + " (UserId, Password, Email, Inactive, CreateDate, ExpirationDate, Name)"
                             + " VALUES (" + id + ", '" + pass + "', '" + clsUser.Email + "', "
                             + (clsUser.Inactive == false ? 0 : 1) + ", '" + cDate + "', '" + eDate + "', '"
-                            + acs + "','" + nme + "')";
+                            + nme + "')";
 
                         oDB.Execute(ref cmm);
                     }
@@ -1063,11 +1061,11 @@ namespace SIAO.SRV
 
             if (blnMes)
             {
-                string strMF = DateTime.Now.Month.ToString();
-                string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
+                string strMF = DateTime.Now.AddMonths(-1).Month.ToString();
+                string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
 
                 string strAF = DateTime.Now.Year.ToString();
-                string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
+                string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
 
                 SQL.Append(String.Format(@" AND (MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) >= MAKEDATE({1},(({0}*360)/12)) AND
                 MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) <= MAKEDATE({3},(({2}*360)/12)))", strMI,strAI,strMF,strAF));
@@ -1209,7 +1207,6 @@ namespace SIAO.SRV
             try
             {
                 string pass = o.encr(clsUser.Password);
-                string acs = o.encr(clsUser.Access);
                 string nme = o.encr(clsUser.Name.ToUpper());
 
                 MySqlConnection cnn = new MySqlConnection(scn);
@@ -1218,9 +1215,13 @@ namespace SIAO.SRV
                 if (oDB.openConnection(cmm))
                 {
                     string lDate = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00";
+                    StringBuilder stbSQL = new StringBuilder();
+                    stbSQL.Append("UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '" + lDate);
+                    if (clsUser.TipoId > 0) stbSQL.Append(",TipoId = @TipoId");
 
-                    cmm.CommandText = "UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '"
-                        + lDate + "' WHERE UserId = " + clsUser.UserId;
+                    stbSQL.Append("' WHERE UserId = " + clsUser.UserId);
+                    cmm.CommandText = stbSQL.ToString();
+                    cmm.Parameters.Add("@TipoId", MySqlDbType.Int32).Value = clsUser.TipoId;
 
                     oDB.Execute(ref cmm);
 
@@ -1228,7 +1229,7 @@ namespace SIAO.SRV
 
                     cmm.CommandText = "UPDATE memberships SET Password = '" + pass + "', Email = '"
                         + clsUser.Email + "', Inactive = " + (clsUser.Inactive == false ? 0 : 1)
-                        + ", ExpirationDate = '" + eDate + "', Access = '" + acs + "', Name = '" + nme
+                        + ", ExpirationDate = '" + eDate + "', Name = '" + nme
                         + "' WHERE UserId = " + clsUser.UserId;
 
                     oDB.Execute(ref cmm);
