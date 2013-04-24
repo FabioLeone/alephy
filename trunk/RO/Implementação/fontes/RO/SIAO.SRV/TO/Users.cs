@@ -17,8 +17,16 @@ namespace SIAO.SRV.TO
         public DateTime CreateDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public string Access { get; set; }
+        public int TipoId { get; set; }
         public string Name { get; set; }
         public int FarmaciaId { get; set; }
         public List<string> Cnpj { get; set; }
+        public string Tipo { get; set; }
+    }
+
+    [Serializable]
+    public class Usuarios_TiposTO {
+        public int id { get; set; }
+        public string Tipo { get; set; }
     }
 }

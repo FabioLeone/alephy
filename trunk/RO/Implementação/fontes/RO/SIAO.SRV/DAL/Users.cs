@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Linq;
+using System.Configuration;
 
 namespace SIAO.SRV.DAL
 {
@@ -29,6 +30,24 @@ namespace SIAO.SRV.DAL
             if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Name"))) { clsUsers.Name = CDM.Desc(drdUsers.GetString(drdUsers.GetOrdinal("Name"))); } else { clsUsers.Name = ""; }
             if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("FarmaciaId"))) { clsUsers.FarmaciaId = drdUsers.GetInt32(drdUsers.GetOrdinal("FarmaciaId")); } else { clsUsers.FarmaciaId = 0; }
 
+            try
+            {
+                if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("TipoId"))) { clsUsers.TipoId = drdUsers.GetInt32(drdUsers.GetOrdinal("TipoId")); } else { clsUsers.TipoId = 0; }
+            }
+            catch 
+            {
+                clsUsers.TipoId = 0; 
+            }
+
+            try
+            {
+                if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Tipo"))) { clsUsers.Tipo = drdUsers.GetString(drdUsers.GetOrdinal("Tipo")); } else { clsUsers.Tipo = ""; }
+            }
+            catch
+            {
+                clsUsers.Tipo = ""; 
+            }
+
             return clsUsers;
         }
 
@@ -49,6 +68,16 @@ namespace SIAO.SRV.DAL
 
             return clsUsers;
         }
+        private static Usuarios_TiposTO LoadTipos(IDataReader drdTipos)
+        {
+            Usuarios_TiposTO clsTipo = new Usuarios_TiposTO();
+
+            if (!drdTipos.IsDBNull(drdTipos.GetOrdinal("id"))) { clsTipo.id = drdTipos.GetInt32(drdTipos.GetOrdinal("id")); } else { clsTipo.id = 0; }
+            if (!drdTipos.IsDBNull(drdTipos.GetOrdinal("Tipo"))) { clsTipo.Tipo = drdTipos.GetString(drdTipos.GetOrdinal("Tipo")); } else { clsTipo.Tipo = ""; }
+
+            return clsTipo;
+        }
+
         #endregion
 
         #region .: Search :.
@@ -62,11 +91,13 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,");
-                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
-                strSQL.Append(" memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId");
-                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
-                strSQL.Append(" ORDER BY users.UserName");
+                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
+                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN 
+                usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId LEFT JOIN
+                usuarios_tipos ON users.TipoId = usuarios_tipos.id
+                ORDER BY users.UserName");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
@@ -98,11 +129,12 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,");
-                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
-                strSQL.Append(" memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId");
-                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
-                strSQL.Append(" WHERE users.UserId=@UserId");
+                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
+                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId LEFT JOIN
+                usuarios_tipos ON users.TipoId = usuarios_tipos.id
+                WHERE users.UserId=@UserId");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
@@ -272,12 +304,14 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,");
-                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
-                strSQL.Append(" memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId");
-                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
-                strSQL.Append(" WHERE users.UserName LIKE @Name");
-                strSQL.Append(" ORDER BY users.UserName");
+                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
+                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN 
+                usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId LEFT JOIN
+                usuarios_tipos ON users.TipoId = usuarios_tipos.id
+                WHERE users.UserName LIKE @Name
+                ORDER BY users.UserName");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
@@ -339,6 +373,38 @@ namespace SIAO.SRV.DAL
             }
 
             return clsUsers.OrderBy(u=>u.Name).ToList();
+        }
+
+        internal static List<Usuarios_TiposTO> GetTiposAll()
+        {
+            List<Usuarios_TiposTO> lstTipos = new List<Usuarios_TiposTO>();
+
+            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("SELECT usuarios_tipos.id,usuarios_tipos.Tipo FROM usuarios_tipos");
+                
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+
+                msc.Open();
+
+                using (IDataReader drdTipos = cmdUsers.ExecuteReader())
+                {
+                    while (drdTipos.Read())
+                    {
+                        lstTipos.Add(LoadTipos(drdTipos));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return lstTipos;
         }
 
         #endregion

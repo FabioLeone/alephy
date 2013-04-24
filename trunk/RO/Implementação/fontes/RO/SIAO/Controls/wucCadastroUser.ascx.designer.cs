@@ -139,13 +139,22 @@ namespace SIAO.Controls {
         protected global::AjaxControlToolkit.CalendarExtender txtValidade_CalendarExtender;
         
         /// <summary>
-        /// rblAccess control.
+        /// ddlAcess control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblAccess;
+        protected global::System.Web.UI.WebControls.DropDownList ddlAcess;
+        
+        /// <summary>
+        /// lblAcs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAcs;
         
         /// <summary>
         /// cbxAtivo control.
