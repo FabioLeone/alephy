@@ -1,11 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Siao.Master" AutoEventWireup="true"
     CodeBehind="wfmCadastroRede.aspx.cs" Inherits="SIAO.wfmCadastroRede" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
+        <contenttemplate>
             <div id="edRede">
                 <p>
                     <input type="button" onclick="show()" value="Editar rede." class="button gray">
@@ -61,6 +60,19 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>
+                                CNPJ:
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtCNPJ" runat="server" Width="250px"></asp:TextBox>
+                                <asp:MaskedEditExtender ID="txtCnpj_MaskedEditExtender" runat="server" CultureAMPMPlaceholder=""
+                                    CultureCurrencySymbolPlaceholder="" CultureDateFormat="" CultureDatePlaceholder=""
+                                    CultureDecimalPlaceholder="" CultureThousandsPlaceholder="" CultureTimePlaceholder=""
+                                    Enabled="True" TargetControlID="txtCNPJ" Mask="99,999,999/9999-99" ClearMaskOnLostFocus="false">
+                                </asp:MaskedEditExtender>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2" style="text-align: right;">
                                 <asp:Button ID="btnSave" CssClass="rightButton gray" ToolTip="Salvar as informações da rede."
                                     runat="server" Text="Salvar" OnClick="btnSave_Click" />
@@ -71,6 +83,6 @@
                     </table>
                 </div>
             </fieldset>
-        </ContentTemplate>
+        </contenttemplate>
     </asp:UpdatePanel>
 </asp:Content>

@@ -76,6 +76,7 @@ namespace SIAO
                 if (rede.RedeId > 0)
                 {
                     rede.RedeName = txtRede.Text;
+                    rede.CNPJ = txtCNPJ.Text;
 
                     msg = o.UpdateRede(scn, rede);
                     ed = true;
@@ -85,6 +86,7 @@ namespace SIAO
                     rede = new SRV.Rede()
                     {
                         RedeName = txtRede.Text,
+                        CNPJ = txtCNPJ.Text
                     };
 
                     if (o.GetByName(txtRede.Text) > 0)
@@ -111,6 +113,7 @@ namespace SIAO
         {
             txtRede.Text = "";
             ddlRede.SelectedIndex = 0;
+            txtCNPJ.Text = "";
             Session["editR"] = null;
         }
 

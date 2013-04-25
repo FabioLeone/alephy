@@ -71,12 +71,14 @@
     <Content Include="Content\navigation-separator.png" />
     <Content Include="Content\report.gif" />
     <Content Include="Content\report.png" />
+    <Content Include="Content\Search.png" />
     <Content Include="Content\ssSIAO.css" />
     <Content Include="Content\success.png" />
     <Content Include="Controls\wucCadastroUser.ascx" />
     <Content Include="Controls\wucListaUsers.ascx" />
     <Content Include="Controls\wucListFiles.ascx" />
     <Content Include="Controls\wucRoles.ascx" />
+    <Content Include="Controls\wucVinculos.ascx" />
     <Content Include="wfmAcesso.aspx" />
     <Content Include="wfmFiles.aspx" />
     <Content Include="wfmIndices.aspx" />
@@ -105,6 +107,7 @@
     <Content Include="wfmRelatMod2.aspx" />
     <Content Include="wfmRelatorio.aspx" />
     <Content Include="wfmUsers.aspx" />
+    <Content Include="wfmVinculos.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\wucCadastroUser.ascx.cs">
@@ -134,6 +137,13 @@
     </Compile>
     <Compile Include="Controls\wucRoles.ascx.designer.cs">
       <DependentUpon>wucRoles.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\wucVinculos.ascx.cs">
+      <DependentUpon>wucVinculos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\wucVinculos.ascx.designer.cs">
+      <DependentUpon>wucVinculos.ascx</DependentUpon>
     </Compile>
     <Compile Include="wfmAcesso.aspx.cs">
       <DependentUpon>wfmAcesso.aspx</DependentUpon>
@@ -276,6 +286,13 @@
     </Compile>
     <Compile Include="wfmUsers.aspx.designer.cs">
       <DependentUpon>wfmUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfmVinculos.aspx.cs">
+      <DependentUpon>wfmVinculos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmVinculos.aspx.designer.cs">
+      <DependentUpon>wfmVinculos.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

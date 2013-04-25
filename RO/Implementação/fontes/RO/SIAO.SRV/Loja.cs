@@ -32,6 +32,7 @@ namespace SIAO.SRV
         public string Rede { get; set; }
         public int idRede { get; set; }
         public bool Ativo { get; set; }
+        public string CEP { get; set; }
 
     }
 }
