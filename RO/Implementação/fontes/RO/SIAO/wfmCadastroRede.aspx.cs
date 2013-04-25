@@ -19,9 +19,7 @@ namespace SIAO
 
             if (Session["editR"] != null) { rede.RedeId = (int)Session["editR"]; }
 
-            if (!IsPostBack) { getGerente(); getRedes(); }
-
-            ddlGerente.Focus();
+            if (!IsPostBack) { getRedes(); }
 
         }
 
@@ -39,23 +37,6 @@ namespace SIAO
                     ddlRede.Items.Add(new ListItem(ds.Tables[0].Rows[i][1].ToString(), ds.Tables[0].Rows[i][0].ToString()));
                 }
                 ddlRede.SelectedIndex = 0;
-            }
-        }
-
-        private void getGerente()
-        {
-            DataSet ds = new DataSet();
-
-            ds = o.GetUser(scn, "nvg");
-
-            if (ds.Tables.Count > 0)
-            {
-                ddlGerente.Items.Add("");
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {
-                    ListItem li = new ListItem(ds.Tables[0].Rows[i][0].ToString(), ds.Tables[0].Rows[i][1].ToString());
-                    ddlGerente.Items.Add(li);
-                }
             }
         }
 
@@ -85,23 +66,16 @@ namespace SIAO
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (ddlGerente.SelectedValue == "")
-            {
-                divErro("Selecione o Gerente da Rede.");
-            }
-            else if (txtRede.Text == "") { divErro("Entre com o nome da Rede."); }
+            if (txtRede.Text == "") { divErro("Entre com o nome da Rede."); }
             else
             {
-
                 string msg = "";
 
                 bool ed = false;
 
                 if (rede.RedeId > 0)
                 {
-                    rede.Gerente = ddlGerente.SelectedItem.Text;
                     rede.RedeName = txtRede.Text;
-                    rede.UserId = Convert.ToInt32(ddlGerente.SelectedValue.ToString());
 
                     msg = o.UpdateRede(scn, rede);
                     ed = true;
@@ -110,12 +84,13 @@ namespace SIAO
                 {
                     rede = new SRV.Rede()
                     {
-                        Gerente = ddlGerente.SelectedItem.Text,
                         RedeName = txtRede.Text,
-                        UserId = Convert.ToInt32(ddlGerente.SelectedValue.ToString())
                     };
 
-                    msg = o.AddRede(scn, rede);
+                    if (o.GetByName(txtRede.Text) > 0)
+                        msg = "Rede já cadastrada.";
+                    else
+                        msg = o.AddRede(scn, rede);
                 }
 
                 if (msg == "")
@@ -134,7 +109,6 @@ namespace SIAO
 
         private void Clear()
         {
-            ddlGerente.SelectedIndex = 0;
             txtRede.Text = "";
             ddlRede.SelectedIndex = 0;
             Session["editR"] = null;
@@ -147,13 +121,6 @@ namespace SIAO
 
             if (or.RedeId > 0)
             {
-                try
-                {
-                    ddlGerente.SelectedValue = or.UserId.ToString();
-                }
-                catch
-                {
-                }
                 txtRede.Text = or.RedeName;
                 Session["editR"] = or.RedeId;
             }

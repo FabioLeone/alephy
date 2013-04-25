@@ -50,25 +50,8 @@
                     <h2>
                         Cadastro de Redes</h2>
                 </legend>
-                <div style="height: 126px; width: 400px; margin-left: 10px;">
+                <div style="height: 85px; width: 400px; margin-left: 10px;">
                     <table>
-                        <tr>
-                            <td>
-                                Gerente da Rede:
-                            </td>
-                            <td>
-                                <asp:DropDownList ID="ddlGerente" Width="254px" runat="server" EnableViewState="true">
-                                </asp:DropDownList>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                &nbsp;
-                            </td>
-                            <td>
-                                <asp:HyperLink ID="hl" NavigateUrl="~/wfmCadastroUsuario.aspx" runat="server">Cadastrar um novo Gerente.</asp:HyperLink>
-                            </td>
-                        </tr>
                         <tr>
                             <td>
                                 Nome da Rede:

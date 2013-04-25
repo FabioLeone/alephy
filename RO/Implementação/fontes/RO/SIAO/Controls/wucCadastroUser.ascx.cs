@@ -20,13 +20,15 @@ namespace SIAO.Controls
         #endregion
 
         #region .: Properties :.
-        public UsersTO User 
+        public UsersTO User
         {
-            get {
+            get
+            {
                 if (this.ViewState["Users"] == null) return new UsersTO();
                 else return (UsersTO)this.ViewState["Users"];
             }
-            set {
+            set
+            {
                 this.ViewState["Users"] = value;
                 this.clsUser = value;
             }
@@ -84,7 +86,8 @@ namespace SIAO.Controls
                     if (lblCS.Visible) { lblCS.Text = "*"; } else { lblCS.Text = "*"; lblCS.Visible = true; }
                     divErro("Senha e confirmação, não conferem.");
                 }
-                else if(ddlAcess.SelectedIndex == 0){
+                else if (ddlAcess.SelectedIndex == 0)
+                {
                     if (lblAcs.Visible) { lblAcs.Text = "*"; } else { lblAcs.Text = "*"; lblCS.Visible = true; }
                     divErro("Selecione o tipo de acesso.");
                 }
@@ -209,7 +212,8 @@ namespace SIAO.Controls
 
             Panel1.Controls.Add(divInfo);
         }
-        public void PopulaDados(UsersTO clsUser) {
+        public void PopulaDados(UsersTO clsUser)
+        {
             if (clsUser.UserId > 0)
             {
                 cbxAtivo.Checked = (bool)(clsUser.Inactive.ToString().ToUpper() == "FALSE" ? true : false);
@@ -219,7 +223,22 @@ namespace SIAO.Controls
                 txtValidade.Text = clsUser.ExpirationDate.ToShortDateString();
                 txtSenha.Text = clsUser.Password;
                 txtCfrSenha.Text = clsUser.Password;
-                ddlAcess.SelectedValue = clsUser.TipoId.ToString();
+                
+                if (clsUser.TipoId > 0)
+                    ddlAcess.SelectedValue = clsUser.TipoId.ToString();
+                else
+                {
+                    if (!String.IsNullOrEmpty(clsUser.Access))
+                    {
+                        switch (clsUser.Access)
+                        {
+                            case "nvg": ddlAcess.SelectedValue = "3"; break;
+                            case "nvp": ddlAcess.SelectedValue = "2"; break;
+                            case "adm": ddlAcess.SelectedValue = "1"; break;
+                        }
+                    }
+                }
+
                 this.User = clsUser;
             }
         }

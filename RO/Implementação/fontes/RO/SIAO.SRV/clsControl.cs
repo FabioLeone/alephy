@@ -6,15 +6,86 @@ using MySql.Data.MySqlClient;
 using System.Text;
 using SIAO.SRV.TO;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace SIAO.SRV
 {
     public class clsControl
     {
+        #region .:Variables:.
         clsDB oDB = new clsDB();
         MySqlCommand cmm = new MySqlCommand();
         clsFuncs o = new clsFuncs();
+        #endregion
 
+        #region .:Search:.
+
+        public System.Data.DataSet GetUser(string scn, string p)
+        {
+            string s = o.encr(p);
+            DataSet ds = new DataSet();
+
+            cmm.CommandText = "SELECT users.UserName, memberships.UserId"
+                + " FROM  users INNER JOIN"
+                + " memberships ON users.UserId = memberships.UserId"
+                + " WHERE (memberships.Inactive = 0) AND (memberships.Access = '" + s + "')"
+                + " AND (memberships.ExpirationDate > SYSDATE())";
+
+            MySqlConnection cnn = new MySqlConnection(scn);
+            cmm.Connection = cnn;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Gerentes");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+        public static DataSet GetRedes(string scn)
+        {
+            DataSet ds = new DataSet();
+            MySqlCommand cmm = new MySqlCommand();
+            MySqlConnection cnn = new MySqlConnection(scn);
+            clsDB oDB = new clsDB();
+
+            cmm.Connection = cnn;
+
+            cmm.CommandText = "SELECT Id, Descricao FROM redesfarmaceuticas ORDER BY Descricao";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Redes");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+
+        public Int32 GetByName(string strName)
+        {
+            MySqlCommand cmm = new MySqlCommand();
+            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            clsDB oDB = new clsDB();
+            Int32 intRedeId = 0;
+
+            cmm.Connection = cnn;
+
+            cmm.CommandText = "SELECT Id FROM redesfarmaceuticas WHERE Descricao=@Descricao";
+            cmm.Parameters.Add("@Descricao", MySqlDbType.String).Value = strName;
+
+            if (oDB.openConnection(cmm))
+            {
+                Int32.TryParse(oDB.Query(intRedeId,ref cmm).ToString(),out intRedeId);
+            }
+            oDB.closeConnection(cmm);
+
+            return intRedeId;
+        }
+        #endregion
+
+        #region .:Persistence:.
         public string AddUser(UsersTO clsUser, string scn)
         {
             string msg = "";
@@ -31,7 +102,7 @@ namespace SIAO.SRV
                 {
                     cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = @UserName";
                     cmm.Parameters.Clear();
-                    cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.Name;
+                    cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.UserName;
 
                     int id = 0;
                     if (oDB.Query(id, ref cmm) == DBNull.Value)
@@ -40,7 +111,7 @@ namespace SIAO.SRV
 
                         cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId) VALUES (@UserName, @LastActivityDate, @TipoId)";
                         cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.Name;
+                        cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.UserName;
                         cmm.Parameters.Add("@LastActivityDate", MySqlDbType.DateTime).Value = lDate;
                         cmm.Parameters.Add("@TipoId", MySqlDbType.Int32).Value = clsUser.TipoId;
 
@@ -48,7 +119,7 @@ namespace SIAO.SRV
 
                         cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = @UserName";
                         cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.Name;
+                        cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.UserName;
 
                         id = (int)oDB.Query(id, ref cmm);
 
@@ -73,35 +144,11 @@ namespace SIAO.SRV
 
             return msg;
         }
-
-        public System.Data.DataSet GetUser(string scn, string p)
-        {
-            string s = o.encr(p);
-            DataSet ds = new DataSet();
-
-            cmm.CommandText = "SELECT users.UserName, memberships.UserId"
-                + " FROM  users INNER JOIN"
-                + " memberships ON users.UserId = memberships.UserId"
-                + " WHERE (memberships.Inactive = 0) AND (memberships.Access = '" + s + "')"
-                + " AND (memberships.ExpirationDate > SYSDATE())";
-
-            MySqlConnection cnn = new MySqlConnection(scn);
-            cmm.Connection = cnn;
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Gerentes");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
-        }
-
         public string AddRede(string scn, Rede rede)
         {
             string msg = "";
-            cmm.CommandText = "INSERT INTO redesfarmaceuticas (Descricao, UserId)"
-                + " VALUES ('" + rede.RedeName + "', '" + rede.UserId + "')";
+            cmm.CommandText = "INSERT INTO redesfarmaceuticas (Descricao)"
+                + " VALUES ('" + rede.RedeName + "')";
 
             MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
@@ -126,7 +173,7 @@ namespace SIAO.SRV
         {
             string msg = "";
             cmm.CommandText = "UPDATE redesfarmaceuticas SET Descricao = '" + rede.RedeName
-                + "', UserId = '" + rede.UserId + "' WHERE Id = " + rede.RedeId;
+                + "' WHERE Id = " + rede.RedeId;
 
             MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
@@ -146,26 +193,7 @@ namespace SIAO.SRV
 
             return msg;
         }
-
-        public static DataSet GetRedes(string scn)
-        {
-            DataSet ds = new DataSet();
-            MySqlCommand cmm = new MySqlCommand();
-            MySqlConnection cnn = new MySqlConnection(scn);
-            clsDB oDB = new clsDB();
-
-            cmm.Connection = cnn;
-
-            cmm.CommandText = "SELECT Id, Descricao FROM redesfarmaceuticas ORDER BY Descricao";
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Redes");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
-        }
+        #endregion
 
         public DataSet GetUf(string scn)
         {
@@ -1216,10 +1244,10 @@ namespace SIAO.SRV
                 {
                     string lDate = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00";
                     StringBuilder stbSQL = new StringBuilder();
-                    stbSQL.Append("UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '" + lDate);
+                    stbSQL.Append("UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '" + lDate + "'");
                     if (clsUser.TipoId > 0) stbSQL.Append(",TipoId = @TipoId");
 
-                    stbSQL.Append("' WHERE UserId = " + clsUser.UserId);
+                    stbSQL.Append(" WHERE UserId = " + clsUser.UserId);
                     cmm.CommandText = stbSQL.ToString();
                     cmm.Parameters.Add("@TipoId", MySqlDbType.Int32).Value = clsUser.TipoId;
 
@@ -1243,14 +1271,14 @@ namespace SIAO.SRV
             return msg;
         }
 
-        public Rede GetRedesEdit(string scn, string p)
+        public Rede GetRedesEdit(string scn, string strRedeId)
         {
             DataSet ds = new DataSet();
             MySqlConnection cnn = new MySqlConnection(scn);
             Rede r = new Rede();
 
             cmm.Connection = cnn;
-            cmm.CommandText = "SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + p + ")";
+            cmm.CommandText = "SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + strRedeId + ")";
 
             if (oDB.openConnection(cmm))
             {

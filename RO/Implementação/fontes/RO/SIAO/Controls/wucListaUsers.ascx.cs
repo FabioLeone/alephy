@@ -69,12 +69,25 @@ namespace SIAO.Controls
             {
                 int intUserId = (int)gvwUsers.DataKeys[e.Row.RowIndex].Value;
                 UsersTO clsUser = UsersBLL.GetById(intUserId, strConnection);
+                
+                if(clsUser.TipoId == 0)
+                    switch (clsUser.Access)
+                    {
+                        case "nvg": ltlTipo.Text = "Gerente"; break;
+                        case "nvp": ltlTipo.Text = "Proprietário"; break;
+                        case "adm": ltlTipo.Text = "Administrador"; break;
+                    }
 
-                switch (clsUser.Access)
+                foreach (DataControlFieldCell cell in e.Row.Cells)
                 {
-                    case "nvg": ltlTipo.Text = "Gerente"; break;
-                    case "nvp": ltlTipo.Text = "Proprietário"; break;
-                    case "adm": ltlTipo.Text = "Administrador"; break;
+                    foreach (Control control in cell.Controls)
+                    {
+                        ImageButton del = control as ImageButton;
+                        if (del != null && del.CommandName == "Delete")
+                        {
+                            del.OnClientClick = "if (!confirm('Você deseja realmente excluir este usuário?')) return;";
+                        }
+                    }
                 }
             }
         }
