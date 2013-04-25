@@ -27,7 +27,6 @@ namespace SIAO
             {
                 LoadRedes();
                 LoadUf();
-                LoadUser();
                 txtNomeFantasia.Focus();
             }
         }
@@ -82,28 +81,6 @@ namespace SIAO
             }
         }
 
-        private void LoadUser()
-        {
-            List<UsersTO> clsUsersG = UsersBLL.GetByAccessType("gerente", scn);
-
-            ddlGerente.DataSource = clsUsersG;
-            ddlGerente.DataTextField = "UserName";
-            ddlGerente.DataValueField = "UserId";
-            ddlGerente.DataBind();
-            ddlGerente.Items.Insert(0, new ListItem(string.Empty, "0"));
-            ddlGerente.SelectedIndex = 0;
-
-            List<UsersTO> clsUsersP = UsersBLL.GetByAccessType("proprietario", scn);
-
-            ddlProprietario.DataSource = clsUsersP;
-            ddlProprietario.DataTextField = "UserName";
-            ddlProprietario.DataValueField = "UserId";
-            ddlProprietario.DataBind();
-            ddlProprietario.Items.Insert(0, new ListItem(string.Empty, "0"));
-            ddlProprietario.SelectedIndex = 0;
-
-        }
-
         private void divErro(string msg)
         {
             System.Web.UI.HtmlControls.HtmlGenericControl divError = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
@@ -152,10 +129,6 @@ namespace SIAO
                 divErro("Entre com a razão social.");
                 txtRazao.Focus();
             }
-            else if (ddlProprietario.SelectedValue == "0") {
-                divErro("Selecione o Proprietário.");
-                ddlProprietario.Focus();
-            }
             else
             {
                 string msg = "";
@@ -176,16 +149,17 @@ namespace SIAO
                     clsLoja.EndNumero = Convert.ToInt32(txtNum.Text);
                     clsLoja.Fone = txtFone.Text;
                     clsLoja.Fone2 = txtFone2.Text;
-                    clsLoja.GerenteId = ddlGerente.SelectedValue == "0" ? 0 : Convert.ToInt32(ddlGerente.SelectedValue);
+                    clsLoja.Gerente = txtGerente.Text;
                     clsLoja.idRede = ddlRede.SelectedValue == "" ? 0 : Convert.ToInt32(ddlRede.SelectedValue);
                     clsLoja.Msn = txtMsn.Text;
                     clsLoja.NomeFantasia = txtNomeFantasia.Text;
-                    clsLoja.ProprietarioId = ddlProprietario.SelectedValue == "0" ? 0 : Convert.ToInt32(ddlProprietario.SelectedValue);
+                    clsLoja.Proprietario = txtProprietario.Text;
                     clsLoja.Razao = txtRazao.Text;
                     clsLoja.Rede = ddlRede.SelectedItem.Text;
                     clsLoja.Site = txtSite.Text;
                     clsLoja.Skype = txtSkype.Text;
                     clsLoja.Uf = ddlUf.SelectedValue;
+                    clsLoja.CEP = txtCep.Text;
 
                     msg = o.UpdateLoja(scn, clsLoja);
                     ed = true;
@@ -206,16 +180,17 @@ namespace SIAO
                         EndNumero = txtNum.Text == "" ? 0 : Convert.ToInt32(txtNum.Text),
                         Fone = txtFone.Text,
                         Fone2 = txtFone2.Text,
-                        GerenteId = ddlGerente.SelectedValue == "" ? 0 : Convert.ToInt32(ddlGerente.SelectedValue),
+                        Gerente = txtGerente.Text,
                         idRede = ddlRede.SelectedValue == "" ? 0 : Convert.ToInt32(ddlRede.SelectedValue),
                         Msn = txtMsn.Text,
                         NomeFantasia = txtNomeFantasia.Text,
-                        ProprietarioId = ddlProprietario.SelectedValue == "" ? 0 : Convert.ToInt32(ddlProprietario.SelectedValue),
+                        Proprietario = txtProprietario.Text,
                         Razao = txtRazao.Text,
                         Rede = ddlRede.SelectedItem.Text,
                         Site = txtSite.Text,
                         Skype = txtSkype.Text,
-                        Uf = ddlUf.SelectedValue
+                        Uf = ddlUf.SelectedValue,
+                        CEP = txtCep.Text
                     };
 
                     msg = o.AddLoja(scn, clsLoja);
@@ -250,15 +225,15 @@ namespace SIAO
             txtEndereco.Text = "";
             txtFone.Text = "";
             txtFone2.Text = "";
-            ddlGerente.SelectedIndex = 0;
+            txtProprietario.Text = "";
             txtMsn.Text = "";
             txtNomeFantasia.Text = "";
             txtNum.Text = "";
-            ddlProprietario.SelectedIndex  = 0;
+            txtGerente.Text = "";
             txtRazao.Text = "";
             txtSite.Text = "";
             txtSkype.Text = "";
-
+            txtCep.Text = "";
             Session["editL"] = null;
 
             txtNomeFantasia.Focus();
@@ -295,13 +270,13 @@ namespace SIAO
                 txtEndereco.Text = ol.Endereco;
                 txtFone.Text = ol.Fone;
                 txtFone2.Text = ol.Fone2;
-                ddlGerente.SelectedValue = ol.GerenteId.ToString();
+                txtGerente.Text = ol.Gerente;
                 txtMsn.Text = ol.Msn;
                 txtNomeFantasia.Text = ol.NomeFantasia;
                 txtNum.Text = ol.EndNumero.ToString();
                 try
                 {
-                    ddlProprietario.SelectedValue = ol.ProprietarioId.ToString();
+                    txtProprietario.Text = ol.Proprietario;
                 }
                 catch 
                 {
@@ -309,6 +284,7 @@ namespace SIAO
                 txtRazao.Text = ol.Razao;
                 txtSite.Text = ol.Site;
                 txtSkype.Text = ol.Skype;
+                txtCep.Text = ol.CEP;
 
                 Session["editL"] = ol.Id;
             }

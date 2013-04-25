@@ -49,18 +49,13 @@
                                 Proprietário:
                             </td>
                             <td colspan="2">
-                                <asp:DropDownList ID="ddlProprietario" Width="246px" runat="server">
-                                </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="rfvProprietario" ControlToValidate="ddlProprietario"
-                                    runat="server" ErrorMessage="Selecione o Proprietário" ForeColor="Red" ToolTip="Selecione o Proprietário"
-                                    ValidationGroup="Cadastro">*</asp:RequiredFieldValidator>
+                                <asp:TextBox width="255px" ID="txtProprietario" runat="server"></asp:TextBox>
                             </td>
                             <td style="text-align: right;">
                                 Gerente:
                             </td>
                             <td colspan="2">
-                                <asp:DropDownList ID="ddlGerente" Width="246px" runat="server">
-                                </asp:DropDownList>
+                                <asp:TextBox Width="255px" ID="txtGerente" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -108,6 +103,19 @@
                             </td>
                             <td>
                                 <asp:TextBox Width="100px" ID="txtComp" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">
+                                CEP:
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtCep" runat="server"></asp:TextBox>
+                                <asp:MaskedEditExtender ID="meeCEP" runat="server" CultureAMPMPlaceholder=""
+                                    CultureCurrencySymbolPlaceholder="" CultureDateFormat="" CultureDatePlaceholder=""
+                                    CultureDecimalPlaceholder="" CultureThousandsPlaceholder="" CultureTimePlaceholder=""
+                                    Enabled="True" TargetControlID="txtCEP" Mask="99999-999" ClearMaskOnLostFocus="false">
+                                </asp:MaskedEditExtender>
                             </td>
                         </tr>
                         <tr>

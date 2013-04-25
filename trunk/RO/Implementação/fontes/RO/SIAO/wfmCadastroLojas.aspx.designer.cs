@@ -76,31 +76,22 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.TextBox txtRazao;
         
         /// <summary>
-        /// ddlProprietario control.
+        /// txtProprietario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlProprietario;
+        protected global::System.Web.UI.WebControls.TextBox txtProprietario;
         
         /// <summary>
-        /// rfvProprietario control.
+        /// txtGerente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProprietario;
-        
-        /// <summary>
-        /// ddlGerente control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlGerente;
+        protected global::System.Web.UI.WebControls.TextBox txtGerente;
         
         /// <summary>
         /// txtEmail control.
@@ -164,6 +155,24 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtComp;
+        
+        /// <summary>
+        /// txtCep control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCep;
+        
+        /// <summary>
+        /// meeCEP control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender meeCEP;
         
         /// <summary>
         /// txtBairro control.

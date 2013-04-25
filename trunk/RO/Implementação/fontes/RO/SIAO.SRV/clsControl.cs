@@ -83,6 +83,122 @@ namespace SIAO.SRV
 
             return intRedeId;
         }
+
+        public static Loja GetLojaByCNPJ(string strCNPJ)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            Loja clsLoja = new Loja();
+
+            MySqlCommand cmm = new MySqlCommand();
+            clsDB oDB = new clsDB();
+
+            cmm.Connection = cnn;
+            StringBuilder strSQL = new StringBuilder();
+            strSQL.Append(@"SELECT farmacias.Id, farmacias.Proprietario, farmacias.Gerente, farmacias.Email,
+            farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,
+            farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,
+            farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,
+            farmacias.Site, farmacias.Skype, farmacias.Msn, farmacias.Ativo, farmacias.idRede,farmacias.CEP
+            FROM farmacias WHERE (farmacias.Cnpj = @Cnpj)");
+
+            string scnpj = strCNPJ.Replace(".", "");
+            scnpj = scnpj.Replace("/", "");
+            scnpj = scnpj.Replace("-", "");
+
+            cmm.CommandText = strSQL.ToString();
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = scnpj;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Loja");
+            }
+            oDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                clsLoja.Id = Convert.ToInt16(ds.Tables["Loja"].Rows[0]["Id"].ToString());
+                clsLoja.Proprietario = ds.Tables["Loja"].Rows[0]["Proprietario"].ToString() == "" ? "" : ds.Tables["Loja"].Rows[0]["Proprietario"].ToString();
+                clsLoja.Gerente = ds.Tables["Loja"].Rows[0]["Gerente"].ToString() == "" ? "" : ds.Tables["Loja"].Rows[0]["Gerente"].ToString();
+                clsLoja.Email = ds.Tables["Loja"].Rows[0]["Email"].ToString();
+                clsLoja.Email2 = ds.Tables["Loja"].Rows[0]["Email2"].ToString();
+                clsLoja.NomeFantasia = ds.Tables["Loja"].Rows[0]["NomeFantasia"].ToString();
+                clsLoja.Razao = ds.Tables["Loja"].Rows[0]["RazaoSocial"].ToString();
+                clsLoja.Cnpj = ds.Tables["Loja"].Rows[0]["Cnpj"].ToString();
+                clsLoja.Endereco = ds.Tables["Loja"].Rows[0]["Endereco"].ToString();
+                clsLoja.EndNumero = Convert.ToInt32(ds.Tables["Loja"].Rows[0]["Numero"].ToString());
+                clsLoja.Bairro = ds.Tables["Loja"].Rows[0]["Bairro"].ToString();
+                clsLoja.Complemento = ds.Tables["Loja"].Rows[0]["Complemento"].ToString();
+                clsLoja.Cidade = ds.Tables["Loja"].Rows[0]["Cidade"].ToString();
+                clsLoja.Uf = ds.Tables["Loja"].Rows[0]["UF"].ToString();
+                clsLoja.Fone = ds.Tables["Loja"].Rows[0]["Tel1"].ToString();
+                clsLoja.Fone2 = ds.Tables["Loja"].Rows[0]["Tel2"].ToString();
+                clsLoja.Celular = ds.Tables["Loja"].Rows[0]["Celular"].ToString();
+                clsLoja.Site = ds.Tables["Loja"].Rows[0]["Site"].ToString();
+                clsLoja.Skype = ds.Tables["Loja"].Rows[0]["Skype"].ToString();
+                clsLoja.Msn = ds.Tables["Loja"].Rows[0]["Msn"].ToString();
+                clsLoja.Ativo = (ds.Tables["Loja"].Rows[0]["Ativo"].ToString() == "1" ? true : false);
+                clsLoja.idRede = Convert.ToInt32(ds.Tables["Loja"].Rows[0]["idRede"].ToString());
+                clsLoja.CEP = ds.Tables["Loja"].Rows[0]["CEP"].ToString();
+            }
+
+            return clsLoja;
+        }
+        public DataSet GetUf(string scn)
+        {
+            DataSet ds = new DataSet();
+
+            MySqlConnection cnn = new MySqlConnection(scn);
+            cmm.Connection = cnn;
+
+            cmm.CommandText = "SELECT id,UF FROM uf";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "UF");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public static Rede GetRedeByCNPJ(string strCNPJ)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            Rede r = new Rede();
+
+            MySqlCommand cmm = new MySqlCommand();
+            clsDB oDB = new clsDB();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId FROM  redesfarmaceuticas 
+            WHERE (redesfarmaceuticas.CNPJ = @CNPJ)";
+
+
+            string scnpj = strCNPJ.Replace(".", "");
+            scnpj = scnpj.Replace("/", "");
+            scnpj = scnpj.Replace("-", "");
+
+            cmm.Parameters.Add("@CNPJ", MySqlDbType.String).Value = scnpj;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Rede");
+            }
+            oDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
+                r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
+                r.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["UserId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["UserId"]);
+            }
+
+            return r;
+        }
+
         #endregion
 
         #region .:Persistence:.
@@ -147,8 +263,8 @@ namespace SIAO.SRV
         public string AddRede(string scn, Rede rede)
         {
             string msg = "";
-            cmm.CommandText = "INSERT INTO redesfarmaceuticas (Descricao)"
-                + " VALUES ('" + rede.RedeName + "')";
+            cmm.CommandText = "INSERT INTO redesfarmaceuticas (Descricao,CNPJ)"
+                + " VALUES ('" + rede.RedeName + "','"+ rede.CNPJ +"')";
 
             MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
@@ -173,7 +289,7 @@ namespace SIAO.SRV
         {
             string msg = "";
             cmm.CommandText = "UPDATE redesfarmaceuticas SET Descricao = '" + rede.RedeName
-                + "' WHERE Id = " + rede.RedeId;
+                + "', CNPJ = '"+ rede.CNPJ +"' WHERE Id = " + rede.RedeId;
 
             MySqlConnection cnn = new MySqlConnection(scn);
             cmm.Connection = cnn;
@@ -192,25 +308,6 @@ namespace SIAO.SRV
             oDB.closeConnection(cmm);
 
             return msg;
-        }
-        #endregion
-
-        public DataSet GetUf(string scn)
-        {
-            DataSet ds = new DataSet();
-
-            MySqlConnection cnn = new MySqlConnection(scn);
-            cmm.Connection = cnn;
-
-            cmm.CommandText = "SELECT id,UF FROM uf";
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "UF");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
         }
 
         public string AddLoja(string scn, Loja ol)
@@ -224,13 +321,13 @@ namespace SIAO.SRV
             scnpj = scnpj.Replace("/", "");
             scnpj = scnpj.Replace("-", "");
 
-            cmm.CommandText = "INSERT INTO farmacias (ProprietarioId, GerenteId, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero, Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, "
-                + " Msn, Ativo, idRede)"
-                + " VALUES (" + ol.ProprietarioId + ", " + ol.GerenteId + ", '" + ol.Email + "', '" + ol.Email2 + "', '"
+            cmm.CommandText = @"INSERT INTO farmacias (Proprietario, Gerente, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero,
+            Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, Msn, Ativo, idRede, CEP)"
+                + " VALUES ('" + ol.Proprietario + "', '" + ol.Gerente + "', '" + ol.Email + "', '" + ol.Email2 + "', '"
                 + ol.NomeFantasia + "', '" + ol.Razao + "', '" + scnpj + "', '" + ol.Endereco + "', '" + ol.EndNumero
                 + "', '" + ol.Bairro + "', '" + ol.Complemento + "', '" + ol.Cidade + "', '" + ol.Uf + "', '" + ol.Fone
                 + "', '" + ol.Fone2 + "', '" + ol.Celular + "', '" + ol.Site + "', '" + ol.Skype + "', "
-                + " '" + ol.Msn + "', " + (ol.Ativo == true ? 1 : 0) + ", " + ol.idRede + ")";
+                + " '" + ol.Msn + "', " + (ol.Ativo == true ? 1 : 0) + ", " + ol.idRede + ",'" + ol.CEP + "')";
 
             try
             {
@@ -248,6 +345,8 @@ namespace SIAO.SRV
             return msg;
         }
 
+        #endregion
+
         public string UpdateLoja(string scn, Loja clsLoja)
         {
             string msg = "";
@@ -259,16 +358,14 @@ namespace SIAO.SRV
             scnpj = scnpj.Replace("/", "");
             scnpj = scnpj.Replace("-", "");
 
-            cmm.CommandText = "UPDATE farmacias SET ProprietarioId = " + clsLoja.ProprietarioId
-                + ", GerenteId = " + clsLoja.GerenteId + ", Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2
-                + "', NomeFantasia = '" + clsLoja.NomeFantasia + "', RazaoSocial = '" + clsLoja.Razao
-                + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
-                + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '"
-                + clsLoja.Complemento + "', Cidade = '" + clsLoja.Cidade + "', UF = '" + clsLoja.Uf
-                + "', Tel1 = '" + clsLoja.Fone + "', Tel2 = '" + clsLoja.Fone2 + "', Celular = '"
-                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', "
-                + " Msn = " + " '" + clsLoja.Msn + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0)
-                + ", idRede = " + clsLoja.idRede + " WHERE Id = " + clsLoja.Id;
+            cmm.CommandText = "UPDATE farmacias SET Proprietario = '" + clsLoja.Proprietario + "', Gerente = '" + clsLoja.Gerente
+                + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2 + "', NomeFantasia = '" + clsLoja.NomeFantasia 
+                + "', RazaoSocial = '" + clsLoja.Razao + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
+                + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '" + clsLoja.Complemento + "', Cidade = '" 
+                + clsLoja.Cidade + "', UF = '" + clsLoja.Uf + "', Tel1 = '" + clsLoja.Fone + "', Tel2 = '" + clsLoja.Fone2 + "', Celular = '"
+                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', " + " Msn = " + " '" + clsLoja.Msn 
+                + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0) + ", idRede = " + clsLoja.idRede + ",CEP = '"+ clsLoja.CEP +"' WHERE Id = " 
+                + clsLoja.Id;
 
             try
             {
@@ -1304,12 +1401,12 @@ namespace SIAO.SRV
 
             cmm.Connection = cnn;
             StringBuilder strSQL = new StringBuilder();
-            strSQL.Append("SELECT farmacias.Id, farmacias.ProprietarioID, farmacias.GerenteId, farmacias.Email,");
-            strSQL.Append(" farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,");
-            strSQL.Append(" farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,");
-            strSQL.Append(" farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,");
-            strSQL.Append(" farmacias.Site, farmacias.Skype, farmacias.Msn, farmacias.Ativo, farmacias.idRede");
-            strSQL.Append(" FROM farmacias WHERE (farmacias.Id = @Id)");
+            strSQL.Append(@"SELECT farmacias.Id, farmacias.Proprietario, farmacias.Gerente, farmacias.Email,
+            farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,
+            farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,
+            farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,
+            farmacias.Site, farmacias.Skype, farmacias.Msn, farmacias.Ativo, farmacias.idRede,farmacias.CEP
+            FROM farmacias WHERE (farmacias.Id = @Id)");
 
             cmm.CommandText = strSQL.ToString();
             cmm.Parameters.Clear();
@@ -1324,8 +1421,8 @@ namespace SIAO.SRV
             if (ds.Tables.Count > 0)
             {
                 clsLoja.Id = Convert.ToInt16(ds.Tables["LojaEd"].Rows[0]["Id"].ToString());
-                clsLoja.ProprietarioId = ds.Tables["LojaEd"].Rows[0]["ProprietarioID"].ToString() == "" ? 0 : Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["ProprietarioID"].ToString());
-                clsLoja.GerenteId = ds.Tables["LojaEd"].Rows[0]["GerenteId"].ToString() == "" ? 0 : Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["GerenteId"].ToString());
+                clsLoja.Proprietario = ds.Tables["LojaEd"].Rows[0]["Proprietario"].ToString() == "" ? "" : ds.Tables["LojaEd"].Rows[0]["Proprietario"].ToString();
+                clsLoja.Gerente = ds.Tables["LojaEd"].Rows[0]["Gerente"].ToString() == "" ? "" : ds.Tables["LojaEd"].Rows[0]["Gerente"].ToString();
                 clsLoja.Email = ds.Tables["LojaEd"].Rows[0]["Email"].ToString();
                 clsLoja.Email2 = ds.Tables["LojaEd"].Rows[0]["Email2"].ToString();
                 clsLoja.NomeFantasia = ds.Tables["LojaEd"].Rows[0]["NomeFantasia"].ToString();
@@ -1345,6 +1442,7 @@ namespace SIAO.SRV
                 clsLoja.Msn = ds.Tables["LojaEd"].Rows[0]["Msn"].ToString();
                 clsLoja.Ativo = (ds.Tables["LojaEd"].Rows[0]["Ativo"].ToString() == "1" ? true : false);
                 clsLoja.idRede = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["idRede"].ToString());
+                clsLoja.CEP = ds.Tables["LojaEd"].Rows[0]["CEP"].ToString();
             }
 
             return clsLoja;
