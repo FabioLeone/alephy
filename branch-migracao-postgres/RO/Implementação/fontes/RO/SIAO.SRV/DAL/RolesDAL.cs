@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using SIAO.SRV.TO;
 using System.Data;
-using MySql.Data.MySqlClient;
 using System.Data.Common;
+using Npgsql;
 
 namespace SIAO.SRV.DAL
 {
@@ -35,7 +35,7 @@ namespace SIAO.SRV.DAL
         {
             RolesTO clsRoles = new RolesTO();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -72,7 +72,7 @@ namespace SIAO.SRV.DAL
         {
             List<RolesTO> clsRoles = new List<RolesTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -106,7 +106,7 @@ namespace SIAO.SRV.DAL
         internal static List<RelatoriosTO> GetRelatoriosByUserId(int UserId, string strConnection)
         {
             List<RelatoriosTO> clsRelatorios = new List<RelatoriosTO>();
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -144,7 +144,7 @@ namespace SIAO.SRV.DAL
 
         internal static bool Insert(RolesTO clsRole, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -172,7 +172,7 @@ namespace SIAO.SRV.DAL
         }
         internal static void Insert(RelatoriosTO clsRelatorio, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -196,7 +196,7 @@ namespace SIAO.SRV.DAL
 
         internal static void Update(RolesTO clsRole, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -223,7 +223,7 @@ namespace SIAO.SRV.DAL
 
         internal static void Update(RelatoriosTO clsRelatorio, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -248,7 +248,7 @@ namespace SIAO.SRV.DAL
 
         internal static void Delete(RelatoriosTO clsRelatorios, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {

@@ -4,7 +4,7 @@ using System.Text;
 using SIAO.SRV.TO;
 using System.Data.Common;
 using System.Data;
-using MySql.Data.MySqlClient;
+using Npgsql;
 using System.Linq;
 using System.Configuration;
 
@@ -86,7 +86,7 @@ namespace SIAO.SRV.DAL
         {
             List<UsersTO> clsUsers = new List<UsersTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -124,7 +124,7 @@ namespace SIAO.SRV.DAL
         {
             UsersTO clsUsers = new UsersTO();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -167,7 +167,7 @@ namespace SIAO.SRV.DAL
         {
             UsersTO clsUsers = new UsersTO();
 
-            MySqlConnection msc = new MySqlConnection(strConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnectionString);
 
             try
             {
@@ -207,7 +207,7 @@ namespace SIAO.SRV.DAL
         {
             List<UsersTO> clsUsers = new List<UsersTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -247,7 +247,7 @@ namespace SIAO.SRV.DAL
         {
             List<UsersTO> clsUsers = new List<UsersTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -299,7 +299,7 @@ namespace SIAO.SRV.DAL
         {
             List<UsersTO> clsUsers = new List<UsersTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -340,7 +340,7 @@ namespace SIAO.SRV.DAL
         {
             List<UsersTO> clsUsers = new List<UsersTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -379,7 +379,7 @@ namespace SIAO.SRV.DAL
         {
             List<Usuarios_TiposTO> lstTipos = new List<Usuarios_TiposTO>();
 
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {
@@ -413,7 +413,7 @@ namespace SIAO.SRV.DAL
 
         public static UsersTO Insert(UsersTO clsUsers, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -480,7 +480,7 @@ namespace SIAO.SRV.DAL
 
         public static Boolean Update(UsersTO clsUsers, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -540,7 +540,7 @@ namespace SIAO.SRV.DAL
 
         public static Boolean Delete(UsersTO clsUsers, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
