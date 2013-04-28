@@ -13,6 +13,16 @@ namespace SIAO.SRV.BLL
         {
             return VinculoDAL.GetByTipoIdAndSearch(intTipoId, strSearch);
         }
+
+        public static List<VinculoTO> GetByUsuarioId(int intUsuarioId)
+        {
+            return VinculoDAL.GetByUsuarioId(intUsuarioId);
+        }
+
+        public static VinculoTO GetByCNPJ(string strCNPJ)
+        {
+            return VinculoDAL.GetByCNPJ(strCNPJ);
+        }
         #endregion
 
         #region .:Persistence:.
@@ -25,6 +35,11 @@ namespace SIAO.SRV.BLL
         {
             VinculoDAL.Update(clsVinculo);
         }
+        public static void Delete(VinculoTO clsVinculo)
+        {
+            VinculoDAL.Delete(clsVinculo);
+        }
         #endregion
+
     }
 }

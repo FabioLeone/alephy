@@ -83,6 +83,94 @@ namespace SIAO.SRV.DAL
 
             return clsVinculos;
         }
+
+        internal static List<VinculoTO> GetByUsuarioId(int intUsuarioId)
+        {
+            List<VinculoTO> clsVinculos = new List<VinculoTO>();
+
+            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT usuarios_vinculos.id,users.UserId,usuarios_vinculos.LinkId,users.UserName, CASE WHEN users.TipoId = 2 THEN farmacias.CNPJ ELSE
+                (CASE WHEN users.TipoId = 3 THEN redesfarmaceuticas.CNPJ ELSE (CASE WHEN users.TipoId = 4 THEN 'Industria' ELSE '' END) END) END AS CNPJ, 
+                CASE WHEN users.TipoId = 2 THEN farmacias.NomeFantasia ELSE
+                (CASE WHEN users.TipoId = 3 THEN redesfarmaceuticas.Descricao ELSE (CASE WHEN users.TipoId = 4 THEN 'Industria' ELSE '' END) END) END AS Empresa,
+                users.TipoId
+                FROM users LEFT JOIN
+                usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId LEFT JOIN
+                redesfarmaceuticas ON usuarios_vinculos.LinkId = redesfarmaceuticas.Id LEFT JOIN
+                farmacias ON usuarios_vinculos.LinkId = farmacias.Id
+                WHERE users.UserId = @UserId ORDER BY users.UserName");
+
+                DbCommand cmdVinculos = msc.CreateCommand();
+                cmdVinculos.CommandText = strSQL.ToString();
+                cmdVinculos.Parameters.Add(DbHelper.GetParameter(cmdVinculos, DbType.Int32, "@UserId", intUsuarioId));
+
+                msc.Open();
+
+                using (IDataReader drdVinculos = cmdVinculos.ExecuteReader())
+                {
+                    while (drdVinculos.Read())
+                    {
+                        clsVinculos.Add(Load(drdVinculos));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsVinculos;
+        }
+
+        internal static VinculoTO GetByCNPJ(string strCNPJ)
+        {
+            VinculoTO clsVinculo = new VinculoTO();
+
+            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            
+            string scnpj = strCNPJ.Replace(".", "");
+            scnpj = scnpj.Replace("/", "");
+            scnpj = scnpj.Replace("-", "");
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT usuarios_vinculos.id,users.UserId,usuarios_vinculos.LinkId,users.UserName, CASE WHEN users.TipoId = 2 THEN farmacias.CNPJ ELSE
+                (CASE WHEN users.TipoId = 3 THEN redesfarmaceuticas.CNPJ ELSE (CASE WHEN users.TipoId = 4 THEN 'Industria' ELSE '' END) END) END AS CNPJ, 
+                CASE WHEN users.TipoId = 2 THEN farmacias.NomeFantasia ELSE
+                (CASE WHEN users.TipoId = 3 THEN redesfarmaceuticas.Descricao ELSE (CASE WHEN users.TipoId = 4 THEN 'Industria' ELSE '' END) END) END AS Empresa,
+                users.TipoId
+                FROM users LEFT JOIN
+                usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId LEFT JOIN
+                redesfarmaceuticas ON usuarios_vinculos.LinkId = redesfarmaceuticas.Id LEFT JOIN
+                farmacias ON usuarios_vinculos.LinkId = farmacias.Id
+                WHERE redesfarmaceuticas.CNPJ = @CNPJ OR farmacias.CNPJ = @CNPJ ORDER BY users.UserName");
+
+                DbCommand cmdVinculos = msc.CreateCommand();
+                cmdVinculos.CommandText = strSQL.ToString();
+                cmdVinculos.Parameters.Add(DbHelper.GetParameter(cmdVinculos, DbType.String, "@CNPJ", scnpj));
+
+                msc.Open();
+
+                using (IDataReader drdVinculos = cmdVinculos.ExecuteReader())
+                {
+                    if (drdVinculos.Read())
+                    {
+                        clsVinculo = Load(drdVinculos);
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsVinculo;
+        }
         #endregion
 
         #region .:Persistence:.
@@ -126,7 +214,6 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SET NOCOUNT=ON;");
                 strSQL.Append("UPDATE usuarios_vinculos SET UsuarioId = @UsuarioId, LinkId = @LinkId WHERE usuarios_vinculos.id=@id");
 
                 DbCommand cmdUsers = msc.CreateCommand();
@@ -146,6 +233,31 @@ namespace SIAO.SRV.DAL
                 msc.Close();
             }
         }
+        internal static void Delete(VinculoTO clsVinculo)
+        {
+            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("DELETE FROM usuarios_vinculos WHERE id = @id");
+
+                DbCommand cmdVinculos = msc.CreateCommand();
+                cmdVinculos.CommandText = strSQL.ToString();
+
+                cmdVinculos.Parameters.Clear();
+                cmdVinculos.Parameters.Add(DbHelper.GetParameter(cmdVinculos, DbType.Int32, "@id", clsVinculo.id));
+
+                msc.Open();
+
+                cmdVinculos.ExecuteNonQuery();
+            }
+            finally
+            {
+                msc.Close();
+            }
+        }
         #endregion
+
     }
 }
