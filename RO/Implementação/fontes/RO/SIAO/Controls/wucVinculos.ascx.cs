@@ -167,7 +167,7 @@ namespace SIAO.Controls
             LinkButton lbtnExcluir = (LinkButton)e.Item.FindControl("lbtnExcluir");
 
             if(lbtnExcluir != null)
-                lbtnExcluir.OnClientClick = "if (!confirm('Você deseja realmente excluir este registro?')) return;";
+                lbtnExcluir.OnClientClick = "return confirm('Você deseja realmente excluir este registro?')";
         }
 
 

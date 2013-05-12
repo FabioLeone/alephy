@@ -1,8 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Siao.Master" AutoEventWireup="true"
     CodeBehind="wfmGerarRelatorios.aspx.cs" Inherits="SIAO.wfmGerarRelatorios" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
@@ -16,23 +15,29 @@
                             </legend>
                             <div id="divForm" style="height: 330px; width: 100%;">
                                 <p>
-                                    Filtrar por:
-                                    <asp:RadioButton ID="rbtAno" GroupName="filtro" Text="ano" runat="server" 
-                                        AutoPostBack="true" oncheckedchanged="rbtAno_CheckedChanged" />
-                                    <asp:DropDownList ID="ddlAno" runat="server">
-                                    </asp:DropDownList>
-                                    
+                                    Filtrar por:<br />
+                                    <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server" 
+                                        AutoPostBack="true" oncheckedchanged="rbtPeriodo_CheckedChanged" />
+                                    de: <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
+                                    <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
+                                Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
+                            </asp:MaskedEditExtender>
+                                    até: <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
+                                    <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
+                                Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
+                                </asp:MaskedEditExtender>
                                     <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" 
                                         Text="ultimos 6 meses" runat="server" 
                                         oncheckedchanged="rbtMes_CheckedChanged" />
                                     <br />
-                                    Loja:
-                                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server">
-                                    </asp:DropDownList>
                                     <div id="dvRedes" runat="server">
-                                        Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server">
+                                        Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
+                                            onselectedindexchanged="ddlRedesRelatorios_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
+                                    Loja:
+                                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" style="min-width:200px;">
+                                    </asp:DropDownList>
                                     <ul class="iconList">
                                         <li>
                                             <p id="M1" runat="server" class="imgBtn">
@@ -49,6 +54,8 @@
                                             </p>
                                         </li>
                                     </ul>
+                                    <p>
+                                    </p>
                                     <p>
                                     </p>
                                     <p>
@@ -105,6 +112,8 @@
                                             </p>
                                         </li>
                                     </ul>
+                                    <p>
+                                    </p>
                                     <p>
                                     </p>
                                     <p>

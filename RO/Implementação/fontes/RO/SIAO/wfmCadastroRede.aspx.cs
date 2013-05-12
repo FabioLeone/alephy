@@ -76,17 +76,26 @@ namespace SIAO
                 if (rede.RedeId > 0)
                 {
                     rede.RedeName = txtRede.Text;
-                    rede.CNPJ = txtCNPJ.Text;
+
+                    string scnpj = txtCNPJ.Text.Replace(".", "");
+                    scnpj = scnpj.Replace("/", "");
+                    scnpj = scnpj.Replace("-", "");
+
+                    rede.CNPJ = scnpj;
 
                     msg = o.UpdateRede(scn, rede);
                     ed = true;
                 }
                 else
                 {
+                    string scnpj = txtCNPJ.Text.Replace(".", "");
+                    scnpj = scnpj.Replace("/", "");
+                    scnpj = scnpj.Replace("-", "");
+
                     rede = new SRV.Rede()
                     {
                         RedeName = txtRede.Text,
-                        CNPJ = txtCNPJ.Text
+                        CNPJ = scnpj
                     };
 
                     if (o.GetByName(txtRede.Text) > 0)
@@ -126,6 +135,7 @@ namespace SIAO
             {
                 txtRede.Text = or.RedeName;
                 Session["editR"] = or.RedeId;
+                txtCNPJ.Text = or.CNPJ;
             }
         }
 

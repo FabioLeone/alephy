@@ -22,22 +22,49 @@ namespace SIAO {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// rbtAno control.
+        /// rbtPeriodo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbtAno;
+        protected global::System.Web.UI.WebControls.RadioButton rbtPeriodo;
         
         /// <summary>
-        /// ddlAno control.
+        /// txtInicio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlAno;
+        protected global::System.Web.UI.WebControls.TextBox txtInicio;
+        
+        /// <summary>
+        /// txtInicio_MaskedEditExtender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender txtInicio_MaskedEditExtender;
+        
+        /// <summary>
+        /// txtFim control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFim;
+        
+        /// <summary>
+        /// txtFim_MaskedEditExtender1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender txtFim_MaskedEditExtender1;
         
         /// <summary>
         /// rbtMes control.
@@ -47,15 +74,6 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton rbtMes;
-        
-        /// <summary>
-        /// ddlLojaRelatorios control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLojaRelatorios;
         
         /// <summary>
         /// dvRedes control.
@@ -74,6 +92,15 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlRedesRelatorios;
+        
+        /// <summary>
+        /// ddlLojaRelatorios control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlLojaRelatorios;
         
         /// <summary>
         /// M1 control.
