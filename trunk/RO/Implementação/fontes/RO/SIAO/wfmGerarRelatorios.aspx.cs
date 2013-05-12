@@ -77,7 +77,8 @@ namespace SIAO
                 getRedes();
                 if (!clsUser.Access.Equals("adm"))
                     ValidaAcesso();
-                ddlAno.Enabled = false;
+                txtInicio.Enabled = false;
+                txtFim.Enabled = false;
             }
             Global.LocalPage = "";
 
@@ -94,7 +95,7 @@ namespace SIAO
                 ddlRedesRelatorios.DataTextField = ds.Tables[0].Columns[1].ToString();
                 ddlRedesRelatorios.DataValueField = ds.Tables[0].Columns[0].ToString();
                 ddlRedesRelatorios.DataBind();
-                ddlRedesRelatorios.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                ddlRedesRelatorios.Items.Insert(0, new ListItem(String.Empty, "0"));
                 ddlRedesRelatorios.SelectedIndex = 0;
             }
         }
@@ -166,8 +167,11 @@ namespace SIAO
             ddlLojas.DataBind();
             ddlLojas.Items.Insert(0, new ListItem("Selecione", string.Empty));
             ddlLojas.SelectedIndex = 0;
+        }
 
-            ddlLojaRelatorios.DataSource = oc.GetLojaByUserId(scn, clsUser);
+        private void getLojas(int intRedeId)
+        {
+            ddlLojaRelatorios.DataSource = oc.GetLojaByRedeId(intRedeId); 
             ddlLojaRelatorios.DataTextField = "NomeFantasia";
             ddlLojaRelatorios.DataValueField = "Cnpj";
             ddlLojaRelatorios.DataBind();
@@ -177,13 +181,6 @@ namespace SIAO
 
         private void getAno()
         {
-            ddlAno.Items.Add(new ListItem(String.Empty, String.Empty));
-            for (int i = 0; i < 3; i++)
-            {
-                ddlAno.Items.Add(new ListItem(System.DateTime.Now.AddYears(-i).Year.ToString(), System.DateTime.Now.AddYears(-i).Year.ToString()));
-            }
-            ddlAno.SelectedIndex = 0;
-
             ddlAnoG.Items.Add(new ListItem(String.Empty, String.Empty));
             for (int i = 0; i < 3; i++)
             {
@@ -216,13 +213,14 @@ namespace SIAO
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
         }
 
+        #region .:Events:.
         protected void btnAdm_Click(object sender, EventArgs e)
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
-            if (rbtAno.Checked)
-                lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+            if (rbtPeriodo.Checked)
+                lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
             else if (rbtMes.Checked)
-                lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
+                lr1 = oc.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
 
             if (lr1.Count > 0)
             {
@@ -243,21 +241,21 @@ namespace SIAO
         protected void btnRelat2_Click(object sender, EventArgs e)
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
-            if (rbtAno.Checked)
-            {
-                if(ddlRedesRelatorios.SelectedIndex > 0)
-                    lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
-                else
-                    lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+            //if (rbtAno.Checked)
+            //{
+            //    if(ddlRedesRelatorios.SelectedIndex > 0)
+            //        lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
+            //    else
+            //        lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
 
-            }
-            else if (rbtMes.Checked)
-            {
-                if(ddlRedesRelatorios.SelectedIndex > 0)
-                    lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
-                else
-                    lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
-            }
+            //}
+            //else if (rbtMes.Checked)
+            //{
+            //    if(ddlRedesRelatorios.SelectedIndex > 0)
+            //        lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
+            //    else
+            //        lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
+            //}
 
             if (lr1.Count > 0)
             {
@@ -326,19 +324,37 @@ namespace SIAO
             Response.Redirect("wfmRelatorio.aspx");
         }
 
-        protected void rbtAno_CheckedChanged(object sender, EventArgs e)
+        protected void rbtPeriodo_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbtAno.Checked)
-                ddlAno.Enabled = true;
+            if (rbtPeriodo.Checked)
+            {
+                txtInicio.Enabled = true;
+                txtFim.Enabled = true;
+            }
             else
-                ddlAno.Enabled = false;
+            {
+                txtInicio.Enabled = false;
+                txtFim.Enabled = false;
+            }
         }
         protected void rbtMes_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtMes.Checked)
-                ddlAno.Enabled = false;
+            {
+                txtInicio.Enabled = false;
+                txtFim.Enabled = false;
+            }
             else
-                ddlAno.Enabled = true;
+            {
+                txtInicio.Enabled = true;
+                txtFim.Enabled = true;
+            }
         }
+
+        protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+        }
+        #endregion
     }
 }

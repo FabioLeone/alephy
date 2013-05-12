@@ -875,10 +875,10 @@ namespace SIAO.SRV
             return lr;
         }
 
-        public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string ano, string strCnpj)
+        public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
@@ -888,97 +888,41 @@ namespace SIAO.SRV
                     consolidado.Valor_Bruto AS 'Soma De Valor bruto', consolidado.Valor_Liquido AS 'Soma De Valor liquido',
                     consolidado.Valor_Desconto AS 'Soma De Valor desconto' FROM consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                    WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND consolidado.Ano = ");
+                    INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
+                    WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
+                    AND (MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) >= MAKEDATE(@AnoIni,((@MesIni*360)/12)) AND
+                    MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) <= MAKEDATE(@AnoFim,((@MesFim*360)/12)))");
 
-            if (ano == "") { SQL.Append(DateTime.Now.Year); }
+            String[] ini, fim;
+
+            ini = strInicio.Split('/');
+            fim = strFim.Split('/');
+
+            if (clsUser.TipoId.Equals(1))
+            {
+                if (!String.IsNullOrEmpty(strCnpj)) {
+                    SQL.Append(" AND farmacias.Cnpj = @Cnpj");
+                }
+                else if (intRedeId > 0) {
+                    SQL.Append(" AND farmacias.idRede = @idRede");
+                }
+
+                SQL.Append(" ORDER BY usuarios_vinculos.UsuarioId,consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+            }
             else
             {
-                SQL.Append(ano);
+                SQL.Append(@" AND usuarios_vinculos.UsuarioId = @UsuarioId
+                    ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
-
-            if (clsUser.Access == "nvg")
-            {
-                cmm.CommandText += "SELECT"
-                    + " farmacias.Cnpj"
-                    + " FROM"
-                    + " memberships"
-                    + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
-                    + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
-                    + " WHERE memberships.UserId = @UserId";
-                cmm.Parameters.Clear();
-                cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
-
-                if (oDB.openConnection(cmm))
-                {
-                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
-                }
-                oDB.closeConnection(cmm);
-
-                if (ds.Tables.Count > 0)
-                {
-                    clsUser.Cnpj = new List<string>();
-                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
-                    {
-                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
-                    }
-                }
-
-                if (clsUser.Cnpj.Count > 0)
-                {
-                    SQL.Append(" AND consolidado.Cnpj IN ('");
-                    for (int i = 0; i < clsUser.Cnpj.Count; i++)
-                    {
-                        if (i == 0) { SQL.Append(clsUser.Cnpj[i]); } else { SQL.Append("', '" + clsUser.Cnpj[i]); }
-                    }
-                    SQL.Append("')");
-                }
-            }
-            else if (clsUser.Access == "nvp")
-            {
-                cmm.CommandText += "SELECT"
-                    + " farmacias.Cnpj"
-                    + " FROM"
-                    + " usuarios_farmacias"
-                    + " RIGHT JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
-                    + " LEFT JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
-                    + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
-                cmm.Parameters.Clear();
-                cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
-
-                if (oDB.openConnection(cmm))
-                {
-                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
-                }
-                oDB.closeConnection(cmm);
-
-                if (ds.Tables.Count > 0)
-                {
-                    clsUser.Cnpj = new List<string>();
-                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
-                    {
-                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(strCnpj))
-                {
-                    SQL.Append(" AND consolidado.Cnpj = '" + strCnpj + "'");
-                }
-                else
-                    if (clsUser.Cnpj.Count > 0)
-                    {
-                        SQL.Append(" AND consolidado.Cnpj IN ('");
-                        for (int i = 0; i < clsUser.Cnpj.Count; i++)
-                        {
-                            if (i == 0) { SQL.Append(clsUser.Cnpj[i]); } else { SQL.Append("', '" + clsUser.Cnpj[i]); }
-                        }
-                        SQL.Append("')");
-                    }
-            }
-
-            SQL.Append(" ORDER BY consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
             cmm.CommandText = SQL.ToString();
+            cmm.Parameters.Add("@AnoIni", MySqlDbType.String).Value = ini[1];
+            cmm.Parameters.Add("@MesIni", MySqlDbType.String).Value = ini[0];
+            cmm.Parameters.Add("@AnoFim", MySqlDbType.String).Value = fim[1];
+            cmm.Parameters.Add("@MesFim", MySqlDbType.String).Value = fim[0];
+            cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = strCnpj;
+            cmm.Parameters.Add("@idRede", MySqlDbType.Int32).Value = intRedeId;
+            cmm.Parameters.Add("@UsuarioId", MySqlDbType.Int32).Value = clsUser.UserId;
             cmm.CommandTimeout = 9999;
 
             if (oDB.openConnection(cmm))
@@ -1023,10 +967,10 @@ namespace SIAO.SRV
             return lr;
         }
 
-        public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string strCnpj, bool blnMes)
+        public List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
@@ -1044,93 +988,34 @@ namespace SIAO.SRV
                         consolidado.Valor_Liquido AS `Soma De Valor liquido`,
                         consolidado.Valor_Desconto AS `Soma De Valor desconto` FROM consolidado
                         INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                        INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
                         WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
-                        AND (consolidado.Mes >= {0} AND consolidado.Ano = {1}) 
-                        AND (consolidado.Mes <= {2} AND consolidado.Ano = {3})", strMI, strAI, strMF, strAF));
+                        AND (MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) >= MAKEDATE({1},(({0}*360)/12)) AND
+                        MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) <= MAKEDATE({3},(({2}*360)/12)))", strMI, strAI, strMF, strAF));
 
-            if (clsUser.Access == "nvg")
+            if (clsUser.TipoId.Equals(1))
             {
-                cmm.CommandText += "SELECT"
-                    + " farmacias.Cnpj"
-                    + " FROM"
-                    + " memberships"
-                    + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
-                    + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
-                    + " WHERE memberships.UserId = @UserId";
-                cmm.Parameters.Clear();
-                cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
-
-                if (oDB.openConnection(cmm))
+                if (!String.IsNullOrEmpty(strCnpj))
                 {
-                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
+                    SQL.Append(" AND farmacias.Cnpj = @Cnpj");
                 }
-                oDB.closeConnection(cmm);
-
-                if (ds.Tables.Count > 0)
+                else if (intRedeId > 0)
                 {
-                    clsUser.Cnpj = new List<string>();
-                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
-                    {
-                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
-                    }
+                    SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
-                if (clsUser.Cnpj.Count > 0)
-                {
-                    SQL.Append(" AND consolidado.Cnpj IN ('");
-                    for (int i = 0; i < clsUser.Cnpj.Count; i++)
-                    {
-                        if (i == 0) { SQL.Append(clsUser.Cnpj[i]); } else { SQL.Append("', '" + clsUser.Cnpj[i]); }
-                    }
-                    SQL.Append("')");
-                }
+                SQL.Append(" ORDER BY usuarios_vinculos.UsuarioId,consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
-            else if (clsUser.Access == "nvp")
+            else
             {
-                cmm.CommandText += "SELECT"
-                    + " farmacias.Cnpj"
-                    + " FROM"
-                    + " usuarios_farmacias"
-                    + " RIGHT JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
-                    + " LEFT JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
-                    + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
-                cmm.Parameters.Clear();
-                cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
-
-                if (oDB.openConnection(cmm))
-                {
-                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
-                }
-                oDB.closeConnection(cmm);
-
-                if (ds.Tables.Count > 0)
-                {
-                    clsUser.Cnpj = new List<string>();
-                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
-                    {
-                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(strCnpj))
-                {
-                    SQL.Append(" AND consolidado.Cnpj = '" + strCnpj + "'");
-                }
-                else
-                    if (clsUser.Cnpj.Count > 0)
-                    {
-                        SQL.Append(" AND consolidado.Cnpj IN ('");
-                        for (int i = 0; i < clsUser.Cnpj.Count; i++)
-                        {
-                            if (i == 0) { SQL.Append(clsUser.Cnpj[i]); } else { SQL.Append("', '" + clsUser.Cnpj[i]); }
-                        }
-                        SQL.Append("')");
-                    }
+                SQL.Append(@" AND usuarios_vinculos.UsuarioId = @UsuarioId
+                    ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
-
-            SQL.Append(" ORDER BY consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
             cmm.CommandText = SQL.ToString();
+            cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = strCnpj;
+            cmm.Parameters.Add("@idRede", MySqlDbType.Int32).Value = intRedeId;
+            cmm.Parameters.Add("@UsuarioId", MySqlDbType.Int32).Value = clsUser.UserId;
             cmm.CommandTimeout = 9999;
 
             if (oDB.openConnection(cmm))
@@ -1381,7 +1266,7 @@ namespace SIAO.SRV
             Rede r = new Rede();
 
             cmm.Connection = cnn;
-            cmm.CommandText = "SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + strRedeId + ")";
+            cmm.CommandText = "SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId,redesfarmaceuticas.CNPJ FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + strRedeId + ")";
 
             if (oDB.openConnection(cmm))
             {
@@ -1394,6 +1279,7 @@ namespace SIAO.SRV
                 r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
                 r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
                 r.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["UserId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["UserId"]);
+                r.CNPJ = ds.Tables[0].Rows[0]["CNPJ"].ToString();
             }
 
             return r;
@@ -1469,6 +1355,27 @@ namespace SIAO.SRV
                 cmm.Parameters.Add("@ProprietarioID", MySqlDbType.Int32).Value = clsUser.UserId;
             }
             cmm.CommandText += " ORDER BY NomeFantasia";
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public DataSet GetLojaByRedeId(int intRedeId)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
+            WHERE farmacias.idRede = @idRede ORDER BY NomeFantasia";
+
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@idRede", MySqlDbType.Int32).Value = intRedeId;
+            
             if (oDB.openConnection(cmm))
             {
                 ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");

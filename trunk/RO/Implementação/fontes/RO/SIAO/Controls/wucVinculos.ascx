@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="wucVinculos.ascx.cs"
+﻿ <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="wucVinculos.ascx.cs"
     Inherits="SIAO.Controls.wucVinculos" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:UpdatePanel ID="upVinculos" runat="server">

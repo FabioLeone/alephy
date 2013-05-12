@@ -49,7 +49,7 @@
                     <h2>
                         Cadastro de Redes</h2>
                 </legend>
-                <div style="height: 85px; width: 400px; margin-left: 10px;">
+                <div style="height: 100px; width: 400px; margin-left: 10px;">
                     <table>
                         <tr>
                             <td>
