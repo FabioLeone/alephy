@@ -975,10 +975,10 @@ namespace SIAO.SRV
 
             cmm.Connection = cnn;
             string strMF = DateTime.Now.Month.ToString();
-            string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
+            string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
 
             string strAF = DateTime.Now.Year.ToString();
-            string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
+            string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
 
             StringBuilder SQL = new StringBuilder();
             SQL.Append(String.Format(@"SELECT farmacias.RazaoSocial AS Razao_Social, consolidado.CNPJ,

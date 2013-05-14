@@ -30,7 +30,7 @@ namespace SIAO
                 {
                     Session["user"] = clsUser;
                     FormsAuthentication.SetAuthCookie(clsUser.UserName, false);
-                    Global.Acs = clsUser.Access;
+                    Global.TId = clsUser.TipoId;
 
                     Response.Redirect("Default.aspx");
                 }

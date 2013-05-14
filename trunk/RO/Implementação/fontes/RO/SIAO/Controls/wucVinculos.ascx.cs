@@ -51,7 +51,7 @@ namespace SIAO.Controls
             TextBox txtCNPJ = sender as TextBox;
             VinculoTO clsVinculo;
 
-            if (VinculoBLL.GetByCNPJ(txtCNPJ.Text).id > 0)
+            if (VinculoBLL.GetByCNPJ(txtCNPJ.Text).id > 0 || txtCNPJ.Text.Equals("__.___.___/____-__"))
             {
                 txtCNPJ.Focus();
                 return;
@@ -68,9 +68,10 @@ namespace SIAO.Controls
                         HiddenField hfUsuarioTipoId = (HiddenField)item.FindControl("hfUsuarioTipoId");
                         HiddenField hfLinkId = (HiddenField)item.FindControl("hfLinkId");
                         Literal litEmpresa = (Literal)item.FindControl("litEmpresa");
+                        Literal litID = (Literal)item.FindControl("litID");
 
                         clsVinculo = new VinculoTO();
-                        clsVinculo = this.Vinculos.Find(v => v.LinkId == Convert.ToInt32(hfLinkId.Value));
+                        clsVinculo = this.Vinculos.Find(v => v.LinkId == Convert.ToInt32(hfLinkId.Value) && v.UsuarioId == Convert.ToInt32(litID.Text));
                         clsVinculo.CNPJ = txtCNPJ.Text;
 
                         switch (Convert.ToInt32(hfUsuarioTipoId.Value))
