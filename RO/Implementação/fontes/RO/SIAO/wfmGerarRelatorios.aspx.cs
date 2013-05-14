@@ -62,6 +62,7 @@ namespace SIAO
         }
         #endregion
 
+        #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
@@ -73,17 +74,161 @@ namespace SIAO
             if (!IsPostBack)
             {
                 getAno();
-                getLojas();
                 getRedes();
-                if (!clsUser.Access.Equals("adm"))
+                if (!clsUser.TipoId.Equals(1))
                     ValidaAcesso();
+                getLojas();
                 txtInicio.Enabled = false;
                 txtFim.Enabled = false;
             }
             Global.LocalPage = "";
 
         }
+        
+        protected void btnAdm_Click(object sender, EventArgs e)
+        {
+            List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
+            if (rbtPeriodo.Checked)
+                lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+            else if (rbtMes.Checked)
+                lr1 = oc.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
 
+            if (lr1.Count > 0)
+            {
+                Session["cross"] = lr1;
+
+                Global.LocalPage = "wfmGerarRelatorios.aspx";
+
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Modelo1",
+                    UserId = this.User.UserId
+                }, scn);
+
+                Response.Redirect("wfmRelatMod1.aspx");
+            }
+        }
+
+        protected void btnRelat2_Click(object sender, EventArgs e)
+        {
+            List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
+            //if (rbtAno.Checked)
+            //{
+            //    if(ddlRedesRelatorios.SelectedIndex > 0)
+            //        lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
+            //    else
+            //        lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+
+            //}
+            //else if (rbtMes.Checked)
+            //{
+            //    if(ddlRedesRelatorios.SelectedIndex > 0)
+            //        lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
+            //    else
+            //        lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
+            //}
+
+            if (lr1.Count > 0)
+            {
+                Session["cross"] = lr1;
+
+                Global.LocalPage = "wfmGerarRelatorios.aspx";
+
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Modelo2",
+                    UserId = this.User.UserId
+                }, scn);
+
+                Response.Redirect("wfmRelatMod2.aspx");
+            }
+        }
+
+        protected void ibtnGrafic1_Click(object sender, ImageClickEventArgs e)
+        {
+            List<GraficTO> clsGrafic;
+            int intAno = 0;
+            if (ddlAnoG.SelectedValue != "")
+                intAno = Convert.ToInt32(ddlAnoG.SelectedValue);
+            else
+                intAno = Convert.ToInt32(DateTime.Now.Year);
+
+            if (ddlMes.SelectedValue != "")
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojas.SelectedValue, intAno);
+            else
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojas.SelectedValue, intAno);
+
+            Session["grafic"] = clsGrafic;
+
+            Global.LocalPage = "wfmGerarRelatorios.aspx";
+            if (clsGrafic.Count > 0)
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Grafico1",
+                    UserId = this.User.UserId
+                }, scn);
+
+            Response.Redirect("wfmRelatorio.aspx");
+        }
+
+        protected void ibtnGrafic2_Click(object sender, ImageClickEventArgs e)
+        {
+            List<GraficTO> clsGrafic;
+
+            if (ddlAnoG.SelectedValue != "")
+                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(ddlAnoG.SelectedValue), clsUser, scn, ddlLojas.SelectedValue);
+            else
+                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(DateTime.Now.Year), clsUser, scn, ddlLojas.SelectedValue);
+
+            Session["grafic"] = null;
+            Session["grafic2"] = clsGrafic;
+
+            Global.LocalPage = "wfmGerarRelatorios.aspx";
+
+            if (clsGrafic.Count > 0)
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Grafico2",
+                    UserId = this.User.UserId
+                }, scn);
+
+            Response.Redirect("wfmRelatorio.aspx");
+        }
+
+        protected void rbtPeriodo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtPeriodo.Checked)
+            {
+                txtInicio.Enabled = true;
+                txtFim.Enabled = true;
+            }
+            else
+            {
+                txtInicio.Enabled = false;
+                txtFim.Enabled = false;
+            }
+        }
+        protected void rbtMes_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbtMes.Checked)
+            {
+                txtInicio.Enabled = false;
+                txtFim.Enabled = false;
+            }
+            else
+            {
+                txtInicio.Enabled = true;
+                txtFim.Enabled = true;
+            }
+        }
+
+        protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+        }
+        #endregion
+
+        #region .: Methods :.
         private void getRedes()
         {
             DataSet ds = new DataSet();
@@ -211,149 +356,6 @@ namespace SIAO
             divInfo.InnerHtml = "<p>Loja cadastrada com sucesso.</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
-        }
-
-        #region .:Events:.
-        protected void btnAdm_Click(object sender, EventArgs e)
-        {
-            List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
-            if (rbtPeriodo.Checked)
-                lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
-            else if (rbtMes.Checked)
-                lr1 = oc.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
-
-            if (lr1.Count > 0)
-            {
-                Session["cross"] = lr1;
-
-                Global.LocalPage = "wfmGerarRelatorios.aspx";
-
-                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
-                {
-                    Relatorio = "Modelo1",
-                    UserId = this.User.UserId
-                }, scn);
-
-                Response.Redirect("wfmRelatMod1.aspx");
-            }
-        }
-
-        protected void btnRelat2_Click(object sender, EventArgs e)
-        {
-            List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
-            //if (rbtAno.Checked)
-            //{
-            //    if(ddlRedesRelatorios.SelectedIndex > 0)
-            //        lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
-            //    else
-            //        lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
-
-            //}
-            //else if (rbtMes.Checked)
-            //{
-            //    if(ddlRedesRelatorios.SelectedIndex > 0)
-            //        lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
-            //    else
-            //        lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
-            //}
-
-            if (lr1.Count > 0)
-            {
-                Session["cross"] = lr1;
-
-                Global.LocalPage = "wfmGerarRelatorios.aspx";
-
-                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
-                {
-                    Relatorio = "Modelo2",
-                    UserId = this.User.UserId
-                }, scn);
-
-                Response.Redirect("wfmRelatMod2.aspx");
-            }
-        }
-
-        protected void ibtnGrafic1_Click(object sender, ImageClickEventArgs e)
-        {
-            List<GraficTO> clsGrafic;
-            int intAno = 0;
-            if (ddlAnoG.SelectedValue != "")
-                intAno = Convert.ToInt32(ddlAnoG.SelectedValue);
-            else
-                intAno = Convert.ToInt32(DateTime.Now.Year);
-
-            if (ddlMes.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojas.SelectedValue, intAno);
-            else
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojas.SelectedValue, intAno);
-
-            Session["grafic"] = clsGrafic;
-
-            Global.LocalPage = "wfmGerarRelatorios.aspx";
-            if(clsGrafic.Count > 0)
-                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
-                {
-                    Relatorio = "Grafico1",
-                    UserId = this.User.UserId
-                }, scn);
-
-            Response.Redirect("wfmRelatorio.aspx");
-        }
-
-        protected void ibtnGrafic2_Click(object sender, ImageClickEventArgs e)
-        {
-            List<GraficTO> clsGrafic;
-
-            if (ddlAnoG.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(ddlAnoG.SelectedValue), clsUser, scn, ddlLojas.SelectedValue);
-            else
-                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(DateTime.Now.Year), clsUser, scn, ddlLojas.SelectedValue);
-
-            Session["grafic"] = null;
-            Session["grafic2"] = clsGrafic;
-
-            Global.LocalPage = "wfmGerarRelatorios.aspx";
-            
-            if (clsGrafic.Count > 0)
-                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
-                {
-                    Relatorio = "Grafico2",
-                    UserId = this.User.UserId
-                }, scn);
-
-            Response.Redirect("wfmRelatorio.aspx");
-        }
-
-        protected void rbtPeriodo_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbtPeriodo.Checked)
-            {
-                txtInicio.Enabled = true;
-                txtFim.Enabled = true;
-            }
-            else
-            {
-                txtInicio.Enabled = false;
-                txtFim.Enabled = false;
-            }
-        }
-        protected void rbtMes_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbtMes.Checked)
-            {
-                txtInicio.Enabled = false;
-                txtFim.Enabled = false;
-            }
-            else
-            {
-                txtInicio.Enabled = true;
-                txtFim.Enabled = true;
-            }
-        }
-
-        protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
         }
         #endregion
     }

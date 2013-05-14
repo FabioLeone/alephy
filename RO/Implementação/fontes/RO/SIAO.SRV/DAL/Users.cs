@@ -304,9 +304,9 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,
+                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
                 memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
+                memberships.Access, memberships.Name, usuarios_farmacias.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
                 FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN 
                 usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId LEFT JOIN
                 usuarios_tipos ON users.TipoId = usuarios_tipos.id

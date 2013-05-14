@@ -45,17 +45,17 @@ namespace SIAO
         {
             Session["user"] = null;
             FormsAuthentication.SignOut();
-            Global.Acs = "";
+            Global.TId = 0;
             Response.Redirect("Logon.aspx");
         }
 
         #region .: Metodos :.
         public bool VerificaEnvio() {
             bool blnOk = false;
-            if(Global.Acs == null)
+            if(Global.TId == null)
                 Response.Redirect("Logon.aspx");
 
-            if (Global.Acs.Equals("adm"))
+            if (Global.TId.Equals(1))
                 blnOk = true;
             else if (Session["user"] != null)
             {
@@ -69,7 +69,7 @@ namespace SIAO
         }
         public bool VerificaRelatorio() {
             bool blnOK = false;
-            if (Global.Acs.Equals("adm"))
+            if (Global.TId.Equals(1))
                 blnOK = true;
             else if (this.Role.RoleId > 0)
             {

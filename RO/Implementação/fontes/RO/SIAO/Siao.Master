@@ -19,7 +19,7 @@
                 <ul>
                     <li><a href="Default.aspx">Home</a></li>
                     <li id="active"><a href="#">Detecta CasBrasil</a></li>
-                    <%if (SIAO.Global.Acs == "adm")
+                    <%if (SIAO.Global.TId.Equals(1))
                       { %>
                     <li><a href='#'><span>Cadastro</span></a>
                         <ul>
@@ -45,7 +45,7 @@
                             <%} %>
                         </ul>
                     </li>
-                    <%if (SIAO.Global.Acs == "adm")
+                    <%if (SIAO.Global.TId.Equals(1))
                       { %>
                     <li><a href="#">Beta</a>
                         <ul>

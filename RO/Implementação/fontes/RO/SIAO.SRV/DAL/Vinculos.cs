@@ -182,7 +182,7 @@ namespace SIAO.SRV.DAL
             {
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("INSERT INTO usuarios_vinculos (UsuarioId, LinkId) VALUES (@UsuarioId, @LinkId);");
-                strSQL.Append("SELECT usuarios_vinculos.id FROM usuarios_vinculos WHERE usuarios_vinculos.id = @@IDENTITY;");
+                strSQL.Append("SELECT usuarios_vinculos.id FROM usuarios_vinculos WHERE usuarios_vinculos.id = SELECT CURRVAL('usuarios_vinculos_id_seq');");
 
                 DbCommand cmdVinculo = msc.CreateCommand();
                 cmdVinculo.CommandText = strSQL.ToString();
