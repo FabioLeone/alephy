@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SIAO.SRV.TO;
 using System.Data;
-using MySql.Data.MySqlClient;
+using Npgsql;
 using System.Data.Common;
 
 namespace SIAO.SRV.DAL
@@ -57,7 +57,7 @@ namespace SIAO.SRV.DAL
         public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUser, string strConnection, string strLoja, int intAno)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
             List<string> lstCnpj = new List<string>();
 
             try
@@ -219,7 +219,7 @@ namespace SIAO.SRV.DAL
         {
             TotaisGraficMesTO clsTotalMes = new TotaisGraficMesTO();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -255,7 +255,7 @@ namespace SIAO.SRV.DAL
         {
             List<IndicesGraficTO> clsIndicesGrafic = new List<IndicesGraficTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -287,7 +287,7 @@ namespace SIAO.SRV.DAL
         public static List<GraficTO> GetGraficAno(int intAno, UsersTO clsUser, string strConnection, string strLoja)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
             List<string> lstCnpj = new List<string>();
 
             try
@@ -452,7 +452,7 @@ namespace SIAO.SRV.DAL
 
         public static IndicesGraficTO InsetIndices(IndicesGraficTO clsIndicesGrafic, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -491,7 +491,7 @@ namespace SIAO.SRV.DAL
 
         public static Boolean UpdateIndices(IndicesGraficTO clsIndicesGrafic, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -526,7 +526,7 @@ namespace SIAO.SRV.DAL
 
         public static Boolean DeleteIndice(IndicesGraficTO clsIndicesGrafic, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -564,7 +564,7 @@ namespace SIAO.SRV.DAL
         {
             IndicesGraficTO clsIndicesGrafic = new IndicesGraficTO();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -600,7 +600,7 @@ namespace SIAO.SRV.DAL
         {
             List<IndicesGraficTO> clsIndicesGrafic = new List<IndicesGraficTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -639,7 +639,7 @@ namespace SIAO.SRV.DAL
         {
             List<string> clsCategorias = new List<string>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -672,7 +672,7 @@ namespace SIAO.SRV.DAL
         {
             List<string> clsGrupos = new List<string>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {

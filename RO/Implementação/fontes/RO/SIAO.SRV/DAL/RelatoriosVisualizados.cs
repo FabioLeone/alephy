@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SIAO.SRV.TO;
 using System.Data;
-using MySql.Data.MySqlClient;
+using Npgsql;
 using System.Data.Common;
 
 namespace SIAO.SRV.DAL
@@ -25,7 +25,7 @@ namespace SIAO.SRV.DAL
         #region .: Persistence :.
         public static bool Insert(RelatoriosVisualizadosTO clsRelatorio, string strConnection)
         {
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
