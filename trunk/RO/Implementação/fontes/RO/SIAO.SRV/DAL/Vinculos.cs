@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using MySql.Data.MySqlClient;
+using Npgsql;
 using System.Configuration;
 using System.Data.Common;
 
@@ -34,7 +34,7 @@ namespace SIAO.SRV.DAL
         {
             List<VinculoTO> clsVinculos = new List<VinculoTO>();
 
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             int intUserId = 0;
 
@@ -88,7 +88,7 @@ namespace SIAO.SRV.DAL
         {
             List<VinculoTO> clsVinculos = new List<VinculoTO>();
 
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {
@@ -130,7 +130,7 @@ namespace SIAO.SRV.DAL
         {
             VinculoTO clsVinculo = new VinculoTO();
 
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             
             string scnpj = strCNPJ.Replace(".", "");
             scnpj = scnpj.Replace("/", "");
@@ -176,7 +176,7 @@ namespace SIAO.SRV.DAL
         #region .:Persistence:.
         internal static void Insert(VinculoTO clsVinculo)
         {
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {
@@ -209,7 +209,7 @@ namespace SIAO.SRV.DAL
 
         internal static void Update(VinculoTO clsVinculo)
         {
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {
@@ -235,7 +235,7 @@ namespace SIAO.SRV.DAL
         }
         internal static void Delete(VinculoTO clsVinculo)
         {
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {

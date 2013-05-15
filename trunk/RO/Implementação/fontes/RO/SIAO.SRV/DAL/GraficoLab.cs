@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using SIAO.SRV.TO;
-using MySql.Data.MySqlClient;
+using Npgsql;
 using System.Data.Common;
 
 namespace SIAO.SRV.DAL
@@ -27,7 +27,7 @@ namespace SIAO.SRV.DAL
 
         public static List<GraficoLabTO> GetByFilter(string strConnection, int intId, int intAno, List<string> lstGrupos, List<string> lstSubGrupos) {
             List<GraficoLabTO> clsGraficoLab = new List<GraficoLabTO>();
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -80,7 +80,7 @@ namespace SIAO.SRV.DAL
         internal static List<GraficoLabTO> GetListaTotaisMesByFilter(string strConnection, int intId, int intAno, List<string> lstGrupos, List<string> lstSubGrupos)
         {
             List<GraficoLabTO> clsGraficoLab = new List<GraficoLabTO>();
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {

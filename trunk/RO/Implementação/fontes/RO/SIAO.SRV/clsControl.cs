@@ -2,11 +2,12 @@
 using System.Data;
 using System.Xml;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
 using System.Text;
 using SIAO.SRV.TO;
 using System.Data.SqlClient;
 using System.Configuration;
+using Npgsql;
+using NpgsqlTypes;
 
 namespace SIAO.SRV
 {
@@ -14,7 +15,7 @@ namespace SIAO.SRV
     {
         #region .:Variables:.
         clsDB oDB = new clsDB();
-        MySqlCommand cmm = new MySqlCommand();
+        NpgsqlCommand cmm = new NpgsqlCommand();
         clsFuncs o = new clsFuncs();
         #endregion
 
@@ -31,7 +32,7 @@ namespace SIAO.SRV
                 + " WHERE (memberships.Inactive = 0) AND (memberships.Access = '" + s + "')"
                 + " AND (memberships.ExpirationDate > SYSDATE())";
 
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             if (oDB.openConnection(cmm))
@@ -45,8 +46,8 @@ namespace SIAO.SRV
         public static DataSet GetRedes(string scn)
         {
             DataSet ds = new DataSet();
-            MySqlCommand cmm = new MySqlCommand();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             clsDB oDB = new clsDB();
 
             cmm.Connection = cnn;
@@ -65,15 +66,15 @@ namespace SIAO.SRV
 
         public Int32 GetByName(string strName)
         {
-            MySqlCommand cmm = new MySqlCommand();
-            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             clsDB oDB = new clsDB();
             Int32 intRedeId = 0;
 
             cmm.Connection = cnn;
 
             cmm.CommandText = "SELECT Id FROM redesfarmaceuticas WHERE Descricao=@Descricao";
-            cmm.Parameters.Add("@Descricao", MySqlDbType.String).Value = strName;
+            cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = strName;
 
             if (oDB.openConnection(cmm))
             {
@@ -87,10 +88,10 @@ namespace SIAO.SRV
         public static Loja GetLojaByCNPJ(string strCNPJ)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             Loja clsLoja = new Loja();
 
-            MySqlCommand cmm = new MySqlCommand();
+            NpgsqlCommand cmm = new NpgsqlCommand();
             clsDB oDB = new clsDB();
 
             cmm.Connection = cnn;
@@ -108,7 +109,7 @@ namespace SIAO.SRV
 
             cmm.CommandText = strSQL.ToString();
             cmm.Parameters.Clear();
-            cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = scnpj;
+            cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = scnpj;
 
             if (oDB.openConnection(cmm))
             {
@@ -152,7 +153,7 @@ namespace SIAO.SRV
         {
             DataSet ds = new DataSet();
 
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             cmm.CommandText = "SELECT id,UF FROM uf";
@@ -169,10 +170,10 @@ namespace SIAO.SRV
         public static Rede GetRedeByCNPJ(string strCNPJ)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             Rede r = new Rede();
 
-            MySqlCommand cmm = new MySqlCommand();
+            NpgsqlCommand cmm = new NpgsqlCommand();
             clsDB oDB = new clsDB();
 
             cmm.Connection = cnn;
@@ -184,7 +185,7 @@ namespace SIAO.SRV
             scnpj = scnpj.Replace("/", "");
             scnpj = scnpj.Replace("-", "");
 
-            cmm.Parameters.Add("@CNPJ", MySqlDbType.String).Value = scnpj;
+            cmm.Parameters.Add("@CNPJ", NpgsqlDbType.Varchar).Value = scnpj;
 
             if (oDB.openConnection(cmm))
             {
@@ -217,14 +218,14 @@ namespace SIAO.SRV
                 string pass = o.encr(clsUser.Password);
                 string nme = o.encr(clsUser.Name.ToUpper());
 
-                MySqlConnection cnn = new MySqlConnection(scn);
+                NpgsqlConnection cnn = new NpgsqlConnection(scn);
                 cmm.Connection = cnn;
 
                 if (oDB.openConnection(cmm))
                 {
                     cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = @UserName";
                     cmm.Parameters.Clear();
-                    cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.UserName;
+                    cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
 
                     int id = 0;
                     if (oDB.Query(id, ref cmm) == DBNull.Value)
@@ -233,15 +234,15 @@ namespace SIAO.SRV
 
                         cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId) VALUES (@UserName, @LastActivityDate, @TipoId)";
                         cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.UserName;
-                        cmm.Parameters.Add("@LastActivityDate", MySqlDbType.DateTime).Value = lDate;
-                        cmm.Parameters.Add("@TipoId", MySqlDbType.Int32).Value = clsUser.TipoId;
+                        cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
+                        cmm.Parameters.Add("@LastActivityDate", NpgsqlDbType.Date).Value = lDate;
+                        cmm.Parameters.Add("@TipoId",NpgsqlDbType.Integer).Value = clsUser.TipoId;
 
                         oDB.Execute(ref cmm);
 
                         cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = @UserName";
                         cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserName", MySqlDbType.String).Value = clsUser.UserName;
+                        cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
 
                         id = (int)oDB.Query(id, ref cmm);
 
@@ -272,7 +273,7 @@ namespace SIAO.SRV
             cmm.CommandText = "INSERT INTO redesfarmaceuticas (Descricao,CNPJ)"
                 + " VALUES ('" + rede.RedeName + "','"+ rede.CNPJ +"')";
 
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             try
@@ -297,7 +298,7 @@ namespace SIAO.SRV
             cmm.CommandText = "UPDATE redesfarmaceuticas SET Descricao = '" + rede.RedeName
                 + "', CNPJ = '"+ rede.CNPJ +"' WHERE Id = " + rede.RedeId;
 
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             try
@@ -320,7 +321,7 @@ namespace SIAO.SRV
         {
             string msg = "";
 
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             string scnpj = ol.Cnpj.Replace(".", "");
@@ -357,7 +358,7 @@ namespace SIAO.SRV
         {
             string msg = "";
 
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             string scnpj = clsLoja.Cnpj.Replace(".", "");
@@ -391,7 +392,7 @@ namespace SIAO.SRV
 
         public string AddXml(string scn, XmlDocument xd, UsersTO clsUser)
         {
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             DataSet ds = new DataSet();
@@ -409,9 +410,9 @@ namespace SIAO.SRV
                             + " WHERE arquivosenviados.cnpj = @cnpj AND arquivosenviados.mes = @mes"
                             + " AND arquivosenviados.ano = @ano";
                         cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@cnpj", MySqlDbType.String).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@mes", MySqlDbType.Int32).Value = ds.Tables[0].Rows[0]["mes"];
-                        cmm.Parameters.Add("@ano", MySqlDbType.Int32).Value = ds.Tables[0].Rows[0]["ano"];
+                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
+                        cmm.Parameters.Add("@mes",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
+                        cmm.Parameters.Add("@ano",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
 
                         int id = 0;
                         if (oDB.Query(id, ref cmm) == DBNull.Value)
@@ -421,16 +422,16 @@ namespace SIAO.SRV
                                 cmm.CommandText = "INSERT INTO base_cliente_espera (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
                                     + " VALUES ( @Cnpj, @Mes, @Ano, @Barras, @Descricao, @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
                                 cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
-                                cmm.Parameters.Add("@Mes", MySqlDbType.Int32).Value = ds.Tables[0].Rows[i]["mes"];
-                                cmm.Parameters.Add("@Ano", MySqlDbType.Int32).Value = ds.Tables[0].Rows[i]["ano"];
-                                cmm.Parameters.Add("@Barras", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["ean"].ToString();
-                                cmm.Parameters.Add("@Descricao", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
-                                cmm.Parameters.Add("@Fabricante", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["fab"].ToString();
-                                cmm.Parameters.Add("@Quantidade", MySqlDbType.Int32).Value = ds.Tables[0].Rows[i]["quant"];
-                                cmm.Parameters.Add("@Valor_Bruto", MySqlDbType.Decimal).Value = ds.Tables[0].Rows[i]["vbruto"];
-                                cmm.Parameters.Add("@Valor_Liquido", MySqlDbType.Decimal).Value = ds.Tables[0].Rows[i]["vliquido"];
-                                cmm.Parameters.Add("@Valor_Desconto", MySqlDbType.Decimal).Value = ds.Tables[0].Rows[i]["desconto"];
+                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
+                                cmm.Parameters.Add("@Mes",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
+                                cmm.Parameters.Add("@Ano",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
+                                cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
+                                cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
+                                cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
+                                cmm.Parameters.Add("@Quantidade",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
+                                cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
+                                cmm.Parameters.Add("@Valor_Liquido",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
+                                cmm.Parameters.Add("@Valor_Desconto",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
 
                                 oDB.Execute(ref cmm);
                             }
@@ -443,16 +444,16 @@ namespace SIAO.SRV
                                     + " Fabricante = @Fabricante, Quantidade = @Quantidade, Valor_Bruto = "
                                     + "@Valor_Bruto, Valor_Liquido = @Valor_Liquido, Valor_Desconto = @Valor_Desconto WHERE Cnpj = @Cnpj AND Mes = @Mes AND Ano = @Ano";
                                 cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Barras", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["ean"].ToString();
-                                cmm.Parameters.Add("@Descricao", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
-                                cmm.Parameters.Add("@Fabricante", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["fab"].ToString();
-                                cmm.Parameters.Add("@Quantidade", MySqlDbType.Int32).Value = ds.Tables[0].Rows[i]["quant"];
-                                cmm.Parameters.Add("@Valor_Bruto", MySqlDbType.Decimal).Value = ds.Tables[0].Rows[i]["vbruto"];
-                                cmm.Parameters.Add("@Valor_Liquido", MySqlDbType.Decimal).Value = ds.Tables[0].Rows[i]["vliquido"];
-                                cmm.Parameters.Add("@Valor_Desconto", MySqlDbType.Decimal).Value = ds.Tables[0].Rows[i]["desconto"];
-                                cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
-                                cmm.Parameters.Add("@Mes", MySqlDbType.Int32).Value = ds.Tables[0].Rows[i]["mes"];
-                                cmm.Parameters.Add("@Ano", MySqlDbType.Int32).Value = ds.Tables[0].Rows[i]["ano"];
+                                cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
+                                cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
+                                cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
+                                cmm.Parameters.Add("@Quantidade",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
+                                cmm.Parameters.Add("@Valor_Bruto",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
+                                cmm.Parameters.Add("@Valor_Liquido",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
+                                cmm.Parameters.Add("@Valor_Desconto",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
+                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
+                                cmm.Parameters.Add("@Mes",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
+                                cmm.Parameters.Add("@Ano",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
 
                                 oDB.Execute(ref cmm);
                             }
@@ -476,7 +477,7 @@ namespace SIAO.SRV
 
         private void AddXmlData(string scn, DataSet ds, UsersTO clsUser)
         {
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             if (ds.Tables.Count > 0)
@@ -488,10 +489,10 @@ namespace SIAO.SRV
                         cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
                             + " VALUES ( @UserId, @cnpj, 'XML', @mes, @ano)";
                         cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
-                        cmm.Parameters.Add("@cnpj", MySqlDbType.String).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@mes", MySqlDbType.Int32).Value = ds.Tables[0].Rows[0]["mes"];
-                        cmm.Parameters.Add("@ano", MySqlDbType.Int32).Value = ds.Tables[0].Rows[0]["ano"];
+                        cmm.Parameters.Add("@UserId",NpgsqlDbType.Integer).Value = clsUser.UserId;
+                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
+                        cmm.Parameters.Add("@mes",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
+                        cmm.Parameters.Add("@ano",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
 
                         oDB.Execute(ref cmm);
                     }
@@ -507,7 +508,7 @@ namespace SIAO.SRV
         public DataSet GetFarmacias(string scn)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
 
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
@@ -524,7 +525,7 @@ namespace SIAO.SRV
         public object GetFarmaciasByRedeId(string scn, string redeId)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
 
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
@@ -543,7 +544,7 @@ namespace SIAO.SRV
         public string AddDbf(string scn, DataTable dt)
         {
             string msg = "";
-            MySqlConnection msc = new MySqlConnection(scn);
+            NpgsqlConnection msc = new NpgsqlConnection(scn);
             DataSet ds = new DataSet();
 
             cmm.Connection = msc;
@@ -619,7 +620,7 @@ namespace SIAO.SRV
 
         public string AddTxt(string scn, DataTable dt, UsersTO clsUser, List<int> lstMeses, List<string> lstCnpj)
         {
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             string msg = "";
@@ -695,7 +696,7 @@ namespace SIAO.SRV
 
         private void AddTxtData(string scn, DataTable dt, UsersTO clsUser)
         {
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
             if (dt.Rows.Count > 0)
@@ -709,10 +710,10 @@ namespace SIAO.SRV
                             cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
                                 + " VALUES (@UserId, @cnpj, 'TXT', @mes, @ano)";
                             cmm.Parameters.Clear();
-                            cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
-                            cmm.Parameters.Add("@cnpj", MySqlDbType.String).Value = dt.Rows[i]["cnpj"].ToString();
-                            cmm.Parameters.Add("@mes", MySqlDbType.Int32).Value = dt.Rows[i][2];
-                            cmm.Parameters.Add("@ano", MySqlDbType.Int32).Value = dt.Rows[i]["ano"];
+                            cmm.Parameters.Add("@UserId",NpgsqlDbType.Integer).Value = clsUser.UserId;
+                            cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dt.Rows[i]["cnpj"].ToString();
+                            cmm.Parameters.Add("@mes",NpgsqlDbType.Integer).Value = dt.Rows[i][2];
+                            cmm.Parameters.Add("@ano",NpgsqlDbType.Integer).Value = dt.Rows[i]["ano"];
 
                             oDB.Execute(ref cmm);
                         }
@@ -729,7 +730,7 @@ namespace SIAO.SRV
         public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string ano)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
@@ -762,7 +763,7 @@ namespace SIAO.SRV
                     + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
                     + " WHERE memberships.UserId = @UserId";
                 cmm.Parameters.Clear();
-                cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
+                cmm.Parameters.Add("@UserId",NpgsqlDbType.Integer).Value = clsUser.UserId;
 
                 if (oDB.openConnection(cmm))
                 {
@@ -799,7 +800,7 @@ namespace SIAO.SRV
                     + " LEFT JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
                     + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
                 cmm.Parameters.Clear();
-                cmm.Parameters.Add("@UserId", MySqlDbType.Int32).Value = clsUser.UserId;
+                cmm.Parameters.Add("@UserId",NpgsqlDbType.Integer).Value = clsUser.UserId;
 
                 if (oDB.openConnection(cmm))
                 {
@@ -878,7 +879,7 @@ namespace SIAO.SRV
         public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
-            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
@@ -916,13 +917,13 @@ namespace SIAO.SRV
             }
 
             cmm.CommandText = SQL.ToString();
-            cmm.Parameters.Add("@AnoIni", MySqlDbType.String).Value = ini[1];
-            cmm.Parameters.Add("@MesIni", MySqlDbType.String).Value = ini[0];
-            cmm.Parameters.Add("@AnoFim", MySqlDbType.String).Value = fim[1];
-            cmm.Parameters.Add("@MesFim", MySqlDbType.String).Value = fim[0];
-            cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = strCnpj;
-            cmm.Parameters.Add("@idRede", MySqlDbType.Int32).Value = intRedeId;
-            cmm.Parameters.Add("@UsuarioId", MySqlDbType.Int32).Value = clsUser.UserId;
+            cmm.Parameters.Add("@AnoIni", NpgsqlDbType.Varchar).Value = ini[1];
+            cmm.Parameters.Add("@MesIni", NpgsqlDbType.Varchar).Value = ini[0];
+            cmm.Parameters.Add("@AnoFim", NpgsqlDbType.Varchar).Value = fim[1];
+            cmm.Parameters.Add("@MesFim", NpgsqlDbType.Varchar).Value = fim[0];
+            cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = strCnpj;
+            cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
+            cmm.Parameters.Add("@UsuarioId", NpgsqlDbType.Integer).Value = clsUser.UserId;
             cmm.CommandTimeout = 9999;
 
             if (oDB.openConnection(cmm))
@@ -970,7 +971,7 @@ namespace SIAO.SRV
         public List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
-            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
@@ -1013,9 +1014,9 @@ namespace SIAO.SRV
             }
 
             cmm.CommandText = SQL.ToString();
-            cmm.Parameters.Add("@Cnpj", MySqlDbType.String).Value = strCnpj;
-            cmm.Parameters.Add("@idRede", MySqlDbType.Int32).Value = intRedeId;
-            cmm.Parameters.Add("@UsuarioId", MySqlDbType.Int32).Value = clsUser.UserId;
+            cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = strCnpj;
+            cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
+            cmm.Parameters.Add("@UsuarioId", NpgsqlDbType.Integer).Value = clsUser.UserId;
             cmm.CommandTimeout = 9999;
 
             if (oDB.openConnection(cmm))
@@ -1062,7 +1063,7 @@ namespace SIAO.SRV
         public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string ano, int intRedeId, Boolean blnMes)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
@@ -1098,7 +1099,7 @@ namespace SIAO.SRV
             SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
             cmm.CommandText = SQL.ToString();
-            cmm.Parameters.Add("@idRede ", MySqlDbType.Int32).Value = intRedeId;
+            cmm.Parameters.Add("@idRede ",NpgsqlDbType.Integer).Value = intRedeId;
             cmm.CommandTimeout = 9999;
 
             if (oDB.openConnection(cmm))
@@ -1162,7 +1163,7 @@ namespace SIAO.SRV
         public DataSet GetUsers(string scn)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
 
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT users.UserId, users.UserName"
@@ -1182,7 +1183,7 @@ namespace SIAO.SRV
         public UsersTO GetUserEdit(string scn, string p)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             UsersTO clsUser = new UsersTO();
 
             cmm.Connection = cnn;
@@ -1225,7 +1226,7 @@ namespace SIAO.SRV
                 string pass = o.encr(clsUser.Password);
                 string nme = o.encr(clsUser.Name.ToUpper());
 
-                MySqlConnection cnn = new MySqlConnection(scn);
+                NpgsqlConnection cnn = new NpgsqlConnection(scn);
                 cmm.Connection = cnn;
 
                 if (oDB.openConnection(cmm))
@@ -1237,7 +1238,7 @@ namespace SIAO.SRV
 
                     stbSQL.Append(" WHERE UserId = " + clsUser.UserId);
                     cmm.CommandText = stbSQL.ToString();
-                    cmm.Parameters.Add("@TipoId", MySqlDbType.Int32).Value = clsUser.TipoId;
+                    cmm.Parameters.Add("@TipoId",NpgsqlDbType.Integer).Value = clsUser.TipoId;
 
                     oDB.Execute(ref cmm);
 
@@ -1262,7 +1263,7 @@ namespace SIAO.SRV
         public Rede GetRedesEdit(string scn, string strRedeId)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             Rede r = new Rede();
 
             cmm.Connection = cnn;
@@ -1288,7 +1289,7 @@ namespace SIAO.SRV
         public Loja GetLojaEdit(string scn, string p)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
             Loja clsLoja = new Loja();
 
             cmm.Connection = cnn;
@@ -1302,7 +1303,7 @@ namespace SIAO.SRV
 
             cmm.CommandText = strSQL.ToString();
             cmm.Parameters.Clear();
-            cmm.Parameters.Add("@Id", MySqlDbType.Int32).Value = p;
+            cmm.Parameters.Add("@Id",NpgsqlDbType.Integer).Value = p;
 
             if (oDB.openConnection(cmm))
             {
@@ -1343,7 +1344,7 @@ namespace SIAO.SRV
         public object GetLojaByUserId(string scn, UsersTO clsUser)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
 
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID FROM farmacias";
@@ -1351,8 +1352,8 @@ namespace SIAO.SRV
             {
                 cmm.CommandText += " WHERE GerenteId = @GerenteId OR ProprietarioID = @ProprietarioID";
                 cmm.Parameters.Clear();
-                cmm.Parameters.Add("@GerenteId", MySqlDbType.Int32).Value = clsUser.UserId;
-                cmm.Parameters.Add("@ProprietarioID", MySqlDbType.Int32).Value = clsUser.UserId;
+                cmm.Parameters.Add("@GerenteId",NpgsqlDbType.Integer).Value = clsUser.UserId;
+                cmm.Parameters.Add("@ProprietarioID",NpgsqlDbType.Integer).Value = clsUser.UserId;
             }
             cmm.CommandText += " ORDER BY NomeFantasia";
             if (oDB.openConnection(cmm))
@@ -1367,14 +1368,14 @@ namespace SIAO.SRV
         public DataSet GetLojaByRedeId(int intRedeId)
         {
             DataSet ds = new DataSet();
-            MySqlConnection cnn = new MySqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             cmm.Connection = cnn;
             cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
             WHERE farmacias.idRede = @idRede ORDER BY NomeFantasia";
 
             cmm.Parameters.Clear();
-            cmm.Parameters.Add("@idRede", MySqlDbType.Int32).Value = intRedeId;
+            cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
             
             if (oDB.openConnection(cmm))
             {
@@ -1388,9 +1389,9 @@ namespace SIAO.SRV
         public static DataSet GetGrupos(string scn)
         {
             DataSet ds = new DataSet();
-            MySqlConnection msc = new MySqlConnection(scn);
+            NpgsqlConnection msc = new NpgsqlConnection(scn);
             clsDB oDB = new clsDB();
-            MySqlCommand cmm = new MySqlCommand();
+            NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = msc;
             cmm.CommandText = "SELECT DISTINCT Grupo FROM produtos_base WHERE Grupo NOT IN ('Fitoterápicos', 'DERMOCOSMETICOS') ORDER BY Grupo";
@@ -1407,9 +1408,9 @@ namespace SIAO.SRV
         public static DataSet GetSubCategorias(string scn)
         {
             DataSet ds = new DataSet();
-            MySqlConnection msc = new MySqlConnection(scn);
+            NpgsqlConnection msc = new NpgsqlConnection(scn);
             clsDB oDB = new clsDB();
-            MySqlCommand cmm = new MySqlCommand();
+            NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = msc;
             cmm.CommandText = "SELECT DISTINCT Sub_Consultoria FROM produtos_base WHERE Sub_Consultoria <> '' ORDER BY Sub_Consultoria";

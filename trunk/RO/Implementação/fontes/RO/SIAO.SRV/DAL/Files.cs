@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SIAO.SRV.TO;
 using System.Data;
-using MySql.Data.MySqlClient;
+using Npgsql;
 using System.Data.Common;
 
 namespace SIAO.SRV.DAL
@@ -51,7 +51,7 @@ namespace SIAO.SRV.DAL
         {
             List<FilesTO> clsFiles = new List<FilesTO>();
 
-            MySqlConnection msc = new MySqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
 
             try
             {
@@ -83,7 +83,7 @@ namespace SIAO.SRV.DAL
         {
             List<FilesTO> clsFiles = new List<FilesTO>();
 
-            MySqlConnection msc = new MySqlConnection(scn);
+            NpgsqlConnection msc = new NpgsqlConnection(scn);
 
             try
             {
@@ -121,7 +121,7 @@ namespace SIAO.SRV.DAL
         {
             List<FilesTO> clsFiles = new List<FilesTO>();
 
-            MySqlConnection msc = new MySqlConnection(scn);
+            NpgsqlConnection msc = new NpgsqlConnection(scn);
 
             try
             {
