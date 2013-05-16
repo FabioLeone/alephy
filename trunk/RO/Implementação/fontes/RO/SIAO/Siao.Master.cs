@@ -52,7 +52,7 @@ namespace SIAO
         #region .: Metodos :.
         public bool VerificaEnvio() {
             bool blnOk = false;
-            if(Global.TId == null)
+            if (Global.TId == null || Global.TId == 0)
                 Response.Redirect("Logon.aspx");
 
             if (Global.TId.Equals(1))
