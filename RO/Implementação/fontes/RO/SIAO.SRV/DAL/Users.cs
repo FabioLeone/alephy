@@ -174,7 +174,7 @@ namespace SIAO.SRV.DAL
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,");
                 strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
-                strSQL.Append(" memberships.Access, memberships.Name, usuarios_farmacias.FarmaciaId");
+                strSQL.Append(" memberships.Access, memberships.Name, usuarios_farmacias.FarmaciaId,users.TipoId");
                 strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
                 strSQL.Append(" WHERE memberships.Name=@Name AND memberships.Password=@Password");
 

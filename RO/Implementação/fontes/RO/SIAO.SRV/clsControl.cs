@@ -230,12 +230,10 @@ namespace SIAO.SRV
                     int id = 0;
                     if (oDB.Query(id, ref cmm) == DBNull.Value)
                     {
-                        string lDate = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00";
-
                         cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId) VALUES (@UserName, @LastActivityDate, @TipoId)";
                         cmm.Parameters.Clear();
                         cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
-                        cmm.Parameters.Add("@LastActivityDate", NpgsqlDbType.Date).Value = lDate;
+                        cmm.Parameters.Add("@LastActivityDate", NpgsqlDbType.Date).Value = DateTime.Now.Date;
                         cmm.Parameters.Add("@TipoId",NpgsqlDbType.Integer).Value = clsUser.TipoId;
 
                         oDB.Execute(ref cmm);
