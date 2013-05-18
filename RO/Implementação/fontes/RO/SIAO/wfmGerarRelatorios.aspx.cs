@@ -112,21 +112,21 @@ namespace SIAO
         protected void btnRelat2_Click(object sender, EventArgs e)
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
-            //if (rbtAno.Checked)
-            //{
-            //    if(ddlRedesRelatorios.SelectedIndex > 0)
-            //        lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
-            //    else
-            //        lr1 = oc.GetCross(scn, clsUser, ddlAno.SelectedItem.Value, ddlLojaRelatorios.SelectedItem.Value);
+            if (rbtPeriodo.Checked)
+            {
+                if (ddlRedesRelatorios.SelectedIndex > 0)
+                    lr1 = oc.GetCross(scn, clsUser, "2013", Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
+                else
+                    lr1 = oc.GetCross(clsUser, txtInicio.Text,txtFim.Text, ddlLojaRelatorios.SelectedItem.Value,0);
 
-            //}
-            //else if (rbtMes.Checked)
-            //{
-            //    if(ddlRedesRelatorios.SelectedIndex > 0)
-            //        lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
-            //    else
-            //        lr1 = oc.GetCross(scn, clsUser, ddlLojaRelatorios.SelectedItem.Value, true);
-            //}
+            }
+            else if (rbtMes.Checked)
+            {
+                if (ddlRedesRelatorios.SelectedIndex > 0)
+                    lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
+                else
+                    lr1 = oc.GetCross(clsUser, ddlLojaRelatorios.SelectedItem.Value, 0);
+            }
 
             if (lr1.Count > 0)
             {
@@ -306,12 +306,23 @@ namespace SIAO
 
         private void getLojas()
         {
-            ddlLojas.DataSource = oc.GetLojaByUserId(scn, clsUser);
+            DataSet dsLojas = oc.GetLojaByUserId(clsUser.UserId);
+            ddlLojas.DataSource = dsLojas;
             ddlLojas.DataTextField = "NomeFantasia";
             ddlLojas.DataValueField = "Cnpj";
             ddlLojas.DataBind();
             ddlLojas.Items.Insert(0, new ListItem("Selecione", string.Empty));
             ddlLojas.SelectedIndex = 0;
+
+            if (this.User.TipoId.Equals(2))
+            {
+                ddlLojaRelatorios.DataSource = dsLojas;
+                ddlLojaRelatorios.DataTextField = "NomeFantasia";
+                ddlLojaRelatorios.DataValueField = "Cnpj";
+                ddlLojaRelatorios.DataBind();
+                ddlLojaRelatorios.Items.Insert(0, new ListItem("Todas", string.Empty));
+                ddlLojaRelatorios.SelectedIndex = 0;
+            }
         }
 
         private void getLojas(int intRedeId)

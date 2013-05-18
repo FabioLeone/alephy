@@ -51,46 +51,23 @@ namespace SIAO
 
         #region .: Metodos :.
         public bool VerificaEnvio() {
-            bool blnOk = false;
             if (Global.TId == null || Global.TId == 0)
+            {
+                return false;
                 Response.Redirect("Logon.aspx");
-
-            if (Global.TId.Equals(1))
-                blnOk = true;
-            else if (Session["user"] != null)
-            {
-                this.User = (UsersTO)Session["user"];
-                this.Role = RolesBLL.GetByUserId(this.User.UserId,strConnectionString);
-                if (this.Role.Envio)
-                    blnOk = true;
-                else blnOk = false;
             }
-            return blnOk;
+            else
+                return UsersBLL.ValidaEnvio(Global.TId);
         }
+
         public bool VerificaRelatorio() {
-            bool blnOK = false;
-            if (Global.TId.Equals(1))
-                blnOK = true;
-            else if (this.Role.RoleId > 0)
+            if (Global.TId == null || Global.TId == 0)
             {
-                List<RelatoriosTO> clsRelatorios = RolesBLL.GetRelatoriosByUserId(this.User.UserId,strConnectionString);
-                if (clsRelatorios.Count > 0)
-                {
-                    if (clsRelatorios.FindAll(r => r.RelatorioTipoId > 0).Count > 0)
-                    {
-                        blnOK = true;
-                    }
-                    else if (clsRole.RelatoriosTodos)
-                    {
-                        blnOK = true;
-                    }
-                }
-                else if (clsRole.RelatoriosTodos)
-                {
-                    blnOK = true;
-                }
+                return false;
+                Response.Redirect("Logon.aspx");
             }
-            return blnOK;
+            else
+                return UsersBLL.ValidaRelatorio(Global.TId);
         }
         #endregion
     }
