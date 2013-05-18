@@ -11,6 +11,7 @@ namespace SIAO.SRV
         public string Cnpj { get; set; }
         public string SubConsultoria { get; set; }
         public int Mes { get; set; }
+        public int Ano { get; set; }
         public string Grupo { get; set; }
         public decimal SomaDeQuantidade { get; set; }
         public decimal SomaDeValorBruto { get; set; }

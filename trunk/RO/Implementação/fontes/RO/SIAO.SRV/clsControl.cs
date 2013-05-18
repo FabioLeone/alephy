@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using Npgsql;
 using NpgsqlTypes;
+using System.Linq;
 
 namespace SIAO.SRV
 {
@@ -43,6 +44,7 @@ namespace SIAO.SRV
 
             return ds;
         }
+
         public static DataSet GetRedes(string scn)
         {
             DataSet ds = new DataSet();
@@ -62,7 +64,6 @@ namespace SIAO.SRV
 
             return ds;
         }
-
 
         public Int32 GetByName(string strName)
         {
@@ -149,6 +150,7 @@ namespace SIAO.SRV
 
             return clsLoja;
         }
+        
         public DataSet GetUf(string scn)
         {
             DataSet ds = new DataSet();
@@ -204,6 +206,206 @@ namespace SIAO.SRV
             }
 
             return r;
+        }
+
+        public DataSet GetFarmacias(string scn)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+
+            cmm.Connection = cnn;
+            cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public object GetFarmaciasByRedeId(string scn, string redeId)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+
+            cmm.Connection = cnn;
+            cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
+            cmm.CommandText += " WHERE idRede = " + redeId;
+            cmm.CommandText += " ORDER BY NomeFantasia";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public Rede GetRedesEdit(string scn, string strRedeId)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            Rede r = new Rede();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = "SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId,redesfarmaceuticas.CNPJ FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + strRedeId + ")";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "RedeEd");
+            }
+            oDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
+                r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
+                r.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["UserId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["UserId"]);
+                r.CNPJ = ds.Tables[0].Rows[0]["CNPJ"].ToString();
+            }
+
+            return r;
+        }
+
+        public Loja GetLojaEdit(string scn, string p)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            Loja clsLoja = new Loja();
+
+            cmm.Connection = cnn;
+            StringBuilder strSQL = new StringBuilder();
+            strSQL.Append(@"SELECT farmacias.Id, farmacias.Proprietario, farmacias.Gerente, farmacias.Email,
+            farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,
+            farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,
+            farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,
+            farmacias.Site, farmacias.Skype, farmacias.Msn, farmacias.Ativo, farmacias.idRede,farmacias.CEP
+            FROM farmacias WHERE (farmacias.Id = @Id)");
+
+            cmm.CommandText = strSQL.ToString();
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@Id", NpgsqlDbType.Integer).Value = p;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "LojaEd");
+            }
+            oDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                clsLoja.Id = Convert.ToInt16(ds.Tables["LojaEd"].Rows[0]["Id"].ToString());
+                clsLoja.Proprietario = ds.Tables["LojaEd"].Rows[0]["Proprietario"].ToString() == "" ? "" : ds.Tables["LojaEd"].Rows[0]["Proprietario"].ToString();
+                clsLoja.Gerente = ds.Tables["LojaEd"].Rows[0]["Gerente"].ToString() == "" ? "" : ds.Tables["LojaEd"].Rows[0]["Gerente"].ToString();
+                clsLoja.Email = ds.Tables["LojaEd"].Rows[0]["Email"].ToString();
+                clsLoja.Email2 = ds.Tables["LojaEd"].Rows[0]["Email2"].ToString();
+                clsLoja.NomeFantasia = ds.Tables["LojaEd"].Rows[0]["NomeFantasia"].ToString();
+                clsLoja.Razao = ds.Tables["LojaEd"].Rows[0]["RazaoSocial"].ToString();
+                clsLoja.Cnpj = ds.Tables["LojaEd"].Rows[0]["Cnpj"].ToString();
+                clsLoja.Endereco = ds.Tables["LojaEd"].Rows[0]["Endereco"].ToString();
+                clsLoja.EndNumero = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["Numero"].ToString());
+                clsLoja.Bairro = ds.Tables["LojaEd"].Rows[0]["Bairro"].ToString();
+                clsLoja.Complemento = ds.Tables["LojaEd"].Rows[0]["Complemento"].ToString();
+                clsLoja.Cidade = ds.Tables["LojaEd"].Rows[0]["Cidade"].ToString();
+                clsLoja.Uf = ds.Tables["LojaEd"].Rows[0]["UF"].ToString();
+                clsLoja.Fone = ds.Tables["LojaEd"].Rows[0]["Tel1"].ToString();
+                clsLoja.Fone2 = ds.Tables["LojaEd"].Rows[0]["Tel2"].ToString();
+                clsLoja.Celular = ds.Tables["LojaEd"].Rows[0]["Celular"].ToString();
+                clsLoja.Site = ds.Tables["LojaEd"].Rows[0]["Site"].ToString();
+                clsLoja.Skype = ds.Tables["LojaEd"].Rows[0]["Skype"].ToString();
+                clsLoja.Msn = ds.Tables["LojaEd"].Rows[0]["Msn"].ToString();
+                clsLoja.Ativo = (ds.Tables["LojaEd"].Rows[0]["Ativo"].ToString() == "1" ? true : false);
+                clsLoja.idRede = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["idRede"].ToString());
+                clsLoja.CEP = ds.Tables["LojaEd"].Rows[0]["CEP"].ToString();
+            }
+
+            return clsLoja;
+        }
+
+        public DataSet GetLojaByUserId(int intUserId)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID 
+            FROM farmacias 
+            INNER JOIN usuarios_vinculos ON farmacias.id = usuarios_vinculos.LinkId
+            WHERE usuarios_vinculos.usuarioid = @usuarioid
+            ORDER BY NomeFantasia";
+
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@usuarioid", NpgsqlDbType.Integer).Value = intUserId;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public DataSet GetLojaByRedeId(int intRedeId)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
+            WHERE farmacias.idRede = @idRede ORDER BY NomeFantasia";
+
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public static DataSet GetGrupos(string scn)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection msc = new NpgsqlConnection(scn);
+            clsDB oDB = new clsDB();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+
+            cmm.Connection = msc;
+            cmm.CommandText = "SELECT DISTINCT Grupo FROM produtos_base WHERE Grupo NOT IN ('Fitoterápicos', 'DERMOCOSMETICOS') ORDER BY Grupo";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Grupos");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        public static DataSet GetSubCategorias(string scn)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection msc = new NpgsqlConnection(scn);
+            clsDB oDB = new clsDB();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+
+            cmm.Connection = msc;
+            cmm.CommandText = "SELECT DISTINCT Sub_Consultoria FROM produtos_base WHERE Sub_Consultoria <> '' ORDER BY Sub_Consultoria";
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Sub_Consultoria");
+            }
+            oDB.closeConnection(cmm);
+
+            return ds;
         }
 
         #endregion
@@ -265,6 +467,7 @@ namespace SIAO.SRV
 
             return msg;
         }
+     
         public string AddRede(string scn, Rede rede)
         {
             string msg = "";
@@ -350,8 +553,6 @@ namespace SIAO.SRV
             return msg;
         }
 
-        #endregion
-
         public string UpdateLoja(string scn, Loja clsLoja)
         {
             string msg = "";
@@ -364,12 +565,12 @@ namespace SIAO.SRV
             scnpj = scnpj.Replace("-", "");
 
             cmm.CommandText = "UPDATE farmacias SET Proprietario = '" + clsLoja.Proprietario + "', Gerente = '" + clsLoja.Gerente
-                + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2 + "', NomeFantasia = '" + clsLoja.NomeFantasia 
+                + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2 + "', NomeFantasia = '" + clsLoja.NomeFantasia
                 + "', RazaoSocial = '" + clsLoja.Razao + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
-                + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '" + clsLoja.Complemento + "', Cidade = '" 
+                + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '" + clsLoja.Complemento + "', Cidade = '"
                 + clsLoja.Cidade + "', UF = '" + clsLoja.Uf + "', Tel1 = '" + clsLoja.Fone + "', Tel2 = '" + clsLoja.Fone2 + "', Celular = '"
-                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', " + " Msn = " + " '" + clsLoja.Msn 
-                + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0) + ", idRede = " + clsLoja.idRede + ",CEP = '"+ clsLoja.CEP +"' WHERE Id = " 
+                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', " + " Msn = " + " '" + clsLoja.Msn
+                + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0) + ", idRede = " + clsLoja.idRede + ",CEP = '" + clsLoja.CEP + "' WHERE Id = "
                 + clsLoja.Id;
 
             try
@@ -409,8 +610,8 @@ namespace SIAO.SRV
                             + " AND arquivosenviados.ano = @ano";
                         cmm.Parameters.Clear();
                         cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@mes",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
-                        cmm.Parameters.Add("@ano",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
+                        cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
+                        cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
 
                         int id = 0;
                         if (oDB.Query(id, ref cmm) == DBNull.Value)
@@ -421,15 +622,15 @@ namespace SIAO.SRV
                                     + " VALUES ( @Cnpj, @Mes, @Ano, @Barras, @Descricao, @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
                                 cmm.Parameters.Clear();
                                 cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
-                                cmm.Parameters.Add("@Mes",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
-                                cmm.Parameters.Add("@Ano",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
+                                cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
+                                cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
                                 cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
                                 cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
                                 cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
-                                cmm.Parameters.Add("@Quantidade",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
+                                cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
                                 cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
-                                cmm.Parameters.Add("@Valor_Liquido",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
-                                cmm.Parameters.Add("@Valor_Desconto",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
+                                cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
+                                cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
 
                                 oDB.Execute(ref cmm);
                             }
@@ -445,13 +646,13 @@ namespace SIAO.SRV
                                 cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
                                 cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
                                 cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
-                                cmm.Parameters.Add("@Quantidade",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
-                                cmm.Parameters.Add("@Valor_Bruto",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
-                                cmm.Parameters.Add("@Valor_Liquido",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
-                                cmm.Parameters.Add("@Valor_Desconto",NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
+                                cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
+                                cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
+                                cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
+                                cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
                                 cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
-                                cmm.Parameters.Add("@Mes",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
-                                cmm.Parameters.Add("@Ano",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
+                                cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
+                                cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
 
                                 oDB.Execute(ref cmm);
                             }
@@ -487,10 +688,10 @@ namespace SIAO.SRV
                         cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
                             + " VALUES ( @UserId, @cnpj, 'XML', @mes, @ano)";
                         cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserId",NpgsqlDbType.Integer).Value = clsUser.UserId;
+                        cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
                         cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@mes",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
-                        cmm.Parameters.Add("@ano",NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
+                        cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
+                        cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
 
                         oDB.Execute(ref cmm);
                     }
@@ -501,42 +702,6 @@ namespace SIAO.SRV
 
                 oDB.closeConnection(cmm);
             }
-        }
-
-        public DataSet GetFarmacias(string scn)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-
-            cmm.Connection = cnn;
-            cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
-        }
-
-        public object GetFarmaciasByRedeId(string scn, string redeId)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-
-            cmm.Connection = cnn;
-            cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
-            cmm.CommandText += " WHERE idRede = " + redeId;
-            cmm.CommandText += " ORDER BY NomeFantasia";
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
         }
 
         public string AddDbf(string scn, DataTable dt)
@@ -708,10 +873,10 @@ namespace SIAO.SRV
                             cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
                                 + " VALUES (@UserId, @cnpj, 'TXT', @mes, @ano)";
                             cmm.Parameters.Clear();
-                            cmm.Parameters.Add("@UserId",NpgsqlDbType.Integer).Value = clsUser.UserId;
+                            cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
                             cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dt.Rows[i]["cnpj"].ToString();
-                            cmm.Parameters.Add("@mes",NpgsqlDbType.Integer).Value = dt.Rows[i][2];
-                            cmm.Parameters.Add("@ano",NpgsqlDbType.Integer).Value = dt.Rows[i]["ano"];
+                            cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = dt.Rows[i][2];
+                            cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = dt.Rows[i]["ano"];
 
                             oDB.Execute(ref cmm);
                         }
@@ -724,6 +889,8 @@ namespace SIAO.SRV
                 oDB.closeConnection(cmm);
             }
         }
+
+        #endregion
 
         public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string ano)
         {
@@ -981,16 +1148,16 @@ namespace SIAO.SRV
 
             StringBuilder SQL = new StringBuilder();
             SQL.Append(String.Format(@"SELECT farmacias.RazaoSocial AS Razao_Social, consolidado.CNPJ,
-                        consolidado.Mes, consolidado.Sub_Consultoria, consolidado.Grupo,
-                        consolidado.Quantidade AS `Soma De Quantidade`,
-                        consolidado.Valor_Bruto AS `Soma De Valor bruto`,
-                        consolidado.Valor_Liquido AS `Soma De Valor liquido`,
-                        consolidado.Valor_Desconto AS `Soma De Valor desconto` FROM consolidado
+                        consolidado.Mes, consolidado.Ano, consolidado.Sub_Consultoria, consolidado.Grupo,
+                        consolidado.Quantidade AS ""Soma De Quantidade"",
+                        consolidado.Valor_Bruto AS ""Soma De Valor bruto"",
+                        consolidado.Valor_Liquido AS ""Soma De Valor liquido"",
+                        consolidado.Valor_Desconto AS ""Soma De Valor desconto"" FROM consolidado
                         INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                         INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
                         WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
-                        AND (MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) >= MAKEDATE({1},(({0}*360)/12)) AND
-                        MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) <= MAKEDATE({3},(({2}*360)/12)))", strMI, strAI, strMF, strAF));
+                        AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND
+                        (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') <= to_date('{2} {3}','MM-yyyy'))", strMI, strAI, strMF, strAF));
 
             if (clsUser.TipoId.Equals(1))
             {
@@ -1036,6 +1203,7 @@ namespace SIAO.SRV
                             or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
+                            or.Ano = (int)ds.Tables["CrossR1"].Rows[i]["Ano"];
                             or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
                             or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
                             or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
@@ -1058,6 +1226,7 @@ namespace SIAO.SRV
 
             return lr;
         }
+       
         public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string ano, int intRedeId, Boolean blnMes)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -1141,6 +1310,7 @@ namespace SIAO.SRV
 
             return lr;
         }
+       
         private string MaskCnpj(string p)
         {
             string cnpj = "";
@@ -1256,170 +1426,6 @@ namespace SIAO.SRV
             }
 
             return msg;
-        }
-
-        public Rede GetRedesEdit(string scn, string strRedeId)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            Rede r = new Rede();
-
-            cmm.Connection = cnn;
-            cmm.CommandText = "SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId,redesfarmaceuticas.CNPJ FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + strRedeId + ")";
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "RedeEd");
-            }
-            oDB.closeConnection(cmm);
-
-            if (ds.Tables.Count > 0)
-            {
-                r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
-                r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
-                r.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["UserId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["UserId"]);
-                r.CNPJ = ds.Tables[0].Rows[0]["CNPJ"].ToString();
-            }
-
-            return r;
-        }
-
-        public Loja GetLojaEdit(string scn, string p)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            Loja clsLoja = new Loja();
-
-            cmm.Connection = cnn;
-            StringBuilder strSQL = new StringBuilder();
-            strSQL.Append(@"SELECT farmacias.Id, farmacias.Proprietario, farmacias.Gerente, farmacias.Email,
-            farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,
-            farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,
-            farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,
-            farmacias.Site, farmacias.Skype, farmacias.Msn, farmacias.Ativo, farmacias.idRede,farmacias.CEP
-            FROM farmacias WHERE (farmacias.Id = @Id)");
-
-            cmm.CommandText = strSQL.ToString();
-            cmm.Parameters.Clear();
-            cmm.Parameters.Add("@Id",NpgsqlDbType.Integer).Value = p;
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "LojaEd");
-            }
-            oDB.closeConnection(cmm);
-
-            if (ds.Tables.Count > 0)
-            {
-                clsLoja.Id = Convert.ToInt16(ds.Tables["LojaEd"].Rows[0]["Id"].ToString());
-                clsLoja.Proprietario = ds.Tables["LojaEd"].Rows[0]["Proprietario"].ToString() == "" ? "" : ds.Tables["LojaEd"].Rows[0]["Proprietario"].ToString();
-                clsLoja.Gerente = ds.Tables["LojaEd"].Rows[0]["Gerente"].ToString() == "" ? "" : ds.Tables["LojaEd"].Rows[0]["Gerente"].ToString();
-                clsLoja.Email = ds.Tables["LojaEd"].Rows[0]["Email"].ToString();
-                clsLoja.Email2 = ds.Tables["LojaEd"].Rows[0]["Email2"].ToString();
-                clsLoja.NomeFantasia = ds.Tables["LojaEd"].Rows[0]["NomeFantasia"].ToString();
-                clsLoja.Razao = ds.Tables["LojaEd"].Rows[0]["RazaoSocial"].ToString();
-                clsLoja.Cnpj = ds.Tables["LojaEd"].Rows[0]["Cnpj"].ToString();
-                clsLoja.Endereco = ds.Tables["LojaEd"].Rows[0]["Endereco"].ToString();
-                clsLoja.EndNumero = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["Numero"].ToString());
-                clsLoja.Bairro = ds.Tables["LojaEd"].Rows[0]["Bairro"].ToString();
-                clsLoja.Complemento = ds.Tables["LojaEd"].Rows[0]["Complemento"].ToString();
-                clsLoja.Cidade = ds.Tables["LojaEd"].Rows[0]["Cidade"].ToString();
-                clsLoja.Uf = ds.Tables["LojaEd"].Rows[0]["UF"].ToString();
-                clsLoja.Fone = ds.Tables["LojaEd"].Rows[0]["Tel1"].ToString();
-                clsLoja.Fone2 = ds.Tables["LojaEd"].Rows[0]["Tel2"].ToString();
-                clsLoja.Celular = ds.Tables["LojaEd"].Rows[0]["Celular"].ToString();
-                clsLoja.Site = ds.Tables["LojaEd"].Rows[0]["Site"].ToString();
-                clsLoja.Skype = ds.Tables["LojaEd"].Rows[0]["Skype"].ToString();
-                clsLoja.Msn = ds.Tables["LojaEd"].Rows[0]["Msn"].ToString();
-                clsLoja.Ativo = (ds.Tables["LojaEd"].Rows[0]["Ativo"].ToString() == "1" ? true : false);
-                clsLoja.idRede = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["idRede"].ToString());
-                clsLoja.CEP = ds.Tables["LojaEd"].Rows[0]["CEP"].ToString();
-            }
-
-            return clsLoja;
-        }
-
-        public object GetLojaByUserId(string scn, UsersTO clsUser)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-
-            cmm.Connection = cnn;
-            cmm.CommandText = "SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID FROM farmacias";
-            if (!clsUser.Access.Equals("adm"))
-            {
-                cmm.CommandText += " WHERE GerenteId = @GerenteId OR ProprietarioID = @ProprietarioID";
-                cmm.Parameters.Clear();
-                cmm.Parameters.Add("@GerenteId",NpgsqlDbType.Integer).Value = clsUser.UserId;
-                cmm.Parameters.Add("@ProprietarioID",NpgsqlDbType.Integer).Value = clsUser.UserId;
-            }
-            cmm.CommandText += " ORDER BY NomeFantasia";
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
-        }
-
-        public DataSet GetLojaByRedeId(int intRedeId)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
-
-            cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
-            WHERE farmacias.idRede = @idRede ORDER BY NomeFantasia";
-
-            cmm.Parameters.Clear();
-            cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
-            
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
-        }
-
-        public static DataSet GetGrupos(string scn)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection msc = new NpgsqlConnection(scn);
-            clsDB oDB = new clsDB();
-            NpgsqlCommand cmm = new NpgsqlCommand();
-
-            cmm.Connection = msc;
-            cmm.CommandText = "SELECT DISTINCT Grupo FROM produtos_base WHERE Grupo NOT IN ('Fitoterápicos', 'DERMOCOSMETICOS') ORDER BY Grupo";
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Grupos");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
-        }
-
-        public static DataSet GetSubCategorias(string scn)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection msc = new NpgsqlConnection(scn);
-            clsDB oDB = new clsDB();
-            NpgsqlCommand cmm = new NpgsqlCommand();
-
-            cmm.Connection = msc;
-            cmm.CommandText = "SELECT DISTINCT Sub_Consultoria FROM produtos_base WHERE Sub_Consultoria <> '' ORDER BY Sub_Consultoria";
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Sub_Consultoria");
-            }
-            oDB.closeConnection(cmm);
-
-            return ds;
         }
 
     }

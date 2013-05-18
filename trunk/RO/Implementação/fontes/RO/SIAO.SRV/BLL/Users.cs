@@ -5,6 +5,7 @@ using System.Text;
 using SIAO.SRV.TO;
 using SIAO.SRV.DAL;
 using System.Web.UI.HtmlControls;
+using System.Web;
 
 namespace SIAO.SRV.BLL
 {
@@ -48,6 +49,18 @@ namespace SIAO.SRV.BLL
             } else { }
 
             return lhgc;
+        }
+
+        public static bool ValidaEnvio(int intTId)
+        {
+            // Retorna true se o usuário for Administrador ou Drogaria.
+            return (intTId.Equals(1) || intTId.Equals(2));
+        }
+
+        public static bool ValidaRelatorio(int intTId)
+        {
+            // Retorna true se o usuário for Administrador ou Drogaria.
+            return (intTId.Equals(1) || intTId.Equals(2));
         }
 
         #endregion
