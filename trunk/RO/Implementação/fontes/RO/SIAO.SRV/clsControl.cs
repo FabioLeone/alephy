@@ -65,6 +65,41 @@ namespace SIAO.SRV
             return ds;
         }
 
+        public static Rede GetRedeByUserId(int intUserId)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            Rede r = new Rede();
+
+            clsDB oDB = new clsDB();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,usuarios_vinculos.usuarioId FROM  redesfarmaceuticas 
+            INNER JOIN usuarios_vinculos ON redesfarmaceuticas.Id = usuarios_vinculos.LinkId
+            WHERE (usuarios_vinculos.usuarioId = @usuarioId)";
+
+            cmm.Parameters.Add("@usuarioId", NpgsqlDbType.Integer).Value = intUserId;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "Rede");
+            }
+            oDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                if (ds.Tables[0].Rows[0]["Id"] != DBNull.Value)
+                {
+                    r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
+                    r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
+                    r.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["usuarioId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["usuarioId"]);
+                }
+            }
+
+            return r;
+        }
+
         public Int32 GetByName(string strName)
         {
             NpgsqlCommand cmm = new NpgsqlCommand();
@@ -892,155 +927,6 @@ namespace SIAO.SRV
 
         #endregion
 
-        public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string ano)
-        {
-            List<clsRelat1> lr = new List<clsRelat1>();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            DataSet ds = new DataSet();
-
-            cmm.Connection = cnn;
-            string SQL = "SELECT (CASE WHEN base_clientes.Razao_Social IS NULL THEN ("
-                + " SELECT farmacias.RazaoSocial FROM farmacias WHERE farmacias.Cnpj = base_clientes.Cnpj"
-                + " ) ELSE base_clientes.Razao_Social END) AS Razao_Social, base_clientes.Cnpj, "
-                + " base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo,"
-                + " SUM(base_clientes.Quantidade) AS 'Soma De Quantidade',"
-                + " SUM(base_clientes.Valor_Bruto) AS 'Soma De Valor bruto',"
-                + " SUM(base_clientes.Valor_Liquido) AS 'Soma De Valor liquido',"
-                + " SUM(base_clientes.Valor_Desconto) AS 'Soma De Valor desconto'"
-                + " FROM"
-                + " base_clientes"
-                + " LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra"
-                + " WHERE produtos_base.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND Ano = ";
-
-            if (ano == "") { SQL += DateTime.Now.Year; }
-            else
-            {
-                SQL += ano;
-            }
-
-            if (clsUser.Access == "nvg")
-            {
-                cmm.CommandText += "SELECT"
-                    + " farmacias.Cnpj"
-                    + " FROM"
-                    + " memberships"
-                    + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
-                    + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
-                    + " WHERE memberships.UserId = @UserId";
-                cmm.Parameters.Clear();
-                cmm.Parameters.Add("@UserId",NpgsqlDbType.Integer).Value = clsUser.UserId;
-
-                if (oDB.openConnection(cmm))
-                {
-                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
-                }
-                oDB.closeConnection(cmm);
-
-                if (ds.Tables.Count > 0)
-                {
-                    clsUser.Cnpj = new List<string>();
-                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
-                    {
-                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
-                    }
-                }
-
-                if (clsUser.Cnpj.Count > 0)
-                {
-                    SQL += " AND base_clientes.Cnpj IN ('";
-                    for (int i = 0; i < clsUser.Cnpj.Count; i++)
-                    {
-                        if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
-                    }
-                    SQL += "')";
-                }
-            }
-            else if (clsUser.Access == "nvp")
-            {
-                cmm.CommandText += "SELECT"
-                    + " farmacias.Cnpj"
-                    + " FROM"
-                    + " usuarios_farmacias"
-                    + " RIGHT JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
-                    + " LEFT JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
-                    + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
-                cmm.Parameters.Clear();
-                cmm.Parameters.Add("@UserId",NpgsqlDbType.Integer).Value = clsUser.UserId;
-
-                if (oDB.openConnection(cmm))
-                {
-                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
-                }
-                oDB.closeConnection(cmm);
-
-                if (ds.Tables.Count > 0)
-                {
-                    clsUser.Cnpj = new List<string>();
-                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
-                    {
-                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
-                    }
-                }
-
-                if (clsUser.Cnpj.Count > 0)
-                {
-                    SQL += " AND base_clientes.Cnpj IN ('";
-                    for (int i = 0; i < clsUser.Cnpj.Count; i++)
-                    {
-                        if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
-                    }
-                    SQL += "')";
-                }
-            }
-
-            SQL += " GROUP BY Razao_Social, base_clientes.Razao_Social, base_clientes.Cnpj, produtos_base.Sub_Consultoria, base_clientes.Mes, produtos_base.Grupo"
-                + " ORDER BY Razao_Social, base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo";
-
-            cmm.CommandText = SQL;
-            cmm.CommandTimeout = 9999;
-
-            if (oDB.openConnection(cmm))
-            {
-                ds = oDB.QueryDS(ref cmm, ref ds, "CrossR1");
-            }
-            oDB.closeConnection(cmm);
-
-            try
-            {
-                if (ds.Tables.Count > 0)
-                {
-                    if (!String.IsNullOrEmpty(ds.Tables["CrossR1"].Rows[0][0].ToString()))
-                        for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
-                        {
-                            clsRelat1 or = new clsRelat1();
-
-                            or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
-                            or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
-                            or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
-                            or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
-                            or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
-                            or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
-                            or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
-                            or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
-                            if (or.SomaDeValorDesconto > 0)
-                            {
-                                if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
-                            }
-                            else { or.PercentualDesconto = 0; }
-
-                            lr.Add(or);
-                        }
-                }
-            }
-            finally
-            {
-
-            }
-
-            return lr;
-        }
-
         public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -1049,20 +935,36 @@ namespace SIAO.SRV
 
             cmm.Connection = cnn;
             StringBuilder SQL = new StringBuilder();
-            SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,consolidado.CNPJ,consolidado.Mes,
-                    consolidado.Sub_Consultoria,consolidado.Grupo,consolidado.Quantidade AS 'Soma De Quantidade',
-                    consolidado.Valor_Bruto AS 'Soma De Valor bruto', consolidado.Valor_Liquido AS 'Soma De Valor liquido',
-                    consolidado.Valor_Desconto AS 'Soma De Valor desconto' FROM consolidado
+            SQL.Append(@"SELECT 
+                    farmacias.RazaoSocial AS Razao_Social,
+                    consolidado.CNPJ,
+                    consolidado.ano,
+                    consolidado.Mes,
+                    ""upper""(
+                    CASE 
+		                    WHEN consolidado.sub_consultoria IS NULL
+			                    OR consolidado.sub_consultoria = '' 
+		                    THEN 'NÃO INDENTIFICADO'
+		                    ELSE consolidado.sub_consultoria
+                    END
+                    ) as ""Sub Consultoria"",
+                    consolidado.Grupo,
+                    consolidado.Quantidade AS ""Soma De Quantidade"",
+                    consolidado.Valor_Bruto AS ""Soma De Valor bruto"",
+                    consolidado.Valor_Liquido AS ""Soma De Valor liquido"",
+                    consolidado.Valor_Desconto AS ""Soma De Valor desconto""
+                    FROM
+                    consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                     INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                    WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
-                    AND (MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) >= MAKEDATE(@AnoIni,((@MesIni*360)/12)) AND
-                    MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) <= MAKEDATE(@AnoFim,((@MesFim*360)/12)))");
+                    WHERE consolidado.Grupo in ('Propagados','Alternativos','Genéricos')
+                    AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
+                    (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
-            String[] ini, fim;
+            String ini, fim;
 
-            ini = strInicio.Split('/');
-            fim = strFim.Split('/');
+            ini = strInicio.Replace('/', ' ');
+            fim = strFim.Replace('/', ' ');
 
             if (clsUser.TipoId.Equals(1))
             {
@@ -1077,15 +979,18 @@ namespace SIAO.SRV
             }
             else
             {
+                if (!String.IsNullOrEmpty(strCnpj))
+                {
+                    SQL.Append(" AND farmacias.Cnpj = @Cnpj");
+                }
+
                 SQL.Append(@" AND usuarios_vinculos.UsuarioId = @UsuarioId
                     ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
 
             cmm.CommandText = SQL.ToString();
-            cmm.Parameters.Add("@AnoIni", NpgsqlDbType.Varchar).Value = ini[1];
-            cmm.Parameters.Add("@MesIni", NpgsqlDbType.Varchar).Value = ini[0];
-            cmm.Parameters.Add("@AnoFim", NpgsqlDbType.Varchar).Value = fim[1];
-            cmm.Parameters.Add("@MesFim", NpgsqlDbType.Varchar).Value = fim[0];
+            cmm.Parameters.Add("@DataIni", NpgsqlDbType.Varchar).Value = ini;
+            cmm.Parameters.Add("@DataFim", NpgsqlDbType.Varchar).Value = fim;
             cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = strCnpj;
             cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
             cmm.Parameters.Add("@UsuarioId", NpgsqlDbType.Integer).Value = clsUser.UserId;
@@ -1099,7 +1004,7 @@ namespace SIAO.SRV
 
             try
             {
-                if (ds.Tables.Count > 0)
+                if (ds.Tables.Count > 0 && ds.Tables["CrossR1"].Rows.Count > 0)
                 {
                     if (!String.IsNullOrEmpty(ds.Tables["CrossR1"].Rows[0][0].ToString()))
                         for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
@@ -1108,7 +1013,7 @@ namespace SIAO.SRV
 
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
                             or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
-                            or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
+                            or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
                             or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
                             or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
@@ -1226,46 +1131,184 @@ namespace SIAO.SRV
 
             return lr;
         }
-       
-        public List<clsRelat1> GetCross(string scn, UsersTO clsUser, string ano, int intRedeId, Boolean blnMes)
+
+        public List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
             NpgsqlConnection cnn = new NpgsqlConnection(scn);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
-            StringBuilder SQL = new StringBuilder();
-            SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,consolidado.CNPJ,consolidado.Mes,
-                    consolidado.Sub_Consultoria,consolidado.Grupo,consolidado.Quantidade AS 'Soma De Quantidade',
-                    consolidado.Valor_Bruto AS 'Soma De Valor bruto', consolidado.Valor_Liquido AS 'Soma De Valor liquido',
-                    consolidado.Valor_Desconto AS 'Soma De Valor desconto' FROM consolidado
-                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                    WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
-                    AND farmacias.idRede = @idRede");
+            string SQL = "SELECT (CASE WHEN base_clientes.Razao_Social IS NULL THEN ("
+                + " SELECT farmacias.RazaoSocial FROM farmacias WHERE farmacias.Cnpj = base_clientes.Cnpj"
+                + " ) ELSE base_clientes.Razao_Social END) AS Razao_Social, base_clientes.Cnpj, "
+                + " base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo,"
+                + " SUM(base_clientes.Quantidade) AS 'Soma De Quantidade',"
+                + " SUM(base_clientes.Valor_Bruto) AS 'Soma De Valor bruto',"
+                + " SUM(base_clientes.Valor_Liquido) AS 'Soma De Valor liquido',"
+                + " SUM(base_clientes.Valor_Desconto) AS 'Soma De Valor desconto'"
+                + " FROM"
+                + " base_clientes"
+                + " LEFT JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra"
+                + " WHERE produtos_base.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') AND Ano = ";
 
-            if (blnMes)
-            {
-                string strMF = DateTime.Now.AddMonths(-1).Month.ToString();
-                string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
-
-                string strAF = DateTime.Now.Year.ToString();
-                string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
-
-                SQL.Append(String.Format(@" AND (MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) >= MAKEDATE({1},(({0}*360)/12)) AND
-                MAKEDATE(consolidado.Ano,((consolidado.Mes*360)/12)) <= MAKEDATE({3},(({2}*360)/12)))", strMI,strAI,strMF,strAF));
-            }
-            else if (String.IsNullOrEmpty(ano)) { 
-                SQL.Append(String.Format(" AND consolidado.Ano = {0}", DateTime.Now.Year));
-            }
+            if (ano == "") { SQL += DateTime.Now.Year; }
             else
             {
-                SQL.Append(String.Format(" AND consolidado.Ano = {0}",ano));
+                SQL += ano;
             }
 
+            if (clsUser.Access == "nvg")
+            {
+                cmm.CommandText += "SELECT"
+                    + " farmacias.Cnpj"
+                    + " FROM"
+                    + " memberships"
+                    + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
+                    + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
+                    + " WHERE memberships.UserId = @UserId";
+                cmm.Parameters.Clear();
+                cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
 
-            SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+                if (oDB.openConnection(cmm))
+                {
+                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
+                }
+                oDB.closeConnection(cmm);
+
+                if (ds.Tables.Count > 0)
+                {
+                    clsUser.Cnpj = new List<string>();
+                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
+                    {
+                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
+                    }
+                }
+
+                if (clsUser.Cnpj.Count > 0)
+                {
+                    SQL += " AND base_clientes.Cnpj IN ('";
+                    for (int i = 0; i < clsUser.Cnpj.Count; i++)
+                    {
+                        if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                    }
+                    SQL += "')";
+                }
+            }
+            else if (clsUser.Access == "nvp")
+            {
+                cmm.CommandText += "SELECT"
+                    + " farmacias.Cnpj"
+                    + " FROM"
+                    + " usuarios_farmacias"
+                    + " RIGHT JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
+                    + " LEFT JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
+                    + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
+                cmm.Parameters.Clear();
+                cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
+
+                if (oDB.openConnection(cmm))
+                {
+                    ds = oDB.QueryDS(ref cmm, ref ds, "Cnpj");
+                }
+                oDB.closeConnection(cmm);
+
+                if (ds.Tables.Count > 0)
+                {
+                    clsUser.Cnpj = new List<string>();
+                    for (int i = 0; i < ds.Tables["Cnpj"].Rows.Count; i++)
+                    {
+                        clsUser.Cnpj.Add(ds.Tables["Cnpj"].Rows[i]["Cnpj"].ToString());
+                    }
+                }
+
+                if (clsUser.Cnpj.Count > 0)
+                {
+                    SQL += " AND base_clientes.Cnpj IN ('";
+                    for (int i = 0; i < clsUser.Cnpj.Count; i++)
+                    {
+                        if (i == 0) { SQL += clsUser.Cnpj[i]; } else { SQL += "', '" + clsUser.Cnpj[i]; }
+                    }
+                    SQL += "')";
+                }
+            }
+
+            SQL += " GROUP BY Razao_Social, base_clientes.Razao_Social, base_clientes.Cnpj, produtos_base.Sub_Consultoria, base_clientes.Mes, produtos_base.Grupo"
+                + " ORDER BY Razao_Social, base_clientes.Mes, produtos_base.Sub_Consultoria, produtos_base.Grupo";
+
+            cmm.CommandText = SQL;
+            cmm.CommandTimeout = 9999;
+
+            if (oDB.openConnection(cmm))
+            {
+                ds = oDB.QueryDS(ref cmm, ref ds, "CrossR1");
+            }
+            oDB.closeConnection(cmm);
+
+            try
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    if (!String.IsNullOrEmpty(ds.Tables["CrossR1"].Rows[0][0].ToString()))
+                        for (int i = 0; i < ds.Tables["CrossR1"].Rows.Count; i++)
+                        {
+                            clsRelat1 or = new clsRelat1();
+
+                            or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
+                            or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
+                            or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
+                            or.SomaDeQuantidade = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Quantidade"].ToString());
+                            or.SomaDeValorBruto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor bruto"].ToString());
+                            or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
+                            or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
+                            if (or.SomaDeValorDesconto > 0)
+                            {
+                                if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
+                            }
+                            else { or.PercentualDesconto = 0; }
+
+                            lr.Add(or);
+                        }
+                }
+            }
+            finally
+            {
+
+            }
+
+            return lr;
+        }
+
+        public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, int intRedeId)
+        {
+            List<clsRelat1> lr = new List<clsRelat1>();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            DataSet ds = new DataSet();
+
+            cmm.Connection = cnn;
+            StringBuilder SQL = new StringBuilder();
+            SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,consolidado.CNPJ,consolidado.Mes,consolidado.Ano,
+                    consolidado.Sub_Consultoria,consolidado.Grupo,consolidado.Quantidade AS ""Soma De Quantidade"",
+                    consolidado.Valor_Bruto AS ""Soma De Valor bruto"", consolidado.Valor_Liquido AS ""Soma De Valor liquido"",
+                    consolidado.Valor_Desconto AS ""Soma De Valor desconto"" FROM consolidado
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                    INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
+                    WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
+                    AND farmacias.idRede = @idRede
+                    AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
+                    (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
+                    ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+
+            String ini, fim;
+
+            ini = strInicio.Replace('/', ' ');
+            fim = strFim.Replace('/', ' ');
 
             cmm.CommandText = SQL.ToString();
+            cmm.Parameters.Add("@DataIni", NpgsqlDbType.Varchar).Value = ini;
+            cmm.Parameters.Add("@DataFim", NpgsqlDbType.Varchar).Value = fim;
             cmm.Parameters.Add("@idRede ",NpgsqlDbType.Integer).Value = intRedeId;
             cmm.CommandTimeout = 9999;
 

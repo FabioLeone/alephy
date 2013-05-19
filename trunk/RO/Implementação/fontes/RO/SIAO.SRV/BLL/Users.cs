@@ -60,7 +60,7 @@ namespace SIAO.SRV.BLL
         public static bool ValidaRelatorio(int intTId)
         {
             // Retorna true se o usuário for Administrador ou Drogaria.
-            return (intTId.Equals(1) || intTId.Equals(2));
+            return (intTId.Equals(1) || intTId.Equals(2) || intTId.Equals(3));
         }
 
         #endregion

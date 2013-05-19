@@ -55,7 +55,7 @@ namespace SIAO.SRV.DAL
                 if(int.TryParse(strSearch,out intUserId)){
                     strSQL.Append(" AND users.UserId = @UserId");
                 }else if(!String.IsNullOrEmpty(strSearch)){
-                    strSQL.Append(" AND users.UserName like @UserName");
+                    strSQL.Append(" AND upper(users.UserName) like upper(@UserName)");
                 }
                  
                 strSQL.Append(" ORDER BY users.UserName");

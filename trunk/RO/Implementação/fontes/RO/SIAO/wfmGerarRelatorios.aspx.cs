@@ -18,6 +18,7 @@ namespace SIAO
         SRV.clsControl oc = new SRV.clsControl();
         Boolean blnTodos;
         List<RelatoriosTO> clsRelatorios = new List<RelatoriosTO>();
+        int intRedeId = 0;
         #endregion
 
         #region .: Properties :.
@@ -60,6 +61,15 @@ namespace SIAO
                 this.clsUser = value;
             }
         }
+        public int RedeId { get{
+            if(this.ViewState["redeId"] == null) return this.intRedeId;
+            else return (int)this.ViewState["redeId"];
+        }
+            set {
+                this.ViewState["redeId"] = value;
+                this.intRedeId = value;
+            }
+        }
         #endregion
 
         #region .: Events :.
@@ -84,14 +94,24 @@ namespace SIAO
             Global.LocalPage = "";
 
         }
-        
+
         protected void btnAdm_Click(object sender, EventArgs e)
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
             if (rbtPeriodo.Checked)
-                lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+            {
+                if (this.RedeId > 0)
+                    lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, this.RedeId);
+                else
+                    lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+            }
             else if (rbtMes.Checked)
-                lr1 = oc.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+            {
+                if (this.RedeId > 0)
+                    lr1 = oc.GetCross(clsUser, this.RedeId);
+                else
+                    lr1 = oc.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+            }
 
             if (lr1.Count > 0)
             {
@@ -117,7 +137,7 @@ namespace SIAO
                 if (ddlRedesRelatorios.SelectedIndex > 0)
                     lr1 = oc.GetCross(scn, clsUser, "2013", Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
                 else
-                    lr1 = oc.GetCross(clsUser, txtInicio.Text,txtFim.Text, ddlLojaRelatorios.SelectedItem.Value,0);
+                    lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, ddlLojaRelatorios.SelectedItem.Value, 0);
 
             }
             else if (rbtMes.Checked)
@@ -240,66 +260,18 @@ namespace SIAO
                 ddlRedesRelatorios.DataTextField = ds.Tables[0].Columns[1].ToString();
                 ddlRedesRelatorios.DataValueField = ds.Tables[0].Columns[0].ToString();
                 ddlRedesRelatorios.DataBind();
-                ddlRedesRelatorios.Items.Insert(0, new ListItem(String.Empty, "0"));
+                ddlRedesRelatorios.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                ddlRedesRelatorios.Items.Insert(1, new ListItem("Independentes", "0"));
                 ddlRedesRelatorios.SelectedIndex = 0;
             }
         }
 
         private void ValidaAcesso()
         {
-            Block();
-            this.Relatorios = RolesBLL.GetRelatoriosByUserId(clsUser.UserId, scn);
-            this.Todos = RolesBLL.GetByUserId(clsUser.UserId, scn).RelatoriosTodos;
-            if (this.Todos)
-            {
-                M1.Disabled = false;
-                M1.Visible = true;
-                M2.Disabled = false;
-                M2.Visible = true;
-                G1.Disabled = false;
-                G1.Visible = true;
-                G2.Disabled = false;
-                G2.Visible = true;
-            }
-            else if (this.Relatorios.Count > 0)
-            {
-                this.Relatorios.ForEach(delegate(RelatoriosTO _relatorio)
-                {
-                    switch (_relatorio.RelatorioTipoId)
-                    {
-                        case (int)RolesBLL.Relatorio.Grafico1:
-                            G1.Disabled = false;
-                            G1.Visible = true;
-                            break;
-                        case (int)RolesBLL.Relatorio.Grafico2:
-                            G2.Disabled = false;
-                            G2.Visible = true;
-                            break;
-                        case (int)RolesBLL.Relatorio.Modelo1:
-                            M1.Disabled = false;
-                            M1.Visible = true;
-                            break;
-                        case (int)RolesBLL.Relatorio.Modelo2:
-                            M2.Disabled = false;
-                            M2.Visible = true;
-                            break;
-                        default:
-                            break;
-                    }
-                });
-            }
-        }
-
-        private void Block()
-        {
-            M1.Disabled = true;
-            M1.Visible = false;
-            M2.Disabled = true;
-            M2.Visible = false;
-            G1.Disabled = false;
-            G1.Visible = false;
-            G2.Disabled = false;
-            G2.Visible = false;
+            if (this.User.TipoId.Equals(3))
+                ddlLojaRelatorios.Visible = false;
+            else
+                ddlLojaRelatorios.Visible = true;
 
             dvRedes.Visible = false;
         }
@@ -314,20 +286,26 @@ namespace SIAO
             ddlLojas.Items.Insert(0, new ListItem("Selecione", string.Empty));
             ddlLojas.SelectedIndex = 0;
 
-            if (this.User.TipoId.Equals(2))
+            switch (this.User.TipoId)
             {
-                ddlLojaRelatorios.DataSource = dsLojas;
-                ddlLojaRelatorios.DataTextField = "NomeFantasia";
-                ddlLojaRelatorios.DataValueField = "Cnpj";
-                ddlLojaRelatorios.DataBind();
-                ddlLojaRelatorios.Items.Insert(0, new ListItem("Todas", string.Empty));
-                ddlLojaRelatorios.SelectedIndex = 0;
+                case 2:
+                    ddlLojaRelatorios.DataSource = dsLojas;
+                    ddlLojaRelatorios.DataTextField = "NomeFantasia";
+                    ddlLojaRelatorios.DataValueField = "Cnpj";
+                    ddlLojaRelatorios.DataBind();
+                    ddlLojaRelatorios.Items.Insert(0, new ListItem("Todas", string.Empty));
+                    ddlLojaRelatorios.SelectedIndex = 0;
+                    break;
+                case 3:
+                    this.RedeId = clsControl.GetRedeByUserId(this.User.UserId).RedeId;
+                    getLojas(this.RedeId);
+                    break;
             }
         }
 
         private void getLojas(int intRedeId)
         {
-            ddlLojaRelatorios.DataSource = oc.GetLojaByRedeId(intRedeId); 
+            ddlLojaRelatorios.DataSource = oc.GetLojaByRedeId(intRedeId);
             ddlLojaRelatorios.DataTextField = "NomeFantasia";
             ddlLojaRelatorios.DataValueField = "Cnpj";
             ddlLojaRelatorios.DataBind();
