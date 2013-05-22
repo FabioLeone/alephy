@@ -33,7 +33,7 @@ namespace SIAO
 
         private void loadRelat(List<SRV.clsRelat1> lr, UsersTO clsUser)
         {
-            if (lr.Count == 0) { lr = oc.GetCross(scn, clsUser, ""); }
+            //if (lr.Count == 0) { lr = oc.GetCross(scn, clsUser, ""); }
 
             Microsoft.Reporting.WebForms.ReportDataSource Rds = new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", lr);
             ReportViewer1.Reset();

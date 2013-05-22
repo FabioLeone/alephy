@@ -103,14 +103,14 @@ namespace SIAO
                 if (this.RedeId > 0)
                     lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, this.RedeId);
                 else
-                    lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+                    lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)));
             }
             else if (rbtMes.Checked)
             {
                 if (this.RedeId > 0)
                     lr1 = oc.GetCross(clsUser, this.RedeId);
                 else
-                    lr1 = oc.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+                    lr1 = oc.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)));
             }
 
             if (lr1.Count > 0)
@@ -135,16 +135,16 @@ namespace SIAO
             if (rbtPeriodo.Checked)
             {
                 if (ddlRedesRelatorios.SelectedIndex > 0)
-                    lr1 = oc.GetCross(scn, clsUser, "2013", Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
-                else
+                    //lr1 = oc.GetCross(clsUser, "2013", Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
+                //else
                     lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, ddlLojaRelatorios.SelectedItem.Value, 0);
 
             }
             else if (rbtMes.Checked)
             {
                 if (ddlRedesRelatorios.SelectedIndex > 0)
-                    lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
-                else
+                  //  lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
+                //else
                     lr1 = oc.GetCross(clsUser, ddlLojaRelatorios.SelectedItem.Value, 0);
             }
 
