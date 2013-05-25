@@ -9,7 +9,7 @@ namespace SIAO.SRV
     public class clsDB
     {
         // Abre o acesso ao banco
-        public bool openConnection(NpgsqlCommand cmm)
+        public static bool openConnection(NpgsqlCommand cmm)
         {
             bool lbOk = false;
             try
@@ -26,7 +26,7 @@ namespace SIAO.SRV
         }
 
         // Fecha o acesso ao banco
-        public void closeConnection(NpgsqlCommand cmm)
+        public static void closeConnection(NpgsqlCommand cmm)
         {
             try
             {
@@ -112,9 +112,8 @@ namespace SIAO.SRV
         }
 
         // Traz o dataset do banco
-        public DataSet QueryDS(ref NpgsqlCommand cmm, ref DataSet ds, string nomeTabela)
+        public static DataSet QueryDS(ref NpgsqlCommand cmm, ref DataSet ds, string nomeTabela)
         {
-
             try
             {
                 if (cmm.Connection.State == System.Data.ConnectionState.Closed)
@@ -144,7 +143,7 @@ namespace SIAO.SRV
         }
 
         // Acrescenta uma linha a tabela
-        private DataSet addLine(ref DataSet ds, object Tabela)
+        private static DataSet addLine(ref DataSet ds, object Tabela)
         {
             if (Tabela.GetType().Name == "String")
             {

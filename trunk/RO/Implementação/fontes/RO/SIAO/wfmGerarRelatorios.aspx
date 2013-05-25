@@ -35,9 +35,11 @@
                                             onselectedindexchanged="ddlRedesRelatorios_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
+                                    <div id="dvLoja" runat="server">
                                     Loja:
                                     <asp:DropDownList ID="ddlLojaRelatorios" runat="server" style="min-width:200px;">
                                     </asp:DropDownList>
+                                    </div>
                                     <ul class="iconList">
                                         <li>
                                             <p id="M1" runat="server" class="imgBtn">
