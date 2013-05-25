@@ -15,7 +15,7 @@ namespace SIAO.SRV
     public class clsControl
     {
         #region .:Variables:.
-        clsDB oDB = new clsDB();
+        clsDB clsDB = new clsDB();
         NpgsqlCommand cmm = new NpgsqlCommand();
         clsFuncs o = new clsFuncs();
         #endregion
@@ -36,11 +36,11 @@ namespace SIAO.SRV
             NpgsqlConnection cnn = new NpgsqlConnection(scn);
             cmm.Connection = cnn;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Gerentes");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Gerentes");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -50,17 +50,17 @@ namespace SIAO.SRV
             DataSet ds = new DataSet();
             NpgsqlCommand cmm = new NpgsqlCommand();
             NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            clsDB oDB = new clsDB();
+            clsDB clsDB = new clsDB();
 
             cmm.Connection = cnn;
 
             cmm.CommandText = "SELECT Id, Descricao FROM redesfarmaceuticas ORDER BY Descricao";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Redes");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Redes");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -72,8 +72,6 @@ namespace SIAO.SRV
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             Rede r = new Rede();
 
-            clsDB oDB = new clsDB();
-
             cmm.Connection = cnn;
             cmm.CommandText = @"SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,usuarios_vinculos.usuarioId FROM  redesfarmaceuticas 
             INNER JOIN usuarios_vinculos ON redesfarmaceuticas.Id = usuarios_vinculos.LinkId
@@ -81,11 +79,11 @@ namespace SIAO.SRV
 
             cmm.Parameters.Add("@usuarioId", NpgsqlDbType.Integer).Value = intUserId;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Rede");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Rede");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             if (ds.Tables.Count > 0)
             {
@@ -104,7 +102,7 @@ namespace SIAO.SRV
         {
             NpgsqlCommand cmm = new NpgsqlCommand();
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
-            clsDB oDB = new clsDB();
+            clsDB clsDB = new clsDB();
             Int32 intRedeId = 0;
 
             cmm.Connection = cnn;
@@ -112,11 +110,11 @@ namespace SIAO.SRV
             cmm.CommandText = "SELECT Id FROM redesfarmaceuticas WHERE Descricao=@Descricao";
             cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = strName;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                Int32.TryParse(oDB.Query(intRedeId,ref cmm).ToString(),out intRedeId);
+                Int32.TryParse(clsDB.Query(intRedeId,ref cmm).ToString(),out intRedeId);
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return intRedeId;
         }
@@ -128,7 +126,7 @@ namespace SIAO.SRV
             Loja clsLoja = new Loja();
 
             NpgsqlCommand cmm = new NpgsqlCommand();
-            clsDB oDB = new clsDB();
+            clsDB clsDB = new clsDB();
 
             cmm.Connection = cnn;
             StringBuilder strSQL = new StringBuilder();
@@ -147,11 +145,11 @@ namespace SIAO.SRV
             cmm.Parameters.Clear();
             cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = scnpj;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Loja");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Loja");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             if (ds.Tables.Count > 0)
             {
@@ -195,11 +193,11 @@ namespace SIAO.SRV
 
             cmm.CommandText = "SELECT id,UF FROM uf";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "UF");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "UF");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -211,7 +209,7 @@ namespace SIAO.SRV
             Rede r = new Rede();
 
             NpgsqlCommand cmm = new NpgsqlCommand();
-            clsDB oDB = new clsDB();
+            clsDB clsDB = new clsDB();
 
             cmm.Connection = cnn;
             cmm.CommandText = @"SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId FROM  redesfarmaceuticas 
@@ -224,11 +222,11 @@ namespace SIAO.SRV
 
             cmm.Parameters.Add("@CNPJ", NpgsqlDbType.Varchar).Value = scnpj;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Rede");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Rede");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             if (ds.Tables.Count > 0)
             {
@@ -251,11 +249,11 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -270,11 +268,11 @@ namespace SIAO.SRV
             cmm.CommandText += " WHERE idRede = " + redeId;
             cmm.CommandText += " ORDER BY NomeFantasia";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -288,11 +286,11 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
             cmm.CommandText = "SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,redesfarmaceuticas.UserId,redesfarmaceuticas.CNPJ FROM  redesfarmaceuticas WHERE (redesfarmaceuticas.Id = " + strRedeId + ")";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "RedeEd");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "RedeEd");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             if (ds.Tables.Count > 0)
             {
@@ -324,11 +322,11 @@ namespace SIAO.SRV
             cmm.Parameters.Clear();
             cmm.Parameters.Add("@Id", NpgsqlDbType.Integer).Value = p;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "LojaEd");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "LojaEd");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             if (ds.Tables.Count > 0)
             {
@@ -375,11 +373,11 @@ namespace SIAO.SRV
             cmm.Parameters.Clear();
             cmm.Parameters.Add("@usuarioid", NpgsqlDbType.Integer).Value = intUserId;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -396,11 +394,11 @@ namespace SIAO.SRV
             cmm.Parameters.Clear();
             cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Farmacias");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -409,17 +407,17 @@ namespace SIAO.SRV
         {
             DataSet ds = new DataSet();
             NpgsqlConnection msc = new NpgsqlConnection(scn);
-            clsDB oDB = new clsDB();
+            clsDB clsDB = new clsDB();
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = msc;
             cmm.CommandText = "SELECT DISTINCT Grupo FROM produtos_base WHERE Grupo NOT IN ('Fitoterápicos', 'DERMOCOSMETICOS') ORDER BY Grupo";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Grupos");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Grupos");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -428,505 +426,22 @@ namespace SIAO.SRV
         {
             DataSet ds = new DataSet();
             NpgsqlConnection msc = new NpgsqlConnection(scn);
-            clsDB oDB = new clsDB();
+            clsDB clsDB = new clsDB();
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = msc;
             cmm.CommandText = "SELECT DISTINCT Sub_Consultoria FROM produtos_base WHERE Sub_Consultoria <> '' ORDER BY Sub_Consultoria";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Sub_Consultoria");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Sub_Consultoria");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
 
-        #endregion
-
-        #region .:Persistence:.
-        public string AddUser(UsersTO clsUser, string scn)
-        {
-            string msg = "";
-
-            try
-            {
-                string pass = o.encr(clsUser.Password);
-                string nme = o.encr(clsUser.Name.ToUpper());
-
-                NpgsqlConnection cnn = new NpgsqlConnection(scn);
-                cmm.Connection = cnn;
-
-                if (oDB.openConnection(cmm))
-                {
-                    cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = @UserName";
-                    cmm.Parameters.Clear();
-                    cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
-
-                    int id = 0;
-                    if (oDB.Query(id, ref cmm) == DBNull.Value)
-                    {
-                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId) VALUES (@UserName, @LastActivityDate, @TipoId)";
-                        cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
-                        cmm.Parameters.Add("@LastActivityDate", NpgsqlDbType.Date).Value = DateTime.Now.Date;
-                        cmm.Parameters.Add("@TipoId",NpgsqlDbType.Integer).Value = clsUser.TipoId;
-
-                        oDB.Execute(ref cmm);
-
-                        cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = @UserName";
-                        cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
-
-                        id = (int)oDB.Query(id, ref cmm);
-
-                        string cDate = clsUser.CreateDate.Year + "-" + clsUser.CreateDate.Month + "-" + clsUser.CreateDate.Day + " 00:00:00";
-                        string eDate = clsUser.ExpirationDate.Year + "-" + clsUser.ExpirationDate.Month + "-" + clsUser.ExpirationDate.Day + " 00:00:00";
-
-                        cmm.CommandText = "INSERT INTO memberships"
-                            + " (UserId, Password, Email, Inactive, CreateDate, ExpirationDate, Name)"
-                            + " VALUES (" + id + ", '" + pass + "', '" + clsUser.Email + "', "
-                            + (clsUser.Inactive == false ? 0 : 1) + ", '" + cDate + "', '" + eDate + "', '"
-                            + nme + "')";
-
-                        oDB.Execute(ref cmm);
-                    }
-                    else { msg = "Usuário já cadastrado."; }
-                }
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-            }
-
-            return msg;
-        }
-     
-        public string AddRede(string scn, Rede rede)
-        {
-            string msg = "";
-            cmm.CommandText = "INSERT INTO redesfarmaceuticas (Descricao,CNPJ)"
-                + " VALUES ('" + rede.RedeName + "','"+ rede.CNPJ +"')";
-
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            try
-            {
-                if (oDB.openConnection(cmm))
-                {
-                    oDB.Execute(ref cmm);
-                }
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-            }
-            oDB.closeConnection(cmm);
-
-            return msg;
-        }
-
-        public string UpdateRede(string scn, Rede rede)
-        {
-            string msg = "";
-            cmm.CommandText = "UPDATE redesfarmaceuticas SET Descricao = '" + rede.RedeName
-                + "', CNPJ = '"+ rede.CNPJ +"' WHERE Id = " + rede.RedeId;
-
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            try
-            {
-                if (oDB.openConnection(cmm))
-                {
-                    oDB.Execute(ref cmm);
-                }
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-            }
-            oDB.closeConnection(cmm);
-
-            return msg;
-        }
-
-        public string AddLoja(string scn, Loja ol)
-        {
-            string msg = "";
-
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            string scnpj = ol.Cnpj.Replace(".", "");
-            scnpj = scnpj.Replace("/", "");
-            scnpj = scnpj.Replace("-", "");
-
-            cmm.CommandText = @"INSERT INTO farmacias (Proprietario, Gerente, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero,
-            Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, Msn, Ativo, idRede, CEP)"
-                + " VALUES ('" + ol.Proprietario + "', '" + ol.Gerente + "', '" + ol.Email + "', '" + ol.Email2 + "', '"
-                + ol.NomeFantasia + "', '" + ol.Razao + "', '" + scnpj + "', '" + ol.Endereco + "', '" + ol.EndNumero
-                + "', '" + ol.Bairro + "', '" + ol.Complemento + "', '" + ol.Cidade + "', '" + ol.Uf + "', '" + ol.Fone
-                + "', '" + ol.Fone2 + "', '" + ol.Celular + "', '" + ol.Site + "', '" + ol.Skype + "', "
-                + " '" + ol.Msn + "', " + (ol.Ativo == true ? 1 : 0) + ", " + ol.idRede + ",'" + ol.CEP + "')";
-
-            try
-            {
-                if (oDB.openConnection(cmm))
-                {
-                    oDB.Execute(ref cmm);
-                }
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-            }
-            oDB.closeConnection(cmm);
-
-            return msg;
-        }
-
-        public string UpdateLoja(string scn, Loja clsLoja)
-        {
-            string msg = "";
-
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            string scnpj = clsLoja.Cnpj.Replace(".", "");
-            scnpj = scnpj.Replace("/", "");
-            scnpj = scnpj.Replace("-", "");
-
-            cmm.CommandText = "UPDATE farmacias SET Proprietario = '" + clsLoja.Proprietario + "', Gerente = '" + clsLoja.Gerente
-                + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2 + "', NomeFantasia = '" + clsLoja.NomeFantasia
-                + "', RazaoSocial = '" + clsLoja.Razao + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
-                + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '" + clsLoja.Complemento + "', Cidade = '"
-                + clsLoja.Cidade + "', UF = '" + clsLoja.Uf + "', Tel1 = '" + clsLoja.Fone + "', Tel2 = '" + clsLoja.Fone2 + "', Celular = '"
-                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', " + " Msn = " + " '" + clsLoja.Msn
-                + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0) + ", idRede = " + clsLoja.idRede + ",CEP = '" + clsLoja.CEP + "' WHERE Id = "
-                + clsLoja.Id;
-
-            try
-            {
-                if (oDB.openConnection(cmm))
-                {
-                    oDB.Execute(ref cmm);
-                }
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-            }
-            oDB.closeConnection(cmm);
-
-            return msg;
-        }
-
-        public string AddXml(string scn, XmlDocument xd, UsersTO clsUser)
-        {
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            DataSet ds = new DataSet();
-
-            ds.ReadXml(new XmlNodeReader(xd));
-            string msg = "";
-
-            if (ds.Tables.Count > 0)
-            {
-                try
-                {
-                    if (oDB.openConnection(cmm))
-                    {
-                        cmm.CommandText = "SELECT arquivosenviados.id FROM arquivosenviados"
-                            + " WHERE arquivosenviados.cnpj = @cnpj AND arquivosenviados.mes = @mes"
-                            + " AND arquivosenviados.ano = @ano";
-                        cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
-                        cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
-
-                        int id = 0;
-                        if (oDB.Query(id, ref cmm) == DBNull.Value)
-                        {
-                            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                            {
-                                cmm.CommandText = "INSERT INTO base_cliente_espera (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
-                                    + " VALUES ( @Cnpj, @Mes, @Ano, @Barras, @Descricao, @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
-                                cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
-                                cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
-                                cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
-                                cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
-                                cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
-                                cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
-                                cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
-                                cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
-                                cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
-                                cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
-
-                                oDB.Execute(ref cmm);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                            {
-                                cmm.CommandText = "UPDATE base_cliente_espera SET Barras = @Barras, Descricao = @Descricao,"
-                                    + " Fabricante = @Fabricante, Quantidade = @Quantidade, Valor_Bruto = "
-                                    + "@Valor_Bruto, Valor_Liquido = @Valor_Liquido, Valor_Desconto = @Valor_Desconto WHERE Cnpj = @Cnpj AND Mes = @Mes AND Ano = @Ano";
-                                cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
-                                cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
-                                cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
-                                cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
-                                cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
-                                cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
-                                cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
-                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
-                                cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
-                                cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
-
-                                oDB.Execute(ref cmm);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    msg = ex.Message;
-                }
-
-                oDB.closeConnection(cmm);
-
-                AddXmlData(scn, ds, clsUser);
-
-            }
-            else { msg = "Erro ao converter o xml."; }
-
-            return msg;
-        }
-
-        private void AddXmlData(string scn, DataSet ds, UsersTO clsUser)
-        {
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            if (ds.Tables.Count > 0)
-            {
-                try
-                {
-                    if (oDB.openConnection(cmm))
-                    {
-                        cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
-                            + " VALUES ( @UserId, @cnpj, 'XML', @mes, @ano)";
-                        cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
-                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
-                        cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
-
-                        oDB.Execute(ref cmm);
-                    }
-                }
-                catch (Exception)
-                {
-                }
-
-                oDB.closeConnection(cmm);
-            }
-        }
-
-        public string AddDbf(string scn, DataTable dt)
-        {
-            string msg = "";
-            NpgsqlConnection msc = new NpgsqlConnection(scn);
-            DataSet ds = new DataSet();
-
-            cmm.Connection = msc;
-
-            if (dt.Rows.Count > 0)
-            {
-                try
-                {
-                    if (oDB.openConnection(cmm))
-                    {
-                        cmm.CommandText = "SELECT produtos_base.CodBarra,produtos_base.CodProd,produtos_base.NomeProd,produtos_base.Apresenta,produtos_base.CodLab,produtos_base.NomeLab,produtos_base.CodPat,produtos_base.NomePat,produtos_base.Grupo,produtos_base.Sub_Consultoria,produtos_base.Sub_Divisao,produtos_base.NCM,produtos_base.`NomePat-NCM`,produtos_base.Descricao_NCM,produtos_base.Lista,produtos_base.ALiq,produtos_base.St FROM produtos_base";
-                        cmm.CommandText += " WHERE CodBarra IN (";
-                        for (int i = 0; i < dt.Rows.Count; i++)
-                        {
-                            if (i > 0) { cmm.CommandText += ","; }
-                            cmm.CommandText += dt.Rows[i][16];
-                        }
-                        cmm.CommandText += ")";
-
-                        ds = oDB.QueryDS(ref cmm, ref ds, "produtos_base");
-
-                        if (ds.Tables.Count > 0)
-                        {
-                            for (int i = 0; i < dt.Rows.Count; i++)
-                            {
-                                if (ds.Tables[0].Select("CodBarra = '" + dt.Rows[i][16] + "'").Length == 0)
-                                {
-                                    cmm.CommandText = "INSERT INTO produtos_base (CodBarra, CodProd, NomeProd, Apresenta, CodLab,"
-                                        + " Grupo, `NomePat-NCM`, ALiq, St)"
-                                        + " VALUES ('" + dt.Rows[i][16] + "', " + dt.Rows[i][0] + ", '" + dt.Rows[i][1]
-                                        + "', '" + dt.Rows[i][35] + "', '" + dt.Rows[i][11] + "',"
-                                        + " '" + dt.Rows[i][2] + "', '" + dt.Rows[i][41] + "', " + dt.Rows[i][54] + ", '" + dt.Rows[i][59] + "')";
-
-                                    oDB.Execute(ref cmm);
-                                }
-                                else
-                                {
-                                    cmm.CommandText = "UPDATE produtos_base SET CodProd = " + dt.Rows[i][0]
-                                        + ", NomeProd = '" + dt.Rows[i][1] + "', Apresenta = '"
-                                        + dt.Rows[i][35] + "', CodLab = '" + dt.Rows[i][11] + "', Grupo = '"
-                                        + dt.Rows[i][2] + "', `NomePat-NCM` = '" + dt.Rows[i][41]
-                                        + "', ALiq = " + dt.Rows[i][54] + ", St = '" + dt.Rows[i][59] + "'"
-                                        + " WHERE CodBarra = " + dt.Rows[i][16];
-
-                                    oDB.Execute(ref cmm);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < dt.Rows.Count; i++)
-                            {
-                                cmm.CommandText = "INSERT INTO produtos_base (CodBarra, CodProd, NomeProd, Apresenta, CodLab,"
-                                + " Grupo, `NomePat-NCM`, ALiq, St)"
-                                + " VALUES ('" + dt.Rows[i][16] + "', " + dt.Rows[i][0] + ", '" + dt.Rows[i][1]
-                                + "', '" + dt.Rows[i][35] + "', '" + dt.Rows[i][11] + "',"
-                                + " '" + dt.Rows[i][2] + "', '" + dt.Rows[i][41] + "', " + dt.Rows[i][54] + ", '" + dt.Rows[i][59] + "')";
-
-                                oDB.Execute(ref cmm);
-                            }
-                        }
-                    }
-                    oDB.closeConnection(cmm);
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else { msg = "Erro na gravação dos dados"; }
-            return msg;
-        }
-
-        public string AddTxt(string scn, DataTable dt, UsersTO clsUser, List<int> lstMeses, List<string> lstCnpj)
-        {
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            string msg = "";
-            int itest = 0;
-
-            if (dt.Rows.Count > 0)
-            {
-                try
-                {
-                    if (oDB.openConnection(cmm))
-                    {
-                        cmm.CommandText = "DELETE FROM base_cliente_espera";
-                        string strCnpj = string.Empty;
-                        int k = 0;
-                        lstCnpj.ForEach(delegate(string _cnpj)
-                        {
-                            if (k == 0) { strCnpj = "'" + _cnpj + "'"; k++; } else { strCnpj += ",'" + _cnpj + "'"; k++; }
-                        });
-                        cmm.CommandText += " WHERE Cnpj IN (" + strCnpj + ")";
-                        string strMeses = "";
-                        int j = 0;
-                        lstMeses.ForEach(delegate(int _mes)
-                        {
-                            if (j == 0) { strMeses = _mes.ToString(); j++; } else { strMeses += ", " + _mes.ToString(); j++; }
-                        });
-                        cmm.CommandText += " AND Mes IN (" + strMeses + ") AND Ano = " + dt.Rows[0]["ano"];
-
-                        oDB.Execute(ref cmm);
-
-                        for (int i = 0; i < dt.Rows.Count; i++)
-                        {
-                            string svb = "", svl = "", svd = "";
-
-                            svb = dt.Rows[i][10].ToString().Replace(".", "");
-                            svb = svb.Replace(",", ".");
-
-                            svl = dt.Rows[i][11].ToString().Replace(".", "");
-                            svl = svl.Replace(",", ".");
-
-                            svd = dt.Rows[i][12].ToString().Replace(".", "");
-                            svd = svd.Replace(",", ".");
-
-                            cmm.CommandText = string.Empty;
-                            cmm.CommandText = "INSERT INTO base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
-                                + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
-                                + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
-                                + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
-                                + ", '" + dt.Rows[i][4].ToString() + "', '"
-                                + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
-                                + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", "
-                                + svb + ", " + svl + ", " + svd + ")";
-
-                            itest = i;
-
-                            oDB.Execute(ref cmm);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    msg = ex.Message;
-                }
-
-                oDB.closeConnection(cmm);
-
-                this.AddTxtData(scn, dt, clsUser);
-
-            }
-            else { msg = "Erro ao converter o txt."; }
-
-            return msg;
-        }
-
-        private void AddTxtData(string scn, DataTable dt, UsersTO clsUser)
-        {
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            if (dt.Rows.Count > 0)
-            {
-                try
-                {
-                    if (oDB.openConnection(cmm))
-                    {
-                        for (int i = 0; i < dt.Rows.Count; i++)
-                        {
-                            cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
-                                + " VALUES (@UserId, @cnpj, 'TXT', @mes, @ano)";
-                            cmm.Parameters.Clear();
-                            cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
-                            cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dt.Rows[i]["cnpj"].ToString();
-                            cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = dt.Rows[i][2];
-                            cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = dt.Rows[i]["ano"];
-
-                            oDB.Execute(ref cmm);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                }
-
-                oDB.closeConnection(cmm);
-            }
-        }
-
-        #endregion
-
+        // Utilizado pelo modelo1
         public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -968,10 +483,12 @@ namespace SIAO.SRV
 
             if (clsUser.TipoId.Equals(1))
             {
-                if (!String.IsNullOrEmpty(strCnpj)) {
+                if (!String.IsNullOrEmpty(strCnpj))
+                {
                     SQL.Append(" AND farmacias.Cnpj = @Cnpj");
                 }
-                else if (intRedeId > 0) {
+                else if (intRedeId > 0)
+                {
                     SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
@@ -996,11 +513,11 @@ namespace SIAO.SRV
             cmm.Parameters.Add("@UsuarioId", NpgsqlDbType.Integer).Value = clsUser.UserId;
             cmm.CommandTimeout = 9999;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "CrossR1");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "CrossR1");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             try
             {
@@ -1012,7 +529,7 @@ namespace SIAO.SRV
                             clsRelat1 or = new clsRelat1();
 
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
                             or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
@@ -1038,6 +555,7 @@ namespace SIAO.SRV
             return lr;
         }
 
+        // Utilizado pelo modelo1
         public List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -1089,11 +607,11 @@ namespace SIAO.SRV
             cmm.Parameters.Add("@UsuarioId", NpgsqlDbType.Integer).Value = clsUser.UserId;
             cmm.CommandTimeout = 9999;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "CrossR1");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "CrossR1");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             try
             {
@@ -1105,7 +623,7 @@ namespace SIAO.SRV
                             clsRelat1 or = new clsRelat1();
 
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
                             or.Ano = (int)ds.Tables["CrossR1"].Rows[i]["Ano"];
@@ -1132,6 +650,7 @@ namespace SIAO.SRV
             return lr;
         }
 
+        // Utilizado pelo modelo1
         public List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -1167,11 +686,11 @@ namespace SIAO.SRV
 
             cmm.CommandTimeout = 9999;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "CrossR1");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "CrossR1");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             try
             {
@@ -1183,7 +702,7 @@ namespace SIAO.SRV
                             clsRelat1 or = new clsRelat1();
 
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
                             or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
@@ -1209,6 +728,7 @@ namespace SIAO.SRV
             return lr;
         }
 
+        // Utilizado pelo modelo1
         public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -1240,14 +760,14 @@ namespace SIAO.SRV
             cmm.CommandText = SQL.ToString();
             cmm.Parameters.Add("@DataIni", NpgsqlDbType.Varchar).Value = ini;
             cmm.Parameters.Add("@DataFim", NpgsqlDbType.Varchar).Value = fim;
-            cmm.Parameters.Add("@idRede ",NpgsqlDbType.Integer).Value = intRedeId;
+            cmm.Parameters.Add("@idRede ", NpgsqlDbType.Integer).Value = intRedeId;
             cmm.CommandTimeout = 9999;
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "CrossR1");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "CrossR1");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             try
             {
@@ -1259,7 +779,7 @@ namespace SIAO.SRV
                             clsRelat1 or = new clsRelat1();
 
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                            or.Cnpj = MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
                             or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
@@ -1284,23 +804,6 @@ namespace SIAO.SRV
 
             return lr;
         }
-       
-        private string MaskCnpj(string p)
-        {
-            string cnpj = "";
-            if (string.IsNullOrEmpty(p))
-                return cnpj;
-            else
-            {
-                cnpj = p.Substring(0, 2) + ".";
-                cnpj += p.Substring(2, 3) + ".";
-                cnpj += p.Substring(5, 3) + "/";
-                cnpj += p.Substring(8, 4) + "-";
-                cnpj += p.Substring(12, 2);
-
-                return cnpj;
-            }
-        }
 
         public DataSet GetUsers(string scn)
         {
@@ -1313,11 +816,11 @@ namespace SIAO.SRV
                 + " memberships ON users.UserId = memberships.UserId"
                 + " WHERE memberships.Inactive = 0";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "Users");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Users");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             return ds;
         }
@@ -1337,11 +840,11 @@ namespace SIAO.SRV
                 + " usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId"
                 + " WHERE (memberships.Inactive = 0) AND (users.UserId = " + p + ")";
 
-            if (oDB.openConnection(cmm))
+            if (clsDB.openConnection(cmm))
             {
-                ds = oDB.QueryDS(ref cmm, ref ds, "UserEd");
+                ds = clsDB.QueryDS(ref cmm, ref ds, "UserEd");
             }
-            oDB.closeConnection(cmm);
+            clsDB.closeConnection(cmm);
 
             if (ds.Tables.Count > 0)
             {
@@ -1359,6 +862,488 @@ namespace SIAO.SRV
             return clsUser;
         }
 
+        #endregion
+
+        #region .:Persistence:.
+        public string AddUser(UsersTO clsUser, string scn)
+        {
+            string msg = "";
+
+            try
+            {
+                string pass = o.encr(clsUser.Password);
+                string nme = o.encr(clsUser.Name.ToUpper());
+
+                NpgsqlConnection cnn = new NpgsqlConnection(scn);
+                cmm.Connection = cnn;
+
+                if (clsDB.openConnection(cmm))
+                {
+                    cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = @UserName";
+                    cmm.Parameters.Clear();
+                    cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
+
+                    int id = 0;
+                    if (clsDB.Query(id, ref cmm) == DBNull.Value)
+                    {
+                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId) VALUES (@UserName, @LastActivityDate, @TipoId)";
+                        cmm.Parameters.Clear();
+                        cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
+                        cmm.Parameters.Add("@LastActivityDate", NpgsqlDbType.Date).Value = DateTime.Now.Date;
+                        cmm.Parameters.Add("@TipoId",NpgsqlDbType.Integer).Value = clsUser.TipoId;
+
+                        clsDB.Execute(ref cmm);
+
+                        cmm.CommandText = "SELECT UserId FROM  users WHERE UserName = @UserName";
+                        cmm.Parameters.Clear();
+                        cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
+
+                        id = (int)clsDB.Query(id, ref cmm);
+
+                        string cDate = clsUser.CreateDate.Year + "-" + clsUser.CreateDate.Month + "-" + clsUser.CreateDate.Day + " 00:00:00";
+                        string eDate = clsUser.ExpirationDate.Year + "-" + clsUser.ExpirationDate.Month + "-" + clsUser.ExpirationDate.Day + " 00:00:00";
+
+                        cmm.CommandText = "INSERT INTO memberships"
+                            + " (UserId, Password, Email, Inactive, CreateDate, ExpirationDate, Name)"
+                            + " VALUES (" + id + ", '" + pass + "', '" + clsUser.Email + "', "
+                            + (clsUser.Inactive == false ? 0 : 1) + ", '" + cDate + "', '" + eDate + "', '"
+                            + nme + "')";
+
+                        clsDB.Execute(ref cmm);
+                    }
+                    else { msg = "Usuário já cadastrado."; }
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+
+            return msg;
+        }
+     
+        public string AddRede(string scn, Rede rede)
+        {
+            string msg = "";
+            cmm.CommandText = "INSERT INTO redesfarmaceuticas (Descricao,CNPJ)"
+                + " VALUES ('" + rede.RedeName + "','"+ rede.CNPJ +"')";
+
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            cmm.Connection = cnn;
+
+            try
+            {
+                if (clsDB.openConnection(cmm))
+                {
+                    clsDB.Execute(ref cmm);
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            clsDB.closeConnection(cmm);
+
+            return msg;
+        }
+
+        public string UpdateRede(string scn, Rede rede)
+        {
+            string msg = "";
+            cmm.CommandText = "UPDATE redesfarmaceuticas SET Descricao = '" + rede.RedeName
+                + "', CNPJ = '"+ rede.CNPJ +"' WHERE Id = " + rede.RedeId;
+
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            cmm.Connection = cnn;
+
+            try
+            {
+                if (clsDB.openConnection(cmm))
+                {
+                    clsDB.Execute(ref cmm);
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            clsDB.closeConnection(cmm);
+
+            return msg;
+        }
+
+        public string AddLoja(string scn, Loja ol)
+        {
+            string msg = "";
+
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            cmm.Connection = cnn;
+
+            string scnpj = ol.Cnpj.Replace(".", "");
+            scnpj = scnpj.Replace("/", "");
+            scnpj = scnpj.Replace("-", "");
+
+            cmm.CommandText = @"INSERT INTO farmacias (Proprietario, Gerente, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero,
+            Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, Msn, Ativo, idRede, CEP)"
+                + " VALUES ('" + ol.Proprietario + "', '" + ol.Gerente + "', '" + ol.Email + "', '" + ol.Email2 + "', '"
+                + ol.NomeFantasia + "', '" + ol.Razao + "', '" + scnpj + "', '" + ol.Endereco + "', '" + ol.EndNumero
+                + "', '" + ol.Bairro + "', '" + ol.Complemento + "', '" + ol.Cidade + "', '" + ol.Uf + "', '" + ol.Fone
+                + "', '" + ol.Fone2 + "', '" + ol.Celular + "', '" + ol.Site + "', '" + ol.Skype + "', "
+                + " '" + ol.Msn + "', " + (ol.Ativo == true ? 1 : 0) + ", " + ol.idRede + ",'" + ol.CEP + "')";
+
+            try
+            {
+                if (clsDB.openConnection(cmm))
+                {
+                    clsDB.Execute(ref cmm);
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            clsDB.closeConnection(cmm);
+
+            return msg;
+        }
+
+        public string UpdateLoja(string scn, Loja clsLoja)
+        {
+            string msg = "";
+
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            cmm.Connection = cnn;
+
+            string scnpj = clsLoja.Cnpj.Replace(".", "");
+            scnpj = scnpj.Replace("/", "");
+            scnpj = scnpj.Replace("-", "");
+
+            cmm.CommandText = "UPDATE farmacias SET Proprietario = '" + clsLoja.Proprietario + "', Gerente = '" + clsLoja.Gerente
+                + "', Email = '" + clsLoja.Email + "', Email2 = '" + clsLoja.Email2 + "', NomeFantasia = '" + clsLoja.NomeFantasia
+                + "', RazaoSocial = '" + clsLoja.Razao + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
+                + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '" + clsLoja.Complemento + "', Cidade = '"
+                + clsLoja.Cidade + "', UF = '" + clsLoja.Uf + "', Tel1 = '" + clsLoja.Fone + "', Tel2 = '" + clsLoja.Fone2 + "', Celular = '"
+                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', " + " Msn = " + " '" + clsLoja.Msn
+                + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0) + ", idRede = " + clsLoja.idRede + ",CEP = '" + clsLoja.CEP + "' WHERE Id = "
+                + clsLoja.Id;
+
+            try
+            {
+                if (clsDB.openConnection(cmm))
+                {
+                    clsDB.Execute(ref cmm);
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            clsDB.closeConnection(cmm);
+
+            return msg;
+        }
+
+        public string AddXml(string scn, XmlDocument xd, UsersTO clsUser)
+        {
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            cmm.Connection = cnn;
+
+            DataSet ds = new DataSet();
+
+            ds.ReadXml(new XmlNodeReader(xd));
+            string msg = "";
+
+            if (ds.Tables.Count > 0)
+            {
+                try
+                {
+                    if (clsDB.openConnection(cmm))
+                    {
+                        cmm.CommandText = "SELECT arquivosenviados.id FROM arquivosenviados"
+                            + " WHERE arquivosenviados.cnpj = @cnpj AND arquivosenviados.mes = @mes"
+                            + " AND arquivosenviados.ano = @ano";
+                        cmm.Parameters.Clear();
+                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
+                        cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
+                        cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
+
+                        int id = 0;
+                        if (clsDB.Query(id, ref cmm) == DBNull.Value)
+                        {
+                            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                            {
+                                cmm.CommandText = "INSERT INTO base_cliente_espera (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
+                                    + " VALUES ( @Cnpj, @Mes, @Ano, @Barras, @Descricao, @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
+                                cmm.Parameters.Clear();
+                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
+                                cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
+                                cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
+                                cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
+                                cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
+                                cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
+                                cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
+                                cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
+                                cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
+                                cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
+
+                                clsDB.Execute(ref cmm);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                            {
+                                cmm.CommandText = "UPDATE base_cliente_espera SET Barras = @Barras, Descricao = @Descricao,"
+                                    + " Fabricante = @Fabricante, Quantidade = @Quantidade, Valor_Bruto = "
+                                    + "@Valor_Bruto, Valor_Liquido = @Valor_Liquido, Valor_Desconto = @Valor_Desconto WHERE Cnpj = @Cnpj AND Mes = @Mes AND Ano = @Ano";
+                                cmm.Parameters.Clear();
+                                cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
+                                cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
+                                cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
+                                cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
+                                cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
+                                cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
+                                cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
+                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
+                                cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
+                                cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
+
+                                clsDB.Execute(ref cmm);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                }
+
+                clsDB.closeConnection(cmm);
+
+                AddXmlData(scn, ds, clsUser);
+
+            }
+            else { msg = "Erro ao converter o xml."; }
+
+            return msg;
+        }
+
+        private void AddXmlData(string scn, DataSet ds, UsersTO clsUser)
+        {
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            cmm.Connection = cnn;
+
+            if (ds.Tables.Count > 0)
+            {
+                try
+                {
+                    if (clsDB.openConnection(cmm))
+                    {
+                        cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
+                            + " VALUES ( @UserId, @cnpj, 'XML', @mes, @ano)";
+                        cmm.Parameters.Clear();
+                        cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
+                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
+                        cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
+                        cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
+
+                        clsDB.Execute(ref cmm);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                clsDB.closeConnection(cmm);
+            }
+        }
+
+        public string AddDbf(string scn, DataTable dt)
+        {
+            string msg = "";
+            NpgsqlConnection msc = new NpgsqlConnection(scn);
+            DataSet ds = new DataSet();
+
+            cmm.Connection = msc;
+
+            if (dt.Rows.Count > 0)
+            {
+                try
+                {
+                    if (clsDB.openConnection(cmm))
+                    {
+                        cmm.CommandText = "SELECT produtos_base.CclsDBarra,produtos_base.CodProd,produtos_base.NomeProd,produtos_base.Apresenta,produtos_base.CodLab,produtos_base.NomeLab,produtos_base.CodPat,produtos_base.NomePat,produtos_base.Grupo,produtos_base.Sub_Consultoria,produtos_base.Sub_Divisao,produtos_base.NCM,produtos_base.`NomePat-NCM`,produtos_base.Descricao_NCM,produtos_base.Lista,produtos_base.ALiq,produtos_base.St FROM produtos_base";
+                        cmm.CommandText += " WHERE CclsDBarra IN (";
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            if (i > 0) { cmm.CommandText += ","; }
+                            cmm.CommandText += dt.Rows[i][16];
+                        }
+                        cmm.CommandText += ")";
+
+                        ds = clsDB.QueryDS(ref cmm, ref ds, "produtos_base");
+
+                        if (ds.Tables.Count > 0)
+                        {
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                if (ds.Tables[0].Select("CclsDBarra = '" + dt.Rows[i][16] + "'").Length == 0)
+                                {
+                                    cmm.CommandText = "INSERT INTO produtos_base (CclsDBarra, CodProd, NomeProd, Apresenta, CodLab,"
+                                        + " Grupo, `NomePat-NCM`, ALiq, St)"
+                                        + " VALUES ('" + dt.Rows[i][16] + "', " + dt.Rows[i][0] + ", '" + dt.Rows[i][1]
+                                        + "', '" + dt.Rows[i][35] + "', '" + dt.Rows[i][11] + "',"
+                                        + " '" + dt.Rows[i][2] + "', '" + dt.Rows[i][41] + "', " + dt.Rows[i][54] + ", '" + dt.Rows[i][59] + "')";
+
+                                    clsDB.Execute(ref cmm);
+                                }
+                                else
+                                {
+                                    cmm.CommandText = "UPDATE produtos_base SET CodProd = " + dt.Rows[i][0]
+                                        + ", NomeProd = '" + dt.Rows[i][1] + "', Apresenta = '"
+                                        + dt.Rows[i][35] + "', CodLab = '" + dt.Rows[i][11] + "', Grupo = '"
+                                        + dt.Rows[i][2] + "', `NomePat-NCM` = '" + dt.Rows[i][41]
+                                        + "', ALiq = " + dt.Rows[i][54] + ", St = '" + dt.Rows[i][59] + "'"
+                                        + " WHERE CclsDBarra = " + dt.Rows[i][16];
+
+                                    clsDB.Execute(ref cmm);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                cmm.CommandText = "INSERT INTO produtos_base (CclsDBarra, CodProd, NomeProd, Apresenta, CodLab,"
+                                + " Grupo, `NomePat-NCM`, ALiq, St)"
+                                + " VALUES ('" + dt.Rows[i][16] + "', " + dt.Rows[i][0] + ", '" + dt.Rows[i][1]
+                                + "', '" + dt.Rows[i][35] + "', '" + dt.Rows[i][11] + "',"
+                                + " '" + dt.Rows[i][2] + "', '" + dt.Rows[i][41] + "', " + dt.Rows[i][54] + ", '" + dt.Rows[i][59] + "')";
+
+                                clsDB.Execute(ref cmm);
+                            }
+                        }
+                    }
+                    clsDB.closeConnection(cmm);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            else { msg = "Erro na gravação dos dados"; }
+            return msg;
+        }
+
+        public string AddTxt(string scn, DataTable dt, UsersTO clsUser, List<int> lstMeses, List<string> lstCnpj)
+        {
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            cmm.Connection = cnn;
+
+            string msg = "";
+            int itest = 0;
+
+            if (dt.Rows.Count > 0)
+            {
+                try
+                {
+                    if (clsDB.openConnection(cmm))
+                    {
+                        cmm.CommandText = "DELETE FROM base_cliente_espera";
+                        string strCnpj = string.Empty;
+                        int k = 0;
+                        lstCnpj.ForEach(delegate(string _cnpj)
+                        {
+                            if (k == 0) { strCnpj = "'" + _cnpj + "'"; k++; } else { strCnpj += ",'" + _cnpj + "'"; k++; }
+                        });
+                        cmm.CommandText += " WHERE Cnpj IN (" + strCnpj + ")";
+                        string strMeses = "";
+                        int j = 0;
+                        lstMeses.ForEach(delegate(int _mes)
+                        {
+                            if (j == 0) { strMeses = _mes.ToString(); j++; } else { strMeses += ", " + _mes.ToString(); j++; }
+                        });
+                        cmm.CommandText += " AND Mes IN (" + strMeses + ") AND Ano = " + dt.Rows[0]["ano"];
+
+                        clsDB.Execute(ref cmm);
+
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            string svb = "", svl = "", svd = "";
+
+                            svb = dt.Rows[i][10].ToString().Replace(".", "");
+                            svb = svb.Replace(",", ".");
+
+                            svl = dt.Rows[i][11].ToString().Replace(".", "");
+                            svl = svl.Replace(",", ".");
+
+                            svd = dt.Rows[i][12].ToString().Replace(".", "");
+                            svd = svd.Replace(",", ".");
+
+                            cmm.CommandText = string.Empty;
+                            cmm.CommandText = "INSERT INTO base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
+                                + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
+                                + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
+                                + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
+                                + ", '" + dt.Rows[i][4].ToString() + "', '"
+                                + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
+                                + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", "
+                                + svb + ", " + svl + ", " + svd + ")";
+
+                            itest = i;
+
+                            clsDB.Execute(ref cmm);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                }
+
+                clsDB.closeConnection(cmm);
+
+                this.AddTxtData(scn, dt, clsUser);
+
+            }
+            else { msg = "Erro ao converter o txt."; }
+
+            return msg;
+        }
+
+        private void AddTxtData(string scn, DataTable dt, UsersTO clsUser)
+        {
+            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            cmm.Connection = cnn;
+
+            if (dt.Rows.Count > 0)
+            {
+                try
+                {
+                    if (clsDB.openConnection(cmm))
+                    {
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
+                                + " VALUES (@UserId, @cnpj, 'TXT', @mes, @ano)";
+                            cmm.Parameters.Clear();
+                            cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
+                            cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dt.Rows[i]["cnpj"].ToString();
+                            cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = dt.Rows[i][2];
+                            cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = dt.Rows[i]["ano"];
+
+                            clsDB.Execute(ref cmm);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                clsDB.closeConnection(cmm);
+            }
+        }
+
         public string UpdateUser(UsersTO clsUser, string scn)
         {
             string msg = "";
@@ -1371,7 +1356,7 @@ namespace SIAO.SRV
                 NpgsqlConnection cnn = new NpgsqlConnection(scn);
                 cmm.Connection = cnn;
 
-                if (oDB.openConnection(cmm))
+                if (clsDB.openConnection(cmm))
                 {
                     string lDate = DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00";
                     StringBuilder stbSQL = new StringBuilder();
@@ -1380,9 +1365,9 @@ namespace SIAO.SRV
 
                     stbSQL.Append(" WHERE UserId = " + clsUser.UserId);
                     cmm.CommandText = stbSQL.ToString();
-                    cmm.Parameters.Add("@TipoId",NpgsqlDbType.Integer).Value = clsUser.TipoId;
+                    cmm.Parameters.Add("@TipoId", NpgsqlDbType.Integer).Value = clsUser.TipoId;
 
-                    oDB.Execute(ref cmm);
+                    clsDB.Execute(ref cmm);
 
                     string eDate = clsUser.ExpirationDate.Year + "-" + clsUser.ExpirationDate.Month + "-" + clsUser.ExpirationDate.Day + " 00:00:00";
 
@@ -1391,7 +1376,7 @@ namespace SIAO.SRV
                         + ", ExpirationDate = '" + eDate + "', Name = '" + nme
                         + "' WHERE UserId = " + clsUser.UserId;
 
-                    oDB.Execute(ref cmm);
+                    clsDB.Execute(ref cmm);
                 }
             }
             catch (Exception ex)
@@ -1401,6 +1386,8 @@ namespace SIAO.SRV
 
             return msg;
         }
+
+        #endregion
 
     }
 }

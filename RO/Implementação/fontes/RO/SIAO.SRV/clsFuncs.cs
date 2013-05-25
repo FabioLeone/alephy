@@ -9,9 +9,12 @@ namespace SIAO.SRV
 {
     public class clsFuncs
     {
+        #region .: Variaveis :.
         private List<int> lstMeses = new List<int>();
         private List<string> lstCnpj = new List<string>();
+        #endregion
 
+        #region .: Criptografia :.
         public string encr(string text)
         {
             Char[] a;
@@ -58,6 +61,26 @@ namespace SIAO.SRV
 
             return c;
         }
+        #endregion
+
+        #region .: Metodos :.
+        public static string MaskCnpj(string p)
+        {
+            string cnpj = "";
+            if (string.IsNullOrEmpty(p))
+                return cnpj;
+            else
+            {
+                cnpj = p.Substring(0, 2) + ".";
+                cnpj += p.Substring(2, 3) + ".";
+                cnpj += p.Substring(5, 3) + "/";
+                cnpj += p.Substring(8, 4) + "-";
+                cnpj += p.Substring(12, 2);
+
+                return cnpj;
+            }
+        }
+        #endregion
 
         #region .: Validações :.
         public bool isEmail(string inputEmail)

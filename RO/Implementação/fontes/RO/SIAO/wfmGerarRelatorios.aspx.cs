@@ -127,26 +127,19 @@ namespace SIAO
 
                 Response.Redirect("wfmRelatMod1.aspx");
             }
+            else
+            {
+                divErro("Não há itens a serem listados.");
+            }
         }
 
         protected void btnRelat2_Click(object sender, EventArgs e)
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
-            if (rbtPeriodo.Checked)
-            {
-                if (ddlRedesRelatorios.SelectedIndex > 0)
-                    //lr1 = oc.GetCross(clsUser, "2013", Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), false);
-                //else
-                    lr1 = oc.GetCross(clsUser, txtInicio.Text, txtFim.Text, ddlLojaRelatorios.SelectedItem.Value, 0);
-
-            }
-            else if (rbtMes.Checked)
-            {
-                if (ddlRedesRelatorios.SelectedIndex > 0)
-                  //  lr1 = oc.GetCross(scn, clsUser, String.Empty, Convert.ToInt32(ddlRedesRelatorios.SelectedItem.Value), true);
-                //else
-                    lr1 = oc.GetCross(clsUser, ddlLojaRelatorios.SelectedItem.Value, 0);
-            }
+            if (this.RedeId > 0)
+                lr1 = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, this.RedeId, rbtPeriodo, rbtMes);
+            else
+                lr1 = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, ddlRedesRelatorios, ddlLojaRelatorios, rbtPeriodo, rbtMes);
 
             if (lr1.Count > 0)
             {
@@ -161,6 +154,9 @@ namespace SIAO
                 }, scn);
 
                 Response.Redirect("wfmRelatMod2.aspx");
+            }
+            else {
+                divErro("Não há itens a serem listados.");
             }
         }
 
@@ -269,10 +265,15 @@ namespace SIAO
         private void ValidaAcesso()
         {
             if (this.User.TipoId.Equals(3))
+            {
                 ddlLojaRelatorios.Visible = false;
+                dvLoja.Visible = false;
+            }
             else
+            {
                 ddlLojaRelatorios.Visible = true;
-
+                dvLoja.Visible = true;
+            }
             dvRedes.Visible = false;
         }
 

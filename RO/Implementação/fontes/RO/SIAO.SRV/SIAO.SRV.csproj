@@ -53,6 +53,7 @@
     <Compile Include="BLL\Files.cs" />
     <Compile Include="BLL\Grafic.cs" />
     <Compile Include="BLL\GraficoLab.cs" />
+    <Compile Include="BLL\Relatorios.cs" />
     <Compile Include="BLL\RelatoriosVisualizados.cs" />
     <Compile Include="BLL\RolesBLL.cs" />
     <Compile Include="BLL\Users.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="DAL\Files.cs" />
     <Compile Include="DAL\Grafic.cs" />
     <Compile Include="DAL\GraficoLab.cs" />
+    <Compile Include="DAL\Relatorios.cs" />
     <Compile Include="DAL\RelatoriosVisualizados.cs" />
     <Compile Include="DAL\RolesDAL.cs" />
     <Compile Include="DAL\Users.cs" />
