@@ -18,5 +18,7 @@ namespace SIAO.SRV
         public decimal SomaDeValorLiquido { get; set; }
         public decimal SomaDeValorDesconto { get; set; }
         public decimal PercentualDesconto { get; set; }
+        public string NomeFantasia { get; set; }
+        public string Importado { get; set; }
     }
 }
