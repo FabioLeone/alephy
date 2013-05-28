@@ -4,8 +4,29 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
+        <contenttemplate>
             <table style="width: 100%; margin-left: 1.25%;">
+                <tr>
+                    <td colspan="2">
+                        <fieldset style="width: 96.5%;">
+                            <legend>
+                                <h2>Filtro</h2>
+                            </legend>
+                            <div id="dvFiltro" style="height: 45px; width: 100%;display:table-row;">
+                                <div id="dvRedes" runat="server" style="width:45%;display:table-cell;">
+                                    Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
+                                        onselectedindexchanged="ddlRedesRelatorios_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </div>
+                                <div id="dvLoja" runat="server" style="display:table-cell;">
+                                    Loja:
+                                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" style="min-width:200px;">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </td>
+                </tr>
                 <tr>
                     <td style="width: 50%;">
                         <fieldset style="width: 93%;">
@@ -13,7 +34,7 @@
                                 <h2>
                                     Relatórios</h2>
                             </legend>
-                            <div id="divForm" style="height: 330px; width: 100%;">
+                            <div id="divForm" style="height: 300px; width: 100%;">
                                 <p>
                                     Filtrar por:<br />
                                     <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server" 
@@ -30,16 +51,7 @@
                                         Text="ultimos 6 meses" runat="server" 
                                         oncheckedchanged="rbtMes_CheckedChanged" />
                                     <br />
-                                    <div id="dvRedes" runat="server">
-                                        Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
-                                            onselectedindexchanged="ddlRedesRelatorios_SelectedIndexChanged">
-                                        </asp:DropDownList>
-                                    </div>
-                                    <div id="dvLoja" runat="server">
-                                    Loja:
-                                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" style="min-width:200px;">
-                                    </asp:DropDownList>
-                                    </div>
+                                    </p>
                                     <ul class="iconList">
                                         <li>
                                             <p id="M1" runat="server" class="imgBtn">
@@ -56,13 +68,6 @@
                                             </p>
                                         </li>
                                     </ul>
-                                    <p>
-                                    </p>
-                                    <p>
-                                    </p>
-                                    <p>
-                                    </p>
-                                </p>
                             </div>
                         </fieldset>
                     </td>
@@ -72,7 +77,7 @@
                                 <h2>
                                     Gráficos</h2>
                             </legend>
-                            <div id="divGrafic" style="height: 330px; width: 100%;">
+                            <div id="divGrafic" style="height: 300px; width: 100%;">
                                 <p>
                                     Selecione o mês, para consulta.
                                     <asp:DropDownList ID="ddlMes" runat="server">
@@ -91,13 +96,10 @@
                                         <asp:ListItem Value="12">Dez</asp:ListItem>
                                     </asp:DropDownList>
                                     <br />
-                                    Loja:
-                                    <asp:DropDownList ID="ddlLojas" runat="server">
-                                    </asp:DropDownList>
-                                    <br />
                                     Selecione o ano, para consulta (válido apenas para o Grafico2).
                                     <asp:DropDownList ID="ddlAnoG" runat="server">
                                     </asp:DropDownList>
+                                    </p>
                                     <ul class="iconList">
                                         <li>
                                             <p id="G1" runat="server" class="imgBtn">
@@ -114,18 +116,11 @@
                                             </p>
                                         </li>
                                     </ul>
-                                    <p>
-                                    </p>
-                                    <p>
-                                    </p>
-                                    <p>
-                                    </p>
-                                </p>
                             </div>
                         </fieldset>
                     </td>
                 </tr>
             </table>
-        </ContentTemplate>
+        </contenttemplate>
     </asp:UpdatePanel>
 </asp:Content>

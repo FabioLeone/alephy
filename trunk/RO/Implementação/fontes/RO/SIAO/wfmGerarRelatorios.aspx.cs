@@ -170,9 +170,9 @@ namespace SIAO
                 intAno = Convert.ToInt32(DateTime.Now.Year);
 
             if (ddlMes.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojas.SelectedValue, intAno);
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojaRelatorios.SelectedValue, intAno);
             else
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojas.SelectedValue, intAno);
+                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojaRelatorios.SelectedValue, intAno);
 
             Session["grafic"] = clsGrafic;
 
@@ -279,18 +279,10 @@ namespace SIAO
 
         private void getLojas()
         {
-            DataSet dsLojas = oc.GetLojaByUserId(clsUser.UserId);
-            ddlLojas.DataSource = dsLojas;
-            ddlLojas.DataTextField = "NomeFantasia";
-            ddlLojas.DataValueField = "Cnpj";
-            ddlLojas.DataBind();
-            ddlLojas.Items.Insert(0, new ListItem("Selecione", string.Empty));
-            ddlLojas.SelectedIndex = 0;
-
             switch (this.User.TipoId)
             {
                 case 2:
-                    ddlLojaRelatorios.DataSource = dsLojas;
+                    ddlLojaRelatorios.DataSource = oc.GetLojaByUserId(clsUser.UserId);
                     ddlLojaRelatorios.DataTextField = "NomeFantasia";
                     ddlLojaRelatorios.DataValueField = "Cnpj";
                     ddlLojaRelatorios.DataBind();
