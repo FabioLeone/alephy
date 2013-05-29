@@ -5,6 +5,7 @@ using SIAO.SRV.TO;
 using System.Data;
 using Npgsql;
 using System.Data.Common;
+using System.Configuration;
 
 namespace SIAO.SRV.DAL
 {
@@ -125,6 +126,72 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
+        internal static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUser, int intAno, int idRede)
+        {
+            List<GraficTO> clsGrafic = new List<GraficTO>();
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            List<string> lstCnpj = new List<string>();
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT farmacias.razaosocial, xTemp.* FROM (
+                select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+	                from consolidado
+	                WHERE 
+	                ((UPPER(grupo) LIKE 'GENÉRICOS' and UPPER(sub_consultoria) like 'PDE 2%') 
+	                OR 
+	                (UPPER(grupo) LIKE 'ALTERNATIVOS' and UPPER(sub_consultoria) = 'PDE 2 (TRATA)')
+	                OR 
+	                (UPPER(grupo) LIKE 'PROPAGADOS' and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)')))
+	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria 
+                union
+	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+	                from consolidado
+	                WHERE 
+	                Grupo in ('Propagados','Alternativos','Genéricos')
+	                AND
+	                sub_consultoria in ('PDE 2 (trata)','PORT (PSICO)','RELAC (PBM)')
+	                GROUP BY cnpj, mes, ano, sub_consultoria
+                union
+	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+	                from consolidado
+	                WHERE 
+	                Grupo in ('Propagados','Alternativos','Genéricos')
+			        GROUP BY cnpj, mes, ano
+                ) AS xTemp 
+                INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ
+                INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
+                WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(@data, 'MM yyyy'))
+                AND farmacias.idRede = @idRede
+                ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
+
+                DbCommand cmdGrafic = msc.CreateCommand();
+
+                cmdGrafic.CommandText = strSQL.ToString();
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", clsUser.UserId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@data", intMes + " " + intAno));
+                cmdGrafic.CommandTimeout = 9999;
+
+                msc.Open();
+
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
+                    while (drdGrafic.Read())
+                    {
+                        clsGrafic.Add(LoadGrfic(drdGrafic));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsGrafic;
+        }
+
         public static TotaisGraficMesTO GetTotalMes(int intMes, string strConnection)
         {
             TotaisGraficMesTO clsTotalMes = new TotaisGraficMesTO();
@@ -161,11 +228,11 @@ namespace SIAO.SRV.DAL
             return clsTotalMes;
         }
 
-        public static List<IndicesGraficTO> GetIndicesALL(string strConnection)
+        public static List<IndicesGraficTO> GetIndicesALL()
         {
             List<IndicesGraficTO> clsIndicesGrafic = new List<IndicesGraficTO>();
 
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {
@@ -194,10 +261,10 @@ namespace SIAO.SRV.DAL
             return clsIndicesGrafic;
         }
 
-        public static List<GraficTO> GetGraficAno(int intAno, UsersTO clsUser, string strConnection, string strLoja)
+        public static List<GraficTO> GetGraficAno(int intAno, UsersTO clsUser, string strLoja)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             List<string> lstCnpj = new List<string>();
 
             try
@@ -610,5 +677,6 @@ namespace SIAO.SRV.DAL
 
             return clsGrupos;
         }
+
     }
 }

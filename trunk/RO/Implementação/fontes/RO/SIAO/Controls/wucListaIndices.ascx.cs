@@ -75,7 +75,7 @@ namespace SIAO.Controls
             ddlGrupos.Items.Insert(0, new ListItem(string.Empty, ""));
             ddlGrupos.SelectedIndex = 0;
 
-            gvwIndices.DataSource = GraficBLL.GetIndicesAll(strConnection);
+            gvwIndices.DataSource = GraficBLL.GetIndicesAll();
             gvwIndices.EmptyDataText = "Nenhum registro encontrado.";
             gvwIndices.DataBind();
         }

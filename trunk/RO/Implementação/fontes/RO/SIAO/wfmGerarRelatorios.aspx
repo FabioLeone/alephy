@@ -6,7 +6,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <contenttemplate>
             <table style="width: 100%; margin-left: 1.25%;">
-                <tr>
+                <tr id="trFiltro" runat="server">
                     <td colspan="2">
                         <fieldset style="width: 96.5%;">
                             <legend>
