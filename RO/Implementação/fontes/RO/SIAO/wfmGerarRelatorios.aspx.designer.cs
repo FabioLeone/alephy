@@ -22,6 +22,15 @@ namespace SIAO {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
+        /// trFiltro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trFiltro;
+        
+        /// <summary>
         /// dvRedes control.
         /// </summary>
         /// <remarks>
@@ -173,15 +182,6 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlMes;
-        
-        /// <summary>
-        /// ddlLojas control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLojas;
         
         /// <summary>
         /// ddlAnoG control.

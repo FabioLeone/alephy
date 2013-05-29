@@ -15,7 +15,7 @@ namespace SIAO.SRV.BLL
         {
             List<GraficTO> clsList = new List<GraficTO>();
             List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, clsUsers, strConnection, strLoja,intAno);
-            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll(strConnection);
+            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
             if (clsGrafic.Count > 0)
             {
@@ -44,11 +44,44 @@ namespace SIAO.SRV.BLL
             return clsList;
         }
 
-        public static List<GraficTO> GraficListByAno(int intAno, UsersTO clsUsers, string strConnection, string strLoja)
+        public static List<GraficTO> GraficList(int intMes, UsersTO clsUser, int intAno, int idRede)
         {
             List<GraficTO> clsList = new List<GraficTO>();
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficAno(intAno, clsUsers, strConnection, strLoja);
-            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll(strConnection);
+            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, clsUser, intAno, idRede);
+            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
+
+            if (clsGrafic.Count > 0)
+            {
+                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
+
+                clsGrafic.ForEach(delegate(GraficTO _Grafic)
+                {
+                    clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
+                    {
+                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
+                        {
+                            clsList.Add(new GraficTO()
+                            {
+                                Sub_Consultoria = _Grafic.Sub_Consultoria,
+                                Razao_Social = _Grafic.Razao_Social,
+                                Mes = _Grafic.Mes,
+                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
+                                Grupo = _Grafic.Grupo,
+                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2)
+                            });
+                        }
+                    });
+                });
+            }
+
+            return clsList;
+        }
+
+        public static List<GraficTO> GraficListByAno(int intAno, UsersTO clsUsers, string strLoja)
+        {
+            List<GraficTO> clsList = new List<GraficTO>();
+            List<GraficTO> clsGrafic = GraficDAL.GetGraficAno(intAno, clsUsers, strLoja);
+            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
             if (clsGrafic.Count > 0)
             {
@@ -91,9 +124,9 @@ namespace SIAO.SRV.BLL
             return GraficDAL.GetTotalMes(intMes, strConnection);
         }
 
-        public static List<IndicesGraficTO> GetIndicesAll(string strConnection)
+        public static List<IndicesGraficTO> GetIndicesAll()
         {
-            return GraficDAL.GetIndicesALL(strConnection);
+            return GraficDAL.GetIndicesALL();
         }
         public static IndicesGraficTO GetIndicesById(int intId, string strConnection)
         {

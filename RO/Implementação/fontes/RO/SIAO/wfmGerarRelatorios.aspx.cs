@@ -169,10 +169,20 @@ namespace SIAO
             else
                 intAno = Convert.ToInt32(DateTime.Now.Year);
 
-            if (ddlMes.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojaRelatorios.SelectedValue, intAno);
+            if (this.RedeId > 0)
+            {
+                if (ddlMes.SelectedValue != "")
+                    clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, intAno, this.RedeId);
+                else
+                    clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, intAno,this.RedeId);
+            }
             else
-                clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojaRelatorios.SelectedValue, intAno);
+            {
+                if (ddlMes.SelectedValue != "")
+                    clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojaRelatorios.SelectedValue, intAno);
+                else
+                    clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojaRelatorios.SelectedValue, intAno);
+            }
 
             Session["grafic"] = clsGrafic;
 
@@ -192,9 +202,9 @@ namespace SIAO
             List<GraficTO> clsGrafic;
 
             if (ddlAnoG.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(ddlAnoG.SelectedValue), clsUser, scn, ddlLojas.SelectedValue);
+                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(ddlAnoG.SelectedValue), clsUser, ddlLojaRelatorios.SelectedValue);
             else
-                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(DateTime.Now.Year), clsUser, scn, ddlLojas.SelectedValue);
+                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(DateTime.Now.Year), clsUser, ddlLojaRelatorios.SelectedValue);
 
             Session["grafic"] = null;
             Session["grafic2"] = clsGrafic;
@@ -268,11 +278,13 @@ namespace SIAO
             {
                 ddlLojaRelatorios.Visible = false;
                 dvLoja.Visible = false;
+                trFiltro.Visible = false;
             }
             else
             {
                 ddlLojaRelatorios.Visible = true;
                 dvLoja.Visible = true;
+                trFiltro.Visible = true;
             }
             dvRedes.Visible = false;
         }
