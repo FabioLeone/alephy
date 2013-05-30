@@ -12,8 +12,8 @@
                             <legend>
                                 <h2>Filtro</h2>
                             </legend>
-                            <div id="dvFiltro" style="height: 45px; width: 100%;display:table-row;">
-                                <div id="dvRedes" runat="server" style="width:45%;display:table-cell;">
+                            <div id="dvFiltro" style="height: 30px; width: 100%;display:table-row;">
+                                <div id="dvRedes" runat="server" style="width:50%;display:table-cell;">
                                     Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
                                         onselectedindexchanged="ddlRedesRelatorios_SelectedIndexChanged">
                                     </asp:DropDownList>
@@ -22,6 +22,25 @@
                                     Loja:
                                     <asp:DropDownList ID="ddlLojaRelatorios" runat="server" style="min-width:200px;">
                                     </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div style="display:table-row;width:100%;">
+                                <div style="display:table-cell;">
+                                <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server" 
+                                            AutoPostBack="true" oncheckedchanged="rbtPeriodo_CheckedChanged" />
+                                        de: <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
+                                        <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
+                                    Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
+                                </asp:MaskedEditExtender>
+                                        até: <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
+                                        <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
+                                    Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
+                                    </asp:MaskedEditExtender>
+                                </div>
+                                <div style="display:table-cell;">
+                                <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" 
+                                    Text="ultimos 6 meses" runat="server" 
+                                    oncheckedchanged="rbtMes_CheckedChanged" />
                                 </div>
                             </div>
                         </fieldset>
@@ -35,23 +54,6 @@
                                     Relatórios</h2>
                             </legend>
                             <div id="divForm" style="height: 300px; width: 100%;">
-                                <p>
-                                    Filtrar por:<br />
-                                    <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server" 
-                                        AutoPostBack="true" oncheckedchanged="rbtPeriodo_CheckedChanged" />
-                                    de: <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
-                                    <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
-                                Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
-                            </asp:MaskedEditExtender>
-                                    até: <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
-                                    <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
-                                Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
-                                </asp:MaskedEditExtender>
-                                    <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" 
-                                        Text="ultimos 6 meses" runat="server" 
-                                        oncheckedchanged="rbtMes_CheckedChanged" />
-                                    <br />
-                                    </p>
                                     <ul class="iconList">
                                         <li>
                                             <p id="M1" runat="server" class="imgBtn">
@@ -78,44 +80,29 @@
                                     Gráficos</h2>
                             </legend>
                             <div id="divGrafic" style="height: 300px; width: 100%;">
-                                <p>
-                                    Selecione o mês, para consulta.
-                                    <asp:DropDownList ID="ddlMes" runat="server">
-                                        <asp:ListItem></asp:ListItem>
-                                        <asp:ListItem Value="1">Jan</asp:ListItem>
-                                        <asp:ListItem Value="2">Fev</asp:ListItem>
-                                        <asp:ListItem Value="3">Mar</asp:ListItem>
-                                        <asp:ListItem Value="4">Abr</asp:ListItem>
-                                        <asp:ListItem Value="5">Mai</asp:ListItem>
-                                        <asp:ListItem Value="6">Jun</asp:ListItem>
-                                        <asp:ListItem Value="7">Jul</asp:ListItem>
-                                        <asp:ListItem Value="8">Ago</asp:ListItem>
-                                        <asp:ListItem Value="9">Set</asp:ListItem>
-                                        <asp:ListItem Value="10">Out</asp:ListItem>
-                                        <asp:ListItem Value="11">Nov</asp:ListItem>
-                                        <asp:ListItem Value="12">Dez</asp:ListItem>
-                                    </asp:DropDownList>
-                                    <br />
-                                    Selecione o ano, para consulta (válido apenas para o Grafico2).
-                                    <asp:DropDownList ID="ddlAnoG" runat="server">
-                                    </asp:DropDownList>
-                                    </p>
-                                    <ul class="iconList">
-                                        <li>
-                                            <p id="G1" runat="server" class="imgBtn">
-                                                <asp:ImageButton ID="ibtnGrafic1" runat="server" AlternateText="Grafico1" ImageUrl="~/Content/graphic.png"
-                                                    ToolTip="Grafico1" OnClick="ibtnGrafic1_Click" />
-                                                <asp:Label ID="lblGrafic1" runat="server" AssociatedControlID="ibtnGrafic1">Grafico1</asp:Label>
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p id="G2" runat="server" class="imgBtn">
-                                                <asp:ImageButton ID="ibtnGrafic2" runat="server" AlternateText="Grafico2" ImageUrl="~/Content/graphic.png"
-                                                    ToolTip="Grafico2" OnClick="ibtnGrafic2_Click" />
-                                                <asp:Label ID="lblGrafic2" runat="server" AssociatedControlID="ibtnGrafic2">Grafico2</asp:Label>
-                                            </p>
-                                        </li>
-                                    </ul>
+                                <ul class="iconList">
+                                    <li>
+                                        <p id="G1" runat="server" class="imgBtn">
+                                            <asp:ImageButton ID="ibtnGrafic1" runat="server" AlternateText="Grafico1" ImageUrl="~/Content/graphic.png"
+                                                ToolTip="Grafico1" OnClick="ibtnGrafic1_Click" />
+                                            <asp:Label ID="lblGrafic1" runat="server" AssociatedControlID="ibtnGrafic1">Grafico1</asp:Label>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p id="G2" runat="server" class="imgBtn">
+                                            <asp:ImageButton ID="ibtnGrafic2" runat="server" AlternateText="Grafico2" ImageUrl="~/Content/graphic.png"
+                                                ToolTip="Grafico2" OnClick="ibtnGrafic2_Click" />
+                                            <asp:Label ID="lblGrafic2" runat="server" AssociatedControlID="ibtnGrafic2">Grafico2</asp:Label>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p id="P1" runat="server" class="imgBtn">
+                                            <asp:ImageButton ID="ibtnGrafic3" runat="server" AlternateText="Grafico3" ImageUrl="~/Content/graphic.png"
+                                                ToolTip="Grafico3" onclick="lblGrafic3_Click" />
+                                            <asp:Label ID="Label2" runat="server" AssociatedControlID="ibtnGrafic3">Grafico3</asp:Label>
+                                        </p>
+                                    </li>
+                                </ul>
                             </div>
                         </fieldset>
                     </td>
