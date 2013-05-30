@@ -61,11 +61,15 @@ namespace SIAO
                 this.clsUser = value;
             }
         }
-        public int RedeId { get{
-            if(this.ViewState["redeId"] == null) return this.intRedeId;
-            else return (int)this.ViewState["redeId"];
-        }
-            set {
+        public int RedeId
+        {
+            get
+            {
+                if (this.ViewState["redeId"] == null) return this.intRedeId;
+                else return (int)this.ViewState["redeId"];
+            }
+            set
+            {
                 this.ViewState["redeId"] = value;
                 this.intRedeId = value;
             }
@@ -83,7 +87,6 @@ namespace SIAO
 
             if (!IsPostBack)
             {
-                getAno();
                 getRedes();
                 if (!clsUser.TipoId.Equals(1))
                     ValidaAcesso();
@@ -155,33 +158,29 @@ namespace SIAO
 
                 Response.Redirect("wfmRelatMod2.aspx");
             }
-            else {
+            else
+            {
                 divErro("Não há itens a serem listados.");
             }
         }
 
         protected void ibtnGrafic1_Click(object sender, ImageClickEventArgs e)
         {
-            List<GraficTO> clsGrafic;
-            int intAno = 0;
-            if (ddlAnoG.SelectedValue != "")
-                intAno = Convert.ToInt32(ddlAnoG.SelectedValue);
-            else
-                intAno = Convert.ToInt32(DateTime.Now.Year);
+            List<GraficTO> clsGrafic = new List<GraficTO>();
 
-            if (this.RedeId > 0)
+            if (rbtPeriodo.Checked)
             {
-                if (ddlMes.SelectedValue != "")
-                    clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, intAno, this.RedeId);
+                if (this.RedeId > 0)
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId);
                 else
-                    clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, intAno,this.RedeId);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text);
             }
-            else
+            else if (rbtMes.Checked)
             {
-                if (ddlMes.SelectedValue != "")
-                    clsGrafic = GraficBLL.GraficList(Convert.ToInt32(ddlMes.SelectedValue), clsUser, scn, ddlLojaRelatorios.SelectedValue, intAno);
+                if (this.RedeId > 0)
+                    clsGrafic = GraficBLL.GraficList(DateTime.Now.AddMonths(-7).ToString("MM/yyyy"), clsUser, DateTime.Now.ToString("MM/yyyy"), this.RedeId);
                 else
-                    clsGrafic = GraficBLL.GraficList(Convert.ToInt32(DateTime.Now.Month), clsUser, scn, ddlLojaRelatorios.SelectedValue, intAno);
+                    clsGrafic = GraficBLL.GraficList(DateTime.Now.AddMonths(-7).ToString("MM/yyyy"), clsUser, ddlLojaRelatorios.SelectedValue, DateTime.Now.ToString("MM/yyyy"));
             }
 
             Session["grafic"] = clsGrafic;
@@ -199,12 +198,22 @@ namespace SIAO
 
         protected void ibtnGrafic2_Click(object sender, ImageClickEventArgs e)
         {
-            List<GraficTO> clsGrafic;
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
 
-            if (ddlAnoG.SelectedValue != "")
-                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(ddlAnoG.SelectedValue), clsUser, ddlLojaRelatorios.SelectedValue);
-            else
-                clsGrafic = GraficBLL.GraficListByAno(Convert.ToInt32(DateTime.Now.Year), clsUser, ddlLojaRelatorios.SelectedValue);
+            if (rbtPeriodo.Checked)
+            {
+                if (this.RedeId > 0)
+                    clsGrafic = GraficBLL.GraficListByAno(txtInicio.Text, txtFim.Text, clsUser, this.RedeId);
+                else
+                    clsGrafic = GraficBLL.GraficListByAno(txtInicio.Text, txtFim.Text, clsUser, ddlLojaRelatorios.SelectedValue);
+            }
+            else if (rbtMes.Checked)
+            {
+                if (this.RedeId > 0)
+                    clsGrafic = GraficBLL.GraficListByAno(string.Empty, string.Empty, clsUser, this.RedeId);
+                else
+                    clsGrafic = GraficBLL.GraficListByAno(string.Empty, string.Empty, clsUser, ddlLojaRelatorios.SelectedValue);
+            }
 
             Session["grafic"] = null;
             Session["grafic2"] = clsGrafic;
@@ -215,6 +224,61 @@ namespace SIAO
                 RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
                 {
                     Relatorio = "Grafico2",
+                    UserId = this.User.UserId
+                }, scn);
+
+            Response.Redirect("wfmRelatorio.aspx");
+        }
+
+        protected void lblGrafic3_Click(object sender, ImageClickEventArgs e)
+        {
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            List<Grafic2TO> clsGrafic2 = new List<Grafic2TO>();
+            List<Grafic2TO> clsGrafic3 = new List<Grafic2TO>();
+
+            if (rbtPeriodo.Checked)
+            {
+                if (this.RedeId > 0)
+                {
+                    clsGrafic = GraficBLL.Grafic31ByPeriodoAndRedeId(txtInicio.Text, txtFim.Text, clsUser, this.RedeId);
+                    clsGrafic2 = GraficBLL.Grafic32ByPeriodoAndRedeId(txtInicio.Text, txtFim.Text, clsUser, this.RedeId);
+                    clsGrafic3 = GraficBLL.Grafic33ByPeriodoAndRedeId(txtInicio.Text, txtFim.Text, clsUser, this.RedeId);
+                }
+                else
+                {
+                    clsGrafic = GraficBLL.Grafic31ByPeriodo(txtInicio.Text, txtFim.Text, clsUser, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic2 = GraficBLL.Grafic32ByPeriodo(txtInicio.Text, txtFim.Text, clsUser, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic3 = GraficBLL.Grafic33ByPeriodo(txtInicio.Text, txtFim.Text, clsUser, ddlLojaRelatorios.SelectedValue);
+                }
+            }
+            else if (rbtMes.Checked)
+            {
+                if (this.RedeId > 0)
+                {
+                    clsGrafic = GraficBLL.Grafic31ByPeriodoAndRedeId(string.Empty, string.Empty, clsUser, this.RedeId);
+                    clsGrafic2 = GraficBLL.Grafic32ByPeriodoAndRedeId(string.Empty, string.Empty, clsUser, this.RedeId);
+                    clsGrafic3 = GraficBLL.Grafic33ByPeriodoAndRedeId(string.Empty, string.Empty, clsUser, this.RedeId);
+                }
+                else
+                {
+                    clsGrafic = GraficBLL.Grafic31ByPeriodo(string.Empty, string.Empty, clsUser, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic2 = GraficBLL.Grafic32ByPeriodo(string.Empty, string.Empty, clsUser, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic3 = GraficBLL.Grafic33ByPeriodo(string.Empty, string.Empty, clsUser, ddlLojaRelatorios.SelectedValue);
+                }
+            }
+
+            Session["grafic"] = null;
+            Session["grafic2"] = null;
+            Session["grafic31"] = clsGrafic;
+            Session["grafic32"] = clsGrafic2;
+            Session["grafic33"] = clsGrafic3;
+
+            Global.LocalPage = "wfmGerarRelatorios.aspx";
+
+            if (clsGrafic.Count > 0)
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Grafico3",
                     UserId = this.User.UserId
                 }, scn);
 
@@ -318,16 +382,6 @@ namespace SIAO
             ddlLojaRelatorios.SelectedIndex = 0;
         }
 
-        private void getAno()
-        {
-            ddlAnoG.Items.Add(new ListItem(String.Empty, String.Empty));
-            for (int i = 0; i < 3; i++)
-            {
-                ddlAnoG.Items.Add(new ListItem(System.DateTime.Now.AddYears(-i).Year.ToString(), System.DateTime.Now.AddYears(-i).Year.ToString()));
-            }
-            ddlAnoG.SelectedIndex = 0;
-        }
-
         private void divErro(string msg)
         {
             System.Web.UI.HtmlControls.HtmlGenericControl divError = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
@@ -352,5 +406,6 @@ namespace SIAO
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
         }
         #endregion
+
     }
 }

@@ -6,6 +6,7 @@ using System.Data;
 using Npgsql;
 using System.Data.Common;
 using System.Configuration;
+using NpgsqlTypes;
 
 namespace SIAO.SRV.DAL
 {
@@ -23,6 +24,51 @@ namespace SIAO.SRV.DAL
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Sub_Consultoria"))) { clsGrafic.Sub_Consultoria = drdGrafic.GetString(drdGrafic.GetOrdinal("Sub_Consultoria")); } else { clsGrafic.Sub_Consultoria = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Desconto"))) { clsGrafic.Desconto = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Desconto")); } else { clsGrafic.Desconto = 0; }
+
+            return clsGrafic;
+        }
+
+        private static Grafic2TO LoadGrficII(IDataReader drdGrafic)
+        {
+            Grafic2TO clsGrafic = new Grafic2TO();
+
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("CNPJ"))) clsGrafic.CNPJ = drdGrafic.GetString(drdGrafic.GetOrdinal("CNPJ")); else clsGrafic.CNPJ = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("NomeFantasia"))) clsGrafic.NomeFantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("NomeFantasia")); else clsGrafic.NomeFantasia = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("RazaoSocial"))) { clsGrafic.Razao_Social = drdGrafic.GetString(drdGrafic.GetOrdinal("RazaoSocial")); } else { clsGrafic.Razao_Social = string.Empty; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Mes")); } else { clsGrafic.Mes = 0; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Ano")); else clsGrafic.Ano = 0;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("sub_consultoria"))) { clsGrafic.Sub_Consultoria = drdGrafic.GetString(drdGrafic.GetOrdinal("sub_consultoria")); } else { clsGrafic.Sub_Consultoria = string.Empty; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("quantidade"))) { clsGrafic.quantidade = drdGrafic.GetInt32(drdGrafic.GetOrdinal("quantidade")); } else { clsGrafic.quantidade = 0; }
+
+            return clsGrafic;
+        }
+
+        private static Grafic2TO LoadGrficIII(IDataReader drdGrafic)
+        {
+            Grafic2TO clsGrafic = new Grafic2TO();
+
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("cnpj"))) clsGrafic.CNPJ = drdGrafic.GetString(drdGrafic.GetOrdinal("cnpj")); else clsGrafic.CNPJ = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("nomefantasia"))) clsGrafic.NomeFantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("nomefantasia")); else clsGrafic.NomeFantasia = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("razaosocial"))) { clsGrafic.Razao_Social = drdGrafic.GetString(drdGrafic.GetOrdinal("razaosocial")); } else { clsGrafic.Razao_Social = string.Empty; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("ano")); else clsGrafic.Ano = 0;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("mes")); } else { clsGrafic.Mes = 0; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("grupo"))) { clsGrafic.Grupo = drdGrafic.GetString(drdGrafic.GetOrdinal("grupo")); } else { clsGrafic.Grupo = string.Empty; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
+
+            return clsGrafic;
+        }
+
+        private static Grafic2TO LoadGrficIV(IDataReader drdGrafic)
+        {
+            Grafic2TO clsGrafic = new Grafic2TO();
+
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("cnpj"))) clsGrafic.CNPJ = drdGrafic.GetString(drdGrafic.GetOrdinal("cnpj")); else clsGrafic.CNPJ = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("nomefantasia"))) clsGrafic.NomeFantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("nomefantasia")); else clsGrafic.NomeFantasia = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("razaosocial"))) { clsGrafic.Razao_Social = drdGrafic.GetString(drdGrafic.GetOrdinal("razaosocial")); } else { clsGrafic.Razao_Social = string.Empty; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("ano")); else clsGrafic.Ano = 0;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("mes")); } else { clsGrafic.Mes = 0; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("SubGrupo"))) { clsGrafic.Sub_Consultoria = drdGrafic.GetString(drdGrafic.GetOrdinal("SubGrupo")); } else { clsGrafic.Sub_Consultoria = string.Empty; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
 
             return clsGrafic;
         }
@@ -55,10 +101,10 @@ namespace SIAO.SRV.DAL
 
         #region .: Search :.
 
-        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUser, string strConnection, string strLoja, int intAno)
+        public static List<GraficTO> GetGraficMes(string strIni, UsersTO clsUser, string strLoja, string strFim)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             List<string> lstCnpj = new List<string>();
 
             try
@@ -91,7 +137,8 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ
                 INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(@data, 'MM yyyy'))");
+                WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
+                AND (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
@@ -105,7 +152,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@data", intMes + " " + intAno));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/"," ")));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/"," ")));
                 cmdGrafic.CommandTimeout = 9999;
 
                 msc.Open();
@@ -126,7 +174,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUser, int intAno, int idRede)
+        internal static List<GraficTO> GetGraficMes(string strIni, UsersTO clsUser, string strFim, int idRede)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -162,7 +210,8 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ
                 INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(@data, 'MM yyyy'))
+                WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
+                AND (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))
                 AND farmacias.idRede = @idRede
                 ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
 
@@ -171,7 +220,9 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", clsUser.UserId));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@data", intMes + " " + intAno));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
+
                 cmdGrafic.CommandTimeout = 9999;
 
                 msc.Open();
@@ -261,149 +312,65 @@ namespace SIAO.SRV.DAL
             return clsIndicesGrafic;
         }
 
-        public static List<GraficTO> GetGraficAno(int intAno, UsersTO clsUser, string strLoja)
+        public static List<Grafic2TO> GetGraficAno(string strIni, string strFim, UsersTO clsUser, string strLoja)
         {
-            List<GraficTO> clsGrafic = new List<GraficTO>();
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             List<string> lstCnpj = new List<string>();
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT Razao_Social,Cnpj,Mes,Grupo,Sub_Consultoria,Liquido,Desconto FROM (
-                    SELECT farmacias.RazaoSocial AS Razao_Social,consolidado.CNPJ,consolidado.Mes,
-                    consolidado.Grupo,consolidado.Sub_Consultoria,consolidado.Valor_Liquido AS Liquido,
-                    consolidado.Valor_Desconto / consolidado.Valor_Bruto AS Desconto
-                    FROM consolidado INNER JOIN farmacias ON consolidado.CNPJ = farmacias.Cnpj
-                    WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Ano = @Ano
-                    AND ((consolidado.Grupo = 'Genéricos' AND consolidado.Sub_Consultoria = 'PDE 2-2 (FPB)') 
-                    OR (consolidado.Sub_Consultoria = 'PDE 2 (trata)')
-                    OR (consolidado.Grupo = 'Propagados' AND consolidado.Sub_Consultoria LIKE 'PDE 1 %'))
-                    AND #CNPJ GROUP BY farmacias.RazaoSocial, consolidado.Mes, consolidado.Grupo, consolidado.Sub_Consultoria
-                    UNION SELECT '' AS Razao_Social,consolidado.Cnpj, consolidado.Mes, 'Total' AS Grupo, 'RELAC (PBM)'AS Sub_Consultoria,   
-                    SUM(consolidado.Valor_Liquido) AS Liquido, SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) AS Desconto
-                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Ano = @Ano
-                    AND consolidado.Sub_Consultoria LIKE 'RELAC (PBM)'  GROUP BY consolidado.Mes,consolidado.Cnpj 
-                    UNION SELECT '' AS Razao_Social,consolidado.Cnpj, consolidado.Mes, 'Total' AS Grupo, 'PDE 2 (trata)'AS Sub_Consultoria,   
-                    SUM(consolidado.Valor_Liquido) AS Liquido, SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) AS Desconto
-                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Ano = @Ano
-                    AND consolidado.Sub_Consultoria LIKE 'PDE 2 %'  GROUP BY consolidado.Mes,consolidado.Cnpj
-                    UNION SELECT '' AS Razao_Social,consolidado.Cnpj, consolidado.Mes, 'Total' AS Grupo, 'PORT (PSICO)'AS Sub_Consultoria,   
-                    SUM(consolidado.Valor_Liquido) AS Liquido, SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) AS Desconto
-                    FROM consolidado WHERE consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND consolidado.Ano = @Ano
-                    AND consolidado.Sub_Consultoria LIKE 'PORT (PSICO)' GROUP BY consolidado.Mes,consolidado.Cnpj   
-                    UNION SELECT '' AS Razao_Social,consolidado.Cnpj, consolidado.Mes, 'zzzzzz' AS Grupo, 'zzzzzz'AS Sub_Consultoria, 
-                    SUM(consolidado.Valor_Liquido) AS Liquido, SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) AS Desconto
-                    FROM consolidado WHERE consolidado.Ano = @Ano AND consolidado.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') 
-                    GROUP BY consolidado.Cnpj) AS xTemp WHERE Mes > 0");
+                strSQL.Append(@"SELECT 
+                CNPJ,
+                NomeFantasia,
+                RazaoSocial,
+                Ano,
+                Mes,
+                sub_consultoria,
+                SUM(quantidade) AS ""quantidade""
+                FROM(
+                SELECT
+                consolidado.CNPJ,
+                farmacias.NomeFantasia,
+                farmacias.RazaoSocial,
+                consolidado.Ano,
+                consolidado.Mes,
+                consolidado.sub_consultoria,
+                consolidado.quantidade
+                FROM
+                consolidado
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                WHERE 
+                UPPER(consolidado.sub_consultoria) like '%PDE%'
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
+                (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                string strCnpj = string.Empty;
+                if (!clsUser.TipoId.Equals(1))
+                        strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
 
-                if (strLoja != "")
+                strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, sub_consultoria
+                ORDER BY Ano, Mes DESC");
+
+                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
                 {
-                    strCnpj = " AND Cnpj IN ('" + strLoja + "')";
-                    strSQL.Append(strCnpj);
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
                 }
                 else
                 {
-                    if (clsUser.Access == "nvg")
-                    {
-                        cmdGrafic.CommandText += "SELECT farmacias.Cnpj FROM memberships"
-                            + " INNER JOIN redesfarmaceuticas ON memberships.UserId = redesfarmaceuticas.UserId"
-                            + " INNER JOIN farmacias ON redesfarmaceuticas.Id = farmacias.idRede"
-                            + " WHERE memberships.UserId = @UserId";
-                        cmdGrafic.Parameters.Clear();
-                        cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UserId", clsUser.UserId));
-
-                        msc.Open();
-                        using (IDataReader drdCnpj = cmdGrafic.ExecuteReader())
-                        {
-                            while (drdCnpj.Read())
-                            {
-                                lstCnpj.Add(!drdCnpj.IsDBNull(drdCnpj.GetOrdinal("Cnpj")) ? drdCnpj.GetString(drdCnpj.GetOrdinal("Cnpj")) : string.Empty);
-                            }
-                        }
-                        msc.Close();
-
-                        if (lstCnpj.Count > 0)
-                        {
-                            clsUser.Cnpj = new List<string>();
-                            lstCnpj.ForEach(delegate(string _cnpj)
-                            {
-                                clsUser.Cnpj.Add(_cnpj);
-                            });
-                        }
-
-                        if (clsUser.Cnpj != null)
-                        {
-                            if (clsUser.Cnpj.Count > 0)
-                            {
-                                strCnpj = " AND Cnpj IN ('";
-
-                                int i = 0;
-                                clsUser.Cnpj.ForEach(delegate(string _cnpj)
-                                {
-                                    if (i == 0) { strCnpj += _cnpj; i++; } else { strCnpj += "', '" + _cnpj; i++; }
-                                });
-                                strCnpj += "')";
-                                strSQL.Append(strCnpj);
-                            }
-                        }
-                    }
-                    else if (clsUser.Access == "nvp")
-                    {
-                        cmdGrafic.CommandText += "SELECT farmacias.Cnpj FROM usuarios_farmacias"
-                            + " INNER JOIN farmacias ON usuarios_farmacias.FarmaciaId = farmacias.Id"
-                            + " INNER JOIN memberships ON usuarios_farmacias.UserId = memberships.UserId"
-                            + " WHERE memberships.UserId = @UserId OR farmacias.ProprietarioId = @UserId";
-                        cmdGrafic.Parameters.Clear();
-                        cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UserId", clsUser.UserId));
-
-                        msc.Open();
-                        using (IDataReader drdCnpj = cmdGrafic.ExecuteReader())
-                        {
-                            while (drdCnpj.Read())
-                            {
-                                lstCnpj.Add(!drdCnpj.IsDBNull(drdCnpj.GetOrdinal("Cnpj")) ? drdCnpj.GetString(drdCnpj.GetOrdinal("Cnpj")) : string.Empty);
-                            }
-                        }
-                        msc.Close();
-
-                        if (lstCnpj.Count > 0)
-                        {
-                            clsUser.Cnpj = new List<string>();
-                            lstCnpj.ForEach(delegate(string _cnpj)
-                            {
-                                clsUser.Cnpj.Add(_cnpj);
-                            });
-                        }
-
-                        if (clsUser.Cnpj != null)
-                        {
-                            if (clsUser.Cnpj.Count > 0)
-                            {
-                                strCnpj = " AND Cnpj IN ('";
-                                int i = 0;
-                                clsUser.Cnpj.ForEach(delegate(string _cnpj)
-                                {
-                                    if (i == 0) { strCnpj += _cnpj; i++; } else { strCnpj += "', '" + _cnpj; i++; }
-                                });
-                                strCnpj += "')";
-                                strSQL.Append(strCnpj);
-
-                            }
-                        }
-                    }
+                    strIni = strIni.Replace("/"," ");
+                    strFim = strFim.Replace("/", " ");
                 }
 
-
-                strSQL.Append(" ORDER BY Grupo, Sub_Consultoria,Mes ");
-
-                cmdGrafic.CommandText = strSQL.ToString().Replace("#CNPJ", strCnpj.Replace("AND ", "consolidado."));
+                cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@Ano", intAno));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -411,7 +378,7 @@ namespace SIAO.SRV.DAL
                 {
                     while (drdGrafic.Read())
                     {
-                        clsGrafic.Add(LoadGrfic(drdGrafic));
+                        clsGrafic.Add(LoadGrficII(drdGrafic));
                     }
                 }
             }
@@ -423,38 +390,70 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        #endregion
-
-        #region .: Persistence :.
-
-        public static IndicesGraficTO InsetIndices(IndicesGraficTO clsIndicesGrafic, string strConnection)
+        internal static List<Grafic2TO> GetGraficAno(string strIni, string strFim, UsersTO clsUsers, int intRedeId)
         {
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            List<string> lstCnpj = new List<string>();
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("INSERT INTO indice_relatorios (indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto)");
-                strSQL.Append(" VALUES (@grupo, @categoria, @venda, @desconto);");
-                strSQL.Append("SELECT indice_relatorios.id, indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto");
-                strSQL.Append(" FROM indice_relatorios WHERE indice_relatorios.id=@@IDENTITY;");
+                strSQL.Append(@"SELECT 
+                CNPJ,
+                NomeFantasia,
+                RazaoSocial,
+                Ano,
+                Mes,
+                sub_consultoria,
+                SUM(quantidade) AS ""quantidade""
+                FROM(
+                SELECT
+                consolidado.CNPJ,
+                farmacias.NomeFantasia,
+                farmacias.RazaoSocial,
+                consolidado.Ano,
+                consolidado.Mes,
+                consolidado.sub_consultoria,
+                consolidado.quantidade
+                FROM
+                consolidado
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                WHERE farmacias.idRede = @idRede 
+                AND UPPER(consolidado.sub_consultoria) like '%PDE%'
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
+                (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
-                DbCommand cmdIndicesGrafic = msc.CreateCommand();
-                cmdIndicesGrafic.CommandText = strSQL.ToString();
+                DbCommand cmdGrafic = msc.CreateCommand();
 
-                cmdIndicesGrafic.Parameters.Clear();
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@grupo", clsIndicesGrafic.grupo));
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@categoria", clsIndicesGrafic.categoria));
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@venda", clsIndicesGrafic.venda));
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@desconto", clsIndicesGrafic.desconto));
+                strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, sub_consultoria
+                ORDER BY Ano, Mes DESC");
 
+                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                {
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                }
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
+
+                cmdGrafic.CommandText = strSQL.ToString();
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", intRedeId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
-                using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
                 {
-                    while (drdIndicesGrafic.Read())
+                    while (drdGrafic.Read())
                     {
-                        clsIndicesGrafic = LoadIndicesGrafic(drdIndicesGrafic);
+                        clsGrafic.Add(LoadGrficII(drdGrafic));
                     }
                 }
             }
@@ -463,80 +462,499 @@ namespace SIAO.SRV.DAL
                 msc.Close();
             }
 
-            return clsIndicesGrafic;
+            return clsGrafic;
         }
 
-        public static Boolean UpdateIndices(IndicesGraficTO clsIndicesGrafic, string strConnection)
+        internal static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
         {
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            List<string> lstCnpj = new List<string>();
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("UPDATE indice_relatorios SET indice_relatorios.grupo=@grupo, indice_relatorios.categoria=@categoria, indice_relatorios.venda=@venda, indice_relatorios.desconto=@desconto");
-                strSQL.Append(" WHERE indice_relatorios.id=@id;");
+                strSQL.Append(@"SELECT * FROM
+                (SELECT
+                ""public"".consolidado.cnpj,
+                ""public"".farmacias.nomefantasia,
+                ""public"".farmacias.razaosocial,
+                ""public"".consolidado.ano,
+                ""public"".consolidado.mes,
+                ""public"".consolidado.grupo,
+                sum(""public"".consolidado.valor_liquido) AS ""Total Liquido""
+                FROM
+                ""public"".consolidado
+                INNER JOIN ""public"".farmacias ON ""public"".farmacias.cnpj = ""public"".consolidado.cnpj
+                WHERE
+                ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
+                GROUP BY ""public"".consolidado.cnpj,
+                ""public"".farmacias.nomefantasia,
+                ""public"".farmacias.razaosocial,
+                ""public"".consolidado.ano,
+                ""public"".consolidado.mes,
+                ""public"".consolidado.grupo
+                UNION ALL
+                SELECT
+                NULL,
+                NULL,
+                NULL,
+                consolidado.Ano,
+                consolidado.Mes,
+                'Total',
+                Sum(consolidado.Valor_Liquido) AS ""Liquido""
+                FROM
+                consolidado
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                WHERE 
+                ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
+                AND farmacias.idRede = @idRede
+                GROUP BY Ano, Mes
+                ) AS a ORDER BY Ano, Mes, Cnpj DESC");
 
-                DbCommand cmdIndicesGrafic = msc.CreateCommand();
-                cmdIndicesGrafic.CommandText = strSQL.ToString();
-                cmdIndicesGrafic.Parameters.Clear();
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Int32, "@id", clsIndicesGrafic.id));
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@grupo", clsIndicesGrafic.grupo));
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@categoria", clsIndicesGrafic.categoria));
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@venda", clsIndicesGrafic.venda));
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@desconto", clsIndicesGrafic.desconto));
+                DbCommand cmdGrafic = msc.CreateCommand();
 
+                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                {
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                }
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
+
+                cmdGrafic.CommandText = strSQL.ToString();
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", intRedeId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
-                cmdIndicesGrafic.ExecuteNonQuery();
-
-                return true;
-            }
-            catch
-            {
-                return false;
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
+                    while (drdGrafic.Read())
+                    {
+                        clsGrafic.Add(LoadGrficIII(drdGrafic));
+                    }
+                }
             }
             finally
             {
                 msc.Close();
             }
+
+            return clsGrafic;
         }
 
-        public static Boolean DeleteIndice(IndicesGraficTO clsIndicesGrafic, string strConnection)
+        internal static List<Grafic2TO> Grafic31ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
         {
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            List<string> lstCnpj = new List<string>();
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("DELETE FROM indice_relatorios");
-                strSQL.Append(" WHERE indice_relatorios.id=@id;");
+                strSQL.Append(@"SELECT * FROM
+                (SELECT
+                ""public"".consolidado.cnpj,
+                ""public"".farmacias.nomefantasia,
+                ""public"".farmacias.razaosocial,
+                ""public"".consolidado.ano,
+                ""public"".consolidado.mes,
+                ""public"".consolidado.grupo,
+                sum(""public"".consolidado.valor_liquido) AS ""Total Liquido""
+                FROM
+                ""public"".consolidado
+                INNER JOIN ""public"".farmacias ON ""public"".farmacias.cnpj = ""public"".consolidado.cnpj
+                WHERE
+                ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
+                GROUP BY ""public"".consolidado.cnpj,
+                ""public"".farmacias.nomefantasia,
+                ""public"".farmacias.razaosocial,
+                ""public"".consolidado.ano,
+                ""public"".consolidado.mes,
+                ""public"".consolidado.grupo
+                UNION ALL
+                SELECT
+                NULL,
+                NULL,
+                NULL,
+                consolidado.Ano,
+                consolidado.Mes,
+                'Total',
+                Sum(consolidado.Valor_Liquido) AS ""Liquido""
+                FROM
+                consolidado
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                WHERE 
+                ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
+                AND usuarios_vinculos.UsuarioId = @UsuarioId
+                GROUP BY Ano, Mes
+                ) AS a ORDER BY Ano, Mes, Cnpj DESC");
 
+                DbCommand cmdGrafic = msc.CreateCommand();
 
-                DbCommand cmdIndicesGrafic = msc.CreateCommand();
-                cmdIndicesGrafic.CommandText = strSQL.ToString();
+                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                {
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                }
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
 
-                cmdIndicesGrafic.Parameters.Clear();
-                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Int32, "@id", clsIndicesGrafic.id));
-
+                cmdGrafic.CommandText = strSQL.ToString();
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
-                cmdIndicesGrafic.ExecuteNonQuery();
-
-                return true;
-            }
-            catch
-            {
-                return false;
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
+                    while (drdGrafic.Read())
+                    {
+                        clsGrafic.Add(LoadGrficIII(drdGrafic));
+                    }
+                }
             }
             finally
             {
                 msc.Close();
             }
+
+            return clsGrafic;
         }
 
-        #endregion
+        internal static List<Grafic2TO> Grafic32ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
+        {
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            List<string> lstCnpj = new List<string>();
 
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT 
+                CNPJ,
+                NomeFantasia,
+                RazaoSocial,
+                Ano,
+                Mes,
+                Grupo,
+                SUM(Valor_Liquido) AS ""Liquido""
+                FROM(
+                SELECT
+                consolidado.CNPJ,
+                farmacias.NomeFantasia,
+                farmacias.RazaoSocial,
+                consolidado.Ano,
+                consolidado.Mes,
+                ""upper""(
+                CASE 
+		                WHEN consolidado.Grupo IS NULL THEN 'Não Identificado'
+		                ELSE consolidado.Grupo
+                END
+                ) as Grupo,
+                consolidado.Valor_Liquido
+                FROM
+                consolidado
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                WHERE 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
+                AND farmacias.idRede = @idRede
+                ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
+                ORDER BY Ano, Mes DESC");
 
+                DbCommand cmdGrafic = msc.CreateCommand();
+
+                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                {
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                }
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
+
+                cmdGrafic.CommandText = strSQL.ToString();
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", intRedeId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.CommandTimeout = 9999;
+                msc.Open();
+
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
+                    while (drdGrafic.Read())
+                    {
+                        clsGrafic.Add(LoadGrficIII(drdGrafic));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsGrafic;
+        }
+
+        internal static List<Grafic2TO> Grafic32ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
+        {
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            List<string> lstCnpj = new List<string>();
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT 
+                CNPJ,
+                NomeFantasia,
+                RazaoSocial,
+                Ano,
+                Mes,
+                Grupo,
+                SUM(Valor_Liquido) AS ""Liquido""
+                FROM(
+                SELECT
+                consolidado.CNPJ,
+                farmacias.NomeFantasia,
+                farmacias.RazaoSocial,
+                consolidado.Ano,
+                consolidado.Mes,
+                ""upper""(
+                CASE 
+		                WHEN consolidado.Grupo IS NULL THEN 'Não Identificado'
+		                ELSE consolidado.Grupo
+                END
+                ) as Grupo,
+                consolidado.Valor_Liquido
+                FROM
+                consolidado
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                WHERE 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
+                AND usuarios_vinculos.UsuarioId = @UsuarioId
+                ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
+                ORDER BY Ano, Mes DESC");
+
+                DbCommand cmdGrafic = msc.CreateCommand();
+
+                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                {
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                }
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
+
+                cmdGrafic.CommandText = strSQL.ToString();
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.CommandTimeout = 9999;
+                msc.Open();
+
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
+                    while (drdGrafic.Read())
+                    {
+                        clsGrafic.Add(LoadGrficIII(drdGrafic));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsGrafic;
+        }
+
+        internal static List<Grafic2TO> Grafic33ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
+        {
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            List<string> lstCnpj = new List<string>();
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT 
+                CNPJ,
+                NomeFantasia,
+                RazaoSocial,
+                Ano,
+                Mes,
+                SubGrupo,
+                SUM(Valor_Liquido) AS ""Liquido""
+                FROM(
+                SELECT
+                consolidado.CNPJ,
+                farmacias.NomeFantasia,
+                farmacias.RazaoSocial,
+                consolidado.Ano,
+                consolidado.Mes,
+                ""upper""(
+                CASE 
+		                WHEN consolidado.sub_consultoria IS NULL THEN 'Não Identificado'
+		                ELSE consolidado.sub_consultoria
+                END
+                ) as SubGrupo,
+                consolidado.Valor_Liquido
+                FROM
+                consolidado
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                WHERE 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
+                AND farmacias.idRede = @idRede
+                ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
+                ORDER BY Ano, Mes DESC");
+
+                DbCommand cmdGrafic = msc.CreateCommand();
+
+                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                {
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                }
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
+
+                cmdGrafic.CommandText = strSQL.ToString();
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", intRedeId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.CommandTimeout = 9999;
+                msc.Open();
+
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
+                    while (drdGrafic.Read())
+                    {
+                        clsGrafic.Add(LoadGrficIV(drdGrafic));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsGrafic;
+        }
+
+        internal static List<Grafic2TO> Grafic33ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
+        {
+            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            List<string> lstCnpj = new List<string>();
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT 
+                CNPJ,
+                NomeFantasia,
+                RazaoSocial,
+                Ano,
+                Mes,
+                SubGrupo,
+                SUM(Valor_Liquido) AS ""Liquido""
+                FROM(
+                SELECT
+                consolidado.CNPJ,
+                farmacias.NomeFantasia,
+                farmacias.RazaoSocial,
+                consolidado.Ano,
+                consolidado.Mes,
+                ""upper""(
+                CASE 
+		                WHEN consolidado.sub_consultoria IS NULL THEN 'Não Identificado'
+		                ELSE consolidado.sub_consultoria
+                END
+                ) as SubGrupo,
+                consolidado.Valor_Liquido
+                FROM
+                consolidado
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                WHERE 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
+                AND usuarios_vinculos.UsuarioId = @UsuarioId
+                ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
+                ORDER BY Ano, Mes DESC");
+
+                DbCommand cmdGrafic = msc.CreateCommand();
+
+                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                {
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                }
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
+
+                cmdGrafic.CommandText = strSQL.ToString();
+                cmdGrafic.Parameters.Clear();
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.CommandTimeout = 9999;
+                msc.Open();
+
+                using (IDataReader drdGrafic = cmdGrafic.ExecuteReader())
+                {
+                    while (drdGrafic.Read())
+                    {
+                        clsGrafic.Add(LoadGrficIV(drdGrafic));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsGrafic;
+        }
+      
         internal static IndicesGraficTO GetIndicesById(int intId, string strConnection)
         {
             IndicesGraficTO clsIndicesGrafic = new IndicesGraficTO();
@@ -677,6 +1095,119 @@ namespace SIAO.SRV.DAL
 
             return clsGrupos;
         }
+
+        #endregion
+
+        #region .: Persistence :.
+
+        public static IndicesGraficTO InsetIndices(IndicesGraficTO clsIndicesGrafic, string strConnection)
+        {
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("INSERT INTO indice_relatorios (indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto)");
+                strSQL.Append(" VALUES (@grupo, @categoria, @venda, @desconto);");
+                strSQL.Append("SELECT indice_relatorios.id, indice_relatorios.grupo, indice_relatorios.categoria, indice_relatorios.venda, indice_relatorios.desconto");
+                strSQL.Append(" FROM indice_relatorios WHERE indice_relatorios.id=@@IDENTITY;");
+
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+
+                cmdIndicesGrafic.Parameters.Clear();
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@grupo", clsIndicesGrafic.grupo));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@categoria", clsIndicesGrafic.categoria));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@venda", clsIndicesGrafic.venda));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@desconto", clsIndicesGrafic.desconto));
+
+                msc.Open();
+
+                using (IDataReader drdIndicesGrafic = cmdIndicesGrafic.ExecuteReader())
+                {
+                    while (drdIndicesGrafic.Read())
+                    {
+                        clsIndicesGrafic = LoadIndicesGrafic(drdIndicesGrafic);
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsIndicesGrafic;
+        }
+
+        public static Boolean UpdateIndices(IndicesGraficTO clsIndicesGrafic, string strConnection)
+        {
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("UPDATE indice_relatorios SET indice_relatorios.grupo=@grupo, indice_relatorios.categoria=@categoria, indice_relatorios.venda=@venda, indice_relatorios.desconto=@desconto");
+                strSQL.Append(" WHERE indice_relatorios.id=@id;");
+
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+                cmdIndicesGrafic.Parameters.Clear();
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Int32, "@id", clsIndicesGrafic.id));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@grupo", clsIndicesGrafic.grupo));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.String, "@categoria", clsIndicesGrafic.categoria));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@venda", clsIndicesGrafic.venda));
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Decimal, "@desconto", clsIndicesGrafic.desconto));
+
+                msc.Open();
+
+                cmdIndicesGrafic.ExecuteNonQuery();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                msc.Close();
+            }
+        }
+
+        public static Boolean DeleteIndice(IndicesGraficTO clsIndicesGrafic, string strConnection)
+        {
+            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append("DELETE FROM indice_relatorios");
+                strSQL.Append(" WHERE indice_relatorios.id=@id;");
+
+
+                DbCommand cmdIndicesGrafic = msc.CreateCommand();
+                cmdIndicesGrafic.CommandText = strSQL.ToString();
+
+                cmdIndicesGrafic.Parameters.Clear();
+                cmdIndicesGrafic.Parameters.Add(DbHelper.GetParameter(cmdIndicesGrafic, DbType.Int32, "@id", clsIndicesGrafic.id));
+
+                msc.Open();
+
+                cmdIndicesGrafic.ExecuteNonQuery();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                msc.Close();
+            }
+        }
+
+        #endregion
 
     }
 }

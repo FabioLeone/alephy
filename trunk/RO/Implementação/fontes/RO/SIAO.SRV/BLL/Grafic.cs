@@ -11,10 +11,10 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static List<GraficTO> GraficList(int intMes, UsersTO clsUsers, string strConnection, string strLoja, int intAno)
+        public static List<GraficTO> GraficList(string strIni, UsersTO clsUsers, string strLoja, string strFim)
         {
             List<GraficTO> clsList = new List<GraficTO>();
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, clsUsers, strConnection, strLoja,intAno);
+            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(strIni, clsUsers, strLoja,strFim);
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
             if (clsGrafic.Count > 0)
@@ -44,10 +44,10 @@ namespace SIAO.SRV.BLL
             return clsList;
         }
 
-        public static List<GraficTO> GraficList(int intMes, UsersTO clsUser, int intAno, int idRede)
+        public static List<GraficTO> GraficList(string strIni, UsersTO clsUser, string strFim, int idRede)
         {
             List<GraficTO> clsList = new List<GraficTO>();
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(intMes, clsUser, intAno, idRede);
+            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strFim, idRede);
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
             if (clsGrafic.Count > 0)
@@ -77,30 +77,65 @@ namespace SIAO.SRV.BLL
             return clsList;
         }
 
-        public static List<GraficTO> GraficListByAno(int intAno, UsersTO clsUsers, string strLoja)
+        public static List<Grafic2TO> GraficListByAno(string strIni, string strFim, UsersTO clsUsers, string strLoja)
         {
-            List<GraficTO> clsList = new List<GraficTO>();
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficAno(intAno, clsUsers, strLoja);
+            List<Grafic2TO> clsList = new List<Grafic2TO>();
+            List<Grafic2TO> clsGrafic = GraficDAL.GetGraficAno(strIni, strFim, clsUsers, strLoja);
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
             if (clsGrafic.Count > 0)
             {
-                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
+                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].quantidade;
 
-                clsGrafic.ForEach(delegate(GraficTO _Grafic)
+                clsGrafic.ForEach(delegate(Grafic2TO _Grafic)
                 {
                     clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
                     {
                         if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
                         {
-                            clsList.Add(new GraficTO()
+                            clsList.Add(new Grafic2TO()
                             {
                                 Sub_Consultoria = _Grafic.Sub_Consultoria,
                                 Razao_Social = _Grafic.Razao_Social,
                                 Mes = _Grafic.Mes,
-                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
-                                Grupo = _Grafic.Grupo,
-                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2)
+                                Liquido = Decimal.Round(((_Grafic.quantidade / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
+                                Ano = _Grafic.Ano,
+                                CNPJ = _Grafic.CNPJ,
+                                NomeFantasia = _Grafic.NomeFantasia
+                            });
+                        }
+                    });
+                });
+            }
+
+            return clsList;
+        }
+
+        public static List<Grafic2TO> GraficListByAno(string strIni, string strFim, UsersTO clsUsers, int intRedeId)
+        {
+            List<Grafic2TO> clsList = new List<Grafic2TO>();
+            List<Grafic2TO> clsGrafic = GraficDAL.GetGraficAno(strIni, strFim, clsUsers, intRedeId);
+            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
+
+            if (clsGrafic.Count > 0)
+            {
+                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].quantidade;
+
+                clsGrafic.ForEach(delegate(Grafic2TO _Grafic)
+                {
+                    clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
+                    {
+                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
+                        {
+                            clsList.Add(new Grafic2TO()
+                            {
+                                Sub_Consultoria = _Grafic.Sub_Consultoria,
+                                Razao_Social = _Grafic.Razao_Social,
+                                Mes = _Grafic.Mes,
+                                Liquido = Decimal.Round(((_Grafic.quantidade / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
+                                Ano = _Grafic.Ano,
+                                CNPJ = _Grafic.CNPJ,
+                                NomeFantasia = _Grafic.NomeFantasia
                             });
                         }
                     });
@@ -113,11 +148,6 @@ namespace SIAO.SRV.BLL
         #endregion
 
         #region .: Search :.
-
-        public static List<GraficTO> GetGraficMes(int intMes, UsersTO clsUsers, string strConnection, string strLoja, int intAno)
-        {
-            return GraficDAL.GetGraficMes(intMes, clsUsers, strConnection, strLoja, intAno);
-        }
 
         public static TotaisGraficMesTO GetTotalMes(int intMes, string strConnection)
         {
@@ -147,6 +177,35 @@ namespace SIAO.SRV.BLL
             return GraficDAL.GetGrupos(strConnection);
         }
 
+        public static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
+        {
+            return GraficDAL.Grafic31ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId);
+        }
+
+        public static List<Grafic2TO> Grafic32ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
+        {
+            return GraficDAL.Grafic32ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId);
+        }
+
+        public static List<Grafic2TO> Grafic33ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
+        {
+            return GraficDAL.Grafic33ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId);
+        }
+
+        public static List<Grafic2TO> Grafic31ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
+        {
+            return GraficDAL.Grafic31ByPeriodo(strIni, strFim, clsUser, strLoja);
+        }
+
+        public static List<Grafic2TO> Grafic32ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
+        {
+            return GraficDAL.Grafic32ByPeriodo(strIni, strFim, clsUser, strLoja);
+        }
+
+        public static List<Grafic2TO> Grafic33ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
+        {
+            return GraficDAL.Grafic33ByPeriodo(strIni, strFim, clsUser, strLoja);
+        }
         #endregion
 
         #region .: Persistence :.

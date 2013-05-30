@@ -17,6 +17,15 @@ namespace SIAO.SRV.TO
     }
 
     [Serializable]
+    public class Grafic2TO : GraficTO
+    {
+        public string CNPJ { get; set; }
+        public string NomeFantasia { get; set; }
+        public int Ano { get; set; }
+        public int quantidade { get; set; }
+    }
+
+    [Serializable]
     public class TotaisGraficMesTO
     {
         public int Mes { get; set; }
