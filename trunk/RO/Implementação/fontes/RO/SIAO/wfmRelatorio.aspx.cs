@@ -82,7 +82,7 @@ namespace SIAO
             ReportViewer2.LocalReport.DataSources.Add(Rds1);
             ReportViewer2.LocalReport.DataSources.Add(Rds2);
 
-            ReportViewer2.LocalReport.ReportPath = "";
+            ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic3.rdlc";
             ReportViewer2.DataBind();
         }
     }
