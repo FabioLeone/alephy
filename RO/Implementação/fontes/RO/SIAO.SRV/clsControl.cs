@@ -452,6 +452,7 @@ namespace SIAO.SRV
             StringBuilder SQL = new StringBuilder();
             SQL.Append(@"SELECT 
                     farmacias.RazaoSocial AS Razao_Social,
+                    farmacias.nomefantasia,
                     consolidado.CNPJ,
                     consolidado.ano,
                     consolidado.Mes,
@@ -470,9 +471,12 @@ namespace SIAO.SRV
                     consolidado.Valor_Desconto AS ""Soma De Valor desconto""
                     FROM
                     consolidado
-                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                    INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                    WHERE consolidado.Grupo in ('Propagados','Alternativos','Genéricos')
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
+
+            if (clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+
+            SQL.Append(@" WHERE consolidado.Grupo in ('Propagados','Alternativos','Genéricos')
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
                     (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
@@ -528,6 +532,7 @@ namespace SIAO.SRV
                         {
                             clsRelat1 or = new clsRelat1();
 
+                            or.Periodo = String.Format("{0} à {1}", strInicio, strFim);
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
                             or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub Consultoria"].ToString();
@@ -538,6 +543,7 @@ namespace SIAO.SRV
                             or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
                             or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
                             or.Ano = Convert.ToInt32(ds.Tables["CrossR1"].Rows[i]["Ano"].ToString());
+                            or.NomeFantasia = ds.Tables["CrossR1"].Rows[i]["nomefantasia"].ToString();
                             if (or.SomaDeValorDesconto > 0)
                             {
                                 if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
@@ -571,15 +577,18 @@ namespace SIAO.SRV
             string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
 
             StringBuilder SQL = new StringBuilder();
-            SQL.Append(String.Format(@"SELECT farmacias.RazaoSocial AS Razao_Social, consolidado.CNPJ,
+            SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,farmacias.nomefantasia, consolidado.CNPJ,
                         consolidado.Mes, consolidado.Ano, consolidado.Sub_Consultoria, consolidado.Grupo,
                         consolidado.Quantidade AS ""Soma De Quantidade"",
                         consolidado.Valor_Bruto AS ""Soma De Valor bruto"",
                         consolidado.Valor_Liquido AS ""Soma De Valor liquido"",
                         consolidado.Valor_Desconto AS ""Soma De Valor desconto"" FROM consolidado
-                        INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                        INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                        WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
+                        INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
+
+            if(clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+
+            SQL.Append(String.Format(@" WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
                         AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND
                         (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') <= to_date('{2} {3}','MM-yyyy'))", strMI, strAI, strMF, strAF));
 
@@ -638,6 +647,8 @@ namespace SIAO.SRV
                                 if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
                             }
                             else { or.PercentualDesconto = 0; }
+                            or.NomeFantasia = ds.Tables["CrossR1"].Rows[i]["nomefantasia"].ToString();
+                            or.Periodo = String.Format("{0} à {1}", strMI + "/" + strAI, strMF + "/" + strAF);
 
                             lr.Add(or);
                         }
@@ -663,9 +674,12 @@ namespace SIAO.SRV
                     consolidado.Sub_Consultoria,consolidado.Grupo,SUM(consolidado.Quantidade) AS ""Soma De Quantidade"",
                     SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"", SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
-                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                    INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                    LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ";
+
+            if(clsUser.TipoId.Equals(1)) SQL += " INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId";
+            else SQL += " LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId";
+
+            SQL += @" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
                     AND farmacias.idRede = @idRede
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
@@ -703,6 +717,8 @@ namespace SIAO.SRV
                             clsRelat1 or = new clsRelat1();
 
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                            or.NomeFantasia = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                            or.Periodo = String.Format("{0} à {1}", strMI + "/" + strAI, strMF + "/" + strAF);
                             or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
@@ -712,6 +728,7 @@ namespace SIAO.SRV
                             or.SomaDeValorLiquido = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor liquido"].ToString());
                             or.SomaDeValorDesconto = Convert.ToDecimal(ds.Tables["CrossR1"].Rows[i]["Soma De Valor desconto"].ToString());
                             or.Ano = Convert.ToInt32(ds.Tables["CrossR1"].Rows[i]["Ano"].ToString());
+                            
                             if (or.SomaDeValorDesconto > 0)
                             {
                                 if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
@@ -743,9 +760,11 @@ namespace SIAO.SRV
                     consolidado.Sub_Consultoria,consolidado.Grupo,SUM(consolidado.Quantidade) AS ""Soma De Quantidade"",
                     SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"", SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
-                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                    INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                    LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
+            if(clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+
+            SQL.Append(@" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE consolidado.Grupo IN ('Genéricos' , 'Alternativos' , 'Propagados') 
                     AND farmacias.idRede = @idRede
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
@@ -780,7 +799,9 @@ namespace SIAO.SRV
                         {
                             clsRelat1 or = new clsRelat1();
 
+                            or.Periodo = String.Format("{0} à {1}", strInicio, strFim);
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
+                            or.NomeFantasia = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
                             or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
