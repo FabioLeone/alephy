@@ -20,5 +20,6 @@ namespace SIAO.SRV
         public decimal PercentualDesconto { get; set; }
         public string NomeFantasia { get; set; }
         public string Importado { get; set; }
+        public string Periodo { get; set; }
     }
 }
