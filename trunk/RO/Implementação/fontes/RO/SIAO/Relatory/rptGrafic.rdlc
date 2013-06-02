@@ -36,6 +36,14 @@
           <DataField>Desconto</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>SIAOSRVBLL</DataSourceName>
@@ -45,7 +53,7 @@
         <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
         <rd:TableName>GraficBLL</rd:TableName>
         <rd:ObjectDataSourceSelectMethod>GraficList</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(Int32)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(System.String, SIAO.SRV.TO.UsersTO, System.String, System.String)</rd:ObjectDataSourceSelectMethodSignature>
         <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
@@ -345,7 +353,7 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>="Participação por Grupo - \n" + "Loja - " + Fields!Razao_Social.Value + " \n " + "Mês - " + Fields!Mes.Value.ToString</Caption>
+            <Caption>="Participação por Grupo - \n" + "Loja - " + Fields!Nome_Fantasia.Value + " \n " + "Periodo - " + Fields!Periodo.Value.ToString</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
