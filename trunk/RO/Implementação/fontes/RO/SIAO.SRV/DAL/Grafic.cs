@@ -54,7 +54,15 @@ namespace SIAO.SRV.DAL
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("ano")); else clsGrafic.Ano = 0;
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("mes")); } else { clsGrafic.Mes = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("grupo"))) { clsGrafic.Grupo = drdGrafic.GetString(drdGrafic.GetOrdinal("grupo")); } else { clsGrafic.Grupo = string.Empty; }
-            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
+            try
+            {
+                if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
+            }
+            catch 
+            {
+                clsGrafic.Liquido = 0; 
+            }
+            
 
             return clsGrafic;
         }
