@@ -497,7 +497,7 @@ namespace SIAO.SRV.DAL
                 ""public"".consolidado.ano,
                 ""public"".consolidado.mes,
                 ""public"".consolidado.grupo,
-                sum(""public"".consolidado.valor_liquido) AS ""Total Liquido""
+                sum(""public"".consolidado.valor_liquido) AS ""Liquido""
                 FROM
                 ""public"".consolidado
                 INNER JOIN ""public"".farmacias ON ""public"".farmacias.cnpj = ""public"".consolidado.cnpj
@@ -532,7 +532,7 @@ namespace SIAO.SRV.DAL
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
                     strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
@@ -584,7 +584,7 @@ namespace SIAO.SRV.DAL
                 ""public"".consolidado.ano,
                 ""public"".consolidado.mes,
                 ""public"".consolidado.grupo,
-                sum(""public"".consolidado.valor_liquido) AS ""Total Liquido""
+                sum(""public"".consolidado.valor_liquido) AS ""Liquido""
                 FROM
                 ""public"".consolidado
                 INNER JOIN ""public"".farmacias ON ""public"".farmacias.cnpj = ""public"".consolidado.cnpj
@@ -612,14 +612,17 @@ namespace SIAO.SRV.DAL
                 WHERE 
                 ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
-                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
-                AND usuarios_vinculos.UsuarioId = @UsuarioId
-                GROUP BY Ano, Mes
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
+
+                if (!clsUser.TipoId.Equals(1))
+                    strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+
+                strSQL.Append(@"GROUP BY Ano, Mes
                 ) AS a ORDER BY Ano, Mes, Cnpj DESC");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
                     strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
@@ -698,7 +701,7 @@ namespace SIAO.SRV.DAL
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
                     strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
@@ -770,14 +773,17 @@ namespace SIAO.SRV.DAL
                 INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
                 WHERE 
                 (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
-                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
-                AND usuarios_vinculos.UsuarioId = @UsuarioId
-                ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
+                
+                if(!clsUser.TipoId.Equals(1))
+                    strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+                
+                strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
                 ORDER BY Ano, Mes DESC");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
                     strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
@@ -856,7 +862,7 @@ namespace SIAO.SRV.DAL
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
                     strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
@@ -927,14 +933,17 @@ namespace SIAO.SRV.DAL
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                 INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
                 WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
-                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
-                AND usuarios_vinculos.UsuarioId = @UsuarioId
-                ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
+                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
+
+                if (!clsUser.TipoId.Equals(1))
+                    strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+
+                strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
                 ORDER BY Ano, Mes DESC");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
                     strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
