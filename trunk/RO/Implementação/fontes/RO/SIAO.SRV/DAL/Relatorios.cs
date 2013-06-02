@@ -50,9 +50,12 @@ namespace SIAO.SRV
             consolidado.Valor_Desconto AS ""Soma De Valor desconto""
             FROM
             consolidado
-            INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-            INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-            WHERE consolidado.Grupo in ('Propagados','Alternativos','Genéricos')
+            INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
+
+            if(clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            
+            SQL.Append(@" WHERE consolidado.Grupo in ('Propagados','Alternativos','Genéricos')
             AND (to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') >= to_date( @DataIni, 'MM yyyy')
             AND to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') <= to_date( @DataFim, 'MM yyyy'))");
 
@@ -125,6 +128,7 @@ namespace SIAO.SRV
                             or.NomeFantasia = ds.Tables["Mod2"].Rows[i]["Nome Fantasia"].ToString();
                             or.Ano = Convert.ToInt32(ds.Tables["Mod2"].Rows[i]["Ano"].ToString());
                             or.Importado = ds.Tables["Mod2"].Rows[i]["importado"].ToString();
+                            or.Periodo = String.Format("{0} à {1}", strIni, strFim);
 
                             lr.Add(or);
                         }
@@ -153,7 +157,7 @@ namespace SIAO.SRV
             string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
 
             StringBuilder SQL = new StringBuilder();
-            SQL.Append(String.Format(@"SELECT 
+            SQL.Append(@"SELECT 
             consolidado.CNPJ,
             farmacias.nomefantasia AS ""Nome Fantasia"",
             farmacias.RazaoSocial AS ""Razao Social"",
@@ -182,9 +186,12 @@ namespace SIAO.SRV
             consolidado.Valor_Desconto AS ""Soma De Valor desconto""
             FROM
             consolidado
-            INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-            INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-            WHERE consolidado.Grupo in ('Propagados','Alternativos','Genéricos')
+            INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
+
+            if(clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+
+            SQL.Append(String.Format(@" WHERE consolidado.Grupo in ('Propagados','Alternativos','Genéricos')
             AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND
             (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') <= to_date('{2} {3}','MM-yyyy'))", strMI, strAI, strMF, strAF));
 
@@ -245,6 +252,7 @@ namespace SIAO.SRV
                             else { or.PercentualDesconto = 0; }
                             or.NomeFantasia = ds.Tables["Mod2"].Rows[i]["Nome Fantasia"].ToString();
                             or.Importado = ds.Tables["Mod2"].Rows[i]["importado"].ToString();
+                            or.Periodo = String.Format("{0} à {1}", strMI + "/" + strAI, strMF + "/" + strAF);
 
                             lr.Add(or);
                         }
@@ -349,6 +357,7 @@ namespace SIAO.SRV
                                 if (or.SomaDeValorBruto > 0) { or.PercentualDesconto = Convert.ToDecimal(((or.SomaDeValorDesconto / or.SomaDeValorBruto) * 100).ToString("N2")); }
                             }
                             else { or.PercentualDesconto = 0; }
+                            or.Periodo = String.Format("{0} à {1}", strIni, strFim);
 
                             lr.Add(or);
                         }
@@ -454,6 +463,7 @@ namespace SIAO.SRV
                             or.NomeFantasia = ds.Tables["Mod2"].Rows[i]["Nome Fantasia"].ToString();
                             or.Ano = Convert.ToInt32(ds.Tables["Mod2"].Rows[i]["Ano"].ToString());
                             or.Importado = ds.Tables["Mod2"].Rows[i]["importado"].ToString();
+                            or.Periodo = String.Format("{0} à {1}", strMI + "/" + strAI, strMF + "/" + strAF);
 
                             lr.Add(or);
                         }
