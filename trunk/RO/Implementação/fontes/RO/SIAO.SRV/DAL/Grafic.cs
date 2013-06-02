@@ -769,7 +769,7 @@ namespace SIAO.SRV.DAL
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                 INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
                 WHERE 
-                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
                 AND usuarios_vinculos.UsuarioId = @UsuarioId
                 ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
@@ -926,8 +926,7 @@ namespace SIAO.SRV.DAL
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                 INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
-                WHERE 
-                AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
                 AND usuarios_vinculos.UsuarioId = @UsuarioId
                 ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
