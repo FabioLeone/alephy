@@ -34,7 +34,9 @@ namespace SIAO.SRV.BLL
                                 Mes = _Grafic.Mes,
                                 Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Grupo = _Grafic.Grupo,
-                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2)
+                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
+                                Periodo = String.Format("{0} à {1}", strIni, strFim),
+                                Nome_Fantasia = _Grafic.Nome_Fantasia
                             });
                         }
                     });
@@ -67,7 +69,9 @@ namespace SIAO.SRV.BLL
                                 Mes = _Grafic.Mes,
                                 Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Grupo = _Grafic.Grupo,
-                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2)
+                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
+                                Periodo = String.Format("{0} à {1}",strIni,strFim),
+                                Nome_Fantasia = _Grafic.Nome_Fantasia
                             });
                         }
                     });
@@ -101,7 +105,7 @@ namespace SIAO.SRV.BLL
                                 Liquido = Decimal.Round(((_Grafic.quantidade / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Ano = _Grafic.Ano,
                                 CNPJ = _Grafic.CNPJ,
-                                NomeFantasia = _Grafic.NomeFantasia
+                                Nome_Fantasia = _Grafic.Nome_Fantasia
                             });
                         }
                     });
@@ -135,7 +139,7 @@ namespace SIAO.SRV.BLL
                                 Liquido = Decimal.Round(((_Grafic.quantidade / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Ano = _Grafic.Ano,
                                 CNPJ = _Grafic.CNPJ,
-                                NomeFantasia = _Grafic.NomeFantasia
+                                Nome_Fantasia = _Grafic.Nome_Fantasia
                             });
                         }
                     });

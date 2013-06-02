@@ -24,6 +24,7 @@ namespace SIAO.SRV.DAL
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Sub_Consultoria"))) { clsGrafic.Sub_Consultoria = drdGrafic.GetString(drdGrafic.GetOrdinal("Sub_Consultoria")); } else { clsGrafic.Sub_Consultoria = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Desconto"))) { clsGrafic.Desconto = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Desconto")); } else { clsGrafic.Desconto = 0; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("nomefantasia"))) clsGrafic.Nome_Fantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("nomefantasia")); else clsGrafic.Nome_Fantasia = string.Empty;
 
             return clsGrafic;
         }
@@ -33,7 +34,7 @@ namespace SIAO.SRV.DAL
             Grafic2TO clsGrafic = new Grafic2TO();
 
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("CNPJ"))) clsGrafic.CNPJ = drdGrafic.GetString(drdGrafic.GetOrdinal("CNPJ")); else clsGrafic.CNPJ = string.Empty;
-            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("NomeFantasia"))) clsGrafic.NomeFantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("NomeFantasia")); else clsGrafic.NomeFantasia = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("NomeFantasia"))) clsGrafic.Nome_Fantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("NomeFantasia")); else clsGrafic.Nome_Fantasia = string.Empty;
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("RazaoSocial"))) { clsGrafic.Razao_Social = drdGrafic.GetString(drdGrafic.GetOrdinal("RazaoSocial")); } else { clsGrafic.Razao_Social = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Mes")); } else { clsGrafic.Mes = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Ano")); else clsGrafic.Ano = 0;
@@ -48,7 +49,7 @@ namespace SIAO.SRV.DAL
             Grafic2TO clsGrafic = new Grafic2TO();
 
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("cnpj"))) clsGrafic.CNPJ = drdGrafic.GetString(drdGrafic.GetOrdinal("cnpj")); else clsGrafic.CNPJ = string.Empty;
-            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("nomefantasia"))) clsGrafic.NomeFantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("nomefantasia")); else clsGrafic.NomeFantasia = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("nomefantasia"))) clsGrafic.Nome_Fantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("nomefantasia")); else clsGrafic.Nome_Fantasia = string.Empty;
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("razaosocial"))) { clsGrafic.Razao_Social = drdGrafic.GetString(drdGrafic.GetOrdinal("razaosocial")); } else { clsGrafic.Razao_Social = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("ano")); else clsGrafic.Ano = 0;
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("mes")); } else { clsGrafic.Mes = 0; }
@@ -63,7 +64,7 @@ namespace SIAO.SRV.DAL
             Grafic2TO clsGrafic = new Grafic2TO();
 
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("cnpj"))) clsGrafic.CNPJ = drdGrafic.GetString(drdGrafic.GetOrdinal("cnpj")); else clsGrafic.CNPJ = string.Empty;
-            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("nomefantasia"))) clsGrafic.NomeFantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("nomefantasia")); else clsGrafic.NomeFantasia = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("nomefantasia"))) clsGrafic.Nome_Fantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("nomefantasia")); else clsGrafic.Nome_Fantasia = string.Empty;
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("razaosocial"))) { clsGrafic.Razao_Social = drdGrafic.GetString(drdGrafic.GetOrdinal("razaosocial")); } else { clsGrafic.Razao_Social = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("ano")); else clsGrafic.Ano = 0;
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("mes")); } else { clsGrafic.Mes = 0; }
@@ -110,7 +111,7 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT farmacias.razaosocial, xTemp.* FROM (
+                strSQL.Append(@"SELECT farmacias.razaosocial,farmacias.nomefantasia, xTemp.* FROM (
                 select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
 	                from consolidado
 	                WHERE 
@@ -135,9 +136,12 @@ namespace SIAO.SRV.DAL
 	                Grupo in ('Propagados','Alternativos','Genéricos')
                     GROUP BY cnpj, mes, ano
                 ) AS xTemp 
-                INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ
-                INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
+                INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
+
+                if (clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+
+                strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
                 AND (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
@@ -183,7 +187,7 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT farmacias.razaosocial, xTemp.* FROM (
+                strSQL.Append(@"SELECT farmacias.razaosocial,farmacias.nomefantasia, xTemp.* FROM (
                 select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
 	                from consolidado
 	                WHERE 
@@ -208,9 +212,12 @@ namespace SIAO.SRV.DAL
 	                Grupo in ('Propagados','Alternativos','Genéricos')
 			        GROUP BY cnpj, mes, ano
                 ) AS xTemp 
-                INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ
-                INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId
-                WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
+                INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
+                
+                if(clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+                
+                strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
                 AND (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))
                 AND farmacias.idRede = @idRede
                 ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
