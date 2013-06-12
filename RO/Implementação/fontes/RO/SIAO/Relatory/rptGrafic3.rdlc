@@ -222,6 +222,8 @@
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style />
+                    <Label>#SERIE #PERCENT</Label>
+                    <Visible>true</Visible>
                   </ChartDataLabel>
                   <Style />
                   <ChartMarker>
@@ -440,8 +442,8 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <Height>5cm</Height>
-        <Width>7.5cm</Width>
+        <Height>21cm</Height>
+        <Width>29.7cm</Width>
         <Style>
           <Border>
             <Color>LightGrey</Color>
@@ -481,6 +483,8 @@
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style />
+                    <Label>#PERCENT</Label>
+                    <Visible>true</Visible>
                   </ChartDataLabel>
                   <Style />
                   <ChartMarker>
@@ -699,9 +703,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet2</DataSetName>
-        <Top>5.52979cm</Top>
-        <Height>5cm</Height>
-        <Width>7.5cm</Width>
+        <Top>21cm</Top>
+        <Height>21cm</Height>
+        <Width>29.7cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -742,6 +746,8 @@
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style />
+                    <Label>#PERCENT</Label>
+                    <Visible>true</Visible>
                   </ChartDataLabel>
                   <Style />
                   <ChartMarker>
@@ -934,7 +940,7 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>Gráfivco 3</Caption>
+            <Caption>Gráfico 3</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -960,9 +966,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet3</DataSetName>
-        <Top>11.65966cm</Top>
-        <Height>5cm</Height>
-        <Width>7.5cm</Width>
+        <Top>42cm</Top>
+        <Height>21cm</Height>
+        <Width>29.7cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -974,13 +980,13 @@
         </Style>
       </Chart>
     </ReportItems>
-    <Height>7.47559in</Height>
+    <Height>63cm</Height>
     <Style />
   </Body>
-  <Width>8.21875in</Width>
+  <Width>29.82437cm</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>
     <RightMargin>2cm</RightMargin>
     <TopMargin>2cm</TopMargin>
