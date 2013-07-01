@@ -792,7 +792,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>0.89513in</Size>
+                            <Size>0.90811in</Size>
                             <CellContents>
                               <Textbox Name="Grupo">
                                 <CanGrow>true</CanGrow>
@@ -830,7 +830,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.89513in</Size>
+                            <Size>0.90811in</Size>
                             <CellContents>
                               <Textbox Name="Textbox55">
                                 <CanGrow>true</CanGrow>
@@ -901,7 +901,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.89513in</Size>
+                            <Size>0.90811in</Size>
                             <CellContents>
                               <Textbox Name="Textbox48">
                                 <CanGrow>true</CanGrow>
@@ -949,8 +949,8 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>3cm</Height>
-        <Width>7.39278cm</Width>
+        <Height>2.99999cm</Height>
+        <Width>7.42574cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1810,8 +1810,8 @@
           <BreakLocation>End</BreakLocation>
         </PageBreak>
         <Top>9cm</Top>
-        <Height>3cm</Height>
-        <Width>7.42575cm</Width>
+        <Height>2.99999cm</Height>
+        <Width>7.42574cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -2670,8 +2670,8 @@
           <BreakLocation>End</BreakLocation>
         </PageBreak>
         <Top>6cm</Top>
-        <Height>3cm</Height>
-        <Width>7.42575cm</Width>
+        <Height>2.99999cm</Height>
+        <Width>7.42574cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -3533,8 +3533,8 @@
         <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
         <Top>12cm</Top>
-        <Height>3cm</Height>
-        <Width>7.42575cm</Width>
+        <Height>3.00004cm</Height>
+        <Width>7.42574cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -4393,8 +4393,8 @@
           <BreakLocation>End</BreakLocation>
         </PageBreak>
         <Top>3cm</Top>
-        <Height>3cm</Height>
-        <Width>7.42575cm</Width>
+        <Height>3.00004cm</Height>
+        <Width>7.42574cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -4403,7 +4403,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>15cm</Height>
+    <Height>15.00005cm</Height>
     <Style />
   </Body>
   <Width>7.42575cm</Width>
