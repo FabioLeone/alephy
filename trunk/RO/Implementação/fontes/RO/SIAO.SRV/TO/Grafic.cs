@@ -23,7 +23,7 @@ namespace SIAO.SRV.TO
     {
         public string CNPJ { get; set; }
         public int Ano { get; set; }
-        public int quantidade { get; set; }
+        public long quantidade { get; set; }
     }
 
     [Serializable]

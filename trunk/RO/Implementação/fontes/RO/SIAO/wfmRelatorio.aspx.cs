@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using SIAO.SRV.TO;
 using System.Configuration;
 using Microsoft.Reporting;
+using SIAO.SRV;
 
 namespace SIAO
 {
@@ -57,6 +58,7 @@ namespace SIAO
             ReportViewer2.LocalReport.DataSources.Add(Rds);
 
             ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic.rdlc";
+            ReportViewer2.LocalReport.DisplayName = clsFuncs.SetFileName("Grafico_1", clsGrafic);
             ReportViewer2.DataBind();
         }
 
@@ -68,6 +70,7 @@ namespace SIAO
             ReportViewer2.LocalReport.DataSources.Add(Rds);
 
             ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic2.rdlc";
+            ReportViewer2.LocalReport.DisplayName = clsFuncs.SetFileName("Grafico_2", clsGrafic);
             ReportViewer2.DataBind();
         }
 
@@ -83,6 +86,7 @@ namespace SIAO
             ReportViewer2.LocalReport.DataSources.Add(Rds2);
 
             ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic3.rdlc";
+            ReportViewer2.LocalReport.DisplayName = clsFuncs.SetFileName("Grafico_3", clsGrafic1);
             ReportViewer2.DataBind();
         }
     }

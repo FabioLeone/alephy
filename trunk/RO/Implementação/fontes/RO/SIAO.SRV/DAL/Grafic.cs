@@ -39,7 +39,7 @@ namespace SIAO.SRV.DAL
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Mes")); } else { clsGrafic.Mes = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Ano")); else clsGrafic.Ano = 0;
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("sub_consultoria"))) { clsGrafic.Sub_Consultoria = drdGrafic.GetString(drdGrafic.GetOrdinal("sub_consultoria")); } else { clsGrafic.Sub_Consultoria = string.Empty; }
-            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("quantidade"))) { clsGrafic.quantidade = drdGrafic.GetInt32(drdGrafic.GetOrdinal("quantidade")); } else { clsGrafic.quantidade = 0; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("quantidade"))) { clsGrafic.quantidade = drdGrafic.GetInt64(drdGrafic.GetOrdinal("quantidade")); } else { clsGrafic.quantidade = 0; }
 
             return clsGrafic;
         }
@@ -370,7 +370,7 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, sub_consultoria
                 ORDER BY Ano, Mes DESC");
 
-                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
                     strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
@@ -445,7 +445,7 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, sub_consultoria
                 ORDER BY Ano, Mes DESC");
 
-                if (!String.IsNullOrEmpty(strIni) && !String.IsNullOrEmpty(strFim))
+                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
                     strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();

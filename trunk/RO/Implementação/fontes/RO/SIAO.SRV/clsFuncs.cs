@@ -4,6 +4,8 @@ using System.Xml;
 using System.Data;
 using System.IO;
 using System.Collections.Generic;
+using System.Text;
+using SIAO.SRV.TO;
 
 namespace SIAO.SRV
 {
@@ -79,6 +81,73 @@ namespace SIAO.SRV
 
                 return cnpj;
             }
+        }
+
+        public static string SetFileName(string strRelatorio, List<clsRelat1> lr)
+        {
+            StringBuilder sbName = new StringBuilder();
+            string a = "",b = "";
+            Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+            sbName.Append(strRelatorio);
+
+            if (lr.Count > 0)
+            {
+                a = lr[0].NomeFantasia.Replace(" ", "");
+                a = r.Replace(a, String.Empty);
+                sbName.Append("_" + a);
+
+                b = lr[0].Periodo.Replace(" ", "");
+                b = r.Replace(b, String.Empty);
+                sbName.Append("_" + b);
+            }
+
+            return sbName.ToString();
+        }
+
+
+        public static string SetFileName(string strGrafico, List<GraficTO> clsGrafic)
+        {
+            StringBuilder sbName = new StringBuilder();
+            string a = "", b = "";
+            Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+            sbName.Append(strGrafico);
+
+            if (clsGrafic.Count > 0)
+            {
+                a = clsGrafic[0].Nome_Fantasia.Replace(" ", "");
+                a = r.Replace(a, String.Empty);
+                sbName.Append("_" + a);
+
+                b = clsGrafic[0].Periodo.Replace(" ", "");
+                b = r.Replace(b, String.Empty);
+                sbName.Append("_" + b);
+            }
+
+            return sbName.ToString();
+        }
+
+        public static string SetFileName(string strGrafico, List<Grafic2TO> clsGrafic)
+        {
+            StringBuilder sbName = new StringBuilder();
+            string a = "", b = "";
+            Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+            sbName.Append(strGrafico);
+
+            if (clsGrafic.Count > 0)
+            {
+                a = clsGrafic[0].Nome_Fantasia.Replace(" ", "");
+                a = r.Replace(a, String.Empty);
+                sbName.Append("_" + a);
+
+                b = clsGrafic[0].Periodo.Replace(" ", "");
+                b = r.Replace(b, String.Empty);
+                sbName.Append("_" + b);
+            }
+
+            return sbName.ToString();
         }
         #endregion
 
