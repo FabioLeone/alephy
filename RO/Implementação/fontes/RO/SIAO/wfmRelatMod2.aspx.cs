@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SIAO.SRV.TO;
 using System.Configuration;
+using SIAO.SRV;
 
 namespace SIAO
 {
@@ -40,6 +41,7 @@ namespace SIAO
             ReportViewer1.LocalReport.Dispose();
             ReportViewer1.LocalReport.DataSources.Add(Rds);
             ReportViewer1.LocalReport.ReportPath = "Relatory/rptCross2.rdlc";
+            ReportViewer1.LocalReport.DisplayName = clsFuncs.SetFileName("Modelo_2", lr);
             ReportViewer1.DataBind();
         }
     }
