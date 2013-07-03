@@ -683,7 +683,7 @@ namespace SIAO.SRV.DAL
                 consolidado.Mes,
                 ""upper""(
                 CASE 
-		                WHEN consolidado.Grupo IS NULL THEN 'Não Identificado'
+		                WHEN consolidado.Grupo IS NULL THEN 'NE'
 		                ELSE consolidado.Grupo
                 END
                 ) as Grupo,
@@ -762,7 +762,7 @@ namespace SIAO.SRV.DAL
                 consolidado.Mes,
                 ""upper""(
                 CASE 
-		                WHEN consolidado.Grupo IS NULL THEN 'Não Identificado'
+		                WHEN consolidado.Grupo IS NULL THEN 'NE'
 		                ELSE consolidado.Grupo
                 END
                 ) as Grupo,
@@ -844,7 +844,7 @@ namespace SIAO.SRV.DAL
                 consolidado.Mes,
                 ""upper""(
                 CASE 
-		                WHEN consolidado.sub_consultoria IS NULL THEN 'Não Identificado'
+		                WHEN consolidado.sub_consultoria IS NULL THEN 'NE'
 		                ELSE consolidado.sub_consultoria
                 END
                 ) as SubGrupo,
@@ -923,7 +923,7 @@ namespace SIAO.SRV.DAL
                 consolidado.Mes,
                 ""upper""(
                 CASE 
-		                WHEN consolidado.sub_consultoria IS NULL THEN 'Não Identificado'
+		                WHEN consolidado.sub_consultoria IS NULL THEN 'NE'
 		                ELSE consolidado.sub_consultoria
                 END
                 ) as SubGrupo,

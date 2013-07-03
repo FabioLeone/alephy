@@ -129,45 +129,6 @@
               </TablixCornerCell>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox157">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox157</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <LeftBorder>
-                        <Style>None</Style>
-                      </LeftBorder>
-                      <RightBorder>
-                        <Style>None</Style>
-                      </RightBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
                   <Textbox Name="Textbox158">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
@@ -245,136 +206,6 @@
             <TablixCornerRow>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox1">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox1</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox2">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox2</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox3">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox3</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox4">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox4</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-            </TablixCornerRow>
-            <TablixCornerRow>
-              <TablixCornerCell>
-                <CellContents>
                   <Textbox Name="Textbox26">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
@@ -382,7 +213,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Razao</Value>
+                            <Value>Loja</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -392,39 +223,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox26</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <BackgroundColor>Silver</BackgroundColor>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox23">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Cnpj</Value>
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox23</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -511,12 +309,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>0.75563in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -551,7 +349,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -587,7 +385,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -599,6 +397,15 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!SomaDeQuantidade.Value)</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -632,7 +439,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.23622in</Size>
+                        <Size>0.22966in</Size>
                         <CellContents>
                           <Textbox Name="Textbox160">
                             <CanGrow>true</CanGrow>
@@ -684,16 +491,16 @@
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>0.23622in</Size>
+                                <Size>0.22966in</Size>
                                 <CellContents>
-                                  <Textbox Name="Ano">
+                                  <Textbox Name="Group1">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!Ano.Value</Value>
+                                            <Value>=Choose(Fields!Mes.Value,"Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez")&amp;"/"&amp;Right(Fields!Ano.Value,2)</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -702,7 +509,7 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Ano</rd:DefaultName>
+                                    <rd:DefaultName>Group1</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Color>LightGrey</Color>
@@ -718,45 +525,7 @@
                                 </CellContents>
                               </TablixHeader>
                               <TablixMembers>
-                                <TablixMember>
-                                  <TablixHeader>
-                                    <Size>0.23622in</Size>
-                                    <CellContents>
-                                      <Textbox Name="Group1">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value>=Fields!Mes.Value</Value>
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style>
-                                              <TextAlign>Center</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Group1</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Color>LightGrey</Color>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <BackgroundColor>Silver</BackgroundColor>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixHeader>
-                                  <TablixMembers>
-                                    <TablixMember />
-                                  </TablixMembers>
-                                </TablixMember>
+                                <TablixMember />
                               </TablixMembers>
                             </TablixMember>
                           </TablixMembers>
@@ -783,7 +552,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.47592in</Size>
+                <Size>0.41397in</Size>
                 <CellContents>
                   <Textbox Name="Razao">
                     <CanGrow>true</CanGrow>
@@ -792,7 +561,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!Razao.Value</Value>
+                            <Value>=Fields!NomeFantasia.Value+" - "+Fields!Cnpj.Value</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -827,39 +596,6 @@
                       <Value>=Fields!Cnpj.Value</Value>
                     </SortExpression>
                   </SortExpressions>
-                  <TablixHeader>
-                    <Size>0.35092in</Size>
-                    <CellContents>
-                      <Textbox Name="Cnpj">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>=Fields!Cnpj.Value</Value>
-                                <Style />
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Cnpj</rd:DefaultName>
-                        <Style>
-                          <Border>
-                            <Color>LightGrey</Color>
-                            <Style>Solid</Style>
-                          </Border>
-                          <VerticalAlign>Middle</VerticalAlign>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                          <WritingMode>Vertical</WritingMode>
-                        </Style>
-                      </Textbox>
-                    </CellContents>
-                  </TablixHeader>
                   <TablixMembers>
                     <TablixMember>
                       <Group Name="Grupo">
@@ -873,7 +609,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.50563in</Size>
                         <CellContents>
                           <Textbox Name="Grupo">
                             <CanGrow>true</CanGrow>
@@ -895,10 +631,12 @@
                                 <Color>LightGrey</Color>
                                 <Style>Solid</Style>
                               </Border>
+                              <VerticalAlign>Middle</VerticalAlign>
                               <PaddingLeft>2pt</PaddingLeft>
                               <PaddingRight>2pt</PaddingRight>
                               <PaddingTop>2pt</PaddingTop>
                               <PaddingBottom>2pt</PaddingBottom>
+                              <WritingMode>Vertical</WritingMode>
                             </Style>
                           </Textbox>
                         </CellContents>
@@ -916,7 +654,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.15146in</Size>
                             <CellContents>
                               <Textbox Name="SubConsultoria">
                                 <CanGrow>true</CanGrow>
@@ -952,7 +690,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.15146in</Size>
                             <CellContents>
                               <Textbox Name="Textbox55">
                                 <CanGrow>true</CanGrow>
@@ -989,7 +727,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.50563in</Size>
                         <CellContents>
                           <Textbox Name="Textbox47">
                             <CanGrow>true</CanGrow>
@@ -1023,9 +761,9 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.15146in</Size>
                             <CellContents>
-                              <Textbox Name="Textbox48">
+                              <Textbox Name="Textbox2">
                                 <CanGrow>true</CanGrow>
                                 <KeepTogether>true</KeepTogether>
                                 <Paragraphs>
@@ -1039,7 +777,7 @@
                                     <Style />
                                   </Paragraph>
                                 </Paragraphs>
-                                <rd:DefaultName>Textbox48</rd:DefaultName>
+                                <rd:DefaultName>Textbox2</rd:DefaultName>
                                 <Style>
                                   <Border>
                                     <Color>LightGrey</Color>
@@ -1067,9 +805,9 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0cm</Top>
-        <Height>3.59999cm</Height>
-        <Width>9.60016cm</Width>
+        <Left>0.02507cm</Left>
+        <Height>2.91667cm</Height>
+        <Width>7.17979cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1097,45 +835,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox156</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <LeftBorder>
-                        <Style>None</Style>
-                      </LeftBorder>
-                      <RightBorder>
-                        <Style>None</Style>
-                      </RightBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox169">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox157</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -1273,42 +972,6 @@
               </TablixCornerCell>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox174">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox159</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <LeftBorder>
-                        <Style>None</Style>
-                      </LeftBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
                   <Textbox Name="Textbox173">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
@@ -1390,7 +1053,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Razao</Value>
+                            <Value>Loja</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -1400,39 +1063,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox26</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <BackgroundColor>Silver</BackgroundColor>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox24">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Cnpj</Value>
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox23</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -1519,12 +1149,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>0.75316in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1561,7 +1191,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1599,7 +1229,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1644,7 +1274,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.23622in</Size>
+                    <Size>0.22966in</Size>
                     <CellContents>
                       <Textbox Name="Textbox207">
                         <CanGrow>true</CanGrow>
@@ -1696,7 +1326,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.23622in</Size>
+                            <Size>0.22966in</Size>
                             <CellContents>
                               <Textbox Name="Ano4">
                                 <CanGrow>true</CanGrow>
@@ -1732,7 +1362,7 @@
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>0.23622in</Size>
+                                <Size>0.22966in</Size>
                                 <CellContents>
                                   <Textbox Name="Group10">
                                     <CanGrow>true</CanGrow>
@@ -1790,7 +1420,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.47592in</Size>
+                <Size>0.30733in</Size>
                 <CellContents>
                   <Textbox Name="Razao2">
                     <CanGrow>true</CanGrow>
@@ -1799,7 +1429,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!Razao.Value</Value>
+                            <Value>=Fields!NomeFantasia.Value+" - "+Fields!Cnpj.Value</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -1834,39 +1464,6 @@
                       <Value>=Fields!Cnpj.Value</Value>
                     </SortExpression>
                   </SortExpressions>
-                  <TablixHeader>
-                    <Size>0.35092in</Size>
-                    <CellContents>
-                      <Textbox Name="Cnpj2">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>=Fields!Cnpj.Value</Value>
-                                <Style />
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Cnpj</rd:DefaultName>
-                        <Style>
-                          <Border>
-                            <Color>LightGrey</Color>
-                            <Style>Solid</Style>
-                          </Border>
-                          <VerticalAlign>Middle</VerticalAlign>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                          <WritingMode>Vertical</WritingMode>
-                        </Style>
-                      </Textbox>
-                    </CellContents>
-                  </TablixHeader>
                   <TablixMembers>
                     <TablixMember>
                       <Group Name="Grupo2">
@@ -1880,7 +1477,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.99275in</Size>
                         <CellContents>
                           <Textbox Name="Grupo2">
                             <CanGrow>true</CanGrow>
@@ -1923,7 +1520,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.09636in</Size>
                             <CellContents>
                               <Textbox Name="SubConsultoria2">
                                 <CanGrow>true</CanGrow>
@@ -1959,7 +1556,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.09636in</Size>
                             <CellContents>
                               <Textbox Name="Textbox61">
                                 <CanGrow>true</CanGrow>
@@ -1996,7 +1593,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.99275in</Size>
                         <CellContents>
                           <Textbox Name="Textbox54">
                             <CanGrow>true</CanGrow>
@@ -2030,7 +1627,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.09636in</Size>
                             <CellContents>
                               <Textbox Name="Textbox62">
                                 <CanGrow>true</CanGrow>
@@ -2074,10 +1671,9 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Top>15.24cm</Top>
-        <Left>0.00001cm</Left>
-        <Height>3.59999cm</Height>
-        <Width>9.60016cm</Width>
+        <Top>14cm</Top>
+        <Height>3.5cm</Height>
+        <Width>8cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -2106,45 +1702,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox156</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <LeftBorder>
-                        <Style>None</Style>
-                      </LeftBorder>
-                      <RightBorder>
-                        <Style>None</Style>
-                      </RightBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox177">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox157</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -2282,42 +1839,6 @@
               </TablixCornerCell>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox183">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox159</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <LeftBorder>
-                        <Style>None</Style>
-                      </LeftBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
                   <Textbox Name="Textbox181">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
@@ -2399,7 +1920,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Razao</Value>
+                            <Value>Loja</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -2409,39 +1930,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox26</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <BackgroundColor>Silver</BackgroundColor>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox25">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Cnpj</Value>
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox23</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -2528,12 +2016,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>0.75563in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2568,7 +2056,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2604,7 +2092,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2649,7 +2137,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.23622in</Size>
+                        <Size>0.22966in</Size>
                         <CellContents>
                           <Textbox Name="Textbox175">
                             <CanGrow>true</CanGrow>
@@ -2701,7 +2189,7 @@
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>0.23622in</Size>
+                                <Size>0.22966in</Size>
                                 <CellContents>
                                   <Textbox Name="Ano3">
                                     <CanGrow>true</CanGrow>
@@ -2737,7 +2225,7 @@
                               <TablixMembers>
                                 <TablixMember>
                                   <TablixHeader>
-                                    <Size>0.23622in</Size>
+                                    <Size>0.22966in</Size>
                                     <CellContents>
                                       <Textbox Name="Group14">
                                         <CanGrow>true</CanGrow>
@@ -2797,7 +2285,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.47592in</Size>
+                <Size>0.3098in</Size>
                 <CellContents>
                   <Textbox Name="Razao3">
                     <CanGrow>true</CanGrow>
@@ -2806,7 +2294,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!Razao.Value</Value>
+                            <Value>=Fields!NomeFantasia.Value+" - "+Fields!Cnpj.Value</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -2841,39 +2329,6 @@
                       <Value>=Fields!Cnpj.Value</Value>
                     </SortExpression>
                   </SortExpressions>
-                  <TablixHeader>
-                    <Size>0.35092in</Size>
-                    <CellContents>
-                      <Textbox Name="Cnpj3">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>=Fields!Cnpj.Value</Value>
-                                <Style />
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Cnpj</rd:DefaultName>
-                        <Style>
-                          <Border>
-                            <Color>LightGrey</Color>
-                            <Style>Solid</Style>
-                          </Border>
-                          <VerticalAlign>Middle</VerticalAlign>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                          <WritingMode>Vertical</WritingMode>
-                        </Style>
-                      </Textbox>
-                    </CellContents>
-                  </TablixHeader>
                   <TablixMembers>
                     <TablixMember>
                       <Group Name="Grupo3">
@@ -2887,7 +2342,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.99521in</Size>
                         <CellContents>
                           <Textbox Name="Grupo3">
                             <CanGrow>true</CanGrow>
@@ -2930,7 +2385,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="SubConsultoria3">
                                 <CanGrow>true</CanGrow>
@@ -2966,7 +2421,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="Textbox73">
                                 <CanGrow>true</CanGrow>
@@ -3003,7 +2458,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.99521in</Size>
                         <CellContents>
                           <Textbox Name="Textbox74">
                             <CanGrow>true</CanGrow>
@@ -3037,7 +2492,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="Textbox75">
                                 <CanGrow>true</CanGrow>
@@ -3081,10 +2536,10 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Top>11.43cm</Top>
-        <Left>0.00001cm</Left>
-        <Height>3.59999cm</Height>
-        <Width>9.60016cm</Width>
+        <Top>10.5cm</Top>
+        <Left>0.02507cm</Left>
+        <Height>3.5cm</Height>
+        <Width>8cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -3113,45 +2568,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox156</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <LeftBorder>
-                        <Style>None</Style>
-                      </LeftBorder>
-                      <RightBorder>
-                        <Style>None</Style>
-                      </RightBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox185">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox157</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -3289,42 +2705,6 @@
               </TablixCornerCell>
               <TablixCornerCell>
                 <CellContents>
-                  <Textbox Name="Textbox191">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox159</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <LeftBorder>
-                        <Style>None</Style>
-                      </LeftBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
                   <Textbox Name="Textbox190">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
@@ -3406,7 +2786,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Razao</Value>
+                            <Value>Loja</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -3416,39 +2796,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox26</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <BackgroundColor>Silver</BackgroundColor>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox30">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Cnpj</Value>
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox23</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -3535,12 +2882,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>0.75563in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3575,7 +2922,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3611,7 +2958,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3656,7 +3003,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.23622in</Size>
+                        <Size>0.22966in</Size>
                         <CellContents>
                           <Textbox Name="Textbox182">
                             <CanGrow>true</CanGrow>
@@ -3708,7 +3055,7 @@
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>0.23622in</Size>
+                                <Size>0.22966in</Size>
                                 <CellContents>
                                   <Textbox Name="Ano2">
                                     <CanGrow>true</CanGrow>
@@ -3744,7 +3091,7 @@
                               <TablixMembers>
                                 <TablixMember>
                                   <TablixHeader>
-                                    <Size>0.23622in</Size>
+                                    <Size>0.22966in</Size>
                                     <CellContents>
                                       <Textbox Name="Group18">
                                         <CanGrow>true</CanGrow>
@@ -3804,7 +3151,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.47592in</Size>
+                <Size>0.3098in</Size>
                 <CellContents>
                   <Textbox Name="Razao4">
                     <CanGrow>true</CanGrow>
@@ -3813,7 +3160,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!Razao.Value</Value>
+                            <Value>=Fields!NomeFantasia.Value+" - "+Fields!Cnpj.Value</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -3848,39 +3195,6 @@
                       <Value>=Fields!Cnpj.Value</Value>
                     </SortExpression>
                   </SortExpressions>
-                  <TablixHeader>
-                    <Size>0.35092in</Size>
-                    <CellContents>
-                      <Textbox Name="Cnpj4">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>=Fields!Cnpj.Value</Value>
-                                <Style />
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Cnpj</rd:DefaultName>
-                        <Style>
-                          <Border>
-                            <Color>LightGrey</Color>
-                            <Style>Solid</Style>
-                          </Border>
-                          <VerticalAlign>Middle</VerticalAlign>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                          <WritingMode>Vertical</WritingMode>
-                        </Style>
-                      </Textbox>
-                    </CellContents>
-                  </TablixHeader>
                   <TablixMembers>
                     <TablixMember>
                       <Group Name="Grupo4">
@@ -3894,7 +3208,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.99521in</Size>
                         <CellContents>
                           <Textbox Name="Grupo4">
                             <CanGrow>true</CanGrow>
@@ -3937,7 +3251,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="SubConsultoria4">
                                 <CanGrow>true</CanGrow>
@@ -3973,7 +3287,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="Textbox86">
                                 <CanGrow>true</CanGrow>
@@ -4010,7 +3324,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.99521in</Size>
                         <CellContents>
                           <Textbox Name="Textbox87">
                             <CanGrow>true</CanGrow>
@@ -4044,7 +3358,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="Textbox88">
                                 <CanGrow>true</CanGrow>
@@ -4088,10 +3402,10 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Top>7.62cm</Top>
-        <Left>0.00001cm</Left>
-        <Height>3.59999cm</Height>
-        <Width>9.60016cm</Width>
+        <Top>7cm</Top>
+        <Left>0.02507cm</Left>
+        <Height>3.5cm</Height>
+        <Width>8cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -4120,45 +3434,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox156</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <TopBorder>
-                        <Style>None</Style>
-                      </TopBorder>
-                      <LeftBorder>
-                        <Style>None</Style>
-                      </LeftBorder>
-                      <RightBorder>
-                        <Style>None</Style>
-                      </RightBorder>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox193">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style />
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox157</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -4218,6 +3493,7 @@
                       <PaddingBottom>2pt</PaddingBottom>
                     </Style>
                   </Textbox>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixCornerCell>
               <TablixCornerCell>
@@ -4261,38 +3537,6 @@
               <TablixCornerCell>
                 <CellContents>
                   <Textbox Name="Textbox14">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value />
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox11</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox13">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
@@ -4397,7 +3641,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Razao</Value>
+                            <Value>Loja</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -4407,39 +3651,6 @@
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox26</rd:DefaultName>
-                    <Style>
-                      <Border>
-                        <Color>LightGrey</Color>
-                        <Style>Solid</Style>
-                      </Border>
-                      <BackgroundColor>Silver</BackgroundColor>
-                      <PaddingLeft>2pt</PaddingLeft>
-                      <PaddingRight>2pt</PaddingRight>
-                      <PaddingTop>2pt</PaddingTop>
-                      <PaddingBottom>2pt</PaddingBottom>
-                    </Style>
-                  </Textbox>
-                </CellContents>
-              </TablixCornerCell>
-              <TablixCornerCell>
-                <CellContents>
-                  <Textbox Name="Textbox34">
-                    <CanGrow>true</CanGrow>
-                    <KeepTogether>true</KeepTogether>
-                    <Paragraphs>
-                      <Paragraph>
-                        <TextRuns>
-                          <TextRun>
-                            <Value>Cnpj</Value>
-                            <Style />
-                          </TextRun>
-                        </TextRuns>
-                        <Style>
-                          <TextAlign>Center</TextAlign>
-                        </Style>
-                      </Paragraph>
-                    </Paragraphs>
-                    <rd:DefaultName>Textbox23</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>LightGrey</Color>
@@ -4526,12 +3737,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>0.75563in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -4566,7 +3777,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -4602,7 +3813,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.22966in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -4647,7 +3858,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.23622in</Size>
+                        <Size>0.22966in</Size>
                         <CellContents>
                           <Textbox Name="Textbox189">
                             <CanGrow>true</CanGrow>
@@ -4699,7 +3910,7 @@
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>0.23622in</Size>
+                                <Size>0.22966in</Size>
                                 <CellContents>
                                   <Textbox Name="Ano1">
                                     <CanGrow>true</CanGrow>
@@ -4735,7 +3946,7 @@
                               <TablixMembers>
                                 <TablixMember>
                                   <TablixHeader>
-                                    <Size>0.23622in</Size>
+                                    <Size>0.22966in</Size>
                                     <CellContents>
                                       <Textbox Name="Group22">
                                         <CanGrow>true</CanGrow>
@@ -4795,7 +4006,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.47592in</Size>
+                <Size>0.3098in</Size>
                 <CellContents>
                   <Textbox Name="Razao5">
                     <CanGrow>true</CanGrow>
@@ -4804,7 +4015,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!Razao.Value</Value>
+                            <Value>=Fields!NomeFantasia.Value+" - "+Fields!Cnpj.Value</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -4839,39 +4050,6 @@
                       <Value>=Fields!Cnpj.Value</Value>
                     </SortExpression>
                   </SortExpressions>
-                  <TablixHeader>
-                    <Size>0.35092in</Size>
-                    <CellContents>
-                      <Textbox Name="Cnpj5">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>=Fields!Cnpj.Value</Value>
-                                <Style />
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Cnpj</rd:DefaultName>
-                        <Style>
-                          <Border>
-                            <Color>LightGrey</Color>
-                            <Style>Solid</Style>
-                          </Border>
-                          <VerticalAlign>Middle</VerticalAlign>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                          <WritingMode>Vertical</WritingMode>
-                        </Style>
-                      </Textbox>
-                    </CellContents>
-                  </TablixHeader>
                   <TablixMembers>
                     <TablixMember>
                       <Group Name="Grupo5">
@@ -4885,7 +4063,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.99521in</Size>
                         <CellContents>
                           <Textbox Name="Grupo5">
                             <CanGrow>true</CanGrow>
@@ -4928,7 +4106,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="SubConsultoria5">
                                 <CanGrow>true</CanGrow>
@@ -4964,7 +4142,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="Textbox99">
                                 <CanGrow>true</CanGrow>
@@ -5001,7 +4179,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.98425in</Size>
+                        <Size>0.99521in</Size>
                         <CellContents>
                           <Textbox Name="Textbox100">
                             <CanGrow>true</CanGrow>
@@ -5035,7 +4213,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.98425in</Size>
+                            <Size>1.08896in</Size>
                             <CellContents>
                               <Textbox Name="Textbox101">
                                 <CanGrow>true</CanGrow>
@@ -5079,10 +4257,10 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Top>3.81cm</Top>
-        <Left>0.00001cm</Left>
-        <Height>3.59999cm</Height>
-        <Width>9.60016cm</Width>
+        <Top>3.5cm</Top>
+        <Left>0.02507cm</Left>
+        <Height>3.5cm</Height>
+        <Width>8cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -5091,10 +4269,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>7.41732in</Height>
+    <Height>6.88976in</Height>
     <Style />
   </Body>
-  <Width>21cm</Width>
+  <Width>21.02507cm</Width>
   <Page>
     <PageHeader>
       <Height>1.61396cm</Height>
@@ -5119,7 +4297,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>NomeFantasia</rd:DefaultName>
-          <Left>0.00001cm</Left>
+          <Top>0.02618cm</Top>
+          <Left>0.02508cm</Left>
           <Height>1.5525cm</Height>
           <Width>16.06446cm</Width>
           <Style>
