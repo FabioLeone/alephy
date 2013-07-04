@@ -10,13 +10,16 @@ using SIAO.SRV;
 
 namespace SIAO
 {
-    public partial class wfmRelatMod2 : System.Web.UI.Page
+    public partial class wfmRelatMod1 : System.Web.UI.Page
     {
+        #region .: Variables :.
         List<SRV.clsRelat1> lr = new List<SRV.clsRelat1>();
         UsersTO clsUser = new UsersTO();
         SRV.clsControl oc = new SRV.clsControl();
         string scn = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
+        #endregion
 
+        #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
@@ -31,7 +34,9 @@ namespace SIAO
                 loadRelat(lr, clsUser);
             }
         }
+        #endregion
 
+        #region .: Methods :.
         private void loadRelat(List<SRV.clsRelat1> lr, UsersTO clsUser)
         {
             //if (lr.Count == 0) { lr = oc.GetCross(scn, clsUser, ""); }
@@ -44,5 +49,6 @@ namespace SIAO
             ReportViewer1.LocalReport.DisplayName = clsFuncs.SetFileName("Modelo_2", lr);
             ReportViewer1.DataBind();
         }
+        #endregion
     }
 }
