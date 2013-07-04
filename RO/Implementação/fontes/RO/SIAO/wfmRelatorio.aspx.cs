@@ -6,13 +6,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SIAO.SRV.TO;
 using System.Configuration;
-using Microsoft.Reporting;
 using SIAO.SRV;
 
 namespace SIAO
 {
-    public partial class wfmRelatorio : System.Web.UI.Page
+    public partial class _wfmRelatorio : System.Web.UI.Page
     {
+        #region .: Variables :.
         UsersTO clsUser = new UsersTO();
         List<GraficTO> clsGrafic = new List<GraficTO>();
         List<Grafic2TO> clsGrafic1 = new List<Grafic2TO>();
@@ -20,7 +20,9 @@ namespace SIAO
         List<Grafic2TO> clsGrafic3 = new List<Grafic2TO>();
 
         string strConnection = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
+        #endregion
 
+        #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
@@ -36,7 +38,8 @@ namespace SIAO
                     clsGrafic = (List<GraficTO>)Session["grafic"];
                     loadRelat(clsGrafic, clsUser);
                 }
-                else if (Session["grafic2"] != null) {
+                else if (Session["grafic2"] != null)
+                {
                     clsGrafic2 = (List<Grafic2TO>)Session["grafic2"];
                     loadRelat2(clsGrafic2, clsUser);
                 }
@@ -49,7 +52,9 @@ namespace SIAO
                 }
             }
         }
+        #endregion
 
+        #region .: Methods :.
         private void loadRelat(List<GraficTO> clsGrafic, UsersTO clsUser)
         {
             Microsoft.Reporting.WebForms.ReportDataSource Rds = new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", clsGrafic);
@@ -89,5 +94,6 @@ namespace SIAO
             ReportViewer2.LocalReport.DisplayName = clsFuncs.SetFileName("Grafico_3", clsGrafic1);
             ReportViewer2.DataBind();
         }
+        #endregion
     }
 }

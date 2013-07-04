@@ -128,7 +128,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
-                Response.Redirect("wfmRelatMod1.aspx");
+                clsFuncs.Redirect("wfmRelatMod1.aspx","_blank", "");
             }
             else
             {
@@ -156,7 +156,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
-                Response.Redirect("wfmRelatMod2.aspx");
+                clsFuncs.Redirect("wfmRelatMod2.aspx", "_blank", "");
             }
             else
             {
@@ -193,7 +193,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
-            Response.Redirect("wfmRelatorio.aspx");
+            clsFuncs.Redirect("wfmRelatorio.aspx", "_blank", "");
         }
 
         protected void ibtnGrafic2_Click(object sender, ImageClickEventArgs e)
@@ -227,7 +227,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
-            Response.Redirect("wfmRelatorio.aspx");
+            clsFuncs.Redirect("wfmRelatorio.aspx", "_blank", "");
         }
 
         protected void lblGrafic3_Click(object sender, ImageClickEventArgs e)
@@ -282,7 +282,8 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
-            Response.Redirect("wfmRelatorio.aspx");
+            clsFuncs.Redirect("wfmRelatorio.aspx", "_blank", "");
+
         }
 
         protected void rbtPeriodo_CheckedChanged(object sender, EventArgs e)
