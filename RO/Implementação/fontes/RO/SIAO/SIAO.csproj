@@ -103,11 +103,11 @@
     <Content Include="wfmEnvio.aspx" />
     <Content Include="wfmGerarRelatorios.aspx" />
     <Content Include="wfmLabPage.aspx" />
-    <Content Include="wfmRelatMod1.aspx" />
     <Content Include="wfmRelatMod2.aspx" />
-    <Content Include="wfmRelatorio.aspx" />
+    <Content Include="wfmRelatMod1.aspx" />
     <Content Include="wfmUsers.aspx" />
     <Content Include="wfmVinculos.aspx" />
+    <Content Include="wfmRelatorio.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\wucCadastroUser.ascx.cs">
@@ -259,13 +259,6 @@
     <Compile Include="wfmLabPage.aspx.designer.cs">
       <DependentUpon>wfmLabPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="wfmRelatMod1.aspx.cs">
-      <DependentUpon>wfmRelatMod1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="wfmRelatMod1.aspx.designer.cs">
-      <DependentUpon>wfmRelatMod1.aspx</DependentUpon>
-    </Compile>
     <Compile Include="wfmRelatMod2.aspx.cs">
       <DependentUpon>wfmRelatMod2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,12 +266,12 @@
     <Compile Include="wfmRelatMod2.aspx.designer.cs">
       <DependentUpon>wfmRelatMod2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="wfmRelatorio.aspx.cs">
-      <DependentUpon>wfmRelatorio.aspx</DependentUpon>
+    <Compile Include="wfmRelatMod1.aspx.cs">
+      <DependentUpon>wfmRelatMod1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="wfmRelatorio.aspx.designer.cs">
-      <DependentUpon>wfmRelatorio.aspx</DependentUpon>
+    <Compile Include="wfmRelatMod1.aspx.designer.cs">
+      <DependentUpon>wfmRelatMod1.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfmUsers.aspx.cs">
       <DependentUpon>wfmUsers.aspx</DependentUpon>
@@ -293,6 +286,13 @@
     </Compile>
     <Compile Include="wfmVinculos.aspx.designer.cs">
       <DependentUpon>wfmVinculos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfmRelatorio.aspx.cs">
+      <DependentUpon>wfmRelatorio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfmRelatorio.aspx.designer.cs">
+      <DependentUpon>wfmRelatorio.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
