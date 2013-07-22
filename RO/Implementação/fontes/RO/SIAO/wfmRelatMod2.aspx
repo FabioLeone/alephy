@@ -15,7 +15,7 @@
     <div>
         <rsweb:ReportViewer ID="ReportViewer1" runat="server" Font-Names="Verdana" Font-Size="8pt"
             InteractiveDeviceInfos="(Collection)" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt"
-            Width="100%" Height="100%">
+            Width="100%" Height="600px">
             <LocalReport ReportPath="Relatory\rptCross2.rdlc">
             </LocalReport>
         </rsweb:ReportViewer>
