@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <contenttemplate>
-            <table style="width: 100%; margin-left: 1.25%;">
+            <table style="width: 100%; margin-left: 0.25%;">
                 <tr id="trFiltro" runat="server">
                     <td colspan="2">
                         <fieldset style="width: 96.5%;">

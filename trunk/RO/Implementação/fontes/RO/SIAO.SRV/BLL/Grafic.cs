@@ -105,7 +105,8 @@ namespace SIAO.SRV.BLL
                                 Liquido = Decimal.Round(((_Grafic.quantidade / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Ano = _Grafic.Ano,
                                 CNPJ = _Grafic.CNPJ,
-                                Nome_Fantasia = _Grafic.Nome_Fantasia
+                                Nome_Fantasia = _Grafic.Nome_Fantasia,
+                                Periodo = String.Format("{0} à {1}", strIni, strFim)
                             });
                         }
                     });
@@ -139,7 +140,8 @@ namespace SIAO.SRV.BLL
                                 Liquido = Decimal.Round(((_Grafic.quantidade / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Ano = _Grafic.Ano,
                                 CNPJ = _Grafic.CNPJ,
-                                Nome_Fantasia = _Grafic.Nome_Fantasia
+                                Nome_Fantasia = _Grafic.Nome_Fantasia,
+                                Periodo = String.Format("{0} à {1}", strIni, strFim)
                             });
                         }
                     });
