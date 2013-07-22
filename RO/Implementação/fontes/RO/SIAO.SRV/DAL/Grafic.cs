@@ -40,6 +40,7 @@ namespace SIAO.SRV.DAL
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Ano"))) clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Ano")); else clsGrafic.Ano = 0;
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("sub_consultoria"))) { clsGrafic.Sub_Consultoria = drdGrafic.GetString(drdGrafic.GetOrdinal("sub_consultoria")); } else { clsGrafic.Sub_Consultoria = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("quantidade"))) { clsGrafic.quantidade = drdGrafic.GetInt64(drdGrafic.GetOrdinal("quantidade")); } else { clsGrafic.quantidade = 0; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("grupo"))) clsGrafic.Grupo = drdGrafic.GetString(drdGrafic.GetOrdinal("grupo")); else clsGrafic.Grupo = string.Empty;
 
             return clsGrafic;
         }
@@ -343,7 +344,8 @@ namespace SIAO.SRV.DAL
                 Ano,
                 Mes,
                 sub_consultoria,
-                SUM(quantidade) AS ""quantidade""
+                SUM(quantidade) AS ""quantidade"",
+                grupo
                 FROM(
                 SELECT
                 consolidado.CNPJ,
@@ -352,7 +354,8 @@ namespace SIAO.SRV.DAL
                 consolidado.Ano,
                 consolidado.Mes,
                 consolidado.sub_consultoria,
-                consolidado.quantidade
+                consolidado.quantidade,
+                consolidado.grupo
                 FROM
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
@@ -367,7 +370,7 @@ namespace SIAO.SRV.DAL
                 if (!clsUser.TipoId.Equals(1))
                         strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
 
-                strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, sub_consultoria
+                strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, sub_consultoria, grupo
                 ORDER BY Ano, Mes DESC");
 
                 if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
@@ -421,7 +424,8 @@ namespace SIAO.SRV.DAL
                 Ano,
                 Mes,
                 sub_consultoria,
-                SUM(quantidade) AS ""quantidade""
+                SUM(quantidade) AS ""quantidade"",
+                grupo
                 FROM(
                 SELECT
                 consolidado.CNPJ,
@@ -430,7 +434,8 @@ namespace SIAO.SRV.DAL
                 consolidado.Ano,
                 consolidado.Mes,
                 consolidado.sub_consultoria,
-                consolidado.quantidade
+                consolidado.quantidade,
+                consolidado.grupo
                 FROM
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
@@ -442,7 +447,7 @@ namespace SIAO.SRV.DAL
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, sub_consultoria
+                strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, sub_consultoria, grupo
                 ORDER BY Ano, Mes DESC");
 
                 if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))

@@ -107,7 +107,6 @@ namespace SIAO.SRV
             return sbName.ToString();
         }
 
-
         public static string SetFileName(string strGrafico, List<GraficTO> clsGrafic)
         {
             StringBuilder sbName = new StringBuilder();
@@ -175,7 +174,7 @@ namespace SIAO.SRV
                 string script;
                 if (!String.IsNullOrEmpty(windowFeatures))
                 {
-                    script = "window.open('{0}','{1}', '{2}');";
+                    script = @"window.open('{0}','{1}', '{2}');";
                 }
                 else
                 {
