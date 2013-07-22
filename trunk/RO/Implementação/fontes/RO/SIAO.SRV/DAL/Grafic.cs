@@ -496,24 +496,24 @@ namespace SIAO.SRV.DAL
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT * FROM
                 (SELECT
-                ""public"".consolidado.cnpj,
-                ""public"".farmacias.nomefantasia,
-                ""public"".farmacias.razaosocial,
-                ""public"".consolidado.ano,
-                ""public"".consolidado.mes,
-                ""public"".consolidado.grupo,
-                sum(""public"".consolidado.valor_liquido) AS ""Liquido""
+                consolidado.cnpj,
+                farmacias.nomefantasia,
+                farmacias.razaosocial,
+                consolidado.ano,
+                consolidado.mes,
+                consolidado.grupo,
+                sum(consolidado.valor_liquido) AS ""Liquido""
                 FROM
-                ""public"".consolidado
-                INNER JOIN ""public"".farmacias ON ""public"".farmacias.cnpj = ""public"".consolidado.cnpj
+                consolidado
+                INNER JOIN farmacias ON farmacias.cnpj = consolidado.cnpj
                 WHERE
-                ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
-                GROUP BY ""public"".consolidado.cnpj,
-                ""public"".farmacias.nomefantasia,
-                ""public"".farmacias.razaosocial,
-                ""public"".consolidado.ano,
-                ""public"".consolidado.mes,
-                ""public"".consolidado.grupo
+                UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
+                GROUP BY consolidado.cnpj,
+                farmacias.nomefantasia,
+                farmacias.razaosocial,
+                consolidado.ano,
+                consolidado.mes,
+                consolidado.grupo
                 UNION ALL
                 SELECT
                 NULL,
@@ -528,7 +528,7 @@ namespace SIAO.SRV.DAL
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                 INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
                 WHERE 
-                ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
+                UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
                 AND farmacias.idRede = @idRede
@@ -536,17 +536,6 @@ namespace SIAO.SRV.DAL
                 ) AS a ORDER BY Ano, Mes, Cnpj DESC");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
-
-                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-                {
-                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
-                }
-                else
-                {
-                    strIni = strIni.Replace("/", " ");
-                    strFim = strFim.Replace("/", " ");
-                }
 
                 cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
@@ -583,24 +572,24 @@ namespace SIAO.SRV.DAL
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT * FROM
                 (SELECT
-                ""public"".consolidado.cnpj,
-                ""public"".farmacias.nomefantasia,
-                ""public"".farmacias.razaosocial,
-                ""public"".consolidado.ano,
-                ""public"".consolidado.mes,
-                ""public"".consolidado.grupo,
-                sum(""public"".consolidado.valor_liquido) AS ""Liquido""
+                consolidado.cnpj,
+                farmacias.nomefantasia,
+                farmacias.razaosocial,
+                consolidado.ano,
+                consolidado.mes,
+                consolidado.grupo,
+                sum(consolidado.valor_liquido) AS ""Liquido""
                 FROM
-                ""public"".consolidado
-                INNER JOIN ""public"".farmacias ON ""public"".farmacias.cnpj = ""public"".consolidado.cnpj
+                consolidado
+                INNER JOIN farmacias ON farmacias.cnpj = consolidado.cnpj
                 WHERE
-                ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
-                GROUP BY ""public"".consolidado.cnpj,
-                ""public"".farmacias.nomefantasia,
-                ""public"".farmacias.razaosocial,
-                ""public"".consolidado.ano,
-                ""public"".consolidado.mes,
-                ""public"".consolidado.grupo
+                UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
+                GROUP BY consolidado.cnpj,
+                farmacias.nomefantasia,
+                farmacias.razaosocial,
+                consolidado.ano,
+                consolidado.mes,
+                consolidado.grupo
                 UNION ALL
                 SELECT
                 NULL,
@@ -615,7 +604,7 @@ namespace SIAO.SRV.DAL
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
                 INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
                 WHERE 
-                ""public"".consolidado.grupo like any ('{Propagados,Alternativos,Genéricos}')
+                UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 

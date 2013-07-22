@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SIAO.SRV.TO;
 using SIAO.SRV.DAL;
+using System.Linq;
 
 namespace SIAO.SRV.BLL
 {
@@ -185,6 +186,17 @@ namespace SIAO.SRV.BLL
 
         public static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
         {
+            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
+            {
+                strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+            }
+            else
+            {
+                strIni = strIni.Replace("/", " ");
+                strFim = strFim.Replace("/", " ");
+            }
+
             return GraficDAL.Grafic31ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId);
         }
 
