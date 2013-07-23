@@ -442,8 +442,8 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <Height>21cm</Height>
-        <Width>29.7cm</Width>
+        <Height>20cm</Height>
+        <Width>28.5cm</Width>
         <Style>
           <Border>
             <Color>LightGrey</Color>
@@ -703,9 +703,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet2</DataSetName>
-        <Top>21cm</Top>
-        <Height>21cm</Height>
-        <Width>29.7cm</Width>
+        <Top>20cm</Top>
+        <Height>20cm</Height>
+        <Width>28.5cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -966,9 +966,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet3</DataSetName>
-        <Top>42cm</Top>
-        <Height>21cm</Height>
-        <Width>29.7cm</Width>
+        <Top>40cm</Top>
+        <Height>20cm</Height>
+        <Width>28.5cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -980,10 +980,10 @@
         </Style>
       </Chart>
     </ReportItems>
-    <Height>63cm</Height>
+    <Height>60.01021cm</Height>
     <Style />
   </Body>
-  <Width>29.7cm</Width>
+  <Width>28.5cm</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
