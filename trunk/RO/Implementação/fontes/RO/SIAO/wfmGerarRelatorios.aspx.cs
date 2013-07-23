@@ -315,7 +315,8 @@ namespace SIAO
 
         protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
         {
-            getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+            if(!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
+                getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
         }
         #endregion
 
