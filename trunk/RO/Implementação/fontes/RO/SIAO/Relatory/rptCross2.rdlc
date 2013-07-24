@@ -805,8 +805,8 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Height>3cm</Height>
-        <Width>7cm</Width>
+        <Height>2.99999cm</Height>
+        <Width>6.99996cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1224,7 +1224,7 @@
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>«Expr»</Value>
+                                        <Value>=Choose(Fields!Mes.Value,"Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez")&amp;"/"&amp;Right(Fields!Ano.Value,2)</Value>
                                         <Style>
                                           <FontStyle>Normal</FontStyle>
                                           <FontWeight>Normal</FontWeight>
@@ -1530,8 +1530,8 @@
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
         <Top>12cm</Top>
-        <Height>3cm</Height>
-        <Width>7cm</Width>
+        <Height>2.99999cm</Height>
+        <Width>6.99996cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1946,7 +1946,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>«Expr»</Value>
+                                            <Value>=Choose(Fields!Mes.Value,"Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez")&amp;"/"&amp;Right(Fields!Ano.Value,2)</Value>
                                             <Style>
                                               <FontStyle>Normal</FontStyle>
                                               <FontWeight>Normal</FontWeight>
@@ -2254,8 +2254,8 @@
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
         <Top>9cm</Top>
-        <Height>3cm</Height>
-        <Width>7cm</Width>
+        <Height>2.99999cm</Height>
+        <Width>6.99996cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -2670,7 +2670,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>«Expr»</Value>
+                                            <Value>=Choose(Fields!Mes.Value,"Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez")&amp;"/"&amp;Right(Fields!Ano.Value,2)</Value>
                                             <Style>
                                               <FontStyle>Normal</FontStyle>
                                               <FontWeight>Normal</FontWeight>
@@ -2978,8 +2978,8 @@
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
         <Top>6cm</Top>
-        <Height>3cm</Height>
-        <Width>7cm</Width>
+        <Height>2.99999cm</Height>
+        <Width>6.99996cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -3387,20 +3387,15 @@
                               <TablixHeader>
                                 <Size>0.23622in</Size>
                                 <CellContents>
-                                  <Textbox Name="Group22">
+                                  <Textbox Name="Group2">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>«Expr»</Value>
-                                            <Style>
-                                              <FontStyle>Normal</FontStyle>
-                                              <FontWeight>Normal</FontWeight>
-                                              <TextDecoration>None</TextDecoration>
-                                              <Color>#000000</Color>
-                                            </Style>
+                                            <Value>=Choose(Fields!Mes.Value,"Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez")&amp;"/"&amp;Right(Fields!Ano.Value,2)</Value>
+                                            <Style />
                                           </TextRun>
                                         </TextRuns>
                                         <Style>
@@ -3408,7 +3403,7 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Group2</rd:DefaultName>
+                                    <rd:DefaultName>Group1</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Color>LightGrey</Color>
@@ -3702,8 +3697,8 @@
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DataSet1</DataSetName>
         <Top>3cm</Top>
-        <Height>3cm</Height>
-        <Width>7cm</Width>
+        <Height>2.99999cm</Height>
+        <Width>6.99996cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>

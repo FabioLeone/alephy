@@ -144,6 +144,10 @@ namespace SIAO
             else
                 lr1 = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, ddlRedesRelatorios, ddlLojaRelatorios, rbtPeriodo, rbtMes);
 
+            int i;
+            if (lr1.Find(x => x.Grupo.ToUpper().Equals("GENÉRICOS")) != null)
+                i = 1;
+
             if (lr1.Count > 0)
             {
                 Session["cross"] = lr1;
