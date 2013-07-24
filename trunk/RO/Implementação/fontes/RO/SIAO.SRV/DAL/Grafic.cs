@@ -131,18 +131,20 @@ namespace SIAO.SRV.DAL
 	                (UPPER(grupo) LIKE 'PROPAGADOS' and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)')))
 	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria 
                 union
-	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",
+                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto""
 	                from consolidado
 	                WHERE 
-	                Grupo in ('Propagados','Alternativos','Genéricos')
+	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
 	                AND
-	                sub_consultoria in ('PDE 2 (trata)','PORT (PSICO)','RELAC (PBM)')
+	                sub_consultoria in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
 	                GROUP BY cnpj, mes, ano, sub_consultoria
                 union
-	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",
+                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto""
 	                from consolidado
 	                WHERE 
-	                Grupo in ('Propagados','Alternativos','Genéricos')
+	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
                     GROUP BY cnpj, mes, ano
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
@@ -207,18 +209,19 @@ namespace SIAO.SRV.DAL
 	                (UPPER(grupo) LIKE 'PROPAGADOS' and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)')))
 	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria 
                 union
-	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",
+                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto""
 	                from consolidado
 	                WHERE 
-	                Grupo in ('Propagados','Alternativos','Genéricos')
+	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
 	                AND
-	                sub_consultoria in ('PDE 2 (trata)','PORT (PSICO)','RELAC (PBM)')
+	                sub_consultoria in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
 	                GROUP BY cnpj, mes, ano, sub_consultoria
                 union
 	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
 	                from consolidado
 	                WHERE 
-	                Grupo in ('Propagados','Alternativos','Genéricos')
+                    upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
 			        GROUP BY cnpj, mes, ano
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
@@ -272,7 +275,7 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(" SUM(base_clientes.Valor_Liquido) AS Liquido, (SUM(base_clientes.Valor_Liquido) / SUM(base_clientes.Valor_Bruto)) AS Desconto");
                 strSQL.Append(" FROM base_clientes");
                 strSQL.Append(" INNER JOIN produtos_base ON base_clientes.Barras = produtos_base.CodBarra");
-                strSQL.Append(" WHERE produtos_base.Grupo IN ('Propagados', 'Alternativos' , 'Genéricos') AND base_clientes.Mes = @Mes");
+                strSQL.Append(" WHERE upper(produtos_base.Grupo) IN ('PROPAGADOS', 'ALTERNATIVOS' , 'GENÉRICOS') AND base_clientes.Mes = @Mes");
                 strSQL.Append(" GROUP BY base_clientes.Mes;");
 
                 DbCommand cmdTotalMes = msc.CreateCommand();
