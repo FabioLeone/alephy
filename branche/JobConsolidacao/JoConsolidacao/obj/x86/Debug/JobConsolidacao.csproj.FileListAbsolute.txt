@@ -25,3 +25,13 @@ D:\Projects\Alephy\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidaca
 D:\Projects\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe.config
 D:\Projects\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.exe
 D:\Projects\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.pdb
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe.config
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.exe
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.pdb
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.exe
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\Mono.Security.dll
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\Npgsql.dll
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\policy.2.0.Npgsql.dll
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\policy.2.0.Npgsql.config
+D:\Projects\branche\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.csprojResolveAssemblyReference.cache

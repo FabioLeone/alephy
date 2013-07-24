@@ -22,32 +22,38 @@ namespace JobConsolidacao
             Boolean blnOk = false;
 
             DeletaDuplicados();
-            if (TransfereDados())
+            List<Cnpj> lstCnpj = TransfereDados();
+            if (lstCnpj.Count > 0)
             {
-                NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+                lstCnpj.ForEach(delegate(Cnpj _cnpj) {
+                    if (_cnpj.Return)
+                    {
+                        NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
 
-                try
-                {
-                    StringBuilder strSQL = new StringBuilder();
-                    strSQL.Append(@"INSERT INTO consolidado (consolidado.CNPJ,consolidado.Mes,consolidado.Ano,consolidado.Grupo,consolidado.Sub_Consultoria,consolidado.Quantidade,consolidado.Valor_Bruto,consolidado.Valor_Liquido,consolidado.Valor_Desconto,consolidado.Importado) 
+                        try
+                        {
+                            StringBuilder strSQL = new StringBuilder();
+                            strSQL.Append(@"INSERT INTO consolidado (consolidado.CNPJ,consolidado.Mes,consolidado.Ano,consolidado.Grupo,consolidado.Sub_Consultoria,consolidado.Quantidade,consolidado.Valor_Bruto,consolidado.Valor_Liquido,consolidado.Valor_Desconto,consolidado.Importado,consolidado.farmaciaid) 
                                 SELECT base_cliente_espera.Cnpj,base_cliente_espera.Mes,base_cliente_espera.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,Sum(base_cliente_espera.Quantidade),Sum(base_cliente_espera.Valor_Bruto),Sum(base_cliente_espera.Valor_Liquido),Sum(base_cliente_espera.Valor_Desconto),
                                 produtos_base.Importado
                                 FROM base_cliente_espera
                                 INNER JOIN produtos_base ON base_cliente_espera.Barras = produtos_base.CodBarra
                                 GROUP BY base_cliente_espera.Cnpj,base_cliente_espera.Mes,base_cliente_espera.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,produtos_base.Importado");
 
-                    DbCommand cmdUsers = msc.CreateCommand();
+                            DbCommand cmdUsers = msc.CreateCommand();
 
-                    cmdUsers.CommandText = strSQL.ToString();
-                    cmdUsers.CommandTimeout = 9999;
-                    msc.Open();
-                    cmdUsers.ExecuteNonQuery();
-                    blnOk = true;
-                }
-                finally
-                {
-                    msc.Close();
-                }
+                            cmdUsers.CommandText = strSQL.ToString();
+                            cmdUsers.CommandTimeout = 9999;
+                            msc.Open();
+                            cmdUsers.ExecuteNonQuery();
+                            blnOk = true;
+                        }
+                        finally
+                        {
+                            msc.Close();
+                        }
+                    }
+                });
             }
 
             if (blnOk)
@@ -89,34 +95,82 @@ namespace JobConsolidacao
 
             return intQtde > 0 ? true : false;
         }
-        
-        private static Boolean TransfereDados()
+
+        private static List<Cnpj> TransfereDados()
+        {
+            List<Cnpj> lstCnpj = GetlistCnpj();
+
+            if (lstCnpj.Count > 0)
+            {
+                NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+
+                lstCnpj.ForEach(delegate(Cnpj cnpj)
+                {
+                    try
+                    {
+                        StringBuilder strSQL = new StringBuilder();
+                        strSQL.Append("INSERT INTO base_clientes (Razao_Social,Cnpj,Mes,Ano,Barras,Descricao,Fabricante,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto,farmaciaid)");
+                        strSQL.Append(@" SELECT b.Razao_Social,b.Cnpj,b.Mes,b.Ano,b.Barras,b.Descricao,b.Fabricante,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,f.id
+                                FROM base_cliente_espera b
+                                INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
+                                WHERE b.Cnpj = @Cnpj");
+
+                        NpgsqlCommand cmdUsers = msc.CreateCommand();
+
+                        cmdUsers.CommandText = strSQL.ToString();
+                        cmdUsers.CommandTimeout = 9999;
+                        cmdUsers.Parameters.Clear();
+                        cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = cnpj.Cnpj;
+
+                        msc.Open();
+                        cmdUsers.ExecuteNonQuery();
+                        cnpj.Return = true;
+                    }
+                    catch
+                    {
+                        cnpj.Return = false;
+                    }
+                    finally
+                    {
+                        msc.Close();
+                    }
+                });
+            }
+
+            return lstCnpj;
+        }
+
+        private static List<Cnpj> GetlistCnpj()
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+            List<Cnpj> lstCnpj = new List<Cnpj>();
+            Cnpj objCnpj;
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("INSERT INTO base_clientes (Razao_Social,Cnpj,Mes,Ano,Barras,Descricao,Fabricante,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto)");
-                strSQL.Append(@" SELECT base_cliente_espera.Razao_Social,base_cliente_espera.Cnpj,base_cliente_espera.Mes,base_cliente_espera.Ano,
-                                base_cliente_espera.Barras,base_cliente_espera.Descricao,base_cliente_espera.Fabricante,base_cliente_espera.Quantidade,base_cliente_espera.Valor_Bruto,base_cliente_espera.Valor_Liquido,base_cliente_espera.Valor_Desconto FROM base_cliente_espera");
+                strSQL.Append("SELECT distinct base_cliente_espera.Cnpj FROM base_cliente_espera");
 
-                DbCommand cmdUsers = msc.CreateCommand();
+                DbCommand cmd = msc.CreateCommand();
 
-                cmdUsers.CommandText = strSQL.ToString();
-                cmdUsers.CommandTimeout = 9999;
+                cmd.CommandText = strSQL.ToString();
+
                 msc.Open();
-                cmdUsers.ExecuteNonQuery();
-                return true;
-            }
-            catch
-            {
-                return false;
+
+                using (IDataReader drd = cmd.ExecuteReader())
+                {
+                    while (drd.Read())
+                    {
+                        if (!drd.IsDBNull(drd.GetOrdinal("Cnpj"))) lstCnpj.Add(objCnpj = new Cnpj(){ Cnpj = drd.GetString(drd.GetOrdinal("Cnpj"))});
+                    }
+                }
             }
             finally
             {
                 msc.Close();
             }
+
+            return lstCnpj;
         }
         
         private static void DeletaDados()
