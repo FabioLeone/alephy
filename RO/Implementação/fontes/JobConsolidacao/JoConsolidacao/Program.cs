@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Common;
-using MySql.Data.MySqlClient;
+using Npgsql;
+using NpgsqlTypes;
 using System.Configuration;
 using System.Text;
 using System.Data;
@@ -23,7 +24,7 @@ namespace JobConsolidacao
             DeletaDuplicados();
             if (TransfereDados())
             {
-                MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+                NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
 
                 try
                 {
@@ -56,9 +57,10 @@ namespace JobConsolidacao
         }
 
         #region .: Metodos :.
+        
         protected static Boolean VerificaConteudo()
         {
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
             int intQtde = 0;
 
             try
@@ -87,9 +89,10 @@ namespace JobConsolidacao
 
             return intQtde > 0 ? true : false;
         }
+        
         private static Boolean TransfereDados()
         {
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
 
             try
             {
@@ -115,9 +118,10 @@ namespace JobConsolidacao
                 msc.Close();
             }
         }
+        
         private static void DeletaDados()
         {
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
 
             try
             {
@@ -140,7 +144,7 @@ namespace JobConsolidacao
 
         private static void DeletaDuplicados()
         {
-            MySqlConnection msc = new MySqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
 
             try
             {
