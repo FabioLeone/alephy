@@ -15,9 +15,10 @@ namespace SIAO
         #region .: Variables :.
         UsersTO clsUser = new UsersTO();
         List<GraficTO> clsGrafic = new List<GraficTO>();
-        List<Grafic2TO> clsGrafic1 = new List<Grafic2TO>();
-        List<Grafic2TO> clsGrafic2 = new List<Grafic2TO>();
-        List<Grafic2TO> clsGrafic3 = new List<Grafic2TO>();
+        List<Grafic2TO> clsGrafic31 = new List<Grafic2TO>();
+        List<GraficTO> clsGrafic2 = new List<GraficTO>();
+        List<Grafic2TO> clsGrafic32 = new List<Grafic2TO>();
+        List<Grafic2TO> clsGrafic33 = new List<Grafic2TO>();
 
         string strConnection = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
         #endregion
@@ -40,15 +41,15 @@ namespace SIAO
                 }
                 else if (Session["grafic2"] != null)
                 {
-                    clsGrafic2 = (List<Grafic2TO>)Session["grafic2"];
+                    clsGrafic2 = (List<GraficTO>)Session["grafic2"];
                     loadRelat2(clsGrafic2, clsUser);
                 }
                 else if (Session["grafic31"] != null && Session["grafic32"] != null && Session["grafic33"] != null)
                 {
-                    clsGrafic1 = (List<Grafic2TO>)Session["grafic31"];
-                    clsGrafic2 = (List<Grafic2TO>)Session["grafic32"];
-                    clsGrafic3 = (List<Grafic2TO>)Session["grafic33"];
-                    loadRelat3(clsGrafic1, clsGrafic2, clsGrafic3, clsUser);
+                    clsGrafic31 = (List<Grafic2TO>)Session["grafic31"];
+                    clsGrafic32 = (List<Grafic2TO>)Session["grafic32"];
+                    clsGrafic33 = (List<Grafic2TO>)Session["grafic33"];
+                    loadRelat3(clsGrafic31, clsGrafic32, clsGrafic33, clsUser);
                 }
             }
         }
@@ -67,7 +68,7 @@ namespace SIAO
             ReportViewer2.DataBind();
         }
 
-        private void loadRelat2(List<Grafic2TO> clsGrafic, UsersTO clsUser)
+        private void loadRelat2(List<GraficTO> clsGrafic, UsersTO clsUser)
         {
             Microsoft.Reporting.WebForms.ReportDataSource Rds = new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", clsGrafic);
             ReportViewer2.Reset();
