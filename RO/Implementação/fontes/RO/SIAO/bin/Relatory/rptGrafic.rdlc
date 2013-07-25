@@ -64,22 +64,40 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Group Name="Chart2_CategoryGroup1">
+              <Group Name="Chart2_CategoryGroup2">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!Grupo.Value</GroupExpression>
+                  <GroupExpression>=Fields!Sub_Consultoria.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!Sub_Consultoria.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!Grupo.Value</Value>
+                  <Direction>Descending</Direction>
+                </SortExpression>
+              </SortExpressions>
               <ChartMembers>
                 <ChartMember>
-                  <Group Name="Chart2_CategoryGroup2">
+                  <Group Name="Chart2_CategoryGroup1">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Sub_Consultoria.Value</GroupExpression>
+                      <GroupExpression>=Fields!Grupo.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
-                  <Label>=Fields!Sub_Consultoria.Value</Label>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Sub_Consultoria.Value</Value>
+                    </SortExpression>
+                    <SortExpression>
+                      <Value>=Fields!Grupo.Value</Value>
+                      <Direction>Descending</Direction>
+                    </SortExpression>
+                  </SortExpressions>
+                  <Label>=Fields!Grupo.Value</Label>
                 </ChartMember>
               </ChartMembers>
-              <Label>=Fields!Grupo.Value</Label>
+              <Label>=Fields!Sub_Consultoria.Value</Label>
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
@@ -110,6 +128,13 @@
                     <Rotation>-90</Rotation>
                   </ChartDataLabel>
                   <ToolTip>=Fields!Grupo.Value + " " + Fields!Sub_Consultoria.Value</ToolTip>
+                  <ActionInfo>
+                    <Actions>
+                      <Action>
+                        <Hyperlink>http://google.com.br</Hyperlink>
+                      </Action>
+                    </Actions>
+                  </ActionInfo>
                   <Style />
                   <ChartMarker>
                     <Style />
@@ -154,6 +179,7 @@
                   <ToolTip>=Fields!Grupo.Value + " " + Fields!Sub_Consultoria.Value</ToolTip>
                   <Style />
                   <ChartMarker>
+                    <Size>8pt</Size>
                     <Style />
                   </ChartMarker>
                   <DataElementOutput>Output</DataElementOutput>
@@ -183,9 +209,7 @@
           <ChartArea Name="Default">
             <ChartCategoryAxes>
               <ChartAxis Name="Primary">
-                <Style>
-                  <FontSize>8pt</FontSize>
-                </Style>
+                <Style />
                 <ChartAxisTitle>
                   <Caption>Grupo / Sub Grupo</Caption>
                   <Style>
@@ -214,7 +238,8 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
-                <MaxFontSize>23pt</MaxFontSize>
+                <MinFontSize>8pt</MinFontSize>
+                <MaxFontSize>16pt</MaxFontSize>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>

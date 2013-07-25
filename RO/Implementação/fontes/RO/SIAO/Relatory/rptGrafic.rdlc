@@ -128,6 +128,13 @@
                     <Rotation>-90</Rotation>
                   </ChartDataLabel>
                   <ToolTip>=Fields!Grupo.Value + " " + Fields!Sub_Consultoria.Value</ToolTip>
+                  <ActionInfo>
+                    <Actions>
+                      <Action>
+                        <Hyperlink>http://google.com.br</Hyperlink>
+                      </Action>
+                    </Actions>
+                  </ActionInfo>
                   <Style />
                   <ChartMarker>
                     <Style />
