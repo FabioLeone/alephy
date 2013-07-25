@@ -178,9 +178,9 @@ namespace SIAO
             else if (rbtMes.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(DateTime.Now.AddMonths(-7).ToString("MM/yyyy"), clsUser, DateTime.Now.ToString("MM/yyyy"), this.RedeId);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId);
                 else
-                    clsGrafic = GraficBLL.GraficList(DateTime.Now.AddMonths(-7).ToString("MM/yyyy"), clsUser, ddlLojaRelatorios.SelectedValue, DateTime.Now.ToString("MM/yyyy"));
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty);
             }
 
             Session["grafic"] = clsGrafic;
@@ -198,21 +198,21 @@ namespace SIAO
 
         protected void ibtnGrafic2_Click(object sender, ImageClickEventArgs e)
         {
-            List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
+            List<GraficTO> clsGrafic = new List<GraficTO>();
 
             if (rbtPeriodo.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficListByAno(txtInicio.Text, txtFim.Text, clsUser, this.RedeId);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId);
                 else
-                    clsGrafic = GraficBLL.GraficListByAno(txtInicio.Text, txtFim.Text, clsUser, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text);
             }
             else if (rbtMes.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficListByAno(string.Empty, string.Empty, clsUser, this.RedeId);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId);
                 else
-                    clsGrafic = GraficBLL.GraficListByAno(string.Empty, string.Empty, clsUser, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty);
             }
 
             Session["grafic"] = null;
