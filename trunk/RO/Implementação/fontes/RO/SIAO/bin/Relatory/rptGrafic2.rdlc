@@ -85,28 +85,18 @@
                   <Value>=Fields!Mes.Value</Value>
                 </SortExpression>
               </SortExpressions>
-              <Label>=Fields!Mes.Value &amp; "/" &amp; Fields!Ano.Value</Label>
+              <Label>=Choose(Fields!Mes.Value,"Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez")&amp;"/"&amp;Right(Fields!Ano.Value,2)</Label>
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
         <ChartSeriesHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Group Name="Chart2_SeriesGroup1">
+              <Group Name="Chart2_SeriesGroup2">
                 <GroupExpressions>
                   <GroupExpression>=Fields!Grupo.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <ChartMembers>
-                <ChartMember>
-                  <Group Name="Chart2_SeriesGroup2">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!Sub_Consultoria.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <Label>=Fields!Sub_Consultoria.Value</Label>
-                </ChartMember>
-              </ChartMembers>
               <Label>=Fields!Grupo.Value</Label>
             </ChartMember>
           </ChartMembers>
@@ -125,22 +115,21 @@
                     </Style>
                     <UseValueAsLabel>true</UseValueAsLabel>
                     <Visible>true</Visible>
-                    <Rotation>-90</Rotation>
                   </ChartDataLabel>
-                  <ToolTip>=Fields!Grupo.Value + "\n" + Fields!Sub_Consultoria.Value + "\n" + Fields!Mes.Value.ToString + "\n" + Fields!Liquido.Value.ToString</ToolTip>
+                  <ToolTip>=Fields!Grupo.Value + "\n Mês:" + Fields!Mes.Value.ToString + "\n Quantidade:" + Fields!quantidade.Value.ToString</ToolTip>
                   <Style>
                     <Border>
                       <Width>2pt</Width>
                     </Border>
                   </Style>
                   <ChartMarker>
-                    <Type>Auto</Type>
                     <Size>9pt</Size>
                     <Style />
                   </ChartMarker>
                 </ChartDataPoint>
               </ChartDataPoints>
-              <Type>Line</Type>
+              <Type>Area</Type>
+              <Subtype>Stacked</Subtype>
               <Style>
                 <ShadowColor>Black</ShadowColor>
               </Style>
@@ -153,6 +142,7 @@
                   <Style />
                 </ChartDataLabel>
               </ChartEmptyPoints>
+              <ValueAxisName>Primary</ValueAxisName>
               <ChartSmartLabel>
                 <Disabled>true</Disabled>
                 <CalloutLineColor>Black</CalloutLineColor>
@@ -314,7 +304,7 @@
           <ChartLegend Name="Default">
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
-              <FontSize>9pt</FontSize>
+              <FontSize>16pt</FontSize>
             </Style>
             <Position>BottomCenter</Position>
             <ChartLegendTitle>
@@ -359,311 +349,17 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <Height>21cm</Height>
+        <Filters>
+          <Filter>
+            <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
+            <Operator>Like</Operator>
+            <FilterValues>
+              <FilterValue>PDE 2 (TRATA)</FilterValue>
+            </FilterValues>
+          </Filter>
+        </Filters>
+        <Height>7.77083cm</Height>
         <Width>29.7cm</Width>
-        <Style>
-          <Border>
-            <Color>LightGrey</Color>
-            <Style>Solid</Style>
-          </Border>
-          <BackgroundColor>White</BackgroundColor>
-          <BackgroundGradientType>None</BackgroundGradientType>
-        </Style>
-      </Chart>
-      <Chart Name="Chart3">
-        <ChartCategoryHierarchy>
-          <ChartMembers>
-            <ChartMember>
-              <Group Name="Chart2_CategoryGroup4">
-                <GroupExpressions>
-                  <GroupExpression>=Fields!Mes.Value</GroupExpression>
-                </GroupExpressions>
-              </Group>
-              <SortExpressions>
-                <SortExpression>
-                  <Value>=Fields!Mes.Value</Value>
-                </SortExpression>
-              </SortExpressions>
-              <Label>=Fields!Mes.Value</Label>
-            </ChartMember>
-          </ChartMembers>
-        </ChartCategoryHierarchy>
-        <ChartSeriesHierarchy>
-          <ChartMembers>
-            <ChartMember>
-              <Group Name="Chart2_SeriesGroup3">
-                <GroupExpressions>
-                  <GroupExpression>=Fields!Grupo.Value</GroupExpression>
-                </GroupExpressions>
-              </Group>
-              <ChartMembers>
-                <ChartMember>
-                  <Group Name="Chart2_SeriesGroup4">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!Sub_Consultoria.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <Label>=Fields!Sub_Consultoria.Value</Label>
-                </ChartMember>
-              </ChartMembers>
-              <Label>=Fields!Grupo.Value</Label>
-            </ChartMember>
-          </ChartMembers>
-        </ChartSeriesHierarchy>
-        <ChartData>
-          <ChartSeriesCollection>
-            <ChartSeries Name="Desconto">
-              <ChartDataPoints>
-                <ChartDataPoint>
-                  <ChartDataPointValues>
-                    <Y>=Sum(Fields!Desconto.Value)</Y>
-                  </ChartDataPointValues>
-                  <ChartDataLabel>
-                    <Style>
-                      <Border>
-                        <Width>1.5pt</Width>
-                      </Border>
-                      <FontSize>12pt</FontSize>
-                    </Style>
-                    <Rotation>-90</Rotation>
-                  </ChartDataLabel>
-                  <ToolTip>=Fields!Grupo.Value + "\n" + Fields!Sub_Consultoria.Value + "\n" + Fields!Mes.Value.ToString + "\n" + Fields!Desconto.Value.ToString</ToolTip>
-                  <Style>
-                    <Border>
-                      <Width>2pt</Width>
-                    </Border>
-                  </Style>
-                  <ChartMarker>
-                    <Type>Auto</Type>
-                    <Size>9pt</Size>
-                    <Style />
-                  </ChartMarker>
-                  <DataElementOutput>Output</DataElementOutput>
-                </ChartDataPoint>
-              </ChartDataPoints>
-              <Type>Line</Type>
-              <Style />
-              <ChartEmptyPoints>
-                <Style />
-                <ChartMarker>
-                  <Style />
-                </ChartMarker>
-                <ChartDataLabel>
-                  <Style />
-                </ChartDataLabel>
-              </ChartEmptyPoints>
-              <ValueAxisName>Primary</ValueAxisName>
-              <CategoryAxisName>Primary</CategoryAxisName>
-              <ChartSmartLabel>
-                <Disabled>true</Disabled>
-                <CalloutLineColor>Black</CalloutLineColor>
-                <MinMovingDistance>0pt</MinMovingDistance>
-              </ChartSmartLabel>
-            </ChartSeries>
-          </ChartSeriesCollection>
-        </ChartData>
-        <ChartAreas>
-          <ChartArea Name="Default">
-            <ChartCategoryAxes>
-              <ChartAxis Name="Primary">
-                <Style>
-                  <FontSize>8pt</FontSize>
-                </Style>
-                <ChartAxisTitle>
-                  <Caption />
-                  <Style>
-                    <FontSize>14pt</FontSize>
-                  </Style>
-                </ChartAxisTitle>
-                <ChartMajorGridLines>
-                  <Enabled>False</Enabled>
-                  <Style>
-                    <Border>
-                      <Color>Gainsboro</Color>
-                    </Border>
-                  </Style>
-                </ChartMajorGridLines>
-                <ChartMinorGridLines>
-                  <Style>
-                    <Border>
-                      <Color>Gainsboro</Color>
-                      <Style>Dotted</Style>
-                    </Border>
-                  </Style>
-                </ChartMinorGridLines>
-                <ChartMinorTickMarks>
-                  <Length>0.5</Length>
-                </ChartMinorTickMarks>
-                <CrossAt>NaN</CrossAt>
-                <Minimum>NaN</Minimum>
-                <Maximum>NaN</Maximum>
-                <MaxFontSize>14pt</MaxFontSize>
-              </ChartAxis>
-              <ChartAxis Name="Secondary">
-                <Style>
-                  <FontSize>8pt</FontSize>
-                </Style>
-                <ChartAxisTitle>
-                  <Caption>Axis Title</Caption>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </ChartAxisTitle>
-                <ChartMajorGridLines>
-                  <Enabled>False</Enabled>
-                  <Style>
-                    <Border>
-                      <Color>Gainsboro</Color>
-                    </Border>
-                  </Style>
-                </ChartMajorGridLines>
-                <ChartMinorGridLines>
-                  <Style>
-                    <Border>
-                      <Color>Gainsboro</Color>
-                      <Style>Dotted</Style>
-                    </Border>
-                  </Style>
-                </ChartMinorGridLines>
-                <ChartMinorTickMarks>
-                  <Length>0.5</Length>
-                </ChartMinorTickMarks>
-                <CrossAt>NaN</CrossAt>
-                <Location>Opposite</Location>
-                <Minimum>NaN</Minimum>
-                <Maximum>NaN</Maximum>
-              </ChartAxis>
-            </ChartCategoryAxes>
-            <ChartValueAxes>
-              <ChartAxis Name="Primary">
-                <Style>
-                  <FontSize>8pt</FontSize>
-                </Style>
-                <ChartAxisTitle>
-                  <Caption>Percentual de aproveitamento</Caption>
-                  <Style>
-                    <FontSize>14pt</FontSize>
-                  </Style>
-                </ChartAxisTitle>
-                <ChartMajorGridLines>
-                  <Style>
-                    <Border>
-                      <Color>Silver</Color>
-                    </Border>
-                  </Style>
-                  <IntervalType>Auto</IntervalType>
-                </ChartMajorGridLines>
-                <ChartMinorGridLines>
-                  <Enabled>True</Enabled>
-                  <Style>
-                    <Border>
-                      <Color>Gainsboro</Color>
-                      <Style>Dotted</Style>
-                    </Border>
-                  </Style>
-                </ChartMinorGridLines>
-                <ChartMinorTickMarks>
-                  <Length>0.5</Length>
-                </ChartMinorTickMarks>
-                <CrossAt>NaN</CrossAt>
-                <Minimum>NaN</Minimum>
-                <Maximum>NaN</Maximum>
-              </ChartAxis>
-              <ChartAxis Name="Secondary">
-                <Style>
-                  <FontSize>8pt</FontSize>
-                </Style>
-                <ChartAxisTitle>
-                  <Caption>Axis Title</Caption>
-                  <Style>
-                    <FontSize>8pt</FontSize>
-                  </Style>
-                </ChartAxisTitle>
-                <ChartMajorGridLines>
-                  <Style>
-                    <Border>
-                      <Color>Gainsboro</Color>
-                    </Border>
-                  </Style>
-                </ChartMajorGridLines>
-                <ChartMinorGridLines>
-                  <Style>
-                    <Border>
-                      <Color>Gainsboro</Color>
-                      <Style>Dotted</Style>
-                    </Border>
-                  </Style>
-                </ChartMinorGridLines>
-                <ChartMinorTickMarks>
-                  <Length>0.5</Length>
-                </ChartMinorTickMarks>
-                <CrossAt>NaN</CrossAt>
-                <Location>Opposite</Location>
-                <Minimum>NaN</Minimum>
-                <Maximum>NaN</Maximum>
-              </ChartAxis>
-            </ChartValueAxes>
-            <Style>
-              <BackgroundColor>#00ffffff</BackgroundColor>
-              <BackgroundGradientType>LeftRight</BackgroundGradientType>
-              <BackgroundGradientEndColor>#00ffffff</BackgroundGradientEndColor>
-              <BackgroundHatchType>None</BackgroundHatchType>
-            </Style>
-          </ChartArea>
-        </ChartAreas>
-        <ChartLegends>
-          <ChartLegend Name="Default">
-            <Style>
-              <BackgroundGradientType>None</BackgroundGradientType>
-              <FontSize>9pt</FontSize>
-            </Style>
-            <Position>BottomCenter</Position>
-            <ChartLegendTitle>
-              <Caption />
-              <Style>
-                <FontSize>8pt</FontSize>
-                <FontWeight>Bold</FontWeight>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </ChartLegendTitle>
-            <AutoFitTextDisabled>true</AutoFitTextDisabled>
-            <HeaderSeparatorColor>Black</HeaderSeparatorColor>
-            <ColumnSeparatorColor>Black</ColumnSeparatorColor>
-          </ChartLegend>
-        </ChartLegends>
-        <ChartTitles>
-          <ChartTitle Name="Default">
-            <Caption>="Aproveitamento em Descontos por Grupo  - \n" + "Loja - " + Fields!Razao_Social.Value</Caption>
-            <Style>
-              <BackgroundGradientType>None</BackgroundGradientType>
-              <FontWeight>Bold</FontWeight>
-              <TextAlign>General</TextAlign>
-              <VerticalAlign>Top</VerticalAlign>
-            </Style>
-            <DockOutsideChartArea>true</DockOutsideChartArea>
-          </ChartTitle>
-        </ChartTitles>
-        <Palette>BrightPastel</Palette>
-        <ChartBorderSkin>
-          <Style>
-            <BackgroundColor>Gray</BackgroundColor>
-            <BackgroundGradientType>None</BackgroundGradientType>
-            <Color>White</Color>
-          </Style>
-        </ChartBorderSkin>
-        <ChartNoDataMessage Name="NoDataMessage">
-          <Caption>No Data Available</Caption>
-          <Style>
-            <BackgroundGradientType>None</BackgroundGradientType>
-            <TextAlign>General</TextAlign>
-            <VerticalAlign>Top</VerticalAlign>
-          </Style>
-        </ChartNoDataMessage>
-        <DataSetName>DataSet1</DataSetName>
-        <Top>21cm</Top>
-        <Height>21cm</Height>
-        <Width>29.7cm</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Color>LightGrey</Color>
