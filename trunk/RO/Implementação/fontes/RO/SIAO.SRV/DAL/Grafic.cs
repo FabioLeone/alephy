@@ -20,11 +20,13 @@ namespace SIAO.SRV.DAL
 
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("razaosocial"))) { clsGrafic.Razao_Social = drdGrafic.GetString(drdGrafic.GetOrdinal("razaosocial")); } else { clsGrafic.Razao_Social = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Mes")); } else { clsGrafic.Mes = 0; }
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Ano"))) { clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Ano")); } else { clsGrafic.Ano = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Grupo"))) { clsGrafic.Grupo = drdGrafic.GetString(drdGrafic.GetOrdinal("Grupo")); } else { clsGrafic.Grupo = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Sub_Consultoria"))) { clsGrafic.Sub_Consultoria = drdGrafic.GetString(drdGrafic.GetOrdinal("Sub_Consultoria")); } else { clsGrafic.Sub_Consultoria = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Desconto"))) { clsGrafic.Desconto = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Desconto")); } else { clsGrafic.Desconto = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("nomefantasia"))) clsGrafic.Nome_Fantasia = drdGrafic.GetString(drdGrafic.GetOrdinal("nomefantasia")); else clsGrafic.Nome_Fantasia = string.Empty;
+            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Quantidade"))) clsGrafic.quantidade = drdGrafic.GetInt64(drdGrafic.GetOrdinal("Quantidade")); else clsGrafic.quantidade = 0;
 
             return clsGrafic;
         }
@@ -121,7 +123,8 @@ namespace SIAO.SRV.DAL
             {
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT farmacias.razaosocial,farmacias.nomefantasia, xTemp.* FROM (
-                select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+                select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
+                    sum(quantidade) as ""Quantidade""
 	                from consolidado
 	                WHERE 
 	                ((UPPER(grupo) LIKE 'GENÉRICOS' and UPPER(sub_consultoria) like 'PDE 2%') 
@@ -132,7 +135,8 @@ namespace SIAO.SRV.DAL
 	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria 
                 union
 	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",
-                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto""
+                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto"", 
+                    sum(quantidade) as ""Quantidade""
 	                from consolidado
 	                WHERE 
 	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
@@ -141,7 +145,8 @@ namespace SIAO.SRV.DAL
 	                GROUP BY cnpj, mes, ano, sub_consultoria
                 union
 	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",
-                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto""
+                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto"", 
+                    sum(quantidade) as ""Quantidade""
 	                from consolidado
 	                WHERE 
 	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
@@ -199,7 +204,8 @@ namespace SIAO.SRV.DAL
             {
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT farmacias.razaosocial,farmacias.nomefantasia, xTemp.* FROM (
-                select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+                select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
+                    sum(quantidade) as ""Quantidade""
 	                from consolidado
 	                WHERE 
 	                ((UPPER(grupo) LIKE 'GENÉRICOS' and UPPER(sub_consultoria) like 'PDE 2%') 
@@ -210,7 +216,8 @@ namespace SIAO.SRV.DAL
 	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria 
                 union
 	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",
-                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto""
+                    CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto"", 
+                    sum(quantidade) as ""Quantidade""
 	                from consolidado
 	                WHERE 
 	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
@@ -218,7 +225,8 @@ namespace SIAO.SRV.DAL
 	                sub_consultoria in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
 	                GROUP BY cnpj, mes, ano, sub_consultoria
                 union
-	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto""
+	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
+                    sum(quantidade) as ""Quantidade""
 	                from consolidado
 	                WHERE 
                     upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')

@@ -10,20 +10,20 @@ namespace SIAO.SRV.TO
     {
         public string Razao_Social { get; set; }
         public int Mes { get; set; }
+        public int Ano { get; set; }
         public string Grupo { get; set; }
         public string Sub_Consultoria { get; set; }
         public decimal Liquido { get; set; }
         public decimal Desconto { get; set; }
         public string Nome_Fantasia { get; set; }
         public string Periodo { get; set; }
+        public long quantidade { get; set; }
     }
 
     [Serializable]
     public class Grafic2TO : GraficTO
     {
         public string CNPJ { get; set; }
-        public int Ano { get; set; }
-        public long quantidade { get; set; }
     }
 
     [Serializable]
