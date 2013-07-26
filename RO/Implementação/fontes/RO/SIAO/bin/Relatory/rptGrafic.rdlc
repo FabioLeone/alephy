@@ -117,7 +117,7 @@
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Sum(Fields!Liquido.Value)</Y>
+                    <Y>=Avg(Fields!Liquido.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
@@ -156,7 +156,7 @@
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Sum(Fields!Desconto.Value)</Y>
+                    <Y>=Avg(Fields!Desconto.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
@@ -399,6 +399,7 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
+        <Top>0.00001cm</Top>
         <Height>21cm</Height>
         <Width>29.7cm</Width>
         <Style>
