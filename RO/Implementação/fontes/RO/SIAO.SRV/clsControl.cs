@@ -441,7 +441,7 @@ namespace SIAO.SRV
             return ds;
         }
 
-        // Utilizado pelo modelo1
+        // Utilizado pelo modelo1 b
         public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -562,7 +562,7 @@ namespace SIAO.SRV
             return lr;
         }
 
-        // Utilizado pelo modelo1
+        // Utilizado pelo modelo1 d
         public List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -662,7 +662,7 @@ namespace SIAO.SRV
             return lr;
         }
 
-        // Utilizado pelo modelo1
+        // Utilizado pelo modelo1 c
         public List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
@@ -747,7 +747,7 @@ namespace SIAO.SRV
             return lr;
         }
 
-        // Utilizado pelo modelo1
+        // Utilizado pelo modelo1 a
         public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, int intRedeId)
         {
             List<clsRelat1> lr = new List<clsRelat1>();

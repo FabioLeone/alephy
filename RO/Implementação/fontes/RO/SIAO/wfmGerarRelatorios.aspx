@@ -76,8 +76,7 @@
                     <td style="width: 50%;">
                         <fieldset style="width: 93%;">
                             <legend>
-                                <h2>
-                                    Gráficos</h2>
+                                <h2>Gráficos</h2>
                             </legend>
                             <div id="divGrafic" style="height: 300px; width: 100%;">
                                 <ul class="iconList">
