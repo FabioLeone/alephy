@@ -20,6 +20,10 @@
           <DataField>Mes</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="Grupo">
           <DataField>Grupo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -36,6 +40,18 @@
           <DataField>Desconto</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantidade">
+          <DataField>quantidade</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>SIAOSRVBLL</DataSourceName>
@@ -45,7 +61,7 @@
         <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
         <rd:TableName>GraficBLL</rd:TableName>
         <rd:ObjectDataSourceSelectMethod>GraficList</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(Int32)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(System.String, SIAO.SRV.TO.UsersTO, System.String, System.String)</rd:ObjectDataSourceSelectMethodSignature>
         <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
@@ -58,6 +74,7 @@
             <ChartMember>
               <Group Name="Chart2_CategoryGroup3">
                 <GroupExpressions>
+                  <GroupExpression>=Fields!Ano.Value</GroupExpression>
                   <GroupExpression>=Fields!Mes.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
@@ -94,11 +111,11 @@
         </ChartSeriesHierarchy>
         <ChartData>
           <ChartSeriesCollection>
-            <ChartSeries Name="Liquido1">
+            <ChartSeries Name="quantidade">
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Sum(Fields!Liquido.Value)</Y>
+                    <Y>=Sum(Fields!quantidade.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>

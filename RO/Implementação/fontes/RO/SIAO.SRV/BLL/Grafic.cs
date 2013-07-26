@@ -45,11 +45,13 @@ namespace SIAO.SRV.BLL
                                 Sub_Consultoria = _Grafic.Sub_Consultoria,
                                 Razao_Social = _Grafic.Razao_Social,
                                 Mes = _Grafic.Mes,
+                                Ano = _Grafic.Ano,
                                 Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Grupo = _Grafic.Grupo,
                                 Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
                                 Periodo = String.Format("{0} à {1}", strIni, strFim),
-                                Nome_Fantasia = _Grafic.Nome_Fantasia
+                                Nome_Fantasia = _Grafic.Nome_Fantasia,
+                                quantidade = _Grafic.quantidade
                             });
                         }
                     });
@@ -92,6 +94,7 @@ namespace SIAO.SRV.BLL
                                 Sub_Consultoria = _Grafic.Sub_Consultoria,
                                 Razao_Social = _Grafic.Razao_Social,
                                 Mes = _Grafic.Mes,
+                                Ano = _Grafic.Ano,
                                 Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
                                 Grupo = _Grafic.Grupo,
                                 Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),

@@ -128,13 +128,6 @@
                     <Rotation>-90</Rotation>
                   </ChartDataLabel>
                   <ToolTip>=Fields!Grupo.Value + " " + Fields!Sub_Consultoria.Value</ToolTip>
-                  <ActionInfo>
-                    <Actions>
-                      <Action>
-                        <Hyperlink>http://google.com.br</Hyperlink>
-                      </Action>
-                    </Actions>
-                  </ActionInfo>
                   <Style />
                   <ChartMarker>
                     <Style />
@@ -236,6 +229,7 @@
                   <Length>0.5</Length>
                 </ChartMinorTickMarks>
                 <CrossAt>NaN</CrossAt>
+                <Scalar>true</Scalar>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
                 <MinFontSize>8pt</MinFontSize>
