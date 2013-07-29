@@ -76,7 +76,14 @@ namespace SIAO.SRV
                 lst = RelatoriosDAL.GetMod2(clsUser, txtInicio.Text, txtFim.Text, (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)), (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
             else if (rbtMes.Checked)
                 lst = RelatoriosDAL.GetMod2(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)));
-            
+
+            lst.ForEach(delegate(clsRelat1 report)
+            {
+                report.SomaDeValorBruto = Math.Round(report.SomaDeValorBruto, 0);
+                report.SomaDeValorLiquido = Math.Round(report.SomaDeValorLiquido, 0);
+                report.SomaDeValorDesconto = Math.Round(report.SomaDeValorDesconto, 0);
+            });
+
             return lst;
         }
 
@@ -87,6 +94,13 @@ namespace SIAO.SRV
                 lst = RelatoriosDAL.GetMod2(clsUser, txtInicio.Text, txtFim.Text, intRedeId);
             else if (rbtMes.Checked)
                 lst = RelatoriosDAL.GetMod2(clsUser, intRedeId);
+
+            lst.ForEach(delegate(clsRelat1 report)
+            {
+                report.SomaDeValorBruto = Math.Round(report.SomaDeValorBruto, 0);
+                report.SomaDeValorLiquido = Math.Round(report.SomaDeValorLiquido, 0);
+                report.SomaDeValorDesconto = Math.Round(report.SomaDeValorDesconto, 0);
+            });
 
             return lst;
         }
