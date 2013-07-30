@@ -38,7 +38,7 @@
                 <br />
                 <asp:ImageButton ID="ibtnLogin" OnClick="lbtnLogin_Click" ValidationGroup="Login" runat="server" ImageUrl="~/Content/login-btn.png" Width="103" Height="42" style="margin-left: 90px;" />
             </p>
-            <asp:Label ID="lblVersion" runat="server" Text="X-Wing"></asp:Label>
+            <asp:Label ID="lblVersion" runat="server" Text="Kokiri - Rv.152"></asp:Label>
         </div>
     </div>
         <asp:ValidationSummary ID="vsmLogin" ValidationGroup="Login" CssClass="error" Width="400px"
