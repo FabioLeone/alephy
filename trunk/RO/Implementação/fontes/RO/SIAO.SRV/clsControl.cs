@@ -1087,7 +1087,7 @@ namespace SIAO.SRV
                             + " WHERE arquivosenviados.cnpj = @cnpj AND arquivosenviados.mes = @mes"
                             + " AND arquivosenviados.ano = @ano";
                         cmm.Parameters.Clear();
-                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[0]["cnpj"].ToString();
+                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = clsFuncs.RemoveMaskCnpj(ds.Tables[0].Rows[0]["cnpj"].ToString());
                         cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["mes"];
                         cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
 
@@ -1099,7 +1099,7 @@ namespace SIAO.SRV
                                 cmm.CommandText = "INSERT INTO base_cliente_espera (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
                                     + " VALUES ( @Cnpj, @Mes, @Ano, @Barras, @Descricao, @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
                                 cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
+                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = clsFuncs.RemoveMaskCnpj(ds.Tables[0].Rows[i]["cnpj"].ToString());
                                 cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
                                 cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
                                 cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
@@ -1128,7 +1128,7 @@ namespace SIAO.SRV
                                 cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
                                 cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
                                 cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
-                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["cnpj"].ToString();
+                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = clsFuncs.RemoveMaskCnpj(ds.Tables[0].Rows[i]["cnpj"].ToString());
                                 cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
                                 cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
 

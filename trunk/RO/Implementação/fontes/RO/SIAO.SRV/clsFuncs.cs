@@ -84,6 +84,21 @@ namespace SIAO.SRV
                 return cnpj;
             }
         }
+        
+        public static string RemoveMaskCnpj(string p)
+        {
+            string cnpj = "";
+            if (string.IsNullOrEmpty(p))
+                return cnpj;
+            else
+            {
+                cnpj = p.Replace(".","");
+                cnpj = cnpj.Replace("/", "");
+                cnpj = cnpj.Replace("-", "");
+
+                return cnpj;
+            }
+        }
 
         public static string SetFileName(string strRelatorio, List<clsRelat1> lr)
         {
@@ -191,7 +206,6 @@ namespace SIAO.SRV
                
             }
         }
-    
 
         #endregion
 
@@ -324,7 +338,7 @@ namespace SIAO.SRV
                         }
                         if (j.Equals(1)) {
                             if (!strCnpj.Equals(line[j])) {
-                                strCnpj = line[j];
+                                strCnpj = RemoveMaskCnpj(line[j]);
                                 lstCnpj.Add(strCnpj);
                             }
                         }

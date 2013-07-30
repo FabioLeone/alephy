@@ -89,7 +89,8 @@ namespace SIAO.SRV.DAL
             {
                 StringBuilder strSQL = new StringBuilder();
                 //TODO - busca por ano
-                strSQL.Append(String.Format("SELECT DISTINCT arquivosenviados.cnpj,farmacias.NomeFantasia FROM arquivosenviados INNER JOIN farmacias ON arquivosenviados.cnpj = farmacias.Cnpj WHERE YEAR(`data`) = '{0}'", intAno));
+                strSQL.Append(String.Format(@"SELECT DISTINCT arquivosenviados.cnpj,farmacias.NomeFantasia FROM arquivosenviados INNER JOIN 
+                farmacias ON arquivosenviados.cnpj = farmacias.Cnpj WHERE extract(year from data) = '{0}'", intAno));
                 if (intRedeId > 0)
                     strSQL.Append(String.Format(" AND farmacias.idRede = {0}", intRedeId));
                 else
