@@ -1092,47 +1092,59 @@ namespace SIAO.SRV
                         cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[0]["ano"];
 
                         int id = 0;
-                        if (clsDB.Query(id, ref cmm) == DBNull.Value)
+
+                        id = (int)clsDB.Query(id, ref cmm);
+                        clsDB.closeConnection(cmm);
+
+                        if (id == 0)
                         {
                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                             {
-                                cmm.CommandText = "INSERT INTO base_cliente_espera (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
-                                    + " VALUES ( @Cnpj, @Mes, @Ano, @Barras, @Descricao, @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
-                                cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = clsFuncs.RemoveMaskCnpj(ds.Tables[0].Rows[i]["cnpj"].ToString());
-                                cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
-                                cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
-                                cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
-                                cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
-                                cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
-                                cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
-                                cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
-                                cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
-                                cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
+                                if (clsDB.openConnection(cmm))
+                                {
+                                    cmm.CommandText = "INSERT INTO base_cliente_espera (Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
+                                        + " VALUES ( @Cnpj, @Mes, @Ano, @Barras, @Descricao, @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
+                                    cmm.Parameters.Clear();
+                                    cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = clsFuncs.RemoveMaskCnpj(ds.Tables[0].Rows[i]["cnpj"].ToString());
+                                    cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
+                                    cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
+                                    cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
+                                    cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
+                                    cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
+                                    cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
+                                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric).Value = ds.Tables[0].Rows[i]["vbruto"];
+                                    cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Numeric).Value = ds.Tables[0].Rows[i]["vliquido"];
+                                    cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Numeric).Value = ds.Tables[0].Rows[i]["desconto"];
 
-                                clsDB.Execute(ref cmm);
+                                    clsDB.Execute(ref cmm);
+                                    clsDB.closeConnection(cmm);
+                                }
                             }
                         }
                         else
                         {
                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                             {
-                                cmm.CommandText = "UPDATE base_cliente_espera SET Barras = @Barras, Descricao = @Descricao,"
-                                    + " Fabricante = @Fabricante, Quantidade = @Quantidade, Valor_Bruto = "
-                                    + "@Valor_Bruto, Valor_Liquido = @Valor_Liquido, Valor_Desconto = @Valor_Desconto WHERE Cnpj = @Cnpj AND Mes = @Mes AND Ano = @Ano";
-                                cmm.Parameters.Clear();
-                                cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
-                                cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
-                                cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
-                                cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
-                                cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vbruto"];
-                                cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["vliquido"];
-                                cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Real).Value = ds.Tables[0].Rows[i]["desconto"];
-                                cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = clsFuncs.RemoveMaskCnpj(ds.Tables[0].Rows[i]["cnpj"].ToString());
-                                cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
-                                cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
+                                if (clsDB.openConnection(cmm))
+                                {
+                                    cmm.CommandText = "UPDATE base_cliente_espera SET Barras = @Barras, Descricao = @Descricao,"
+                                        + " Fabricante = @Fabricante, Quantidade = @Quantidade, Valor_Bruto = "
+                                        + "@Valor_Bruto, Valor_Liquido = @Valor_Liquido, Valor_Desconto = @Valor_Desconto WHERE Cnpj = @Cnpj AND Mes = @Mes AND Ano = @Ano";
+                                    cmm.Parameters.Clear();
+                                    cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["ean"].ToString();
+                                    cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["nprod"].ToString();
+                                    cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar).Value = ds.Tables[0].Rows[i]["fab"].ToString();
+                                    cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["quant"];
+                                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric).Value = ds.Tables[0].Rows[i]["vbruto"];
+                                    cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Numeric).Value = ds.Tables[0].Rows[i]["vliquido"];
+                                    cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Numeric).Value = ds.Tables[0].Rows[i]["desconto"];
+                                    cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = clsFuncs.RemoveMaskCnpj(ds.Tables[0].Rows[i]["cnpj"].ToString());
+                                    cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["mes"];
+                                    cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer).Value = ds.Tables[0].Rows[i]["ano"];
 
-                                clsDB.Execute(ref cmm);
+                                    clsDB.Execute(ref cmm);
+                                    clsDB.closeConnection(cmm);
+                                }
                             }
                         }
                     }
@@ -1140,11 +1152,12 @@ namespace SIAO.SRV
                 catch (Exception ex)
                 {
                     msg = ex.Message;
+                    clsDB.closeConnection(cmm);
+
                 }
 
-                clsDB.closeConnection(cmm);
-
-                AddXmlData(scn, ds, clsUser);
+                if(String.IsNullOrEmpty(msg))
+                    AddXmlData(scn, ds, clsUser);
 
             }
             else { msg = "Erro ao converter o xml."; }
