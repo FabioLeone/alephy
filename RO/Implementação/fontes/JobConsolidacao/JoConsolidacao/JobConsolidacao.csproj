@@ -36,13 +36,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Security">
-      <HintPath>..\..\RO\SIAO.SRV\bin\Debug\Mono.Security.dll</HintPath>
+      <HintPath>..\..\..\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Mono.Security.dll</HintPath>
     </Reference>
     <Reference Include="Npgsql">
-      <HintPath>..\..\RO\SIAO.SRV\bin\Debug\Npgsql.dll</HintPath>
+      <HintPath>..\..\..\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.Npgsql">
-      <HintPath>..\..\RO\SIAO.SRV\bin\Debug\policy.2.0.Npgsql.dll</HintPath>
+      <HintPath>..\..\..\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\policy.2.0.Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
