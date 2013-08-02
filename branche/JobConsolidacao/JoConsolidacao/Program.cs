@@ -33,7 +33,7 @@ namespace JobConsolidacao
                         try
                         {
                             StringBuilder strSQL = new StringBuilder();
-                            strSQL.Append(@"INSERT INTO consolidado (consolidado.CNPJ,consolidado.Mes,consolidado.Ano,consolidado.Grupo,consolidado.Sub_Consultoria,consolidado.Quantidade,consolidado.Valor_Bruto,consolidado.Valor_Liquido,consolidado.Valor_Desconto,consolidado.Importado,consolidado.farmaciaid) 
+                            strSQL.Append(@"INSERT INTO consolidado (CNPJ,Mes,Ano,Grupo,Sub_Consultoria,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto,Importado,farmaciaid) 
                                 SELECT b.Cnpj,b.Mes,b.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,
                                 Sum(b.Quantidade),Sum(b.Valor_Bruto),Sum(b.Valor_Liquido),
                                 Sum(b.Valor_Desconto),produtos_base.Importado,f.id
@@ -42,7 +42,7 @@ namespace JobConsolidacao
                                 INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
                                 WHERE b.Cnpj = @Cnpj
                                 GROUP BY b.Cnpj,b.Mes,b.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,
-                                produtos_base.Importado");
+                                produtos_base.Importado,f.id");
 
                             NpgsqlCommand cmdUsers = msc.CreateCommand();
 
@@ -72,7 +72,7 @@ namespace JobConsolidacao
         protected static Boolean VerificaConteudo()
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
-            int intQtde = 0;
+            Int64 intQtde = 0;
 
             try
             {
@@ -89,7 +89,7 @@ namespace JobConsolidacao
                 {
                     if (drd.Read())
                     {
-                        if (!drd.IsDBNull(drd.GetOrdinal("Qtde"))) intQtde = drd.GetInt32(drd.GetOrdinal("Qtde"));  else intQtde = 0; 
+                        if (!drd.IsDBNull(drd.GetOrdinal("Qtde"))) intQtde = drd.GetInt64(drd.GetOrdinal("Qtde"));  else intQtde = 0; 
                     }
                 }
             }

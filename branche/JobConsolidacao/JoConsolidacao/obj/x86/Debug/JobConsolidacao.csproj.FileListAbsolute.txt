@@ -34,4 +34,3 @@ D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\Mono.Security.dll
 D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\Npgsql.dll
 D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\policy.2.0.Npgsql.dll
 D:\Projects\branche\JobConsolidacao\JoConsolidacao\bin\Debug\policy.2.0.Npgsql.config
-D:\Projects\branche\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.csprojResolveAssemblyReference.cache
