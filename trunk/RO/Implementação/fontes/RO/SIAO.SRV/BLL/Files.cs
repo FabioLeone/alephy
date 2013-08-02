@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using SIAO.SRV.TO;
 using SIAO.SRV.DAL;
+using System.Xml;
+using System.Data;
 
 namespace SIAO.SRV.BLL
 {
     public class FilesBLL
     {
+        #region .:Searches:.
         public static List<FilesTO> GetByYear(int intAno, string strConnection) {
             return FilesDAL.GetByYear(intAno, strConnection);
         }
@@ -34,5 +37,90 @@ namespace SIAO.SRV.BLL
 
             return clsAux;
         }
+        #endregion
+
+        #region .:Methods:.
+
+        public static string LoadArquivo(UsersTO clsUser, System.Web.UI.WebControls.FileUpload fuArquivo)
+        {
+            string msg = String.Empty;
+            SRV.clsFuncs of = new SRV.clsFuncs();
+            SRV.clsControl oc = new SRV.clsControl();
+
+            if (fuArquivo.PostedFile.FileName == "")
+            {
+                msg = "Selecione um arquivo.";
+            }
+            else if (of.ValidaExt(fuArquivo.PostedFile.FileName))
+            {
+                if (fuArquivo.HasFile)
+                {
+                    if (System.IO.Path.GetExtension(fuArquivo.PostedFile.FileName).ToUpper() == ".XML")
+                    {
+                        XmlDocument xd = new XmlDocument();
+
+                        xd.Load(fuArquivo.FileContent);
+
+                        DataTable dt = ConvertXML(xd);
+
+                        if (!DataValidation(dt))
+                            msg = "CNPJ não cadastrado";
+                        else
+                            msg = oc.AddXml(dt, clsUser);
+                    }
+                    else
+                    {
+                        DataTable dt = new DataTable();
+                        dt = of.txtDtConvert(fuArquivo.FileContent);
+
+                        msg = oc.AddTxt(dt, clsUser, of.Meses(), of.Cnpj());
+                    }
+                }
+                else { msg ="Selecione apenas arquivos com extenção '.XML' ou '.TXT'."; }
+            }
+            else
+            {
+                msg = "Selecione apenas arquivos com extenção '.XML' ou '.TXT'.";
+            }
+
+            return msg;
+        }
+
+        /// <summary>
+        /// Verifica se o cnpj do arquivo está cadastrado na base.
+        /// </summary>
+        /// <param name="dt">DataTable com os dados</param>
+        /// <returns>True/False</returns>
+        private static bool DataValidation(DataTable dt)
+        {
+            DataTable auxDt = new DataTable();
+            int count = 0;
+
+            auxDt = dt.DefaultView.ToTable(true,"cnpj");
+            if (auxDt.Rows.Count > 0)
+            {
+                for (int i = 0; i < auxDt.Rows.Count; i++)
+                {
+                    if (clsControl.GetLojaByCNPJ(auxDt.Rows[i][0].ToString()).Id > 0) count++;
+                }
+            }
+
+            return (count > 0);
+        }
+
+        /// <summary>
+        /// Converte arquivo .xml para um objeto DataTable.
+        /// </summary>
+        /// <param name="xd">Aquivo a ser convertido</param>
+        /// <returns>DataTable populado</returns>
+        private static DataTable ConvertXML(XmlDocument xd)
+        {
+            DataSet ds = new DataSet();
+
+            ds.ReadXml(new XmlNodeReader(xd));
+            return ds.Tables[0];
+        }
+        #endregion
+
     }
 }

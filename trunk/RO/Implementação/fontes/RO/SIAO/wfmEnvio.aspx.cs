@@ -4,13 +4,12 @@ using System.Xml;
 using System.Configuration;
 using System.Data;
 using SIAO.SRV.TO;
+using SIAO.SRV.BLL;
 
 namespace SIAO
 {
     public partial class wfmEnvio : System.Web.UI.Page
     {
-        SRV.clsFuncs of = new SRV.clsFuncs();
-        SRV.clsControl oc = new SRV.clsControl();
         UsersTO clsUser = new UsersTO();
         string scn = ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString;
 
@@ -47,40 +46,11 @@ namespace SIAO
 
         protected void btnEnviar_Click(object sender, EventArgs e)
         {
-            if (fuArquivo.PostedFile.FileName == "") { 
-                divErro("Selecione um arquivo."); 
-            } else if (of.ValidaExt(fuArquivo.PostedFile.FileName)) {
-                if (fuArquivo.HasFile)
-                {
-                    if (System.IO.Path.GetExtension(fuArquivo.PostedFile.FileName).ToUpper() == ".XML")
-                    {
-                        XmlDocument xd = new XmlDocument();
+            string msg = FilesBLL.LoadArquivo(clsUser,fuArquivo);
 
-                        xd.Load(fuArquivo.FileContent);
+            if (String.IsNullOrEmpty(msg)) divSces();
+            else divErro(msg);
 
-                        string msg = oc.AddXml(scn, xd, clsUser);
-                        if (msg == "")
-                        {
-                            divSces();
-                        }
-                        else { divErro(msg); }
-                    }
-                    else {
-                        DataTable dt = new DataTable();
-                        dt = of.txtDtConvert(fuArquivo.FileContent);
-
-                        string msg = oc.AddTxt(scn, dt, clsUser, of.Meses(), of.Cnpj());
-                        if (msg == "")
-                        {
-                            divSces();
-                        }
-                        else { divErro(msg); }
-                    }
-                }
-                else { divErro("Selecione apenas arquivos com extenção '.XML' ou '.TXT'."); }
-            } else {
-                divErro("Selecione apenas arquivos com extenção '.XML' ou '.TXT'.");
-            }
         }
     }
 }

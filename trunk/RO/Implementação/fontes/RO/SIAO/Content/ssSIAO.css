@@ -250,7 +250,7 @@ section
     padding: 1px 10px 10px 12px;
     color: #4f8a10;
     background: #dff2bf url(success.png) no-repeat 5px center;
-    width: 310px;
+    width: 316px;
     height: 45px;
     margin-left: 3%;
     vertical-align: middle;
@@ -265,7 +265,7 @@ section
     color: #d8000c;
     background: #ffbaba url(important.png) no-repeat 5px center;
     max-width: 85%;
-    height: 45px;
+    min-height: 45px;
     vertical-align: middle;
 }
 
