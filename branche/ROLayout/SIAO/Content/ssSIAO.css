@@ -1,10 +1,58 @@
-﻿#divHome
-{
-    background-image: url(a_Logo.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 450px;
+﻿@charset "utf-8";
+
+#home {
+background: #3A5170  url(images/banners/anuncio-medley-1.jpg)  no-repeat center ;
+background-size:100%;
+padding: 0;
+margin: 0;
+font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+#page {
+width: 900px;
+display: block;
+margin: 0 auto;
+padding: 0;
+border: 0;
+}
+
+footer {
+width: 900px;
+height: 32px;
+background: rgba(23,23,23,0.9);
+bottom: 0;
+position: absolute;
+color:#CCC;
+text-align:center;
+vertical-align: middle;
+font-size:9px;
+}
+
+header {
+height: 50px;
+position: relative;
+list-style: none;
+outline: none;
+margin:0;
+width: 900px;
+background-color: rgba(22,22,22,0.8);
+overflow:hidden;
+font-style: normal;
+font-size: 10pt;
+}
+
+a {
+text-decoration: none;
+}
+
+#main {
+background: rgba(242,245,246,0.6)
+url(images/app/logo_Cas_blue_512_transparente.png) no-repeat center;
+width: 900px;
+height: 585px;
+font-style: light;
+font-size:13pt;
+z-index:1;
 }
 
 #login-box
@@ -17,62 +65,6 @@
     color: #ebebeb;
     font: 12px Arial, Helvetica, sans-serif;
     background: url(login-box-backg.png) no-repeat left top;
-}
-
-#login-box img
-{
-    border: none;
-}
-
-#login-box h2
-{
-    padding: 0;
-    margin: 0;
-    color: #ebebeb;
-    font: bold 44px "Calibri" , Arial;
-}
-
-
-.login-box-name
-{
-    float: left;
-    display: inline;
-    width: 80px;
-    text-align: right;
-    padding: 14px 10px 0 0;
-    margin: 0 0 7px 0;
-}
-
-.login-box-field
-{
-    float: left;
-    display: inline;
-    width: 230px;
-    margin: 0;
-    margin: 0 0 7px 0;
-}
-
-.form-login
-{
-    width: 205px;
-    padding: 10px 4px 6px 3px;
-    border: 1px solid #0d2c52;
-    background-color: #1e4f8a;
-    font-size: 16px;
-    color: #ebebeb;
-}
-
-.login-box-options
-{
-    clear: both;
-    padding-left: 87px;
-    font-size: 11px;
-}
-
-.login-box-options a
-{
-    color: #ebebeb;
-    font-size: 11px;
 }
 
 .button
@@ -139,77 +131,103 @@ fieldset
     border-radius: 4pt;
 }
 
-#navigation
-{
-    width: 950px;
-    height: 50px;
-    margin: auto;
-    padding: 0;
-    background: url(navigation-bg.jpg) no-repeat left top;
+nav ul li {
+	float:left;
+	list-style: none !important;
 }
-#navigation ul
-{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-#navigation ul li
-{
-    display: block;
-    margin: auto;
-    float: left;
-}
-#navigation ul li a
-{
-    height: 33px;
-    display: block;
-    float: left;
-    padding: 17px 15px 0 15px;
-    font: bold 12px Arial;
-    color: #FFF;
-    text-decoration: none;
-    background: url(navigation-separator.png) no-repeat right center;
+nav ul li a {
+	margin: 0px;
+	color:#fff;
+	text-decoration:none;
+	padding:0 20px;
+	display:block;
+	height:50px;
+	line-height:50px;
+	font-weight:700;
 }
 
-#navigation ul li a:hover
-{
-    color: #363636;
-    background: url(navigation-hover.png) repeat-x left top;
+nav ul li.active a,
+nav ul li a:hover {
+	color:#09C;
+}
+nav .lavalamp-object {
+	height:50px;
 }
 
-#navigation ul li#active a
-{
-    color: #363636;
-    background: url(navigation-hover.png) repeat-x left top;
-    box-shadow: inset;
-    text-shadow: inherit;
+ul, menu, dir {
+display: block;
+list-style-type: disc;
+-webkit-margin-before: 0px;
+-webkit-margin-after: 0px;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 20px;
 }
 
-#navigation li ul
-{
-    border-radius: 4pt;
-    background: url(navigation-bg.jpg) no-repeat left top;
-    display: none;
-    position: absolute;
-    float: none;
-    width: auto;
-    z-index: 9999; /*top:1em; 	/*left:0;*/
-}
-#navigation ul li:hover ul
-{
-    top: 55px;
-    display: block;
+h1 {
+display: block;
+font-size: 2em;
+-webkit-margin-before: 0px;
+-webkit-margin-after: 0px;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+font-weight: bold;
 }
 
-#navigation a
+h2
 {
-    height: 33px;
-    float: left;
-    padding: 17px 15px 0 15px;
-    font: bold 12px Arial;
-    color: #FFF;
-    text-decoration: none;
+    margin-top: 0;
+    color: #19000c;
+    font-family: Raavi;
 }
+
+li {
+text-align: center;
+vertical-align:middle;
+}
+
+.lavalamp-object {
+    background-color: rgba(0,0,0,0.3);
+}
+
+#fundo {
+	list-style:none;
+	z-index:-100!important	;
+}
+
+#fundo > ul {
+	list-style:none;	
+}
+
+#login {
+	background: rgba(0,0,0,0.6) url(images/app/logo_Cas_blue_128_transparente.png) no-repeat right top;
+	border-radius: 25px;
+	width: 400px;
+	height: 300px;
+	position: absolute;
+	right: 50px;
+	bottom: 50px;
+	padding: 10px;
+	color:#CCC;
+}
+
+#login > p 
+{
+    font-size:1.5em;
+    }
+
+#login > input[type="submit"]
+{
+    background-color: #30a4e4;
+    Width: 103px;
+    Height: 40px;
+    border: none;
+    opacity: 0.5;
+    font-size: 1.25em;
+    color: #fff;
+    cursor: pointer;
+    margin:15px;
+    }
 
 #botoes
 {
@@ -217,22 +235,9 @@ fieldset
     padding: 2px;
 }
 
-h1, h2, h3
-{
-    margin-top: 0;
-    color: #19000c;
-    font-family: Raavi;
-}
-
 h2
 {
     font-size: 1.2em;
-}
-
-a
-{
-    font-family: Raavi;
-    font-size: 0.8em;
 }
 
 section
@@ -249,7 +254,7 @@ section
     margin: 10px 0px;
     padding: 1px 10px 10px 12px;
     color: #4f8a10;
-    background: #dff2bf url(success.png) no-repeat 5px center;
+    background: #dff2bf url(images/app/success.png) no-repeat 5px center;
     width: 316px;
     height: 45px;
     margin-left: 3%;
@@ -263,7 +268,7 @@ section
     margin: auto;
     padding: 1px 10px 10px 55px;
     color: #d8000c;
-    background: #ffbaba url(important.png) no-repeat 5px center;
+    background: #ffbaba url(images/app/important.png) no-repeat 5px center;
     max-width: 85%;
     min-height: 45px;
     vertical-align: middle;
@@ -275,7 +280,7 @@ section
     margin: 10px 0px;
     padding: 1px 10px 10px 55px;
     color: #d8000c;
-    background: #ffbaba url(important.png) no-repeat 5px center;
+    background: #ffbaba url(images/app/important.png) no-repeat 5px center;
     vertical-align: middle;
 }
 
