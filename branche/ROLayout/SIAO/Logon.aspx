@@ -52,14 +52,13 @@
                     <asp:RequiredFieldValidator ID="rfvSenha" ValidationGroup="Login" runat="server"
                             ControlToValidate="txtSenha" ErrorMessage="Entre com a senha.">*</asp:RequiredFieldValidator>
                 </div>
-                <asp:Button ID="btnLogin" ValidationGroup="Login" runat="server" Style="margin-left:68%;" Text="Login"
+                <asp:Button ID="btnLogin" ValidationGroup="Login" runat="server" Style="margin-left:68%;" Text="Logar"
                 OnClick="lbtnLogin_Click" />
                 <asp:Label ID="lblVersion" runat="server" Text="Kokiri - Rv.152"></asp:Label>
             </div>
-            <asp:ValidationSummary ID="vsmLogin" ValidationGroup="Login" CssClass="error" Width="400px"
-            runat="server" />
         </section>
     </div>
+    <asp:ValidationSummary ID="vsmLogin" ValidationGroup="Login" CssClass="alerta" runat="server" />
     </form>
 </body>
 </html>

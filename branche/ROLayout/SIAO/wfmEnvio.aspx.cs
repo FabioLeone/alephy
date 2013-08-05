@@ -18,6 +18,18 @@ namespace SIAO
             if (Session["user"] == null) { Response.Redirect("Logon.aspx"); } else {
                 clsUser = (UsersTO)Session["user"];
             }
+
+            Control ul = Master.FindControl("navlist");
+
+            foreach (Control item in ul.Controls)
+            {
+                if (item != null)
+                    ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+            }
+
+            Control li = Master.FindControl("l4");
+            if (li != null)
+                ((System.Web.UI.HtmlControls.HtmlControl)li).Attributes.Add("class", "active");
         }
 
         private void divErro(string msg)

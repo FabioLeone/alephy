@@ -57,22 +57,22 @@
             <div id="page">
                 <header>
                 <nav>
-	                <ul id="navlist">
-                        <li class="active"><a href="Default.aspx">Home</a></li>
+	                <ul id="navlist" runat="server">
+                        <li id="l1" runat="server"><a href="Default.aspx">Home</a></li>
                         <%if (SIAO.Global.TId.Equals(1))
                           { %>
-                        <li><a href="#">Configurações</a></li>
+                        <li id="l2" runat="server"><a href="#">Configurações</a></li>
                         <%}
                           if (VerificaRelatorio())
                           {%>
-                        <li><a href="wfmGerarRelatorios.aspx">Aplicativos</a></li>
+                        <li id="l3" runat="server"><a href="wfmGerarRelatorios.aspx">Aplicativos</a></li>
                         <%}
                           if (VerificaEnvio())
                           { %>
-                        <li><a href="wfmEnvio.aspx">Envio de Informações</a></li>
+                        <li id="l4" runat="server"><a href="wfmEnvio.aspx">Envio de Informações</a></li>
                         <%} %>
                     </ul>
-                    <ul id="Ul1">
+                    <ul id="Ul1" style="float:right;">
                         <% if (!String.IsNullOrEmpty(SIAO.Global.LocalPage))
                            { %>
                         <li><a href='<%= SIAO.Global.LocalPage %>'>Voltar</a></li>

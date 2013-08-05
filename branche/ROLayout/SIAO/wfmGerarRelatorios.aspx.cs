@@ -95,6 +95,17 @@ namespace SIAO
                 txtFim.Enabled = false;
             }
             Global.LocalPage = "";
+            Control ul = Master.FindControl("navlist");
+
+            foreach (Control item in ul.Controls)
+            {
+                if (item != null)
+                    ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+            }
+
+            Control li = Master.FindControl("l3");
+            if (li != null)
+                ((System.Web.UI.HtmlControls.HtmlControl)li).Attributes.Add("class", "active");
 
         }
 
