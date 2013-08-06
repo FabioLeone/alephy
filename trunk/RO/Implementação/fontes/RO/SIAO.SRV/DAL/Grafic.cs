@@ -420,15 +420,20 @@ namespace SIAO.SRV.DAL
                 sum(consolidado.valor_liquido) AS ""Liquido""
                 FROM
                 consolidado
-                INNER JOIN farmacias ON farmacias.cnpj = consolidado.cnpj
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede                
-                WHERE
+                INNER JOIN farmacias ON farmacias.cnpj = consolidado.cnpj");
+
+                if (!clsUser.TipoId.Equals(1))
+                    strSQL.Append(@" INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede");
+
+                strSQL.Append(@" WHERE
                 UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
                 if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+                else if (!String.IsNullOrEmpty(strLoja))
+                    strSQL.Append(" AND consolidado.cnpj = @cnpj");
 
                 strSQL.Append(@" GROUP BY consolidado.cnpj,
                 farmacias.nomefantasia,
@@ -445,6 +450,7 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@cnpj", strLoja));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -576,14 +582,19 @@ namespace SIAO.SRV.DAL
                 consolidado.Valor_Liquido
                 FROM
                 consolidado
-                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
-                WHERE 
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
+
+                if(!clsUser.TipoId.Equals(1))
+                    strSQL.Append(" INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede");
+
+                strSQL.Append(@" WHERE 
                 (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
-                
-                if(!clsUser.TipoId.Equals(1))
+
+                if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+                else if (!String.IsNullOrEmpty(strLoja))
+                    strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
                 
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
                 ORDER BY Ano, Mes DESC");
@@ -592,7 +603,7 @@ namespace SIAO.SRV.DAL
 
                 if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
-                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); 
                     strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
                 }
                 else
@@ -606,6 +617,7 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strLoja));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -737,13 +749,18 @@ namespace SIAO.SRV.DAL
                 consolidado.Valor_Liquido
                 FROM
                 consolidado
-                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
-                WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
+                INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
+
+                if (!clsUser.TipoId.Equals(1))
+                    strSQL.Append(" INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede");
+
+                strSQL.Append(@" WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
                 if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+                else if (!String.IsNullOrEmpty(strLoja))
+                    strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
                 ORDER BY Ano, Mes DESC");
@@ -766,6 +783,7 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strLoja));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 

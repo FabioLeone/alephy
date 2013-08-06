@@ -304,7 +304,7 @@ namespace SIAO.SRV
         public System.Data.DataTable txtDtConvert(System.IO.Stream stream)
         {
             DataTable dt = new DataTable();
-            StreamReader sr = new StreamReader(stream);
+            StreamReader sr = new StreamReader(stream,Encoding.UTF8);
             string[] line;
             int i = 0;
             int intMes = 0;
