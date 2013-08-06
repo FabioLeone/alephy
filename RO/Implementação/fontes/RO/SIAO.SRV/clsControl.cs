@@ -1111,7 +1111,7 @@ namespace SIAO.SRV
 
                 if (String.IsNullOrEmpty(msg))
                     AddXmlData(dt, clsUser);
-                
+
             }
             else { msg = "Erro ao converter o xml."; }
 
@@ -1124,7 +1124,7 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
             DataTable auxDt = new DataTable();
 
-            auxDt = dt.DefaultView.ToTable(true, "ano", "mes");
+            auxDt = dt.DefaultView.ToTable(true, "cnpj", "ano", "mes");
 
             if (auxDt.Rows.Count > 0)
             {
@@ -1136,9 +1136,9 @@ namespace SIAO.SRV
                             + " VALUES ( @UserId, @cnpj, 'XML', @mes, @ano)";
                         cmm.Parameters.Clear();
                         cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
-                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dt.Rows[0]["cnpj"].ToString();
-                        cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = auxDt.Rows[i][0];
-                        cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = auxDt.Rows[i][1];
+                        cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = auxDt.Rows[i][0].ToString();
+                        cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = auxDt.Rows[i][1];
+                        cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = auxDt.Rows[i][2];
 
                         if (clsDB.openConnection(cmm))
                             clsDB.Execute(ref cmm);
@@ -1237,67 +1237,82 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
 
             string msg = "";
-            int itest = 0;
+            int iLine = 0;
 
             if (dt.Rows.Count > 0)
             {
                 try
                 {
-                    if (clsDB.openConnection(cmm))
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        cmm.CommandText = "DELETE FROM base_cliente_espera";
-                        string strCnpj = string.Empty;
-                        int k = 0;
-                        lstCnpj.ForEach(delegate(string _cnpj)
+                        string svb = "", svl = "", svd = "";
+
+                        svb = dt.Rows[i][10].ToString().Replace(".", "");
+                        svb = svb.Replace(",", ".");
+
+                        svl = dt.Rows[i][11].ToString().Replace(".", "");
+                        svl = svl.Replace(",", ".");
+
+                        svd = dt.Rows[i][12].ToString().Replace(".", "");
+                        svd = svd.Replace(",", ".");
+
+                        cmm.CommandText = string.Empty;
+                        cmm.CommandText = "INSERT INTO base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
+                            + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
+                            + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
+                            + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
+                            + ", '" + dt.Rows[i][4].ToString() + "', '"
+                            + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
+                            + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", "
+                            + svb + ", " + svl + ", " + svd + ")";
+
+                        iLine = i;
+
+                        if (clsDB.openConnection(cmm))
                         {
-                            if (k == 0) { strCnpj = "'" + _cnpj + "'"; k++; } else { strCnpj += ",'" + _cnpj + "'"; k++; }
-                        });
-                        cmm.CommandText += " WHERE Cnpj IN (" + strCnpj + ")";
-                        string strMeses = "";
-                        int j = 0;
-                        lstMeses.ForEach(delegate(int _mes)
-                        {
-                            if (j == 0) { strMeses = _mes.ToString(); j++; } else { strMeses += ", " + _mes.ToString(); j++; }
-                        });
-                        cmm.CommandText += " AND Mes IN (" + strMeses + ") AND Ano = " + dt.Rows[0]["ano"];
-
-                        clsDB.Execute(ref cmm);
-
-                        for (int i = 0; i < dt.Rows.Count; i++)
-                        {
-                            string svb = "", svl = "", svd = "";
-
-                            svb = dt.Rows[i][10].ToString().Replace(".", "");
-                            svb = svb.Replace(",", ".");
-
-                            svl = dt.Rows[i][11].ToString().Replace(".", "");
-                            svl = svl.Replace(",", ".");
-
-                            svd = dt.Rows[i][12].ToString().Replace(".", "");
-                            svd = svd.Replace(",", ".");
-
-                            cmm.CommandText = string.Empty;
-                            cmm.CommandText = "INSERT INTO base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,"
-                                + " Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)"
-                                + " VALUES ('" + dt.Rows[i][0].ToString().Replace("'", "''") + "', '"
-                                + dt.Rows[i][1].ToString() + "', " + dt.Rows[i][2] + ", " + dt.Rows[i][3]
-                                + ", '" + dt.Rows[i][4].ToString() + "', '"
-                                + dt.Rows[i][5].ToString().Replace("'", "''") + "', '"
-                                + dt.Rows[i][6].ToString().Replace("'", "''") + "', " + dt.Rows[i][9] + ", "
-                                + svb + ", " + svl + ", " + svd + ")";
-
-                            itest = i;
-
                             clsDB.Execute(ref cmm);
                         }
+                        clsDB.closeConnection(cmm);
                     }
                 }
                 catch (Exception ex)
                 {
-                    msg = ex.Message;
+                    msg = ex.Message + "linha " + iLine;
+                    clsDB.closeConnection(cmm);
                 }
 
-                clsDB.closeConnection(cmm);
+                this.AddTxtData(dt, clsUser);
+
+            }
+            else { msg = "Erro ao converter o txt."; }
+
+            return msg;
+        }
+
+        public string AddTxtDT(DataTable dt, UsersTO clsUser, List<int> lstMeses, List<string> lstCnpj)
+        {
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            cmm.Connection = cnn;
+
+            string msg = "";
+            int iLine = 0;
+
+            if (dt.Rows.Count > 0)
+            {
+                try
+                {
+                    cmm.CommandText = @"INSERT INTO base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,
+                              Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)
+                              VALUES (@Razao_Social, @Cnpj, @Mes, @Ano, @Barras, @Descricao,
+                              @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
+
+                    cmm.Parameters.Add("", NpgsqlDbType.Varchar, 255, "");
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message + "linha " + iLine;
+                    clsDB.closeConnection(cmm);
+                }
 
                 this.AddTxtData(dt, clsUser);
 
@@ -1311,22 +1326,23 @@ namespace SIAO.SRV
         {
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             cmm.Connection = cnn;
-
-            if (dt.Rows.Count > 0)
+            DataTable auxDt = new DataTable();
+            auxDt = dt.DefaultView.ToTable(true, "cnpj", "ano", "mes");
+            if (auxDt.Rows.Count > 0)
             {
                 try
                 {
                     if (clsDB.openConnection(cmm))
                     {
-                        for (int i = 0; i < dt.Rows.Count; i++)
+                        for (int i = 0; i < auxDt.Rows.Count; i++)
                         {
                             cmm.CommandText = "INSERT INTO arquivosenviados (UserId, cnpj, tipo, mes, ano)"
                                 + " VALUES (@UserId, @cnpj, 'TXT', @mes, @ano)";
                             cmm.Parameters.Clear();
                             cmm.Parameters.Add("@UserId", NpgsqlDbType.Integer).Value = clsUser.UserId;
-                            cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dt.Rows[i]["cnpj"].ToString();
-                            cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = dt.Rows[i][2];
-                            cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = dt.Rows[i]["ano"];
+                            cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = auxDt.Rows[i][0].ToString();
+                            cmm.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = auxDt.Rows[i][1];
+                            cmm.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = auxDt.Rows[i][2];
 
                             clsDB.Execute(ref cmm);
                         }
