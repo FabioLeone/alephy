@@ -8,6 +8,7 @@ using System.Text;
 using SIAO.SRV.TO;
 using System.Web;
 using System.Web.UI;
+using System.Globalization;
 
 namespace SIAO.SRV
 {
@@ -98,6 +99,23 @@ namespace SIAO.SRV
 
                 return cnpj;
             }
+        }
+
+        public static string RemoveSpecialChar(string strText)
+        {
+            string normalized = strText.Normalize(NormalizationForm.FormD);
+
+            StringBuilder resultBuilder = new StringBuilder();
+            foreach (var character in normalized)
+            {
+                UnicodeCategory category = CharUnicodeInfo.GetUnicodeCategory(character);
+                if (category == UnicodeCategory.LowercaseLetter
+                    || category == UnicodeCategory.UppercaseLetter
+                    || category == UnicodeCategory.SpaceSeparator)
+                    resultBuilder.Append(character);
+            }
+
+            return Regex.Replace(resultBuilder.ToString(), @"\s+", "-"); 
         }
 
         public static string SetFileName(string strRelatorio, List<clsRelat1> lr)
@@ -313,12 +331,12 @@ namespace SIAO.SRV
             while (! sr.EndOfStream)
             {
                 line = sr.ReadLine().Split(';');
-
+                
                 if (i == 0)
                 {
                     for (int j = 0; j < line.Length; j++)
                     {
-                        dt.Columns.Add(line[j]);
+                        dt.Columns.Add(RemoveSpecialChar(line[j].Replace("\t","").Trim()));
                     }
                     i++;
                 }
@@ -327,7 +345,7 @@ namespace SIAO.SRV
                   
                     for (int j = 0; j < line.Length; j++)
                     {
-                        dr[j] = line[j];
+                        dr[j] = line[j].Replace("\t", "").Trim();
 
                         if (j.Equals(2)) {
                             if (!intMes.Equals(Convert.ToInt32(line[j])))
