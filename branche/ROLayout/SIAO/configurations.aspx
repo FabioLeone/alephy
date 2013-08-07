@@ -21,6 +21,4 @@
         </ul>
     </div>
 </div>
-<div id="opContent">
-</div>
 </asp:Content>
