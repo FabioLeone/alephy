@@ -1,6 +1,4 @@
-﻿@charset "utf-8";
-
-#home {
+﻿#home {
 background: #3A5170  url(images/banners/anuncio-medley-1.jpg)  no-repeat center ;
 background-size:100%;
 padding: 0;
@@ -140,6 +138,92 @@ nav ul li a:hover {
 }
 nav .lavalamp-object {
 	height:50px;
+}
+
+.leftNav div{
+    display:none;
+    float:left;
+    background-color: rgba(22,22,22,0.8);
+}
+
+.leftNav:hover div{
+    display:block;
+}
+
+.leftNav div ul
+{
+    padding: 0 10px;
+}
+
+.leftNav div ul li 
+{
+    text-align:left;
+	list-style: none !important;
+	cursor:pointer;
+}
+
+.leftNav div ul li a {
+	margin: 0px;
+	color:#fff;
+	text-decoration:none;
+	display:block;
+	line-height:30px;
+}
+
+.leftNav div ul li.active a,
+.leftNav div ul li a:hover {
+	color:#09C;
+}
+
+.leftNav span
+{
+    background-color: rgba(22,22,22,0.8);
+    border-radius: 0 10px 0 0;
+    -webkit-transform: rotate(90deg);
+    writing-mode: tb-rl;
+    display: -webkit-inline-box;
+    color: #fff;
+    padding: 0 55px;
+    margin-top: 60px;
+    margin-left: -60px;
+}
+
+.leftIni span
+{
+    display:none;
+}
+
+.leftIni div
+{
+    display:block;
+    float:left;
+    background-color: rgba(22,22,22,0.8);
+    border-radius:0 0 10px;
+}
+
+.leftIni div ul
+{
+    padding: 0 10px;
+}
+
+.leftIni div ul li 
+{
+    text-align:left;
+	list-style: none !important;
+	cursor:pointer;
+}
+
+.leftIni div ul li a {
+	margin: 0px;
+	color:#fff;
+	text-decoration:none;
+	display:block;
+	line-height:30px;
+}
+
+.leftIni div ul li.active a,
+.leftIni div ul li a:hover {
+	color:#09C;
 }
 
 ul, menu, dir {
