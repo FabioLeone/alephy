@@ -1,24 +1,75 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Siao.Master" AutoEventWireup="true" CodeBehind="configurations.aspx.cs" Inherits="SIAO.Views.configurations" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Siao.Master" AutoEventWireup="true"
+    CodeBehind="configurations.aspx.cs" Inherits="SIAO.configurations" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("li").click(function () {
-                $("#leftbox").removeClass("leftIni");
-                $("#leftbox").addClass("leftNav");
-            });
-    </script>
+    <link href="Content/css/Animations.css" rel="Stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div id="leftbox" class="leftIni">
-    <span>Menu</span>
-    <div>
-        <ul>
-            <li><a href="#">Cadastro de usuários</a></li>
-            <li><a href="#">Cadastro de redes</a></li>
-            <li><a href="#">Cadastro de lojas</a></li>
-            <li><a href="#">Vincular usuário</a></li>
-            <li><a href="#">Histórico de uploads</a></li>
+    <div class="no-js">
+        <ul class="conav" role="navigation">
+            <li class="nav-item-a fade fade-50" data-opacity="1">
+                <div class="hex">
+                    <span><a href="Default.aspx">Detecta CasBrasil</a></span>
+                    <div class="corner-1">
+                    </div>
+                    <div class="corner-2">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item-b fade fade-60" data-opacity="0.6">
+                <div class="hex">
+                    <a href="wfmCadastroUsuario.aspx" title="">Cadastro de usuários</a>
+                    <div class="corner-1">
+                    </div>
+                    <div class="corner-2">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item-c fade fade-60" data-opacity="0.6">
+                <div class="hex">
+                    <a href="wfmCadastroRede.aspx" title="">Cadastro de redes</a>
+                    <div class="corner-1">
+                    </div>
+                    <div class="corner-2">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item-d fade fade-60" data-opacity="0.6">
+                <div class="hex">
+                    <a href="wfmCadastroLojas.aspx" title="">Cadastro de lojas</a>
+                    <div class="corner-1">
+                    </div>
+                    <div class="corner-2">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item-f fade fade-60" data-opacity="0.6">
+                <div class="hex">
+                    <a href="wfmVinculos.aspx" title="">Vincular usuário</a>
+                    <div class="corner-1">
+                    </div>
+                    <div class="corner-2">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item-e fade fade-60" data-opacity="0.6">
+                <div class="hex">
+                    <a href="wfmFiles.aspx"title="">Histórico de uploads</a>
+                    <div class="corner-1">
+                    </div>
+                    <div class="corner-2">
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item-empty-2 fade fade-30" data-opacity="0.3">
+                <div class="hex">
+                    <a href="wfmBanco.aspx"title="">Gerênciamento do banco</a>
+                    <div class="corner-1">
+                    </div>
+                    <div class="corner-2">
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
-</div>
 </asp:Content>

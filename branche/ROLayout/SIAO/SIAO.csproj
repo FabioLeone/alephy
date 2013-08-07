@@ -58,7 +58,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="configurations.aspx" />
     <Content Include="Content\a_Logo.jpg" />
+    <Content Include="Content\css\Animations.css" />
     <Content Include="Content\css\style1.css" />
     <Content Include="Content\delete.png" />
     <Content Include="Content\document.png" />
@@ -100,7 +102,6 @@
     <Content Include="Controls\wucListFiles.ascx" />
     <Content Include="Controls\wucRoles.ascx" />
     <Content Include="Controls\wucVinculos.ascx" />
-    <Content Include="configurations.aspx" />
     <Content Include="wfmAcesso.aspx" />
     <Content Include="wfmFiles.aspx" />
     <Content Include="wfmIndices.aspx" />
@@ -132,6 +133,13 @@
     <Content Include="wfmRelatorio.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="configurations.aspx.cs">
+      <DependentUpon>configurations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="configurations.aspx.designer.cs">
+      <DependentUpon>configurations.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\wucCadastroUser.ascx.cs">
       <DependentUpon>wucCadastroUser.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -166,13 +174,6 @@
     </Compile>
     <Compile Include="Controls\wucVinculos.ascx.designer.cs">
       <DependentUpon>wucVinculos.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="configurations.aspx.cs">
-      <DependentUpon>configurations.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="configurations.aspx.designer.cs">
-      <DependentUpon>configurations.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfmAcesso.aspx.cs">
       <DependentUpon>wfmAcesso.aspx</DependentUpon>

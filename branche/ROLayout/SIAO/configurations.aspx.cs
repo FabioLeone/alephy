@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SIAO.Views
+namespace SIAO
 {
     public partial class configurations : System.Web.UI.Page
     {
