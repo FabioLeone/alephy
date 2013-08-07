@@ -1085,17 +1085,17 @@ namespace SIAO.SRV
                               VALUES (@Razao_Social, @Cnpj, @Mes, @Ano, @Barras, @Descricao,
                               @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
 
-                    cmm.Parameters.Add("@Razao_Social", NpgsqlDbType.Varchar, 255, "Razao-Social");
-                    cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar, 255, "Cnpj");
-                    cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer, 255, "Mes");
-                    cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer, 255, "Ano");
-                    cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar, 255, "Barras");
-                    cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar, 255, "Descricao");
-                    cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar, 255, "Fabricante");
-                    cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer, 255, "Quantidade");
-                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric, 255, "Valor-bruto");
-                    cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Numeric, 255, "Valor-liquido");
-                    cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Numeric, 255, "Valor-desconto");
+                    cmm.Parameters.Add("@Razao_Social", NpgsqlDbType.Varchar, 255, "razao");
+                    cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar, 255, "cnpj");
+                    cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer, 255, "mes");
+                    cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer, 255, "ano");
+                    cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar, 255, "ean");
+                    cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar, 255, "nprod");
+                    cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar, 255, "fab");
+                    cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer, 255, "quant");
+                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric, 255, "vbruto");
+                    cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Numeric, 255, "vliquido");
+                    cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Numeric, 255, "desconto");
 
                     cnn.Open();
                     NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmm);
