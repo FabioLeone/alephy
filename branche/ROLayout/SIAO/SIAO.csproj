@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -68,6 +69,7 @@
     <Content Include="Content\fonts\BebasNeue-webfont.svg" />
     <Content Include="Content\fonts\Dharma Type Font License.txt" />
     <Content Include="Content\graphic.png" />
+    <Content Include="Content\images\app\hex.png" />
     <Content Include="Content\images\app\icons\Charts-Combo-icon.png" />
     <Content Include="Content\images\app\icons\Settings-icon.png" />
     <Content Include="Content\images\app\icons\user-icon.png" />
@@ -75,9 +77,11 @@
     <Content Include="Content\images\app\logo_Cas_blue_128_transparente.png" />
     <Content Include="Content\images\app\logo_Cas_blue_256.png" />
     <Content Include="Content\images\app\logo_Cas_blue_512.png" />
+    <Content Include="Content\images\app\logo_Cas_blue_512_80p_transparente.png" />
     <Content Include="Content\images\app\logo_Cas_blue_512_transparente.png" />
     <Content Include="Content\images\banners\anuncio-medley-1.jpg" />
     <Content Include="Content\images\banners\anuncio-medley-12.jpg" />
+    <Content Include="Content\images\banners\logo.png" />
     <Content Include="Content\images\banners\Pack-ESSENCELE.jpg.jpg" />
     <Content Include="Content\images\banners\pattern - Cópia.png" />
     <Content Include="Content\images\banners\pattern.png" />

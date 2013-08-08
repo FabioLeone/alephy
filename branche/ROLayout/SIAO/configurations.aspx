@@ -11,7 +11,7 @@
             </li>
             <li class="nav-item-b fade fade-60">
                 <div class="hex">
-                    <a href="wfmCadastroUsuario.aspx" title="">Cadastro de usuários</a>
+                    <a href="wfmUsers.aspx" title="">Cadastro de usuários</a>
                     <div class="corner-1">
                     </div>
                     <div class="corner-2">

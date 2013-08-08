@@ -5,6 +5,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <contenttemplate>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("section").addClass("sectionb");
+                });
+            </script>
             <table style="width: 100%; margin-left: 0.25%;">
                 <tr id="trFiltro" runat="server">
                     <td colspan="2">

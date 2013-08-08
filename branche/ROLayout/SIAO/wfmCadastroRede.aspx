@@ -3,6 +3,7 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <contenttemplate>
             <div id="edRede">
@@ -43,6 +44,12 @@
          eval('document.layers["rede"]');
                     document.poppedLayer.style.visibility = "visible";
                 }
+
+                function pageLoad() {
+                    $("section").addClass("sectionb");
+                }
+
+                window.onload(pageLoad);
             </script>
             <fieldset style="width: 402px; margin-left: 26%;">
                 <legend>

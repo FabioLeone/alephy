@@ -45,8 +45,9 @@ namespace SIAO
             System.Web.UI.HtmlControls.HtmlGenericControl divError = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
 
             divError.ID = "msgError";
-            divError.Attributes.Add("class", "error");
-            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "4%");
+            divError.Attributes.Add("class", "alerta");
+            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
+            divError.Style.Add("bottom", "3.5%");
             divError.InnerHtml = "<p>" + msg + "</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divError);
@@ -58,7 +59,8 @@ namespace SIAO
 
             divInfo.ID = "msgInfo";
             divInfo.Attributes.Add("class", "success");
-            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "26%");
+            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
+            divInfo.Style.Add("bottom", "4.6%");
             divInfo.InnerHtml = "<p>" + strMsg + "</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);

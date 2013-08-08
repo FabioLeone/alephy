@@ -36,7 +36,7 @@
             </li>
         </ul>
     </div>
-    <div id="page">
+    <div>
         <section>
             <div id="login">
                 <h1>Login</h1>
