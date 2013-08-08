@@ -48,42 +48,47 @@
         <ContentTemplate>
             <div id="page">
                 <header>
-                <nav>
-	                <ul id="navlist" runat="server">
-                        <li id="l1" runat="server"><a href="Default.aspx">Home</a></li>
-                        <%if (SIAO.Global.TId.Equals(1))
-                          { %>
-                        <li id="l2" runat="server"><a href="configurations.aspx">Configurações</a></li>
-                        <%}
-                          if (VerificaRelatorio())
-                          {%>
-                        <li id="l3" runat="server"><a href="wfmGerarRelatorios.aspx">Aplicativos</a></li>
-                        <%}
-                          if (VerificaEnvio())
-                          { %>
-                        <li id="l4" runat="server"><a href="wfmEnvio.aspx">Envio de Informações</a></li>
-                        <%} %>
-                    </ul>
-                    <ul id="Ul1" style="float:right;">
-                        <% if (!String.IsNullOrEmpty(SIAO.Global.LocalPage))
-                           { %>
-                        <li><a href='<%= SIAO.Global.LocalPage %>'>Voltar</a></li>
-                        <% } %>
-                        <li>
-                            <asp:LinkButton ID="LinkButton1" runat="server" OnClick="lbtnLogoff_Click1">Logoff</asp:LinkButton></li>
-                    </ul>
-                </nav>
+                <a class="menub" href="#">
+                   <div class="logo"></div>
+                   <span>&raquo;</span>
+                </a>
+                <div class="center">
+                    <nav>
+	                    <ul id="navlist" runat="server">
+                            <li id="l1" runat="server"><a href="Default.aspx">Home</a></li>
+                            <%if (SIAO.Global.TId.Equals(1))
+                              { %>
+                            <li id="l2" runat="server"><a href="configurations.aspx">Configurações</a></li>
+                            <%}
+                              if (VerificaRelatorio())
+                              {%>
+                            <li id="l3" runat="server"><a href="wfmGerarRelatorios.aspx">Aplicativos</a></li>
+                            <%}
+                              if (VerificaEnvio())
+                              { %>
+                            <li id="l4" runat="server"><a href="wfmEnvio.aspx">Envio de Informações</a></li>
+                            <%} %>
+                        </ul>
+                        <ul id="Ul1" style="float:right;">
+                            <% if (!String.IsNullOrEmpty(SIAO.Global.LocalPage))
+                               { %>
+                            <li><a href='<%= SIAO.Global.LocalPage %>'>Voltar</a></li>
+                            <% } %>
+                            <li>
+                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="lbtnLogoff_Click1">Logoff</asp:LinkButton></li>
+                        </ul>
+                    </nav>
+                </div>
               </header>
-                <section>
+              <section>
                 <div id="main">
                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                     </asp:ContentPlaceHolder>
                 </div>
               </section>
-                <footer>
-              <p>Todos os Direitos Reservados. CasBrasil Informática
-            <p>
-            </footer>
+              <footer>
+                <p>Todos os Direitos Reservados. CasBrasil Informática</p>
+              </footer>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
