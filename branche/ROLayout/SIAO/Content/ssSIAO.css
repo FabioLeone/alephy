@@ -5,7 +5,7 @@ font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 #page {
-background:  url(imagens/logo_Cas_blue_512_transparente.png)  no-repeat center ;
+background:  url(images/app/logo_Cas_blue_512_transparente.png)  no-repeat center ;
 width: 900px;
 display: block;
 margin: 0 auto;
@@ -465,9 +465,8 @@ section
 	}
 	
 .conav .nav-item-b{
-	left:92px;
-	opacity:.6;
-	top:0;
+	left:78px;
+	top:-18px;
 	}
 	
 .conav .nav-item-b a{
@@ -476,8 +475,8 @@ section
 	}
 	
 .conav .nav-item-c{
-	left:247px;
-	opacity:.6;
+	left:249px;
+	top:-18px;
 	}
 	
 .conav .nav-item-c a{
@@ -486,27 +485,23 @@ section
 	}
 	
 .conav .nav-item-d{
-	left:326px;
-	top:135px;
-	opacity:.6;
+	left:334px;
+	top:130px;
 	}
 	
 .conav .nav-item-e{
-	left:92px;
-	top:269px;
-	opacity:.6;
+	left:79px;
+	top:278px;
 	}
 	
 .conav .nav-item-f{
 	left:249px;
-	top:269px;
-	opacity:.6;
+	top:278px;
 	}
 	
-.conav .nav-item-empty-2{
-	left:14px;
-	top:135px;
-	opacity:.3;
+.conav .nav-item-g{
+	left:-6px;
+	top:130px;
 	}
 	
 .conav .nav-item-e a{
@@ -515,9 +510,8 @@ section
 	}
 
 .hex {
-	width:150px;
-	height:86px;
-	background-color: #39f;
+	width:164px;
+	height:96px;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;			
 	background-size: auto 173px;							
