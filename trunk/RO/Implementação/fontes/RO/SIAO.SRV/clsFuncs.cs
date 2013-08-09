@@ -115,7 +115,7 @@ namespace SIAO.SRV
                     resultBuilder.Append(character);
             }
 
-            return Regex.Replace(resultBuilder.ToString(), @"\s+", "-"); 
+            return Regex.Replace(resultBuilder.ToString(), @"\s+", "-");
         }
 
         public static string SetFileName(string strRelatorio, List<clsRelat1> lr)
@@ -322,7 +322,7 @@ namespace SIAO.SRV
         public System.Data.DataTable txtDtConvert(System.IO.Stream stream)
         {
             DataTable dt = new DataTable();
-            StreamReader sr = new StreamReader(stream,Encoding.UTF8);
+            StreamReader sr = new StreamReader(stream, Encoding.GetEncoding("Windows-1252"), true);
             string[] line;
             int i = 0;
             int intMes = 0;
