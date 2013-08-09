@@ -1,8 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="wucListaUsers.ascx.cs" Inherits="SIAO.Controls.wucListaUsers" %>
 <%@ Register src="wucCadastroUser.ascx" tagname="wucCadastroUser" tagprefix="uc1" %>
+
 <asp:MultiView ID="mvwUsers" runat="server" ActiveViewIndex="0">
     <asp:View ID="vwUserList" runat="server">
-        <table style="width:100%;">
+        <table style="width:100%;padding:2% 0">
             <tr>
                 <td>
                     <asp:Label ID="lblNome" runat="server" Text="Nome" AssociatedControlID="txtNome"></asp:Label>
@@ -18,7 +19,7 @@
             <tr>
                 <td colspan="2">
                     <asp:GridView ID="gvwUsers" AutoGenerateColumns="False" DataKeyNames="UserId" EmptyDataText="Registros não encontrados"
-                        Width="948px" runat="server" Font-Names="verdana" GridLines="None" 
+                        Width="892px" runat="server" Font-Names="verdana" GridLines="None" 
                         HeaderStyle-BackColor="#0e9de3" HeaderStyle-ForeColor="White" CellPadding="2" 
                         ForeColor="#333333" onrowdeleting="gvwUsers_RowDeleting" 
                         onrowediting="gvwUsers_RowEditing" onrowdatabound="gvwUsers_RowDataBound" 

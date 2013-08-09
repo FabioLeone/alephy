@@ -171,7 +171,6 @@ namespace SIAO.Controls
                 lbtnExcluir.OnClientClick = "return confirm('Você deseja realmente excluir este registro?')";
         }
 
-
         #endregion
 
         #region .:Methods:.
@@ -198,7 +197,8 @@ namespace SIAO.Controls
 
             divInfo.ID = "msgInfo";
             divInfo.Attributes.Add("class", "success");
-            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "28%");
+            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
+            divInfo.Style.Add("bottom", "4.6%");
             divInfo.InnerHtml = "<p>" + strMsg + "</p>";
 
             upVinculos.ContentTemplateContainer.Controls.Add(divInfo);
@@ -209,8 +209,9 @@ namespace SIAO.Controls
             System.Web.UI.HtmlControls.HtmlGenericControl divInfo = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
 
             divInfo.ID = "msgError";
-            divInfo.Attributes.Add("class", "error");
-            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "4%");
+            divInfo.Attributes.Add("class", "alerta");
+            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
+            divInfo.Style.Add("bottom", "3.5%");
             divInfo.InnerHtml = "<p>" + strMsg + "</p>";
 
             upVinculos.ContentTemplateContainer.Controls.Add(divInfo);

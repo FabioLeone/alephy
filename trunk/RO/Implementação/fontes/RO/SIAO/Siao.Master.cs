@@ -36,6 +36,7 @@ namespace SIAO
         }
         #endregion
 
+        #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -48,6 +49,7 @@ namespace SIAO
             Global.TId = 0;
             Response.Redirect("Logon.aspx");
         }
+        #endregion
 
         #region .: Metodos :.
         public bool VerificaEnvio() {

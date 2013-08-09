@@ -7,6 +7,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <script type="text/javascript">
+                function pageLoad() {
+                    $("section").addClass("sectionb");
+                }
+
+                window.onload(pageLoad);
+            </script>
             <table style="width: 99%;">
                 <tr>
                     <td>

@@ -64,5 +64,5 @@
         </td>
     </tr>
 </table>
-<asp:ValidationSummary ID="vsIndices" ValidationGroup="Cadastro" CssClass="vsError"
-    runat="server" />
+<asp:ValidationSummary ID="vsIndices" ValidationGroup="Cadastro" CssClass="alerta"
+    runat="server" style="margin-left:-41%;bottom:3.5%;" />

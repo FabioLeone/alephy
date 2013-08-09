@@ -52,9 +52,7 @@ namespace SIAO
             System.Web.UI.HtmlControls.HtmlGenericControl divError = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
 
             divError.ID = "msgError";
-            divError.Attributes.Add("class", "error");
-            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "35%");
-            divError.Style.Add(HtmlTextWriterStyle.Width, "360px");
+            divError.Attributes.Add("class", "alerta");
             divError.InnerHtml = "<p>" + msg + "</p>";
 
             frmLogon.Controls.Add(divError);

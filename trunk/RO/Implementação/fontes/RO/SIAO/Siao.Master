@@ -4,72 +4,99 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Detecta CasBrasil</title>
+    <title>Farma Manager</title>
     <link href="Content/ssSIAO.css" rel="Stylesheet" type="text/css" />
+    <!-- Animação fundo -->
+    <link rel="stylesheet" type="text/css" href="Content/css/style1.css" />
+    <script type="text/javascript" src="Content/js/modernizr.custom.86080.js"></script>
+    <!-- Include jQuery -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <!-- Optional: Include the easing plugin -->
+    <script type="text/javascript" src="Content/js/jquery.easing.1.3.js"></script>
+    <!-- Include the lava lamp plugin -->
+    <script type="text/javascript" src="Content/js/jquery.lavalamp.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body>
+<body id="home">
     <form id="form1" runat="server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
+    <header>
+    <a class="menub" href="#">
+        <div class="logo"></div>
+        <span>&raquo;</span>
+    </a>
+    <div class="center">
+        <nav>
+	        <ul id="navlist" runat="server">
+                <li id="l1" runat="server"><a href="Default.aspx">Home</a></li>
+                <%if (SIAO.Global.TId.Equals(1))
+                    { %>
+                <li id="l2" runat="server"><a href="configurations.aspx">Configurações</a></li>
+                <%}
+                    if (VerificaRelatorio())
+                    {%>
+                <li id="l3" runat="server"><a href="wfmGerarRelatorios.aspx">Aplicativos</a></li>
+                <%}
+                    if (VerificaEnvio())
+                    { %>
+                <li id="l4" runat="server"><a href="wfmEnvio.aspx">Envio de Informações</a></li>
+                <%} %>
+            </ul>
+            <ul id="Ul1" style="float:right;">
+                <% if (!String.IsNullOrEmpty(SIAO.Global.LocalPage))
+                    { %>
+                <li><a href='<%= SIAO.Global.LocalPage %>'>Voltar</a></li>
+                <% } %>
+                <li>
+                    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="lbtnLogoff_Click1">Logoff</asp:LinkButton></li>
+            </ul>
+        </nav>
+    </div>
+    </header>
+    <div id="fundo">
+        <ul class="cb-slideshow">
+            <li><span>Image 01</span><div>
+            </div>
+            </li>
+            <li><span>Image 02</span><div>
+            </div>
+            </li>
+            <li><span>Image 03</span><div>
+            </div>
+            </li>
+            <li><span>Image 04</span><div>
+            </div>
+            </li>
+            <li><span>Image 05</span><div>
+            </div>
+            </li>
+            <li><span>Image 06</span><div>
+            </div>
+            </li>
+        </ul>
+    </div>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <div id="navigation">
-                <ul>
-                    <li><a href="Default.aspx">Home</a></li>
-                    <li id="active"><a href="#">Detecta CasBrasil</a></li>
-                    <%if (SIAO.Global.TId.Equals(1))
-                      { %>
-                    <li><a href='#'><span>Cadastro</span></a>
-                        <ul>
-                            <li><a href="wfmUsers.aspx"><span>Usuários</span></a></li>
-                            <li><a href="wfmCadastroRede.aspx"><span>Cadastro de Redes</span></a></li>
-                            <li><a href="wfmCadastroLojas.aspx"><span>Cadastro de Lojas</span></a></li>
-                            <li><a href="wfmBanco.aspx"><span>Manutenção do Banco de Dados</span></a></li>
-                            <%--<li><a href="wfmAcesso.aspx"><span>Controle de Acesso</span></a></li>--%>
-                            <li><a href="wfmVinculos.aspx"><span>Vinculos</span></a></li>
-                            <li><a href="wfmFiles.aspx"><span>Histórico de uploads</span></a></li>
-                        </ul>
-                    </li>
-                    <%} %>
-                    <li><a href="#">Opções</a>
-                        <ul>
-                            <%if (VerificaEnvio())
-                              { %>
-                            <li><a href="wfmEnvio.aspx" class="link">Envio de arquivos</a></li>
-                            <%}
-                              if (VerificaRelatorio())
-                              { %>
-                            <li><a href="wfmGerarRelatorios.aspx" class="link">Gerar relatórios</a></li>
-                            <%} %>
-                        </ul>
-                    </li>
-                    <%if (SIAO.Global.TId.Equals(1))
-                      { %>
-                    <li><a href="#">Beta</a>
-                        <ul>
-                            <li><a href="wfmLabPage.aspx" class="link">Porcentagem de Participação</a></li>
-                        </ul>
-                    </li>
-                    <%} %>
-                </ul>
-                <ul id="botoes">
-                    <% if (!String.IsNullOrEmpty(SIAO.Global.LocalPage))
-                       { %>
-                    <li><a href='<%= SIAO.Global.LocalPage %>'>Voltar</a></li>
-                    <% } %>
-                    <li>
-                        <asp:LinkButton ID="lbtnLogoff" runat="server" OnClick="lbtnLogoff_Click1">Logoff</asp:LinkButton></li>
-                </ul>
+            <div id="page">
+              <section>
+                <div id="main">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+              </section>
             </div>
-            <br />
-            <section>
-                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                </asp:ContentPlaceHolder>
-            </section>
         </ContentTemplate>
     </asp:UpdatePanel>
+        <footer>
+        <p>Todos os Direitos Reservados. CasBrasil Informática</p>
+        </footer>
     </form>
 </body>
+<script type="text/javascript">
+    $('#navlist').lavalamp({
+        easing: 'easeOutBack'
+    });
+</script>
 </html>
