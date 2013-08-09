@@ -5,7 +5,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <contenttemplate>
-            <table style="width: 100%; margin-left: 0.25%;">
+            <script type="text/javascript">
+                function pageLoad() {
+                    $("section").addClass("sectionb");
+                }
+
+                window.onload(pageLoad);
+            </script>
+            <table style="width: 99.5%;">
                 <tr id="trFiltro" runat="server">
                     <td colspan="2">
                         <fieldset style="width: 96.5%;">

@@ -95,6 +95,17 @@ namespace SIAO
                 txtFim.Enabled = false;
             }
             Global.LocalPage = "";
+            Control ul = Master.FindControl("navlist");
+
+            foreach (Control item in ul.Controls)
+            {
+                if (item != null)
+                    ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+            }
+
+            Control li = Master.FindControl("l3");
+            if (li != null)
+                ((System.Web.UI.HtmlControls.HtmlControl)li).Attributes.Add("class", "active");
 
         }
 
@@ -389,8 +400,9 @@ namespace SIAO
             System.Web.UI.HtmlControls.HtmlGenericControl divError = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
 
             divError.ID = "msgError";
-            divError.Attributes.Add("class", "error");
-            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "4%");
+            divError.Attributes.Add("class", "alerta");
+            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
+            divError.Style.Add("bottom", "3.5%");
             divError.InnerHtml = "<p>" + msg + "</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divError);
@@ -402,7 +414,8 @@ namespace SIAO
 
             divInfo.ID = "msgInfo";
             divInfo.Attributes.Add("class", "success");
-            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "32%");
+            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
+            divInfo.Style.Add("bottom","4.6%");
             divInfo.InnerHtml = "<p>Loja cadastrada com sucesso.</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);

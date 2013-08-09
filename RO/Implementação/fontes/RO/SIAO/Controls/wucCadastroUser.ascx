@@ -2,10 +2,9 @@
     Inherits="SIAO.Controls.wucCadastroUser" %>
     <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Panel ID="Panel1" runat="server">
-    <fieldset style="width: 372px; margin-left: 36%;">
+    <fieldset style="width: 372px;margin: 0 auto;">
         <legend>
-            <h2>
-                Cadastro de Usuários</h2>
+            <h2>Cadastro de Usuários</h2>
         </legend>
         <div id="divForm" style="height: 288px; width: 366px; margin-left: 24px;">
             <table>
