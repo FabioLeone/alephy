@@ -23,7 +23,7 @@
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
     <header>
-    <a class="menub" href="#">
+    <a id="log" class="menub" href="#">
         <div class="logo"></div>
         <span>&raquo;</span>
     </a>
@@ -89,9 +89,9 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
-        <footer>
+    <footer>
         <p>Todos os Direitos Reservados. CasBrasil Informática</p>
-        </footer>
+    </footer>
     </form>
 </body>
 <script type="text/javascript">

@@ -141,7 +141,7 @@ namespace SIAO.SRV.DAL
 	                WHERE 
 	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
 	                AND
-	                sub_consultoria in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
+	                upper(sub_consultoria) in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
 	                GROUP BY cnpj, mes, ano, sub_consultoria
                 union
 	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",
@@ -222,7 +222,7 @@ namespace SIAO.SRV.DAL
 	                WHERE 
 	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
 	                AND
-	                sub_consultoria in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
+	                upper(sub_consultoria) in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
 	                GROUP BY cnpj, mes, ano, sub_consultoria
                 union
 	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
