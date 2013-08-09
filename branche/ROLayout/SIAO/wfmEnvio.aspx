@@ -1,15 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Siao.Master" AutoEventWireup="true" CodeBehind="wfmEnvio.aspx.cs" Inherits="SIAO.wfmEnvio" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-        $(document).ready(function () {
+        function pageLoad() {
             $("section").addClass("sectionb");
-        });
+        }
+
+        window.onload(pageLoad);
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <fieldset style="width: 33%; margin-left:31%; margin-Top:7%;">
+            <fieldset style="width: 33%; margin-left:31%;">
                 <legend>
                     <h2>
                         Envio de Arquivos</h2>

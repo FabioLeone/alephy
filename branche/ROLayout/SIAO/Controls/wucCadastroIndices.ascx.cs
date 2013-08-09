@@ -39,7 +39,9 @@ namespace SIAO.Controls
         {
 
         }
+        #endregion
 
+        #region .: Metodos :.
         public void PopulaDados(IndicesGraficTO clsIndices)
         {
             lbxGrupo.DataSource = GraficBLL.GetGrupos(strConnection);
@@ -82,7 +84,6 @@ namespace SIAO.Controls
 
             Response.Redirect("wfmIndices.aspx");
         }
-        #endregion
 
         private IndicesGraficTO ResgataDados()
         {
@@ -94,5 +95,6 @@ namespace SIAO.Controls
                 venda = Convert.ToDecimal(txtVenda.Text)
             };
         }
+        #endregion
     }
 }

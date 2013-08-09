@@ -126,7 +126,6 @@
     <Content Include="wfmBanco.aspx" />
     <Content Include="wfmCadastroLojas.aspx" />
     <Content Include="wfmCadastroRede.aspx" />
-    <Content Include="wfmCadastroUsuario.aspx" />
     <Content Include="wfmEnvio.aspx" />
     <Content Include="wfmGerarRelatorios.aspx" />
     <Content Include="wfmLabPage.aspx" />
@@ -264,13 +263,6 @@
     </Compile>
     <Compile Include="wfmCadastroRede.aspx.designer.cs">
       <DependentUpon>wfmCadastroRede.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="wfmCadastroUsuario.aspx.cs">
-      <DependentUpon>wfmCadastroUsuario.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="wfmCadastroUsuario.aspx.designer.cs">
-      <DependentUpon>wfmCadastroUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfmEnvio.aspx.cs">
       <DependentUpon>wfmEnvio.aspx</DependentUpon>

@@ -52,3 +52,7 @@ D:\Projects\trunk\RO\Implementação\fontes\RO\SIAO.SRV\bin\Debug\SIAO.SRV.pdb
 D:\Projects\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Debug\SIAO.SRV.dll
 D:\Projects\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Debug\SIAO.SRV.pdb
 D:\Projects\trunk\RO\Implementação\fontes\RO\SIAO.SRV\obj\Debug\SIAO.SRV.csprojResolveAssemblyReference.cache
+D:\Projects\branche\SIAO.SRV\bin\Debug\SIAO.SRV.dll
+D:\Projects\branche\SIAO.SRV\bin\Debug\SIAO.SRV.pdb
+D:\Projects\branche\SIAO.SRV\obj\Debug\SIAO.SRV.dll
+D:\Projects\branche\SIAO.SRV\obj\Debug\SIAO.SRV.pdb

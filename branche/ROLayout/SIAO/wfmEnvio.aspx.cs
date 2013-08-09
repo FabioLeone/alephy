@@ -30,6 +30,7 @@ namespace SIAO
             Control li = Master.FindControl("l4");
             if (li != null)
                 ((System.Web.UI.HtmlControls.HtmlControl)li).Attributes.Add("class", "active");
+
         }
 
         private void divErro(string msg)
@@ -37,8 +38,9 @@ namespace SIAO
             System.Web.UI.HtmlControls.HtmlGenericControl divError = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
 
             divError.ID = "msgError";
-            divError.Attributes.Add("class", "error");
-            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "4%");
+            divError.Attributes.Add("class", "alerta");
+            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
+            divError.Style.Add("bottom", "3.5%");
             divError.InnerHtml = "<p>" + msg + "</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divError);
@@ -50,7 +52,8 @@ namespace SIAO
 
             divInfo.ID = "msgInfo";
             divInfo.Attributes.Add("class", "success");
-            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "31%");
+            divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
+            divInfo.Style.Add("bottom", "4.6%");
             divInfo.InnerHtml = "<p>Arquivo enviado com sucesso.</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
