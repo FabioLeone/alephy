@@ -54,6 +54,7 @@
             </ul>
         </nav>
     </div>
+    <div id="inf">asdf</div>
     </header>
     <div id="fundo">
         <ul class="cb-slideshow">

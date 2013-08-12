@@ -629,3 +629,19 @@ color:#09C;
 .hex.hex-3 {
 	background: #80b971;
 }
+
+#inf
+{
+    display: none;
+    background: #ccc;
+    margin-top: 50px;
+    left: 0px;
+    position: fixed;
+    width: 200px;
+    height: 87%;
+}
+    
+.menub:hover ~ #inf
+{
+    display:block;
+}
