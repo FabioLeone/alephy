@@ -59,6 +59,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="aplicativos.aspx" />
     <Content Include="configurations.aspx" />
     <Content Include="Content\a_Logo.jpg" />
     <Content Include="Content\css\Animations.css" />
@@ -136,6 +137,13 @@
     <Content Include="wfmRelatorio.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="aplicativos.aspx.cs">
+      <DependentUpon>aplicativos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aplicativos.aspx.designer.cs">
+      <DependentUpon>aplicativos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="configurations.aspx.cs">
       <DependentUpon>configurations.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
