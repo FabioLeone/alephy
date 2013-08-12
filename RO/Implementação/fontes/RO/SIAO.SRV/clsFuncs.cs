@@ -336,7 +336,7 @@ namespace SIAO.SRV
                 {
                     for (int j = 0; j < line.Length; j++)
                     {
-                        dt.Columns.Add(RemoveSpecialChar(line[j].Replace("\t","").Trim()));
+                        dt.Columns.Add(RemoveSpecialChar(line[j].Trim()));
                     }
                     i++;
                 }
@@ -345,7 +345,7 @@ namespace SIAO.SRV
                   
                     for (int j = 0; j < line.Length; j++)
                     {
-                        dr[j] = line[j].Replace("\t", "").Trim();
+                        dr[j] = line[j].Trim();
 
                         if (j.Equals(2)) {
                             if (!intMes.Equals(Convert.ToInt32(line[j])))
