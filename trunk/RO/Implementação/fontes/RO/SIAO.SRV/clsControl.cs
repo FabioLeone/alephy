@@ -1247,7 +1247,7 @@ namespace SIAO.SRV
                               VALUES (@Razao_Social, @Cnpj, @Mes, @Ano, @Barras, @Descricao,
                               @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
 
-                    cmm.Parameters.Add("@Razao_Social", NpgsqlDbType.Varchar, 255, "Razao-Social");
+                    cmm.Parameters.Add("@Razao_Social", NpgsqlDbType.Varchar, 255, "RazaoSocial");
                     cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar, 255, "Cnpj");
                     cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer, 2, "Mes");
                     cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer, 4, "Ano");
@@ -1255,9 +1255,9 @@ namespace SIAO.SRV
                     cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar, 255, "Descricao");
                     cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar, 255, "Fabricante");
                     cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer, 255, "Quantidade");
-                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric,15, "Valor-bruto");
-                    cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Numeric, 15, "Valor-liquido");
-                    cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Numeric, 15, "Valor-desconto");
+                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric,15, "Valorbruto");
+                    cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Numeric, 15, "Valorliquido");
+                    cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Numeric, 15, "Valordesconto");
                     
                     cnn.Open();
                     NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmm);
