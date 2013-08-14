@@ -161,7 +161,7 @@ namespace SIAO.Controls
                     {
                         VinculoBLL.Delete(this.Vinculos.Find(v=>v.id == Convert.ToInt32(lbtnExcluir.CommandArgument)));
 
-                        this.Vinculos = VinculoBLL.GetByUsuarioId(this.Vinculos.First().UsuarioId);
+                        this.Vinculos = VinculoBLL.GetByTipoIdAndSearch(Convert.ToInt32(ddlTipos.SelectedValue), txtSearch.Text);
                         LoadList();
                     }
                 }
