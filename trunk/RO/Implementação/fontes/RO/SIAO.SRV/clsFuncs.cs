@@ -115,7 +115,7 @@ namespace SIAO.SRV
                     resultBuilder.Append(character);
             }
 
-            return Regex.Replace(resultBuilder.ToString(), @"\s+", "-");
+            return Regex.Replace(resultBuilder.ToString(), @"\s+", "");
         }
 
         public static string SetFileName(string strRelatorio, List<clsRelat1> lr)
