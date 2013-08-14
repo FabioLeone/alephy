@@ -72,46 +72,50 @@ namespace SIAO.Controls
 
                         clsVinculo = new VinculoTO();
                         clsVinculo = this.Vinculos.Find(v => v.LinkId == Convert.ToInt32(hfLinkId.Value) && v.UsuarioId == Convert.ToInt32(litID.Text));
-                        clsVinculo.CNPJ = txtCNPJ.Text;
 
-                        switch (Convert.ToInt32(hfUsuarioTipoId.Value))
+                        if (String.IsNullOrEmpty(clsVinculo.CNPJ))
                         {
-                            case 2:
-                                {
-                                    Loja clsLoja = clsControl.GetLojaByCNPJ(txtCNPJ.Text);
-                                    if (clsLoja.Id == 0)
-                                    {
-                                        divErro("CNPJ não corresponde a uma Drogaria ou não cadastrado");
-                                        txtCNPJ.Text = String.Empty;
-                                        txtCNPJ.Focus();
-                                        return;
-                                    }
+                            clsVinculo.CNPJ = txtCNPJ.Text;
 
-                                    clsVinculo.Empresa = clsLoja.NomeFantasia;
-                                    clsVinculo.LinkId = clsLoja.Id;
-                                    break;
-                                }
-                            case 3:
-                                {
-                                    Rede clsRede = clsControl.GetRedeByCNPJ(txtCNPJ.Text);
-                                    if (clsRede.RedeId == 0)
+                            switch (Convert.ToInt32(hfUsuarioTipoId.Value))
+                            {
+                                case 2:
                                     {
-                                        divErro("CNPJ não corresponde a uma Rede ou não cadastrado");
-                                        txtCNPJ.Text = String.Empty;
-                                        txtCNPJ.Focus();
-                                        return;
-                                    }
+                                        Loja clsLoja = clsControl.GetLojaByCNPJ(txtCNPJ.Text);
+                                        if (clsLoja.Id == 0)
+                                        {
+                                            divErro("CNPJ não corresponde a uma Drogaria ou não cadastrado");
+                                            txtCNPJ.Text = String.Empty;
+                                            txtCNPJ.Focus();
+                                            return;
+                                        }
 
-                                    clsVinculo.Empresa = clsRede.RedeName;
-                                    clsVinculo.LinkId = clsRede.RedeId;
-                                    break;
-                                }
+                                        clsVinculo.Empresa = clsLoja.NomeFantasia;
+                                        clsVinculo.LinkId = clsLoja.Id;
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        Rede clsRede = clsControl.GetRedeByCNPJ(txtCNPJ.Text);
+                                        if (clsRede.RedeId == 0)
+                                        {
+                                            divErro("CNPJ não corresponde a uma Rede ou não cadastrado");
+                                            txtCNPJ.Text = String.Empty;
+                                            txtCNPJ.Focus();
+                                            return;
+                                        }
+
+                                        clsVinculo.Empresa = clsRede.RedeName;
+                                        clsVinculo.LinkId = clsRede.RedeId;
+                                        break;
+                                    }
+                            }
+
+                            if (clsVinculo.id > 0)
+                                VinculoBLL.Update(clsVinculo);
+                            else
+                                VinculoBLL.Insert(clsVinculo);
                         }
-
-                        if (clsVinculo.id > 0)
-                            VinculoBLL.Update(clsVinculo);
-                        else
-                            VinculoBLL.Insert(clsVinculo);
                     }
                 }
             }
