@@ -432,7 +432,8 @@ namespace SIAO.SRV.DAL
 
                 if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
-                else if (!String.IsNullOrEmpty(strLoja))
+                
+                if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.cnpj = @cnpj");
 
                 strSQL.Append(@" GROUP BY consolidado.cnpj,
@@ -593,7 +594,8 @@ namespace SIAO.SRV.DAL
 
                 if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
-                else if (!String.IsNullOrEmpty(strLoja))
+                
+                if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
                 
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
@@ -759,7 +761,8 @@ namespace SIAO.SRV.DAL
 
                 if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
-                else if (!String.IsNullOrEmpty(strLoja))
+                
+                if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo

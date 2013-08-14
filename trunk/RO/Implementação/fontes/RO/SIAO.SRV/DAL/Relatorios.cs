@@ -210,6 +210,15 @@ namespace SIAO.SRV
             }
             else
             {
+                if (!String.IsNullOrEmpty(strCnpj))
+                {
+                    SQL.Append(" AND farmacias.Cnpj = @Cnpj");
+                }
+                else if (intRedeId > 0)
+                {
+                    SQL.Append(" AND farmacias.idRede = @idRede");
+                }
+
                 SQL.Append(@" AND usuarios_vinculos.UsuarioId = @UsuarioId
                 ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
