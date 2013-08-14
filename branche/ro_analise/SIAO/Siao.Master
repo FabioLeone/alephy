@@ -37,7 +37,7 @@
                 <%}
                     if (VerificaRelatorio())
                     {%>
-                <li id="l3" runat="server"><a href="wfmGerarRelatorios.aspx">Aplicativos</a></li>
+                <li id="l3" runat="server"><a href="aplicativos.aspx">Aplicativos</a></li>
                 <%}
                     if (VerificaEnvio())
                     { %>

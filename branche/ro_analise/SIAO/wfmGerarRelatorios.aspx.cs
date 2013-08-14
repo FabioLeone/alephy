@@ -335,7 +335,7 @@ namespace SIAO
         private void getRedes()
         {
             DataSet ds = new DataSet();
-            ds = clsControl.GetRedes(scn);
+            ds = clsControl.GetRedes();
 
             if (ds.Tables.Count > 0)
             {
@@ -371,7 +371,7 @@ namespace SIAO
             switch (this.User.TipoId)
             {
                 case 2:
-                    ddlLojaRelatorios.DataSource = oc.GetLojaByUserId(clsUser.UserId);
+                    ddlLojaRelatorios.DataSource = clsControl.GetLojaByUserId(clsUser.UserId);
                     ddlLojaRelatorios.DataTextField = "NomeFantasia";
                     ddlLojaRelatorios.DataValueField = "Cnpj";
                     ddlLojaRelatorios.DataBind();
@@ -387,7 +387,7 @@ namespace SIAO
 
         private void getLojas(int intRedeId)
         {
-            ddlLojaRelatorios.DataSource = oc.GetLojaByRedeId(intRedeId);
+            ddlLojaRelatorios.DataSource = clsControl.GetLojaByRedeId(intRedeId);
             ddlLojaRelatorios.DataTextField = "NomeFantasia";
             ddlLojaRelatorios.DataValueField = "Cnpj";
             ddlLojaRelatorios.DataBind();

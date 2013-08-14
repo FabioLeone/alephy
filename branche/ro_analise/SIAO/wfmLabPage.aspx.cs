@@ -40,7 +40,7 @@ namespace SIAO
             ddlAno.SelectedIndex = 0;
 
             //Rede
-            ddlRede.DataSource = clsControl.GetRedes(scn);
+            ddlRede.DataSource = clsControl.GetRedes();
             ddlRede.DataTextField = "Descricao";
             ddlRede.DataValueField = "Id";
             ddlRede.DataBind();
