@@ -28,7 +28,8 @@ namespace SIAO
             {
                 if (!clsUser.Inactive && clsUser.ExpirationDate > DateTime.Today)
                 {
-                    Session["user"] = clsUser;
+                    UsersBLL.SetUserSession(clsUser);
+                    
                     FormsAuthentication.SetAuthCookie(clsUser.UserName, false);
                     Global.TId = clsUser.TipoId;
 

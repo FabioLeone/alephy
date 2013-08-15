@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using SIAO.SRV;
 using SIAO.SRV.TO;
+using SIAO.SRV.BLL;
 
 namespace SIAO.Controls
 {
@@ -50,12 +51,10 @@ namespace SIAO.Controls
         #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
-            else
-            {
-                this.User = (UsersTO)Session["user"];
-            }
+            this.User = UsersBLL.GetUserSession(new UsersTO());
 
+            if (this.User.UserId == 0) { Response.Redirect("Logon.aspx"); }
+            
             if (!IsPostBack)
             {
                 getRedes();

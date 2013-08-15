@@ -1,55 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SIAO.SRV.TO;
-using SIAO.SRV.DAL;
-using System.Web.UI.HtmlControls;
 using System.Web;
+using System.Web.Script.Serialization;
+using SIAO.SRV.DAL;
+using SIAO.SRV.TO;
 
 namespace SIAO.SRV.BLL
 {
     public class UsersBLL
     {
         #region .: Métodos :.
-
-        public static List<HtmlGenericControl> GetMenu(int intUserId, string strConnection)
-        {
-            List<HtmlGenericControl> lhgc = new List<HtmlGenericControl>();
-
-            if (UsersDAL.GetById(intUserId, strConnection).Access == "adm") {
-                HtmlGenericControl h1 = new HtmlGenericControl();
-                h1.InnerHtml = "<h2>Cadastros</h2>";
-                lhgc.Add(h1);
-
-                HtmlGenericControl ul1 = new HtmlGenericControl();
-                ul1.InnerHtml = "<ul>";
-                lhgc.Add(ul1);
-
-                HtmlGenericControl li1 = new HtmlGenericControl();
-                li1.InnerHtml = "<li><a href='Users/Default.aspx'>Usuários</li>";
-                lhgc.Add(li1);
-
-                HtmlGenericControl li2 = new HtmlGenericControl();
-                li2.InnerHtml = "<li><a href='#'>Redes</li>";
-                lhgc.Add(li2);
-
-                HtmlGenericControl li3 = new HtmlGenericControl();
-                li3.InnerHtml = "<li><a href='#'>Lojas</li>";
-                lhgc.Add(li3);
-
-                HtmlGenericControl li4 = new HtmlGenericControl();
-                li4.InnerHtml = "<li><a href='#'>Manutenção do Banco de Dados</li>";
-                lhgc.Add(li4);
-
-                HtmlGenericControl eul1 = new HtmlGenericControl();
-                eul1.InnerHtml = "</ul>";
-                lhgc.Add(eul1);
-
-            } else { }
-
-            return lhgc;
-        }
 
         public static bool ValidaEnvio(int intTId)
         {
@@ -63,6 +23,26 @@ namespace SIAO.SRV.BLL
             return (intTId.Equals(1) || intTId.Equals(2) || intTId.Equals(3));
         }
 
+        public static void SetUserSession(UsersTO objUser)
+        {
+            String jssObject = new JavaScriptSerializer().Serialize(objUser);
+            clsFuncs of = new clsFuncs();
+
+            HttpContext.Current.Session[of.encr(objUser.UserName)] = of.encr(jssObject);
+        }
+
+        public static UsersTO GetUserSession(UsersTO objUser)
+        {
+            JavaScriptSerializer jssObject = new JavaScriptSerializer();
+            clsFuncs of = new clsFuncs();
+            Type t = objUser.GetType();
+            String strName = HttpContext.Current.User.Identity.Name;
+
+            if (HttpContext.Current.Session[of.encr(strName)] != null)
+                return (UsersTO)jssObject.Deserialize(of.denc(HttpContext.Current.Session[of.encr(strName)].ToString()), t);
+            else
+                return objUser;
+        }
         #endregion
         
         #region .: Search :.

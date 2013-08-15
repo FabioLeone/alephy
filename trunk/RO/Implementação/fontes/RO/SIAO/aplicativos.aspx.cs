@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using SIAO.SRV.BLL;
+using SIAO.SRV.TO;
 
 namespace SIAO
 {
@@ -11,7 +13,7 @@ namespace SIAO
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
+            if (UsersBLL.GetUserSession(new UsersTO()).UserId == 0) { Response.Redirect("Logon.aspx"); }
 
             Control ul = Master.FindControl("navlist");
 

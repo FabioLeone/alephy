@@ -19,7 +19,7 @@ namespace SIAO
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
+            if (UsersBLL.GetUserSession(new UsersTO()).UserId == 0) { Response.Redirect("Logon.aspx"); }
 
             if (Session["editL"] != null) { clsLoja.Id = (int)Session["editL"]; }
 
