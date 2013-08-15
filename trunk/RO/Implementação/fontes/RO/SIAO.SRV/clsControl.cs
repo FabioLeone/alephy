@@ -45,11 +45,11 @@ namespace SIAO.SRV
             return ds;
         }
 
-        public static DataSet GetRedes(string scn)
+        public static DataSet GetRedes()
         {
             DataSet ds = new DataSet();
             NpgsqlCommand cmm = new NpgsqlCommand();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             clsDB clsDB = new clsDB();
 
             cmm.Connection = cnn;
@@ -358,10 +358,11 @@ namespace SIAO.SRV
             return clsLoja;
         }
 
-        public DataSet GetLojaByUserId(int intUserId)
+        public static DataSet GetLojaByUserId(int intUserId)
         {
             DataSet ds = new DataSet();
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
             cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID 
@@ -382,10 +383,11 @@ namespace SIAO.SRV
             return ds;
         }
 
-        public DataSet GetLojaByRedeId(int intRedeId)
+        public static DataSet GetLojaByRedeId(int intRedeId)
         {
             DataSet ds = new DataSet();
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
             cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias

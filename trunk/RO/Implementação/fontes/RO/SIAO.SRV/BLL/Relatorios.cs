@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SIAO.SRV.TO;
 using System.Web.UI.WebControls;
+using SIAO.SRV.BLL;
 
 namespace SIAO.SRV
 {
@@ -103,6 +104,20 @@ namespace SIAO.SRV
             });
 
             return lst;
+        }
+
+        public static void GetAnalise(ListItemCollection lstFiltro)
+        {
+            //List<GraficTO> lst;
+            //if(lstFiltro.Count == 4)
+            //    lst = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text);
+            //else
+            //    return;
+        }
+
+        public static void GetAnalise(ListItemCollection lstFiltro, int intId)
+        {
+            //clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId);
         }
     }
 }

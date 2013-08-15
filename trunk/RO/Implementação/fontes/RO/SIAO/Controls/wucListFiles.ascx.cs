@@ -24,7 +24,7 @@ namespace SIAO.Controls
         private void LoadDados()
         {
             DataSet ds = new DataSet();
-            ds = clsControl.GetRedes(scn);
+            ds = clsControl.GetRedes();
 
             if (ds.Tables.Count > 0)
             {
