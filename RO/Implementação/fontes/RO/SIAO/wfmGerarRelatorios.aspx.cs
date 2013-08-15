@@ -79,12 +79,10 @@ namespace SIAO
         #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
-            else
-            {
-                this.User = clsUser = (UsersTO)Session["user"];
-            }
+            this.User = clsUser = UsersBLL.GetUserSession(new UsersTO());
 
+            if (this.User.UserId == 0) { Response.Redirect("Logon.aspx"); }
+            
             if (!IsPostBack)
             {
                 getRedes();

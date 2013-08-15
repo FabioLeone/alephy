@@ -38,7 +38,7 @@ namespace SIAO.Controls
         #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
+            if (UsersBLL.GetUserSession(new UsersTO()).UserId == 0) { Response.Redirect("Logon.aspx"); }
 
             if (!IsPostBack)
             {

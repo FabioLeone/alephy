@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SIAO.SRV.BLL;
 using SIAO.SRV;
+using SIAO.SRV.TO;
 
 namespace SIAO.Controls
 {
@@ -14,7 +15,7 @@ namespace SIAO.Controls
         #region .:Events:.
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
+            if (UsersBLL.GetUserSession(new UsersTO()).UserId == 0) { Response.Redirect("Logon.aspx"); }
         }
 
         protected void btnAnalise_ServerClick(object sender, EventArgs e)
