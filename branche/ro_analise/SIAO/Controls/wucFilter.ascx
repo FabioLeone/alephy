@@ -7,7 +7,7 @@
             <h2>
                 Filtro</h2>
         </legend>
-        <div id="dvFiltro" style="height: 30px; width: 100%; display: table-row;">
+        <div id="dvFiltro" runat="server" style="height: 30px; width: 100%; display: table-row;">
             <div id="dvRedes" runat="server" style="width: 50%; display: table-cell;">
                 Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
                     OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
@@ -15,7 +15,7 @@
             </div>
             <div id="dvLoja" runat="server" style="display: table-cell;">
                 Loja:
-                <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="min-width: 200px;">
+                <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="min-width: 243px;">
                 </asp:DropDownList>
             </div>
         </div>

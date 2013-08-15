@@ -22,6 +22,15 @@ namespace SIAO.Controls {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvFilter;
         
         /// <summary>
+        /// dvFiltro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvFiltro;
+        
+        /// <summary>
         /// dvRedes control.
         /// </summary>
         /// <remarks>

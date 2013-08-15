@@ -59,6 +59,9 @@ namespace SIAO.Controls
             if (!IsPostBack)
             {
                 getRedes();
+                if (!clsUser.TipoId.Equals(1))
+                    ValidaAcesso();
+                
                 txtInicio.Enabled = false;
                 txtFim.Enabled = false;
             }
@@ -159,8 +162,59 @@ namespace SIAO.Controls
             dvFilter.Controls.Add(divError);
         }
 
-        public void ResultData()
-        { }
+        public ListItemCollection ResultData()
+        {
+            ListItemCollection lic = new ListItemCollection();
+
+            if (ddlRedesRelatorios.Visible && String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
+            {
+                divErro("Selecione a rede!");
+                return lic;
+            }
+            else
+                lic.Add(new ListItem("rede", ddlRedesRelatorios.SelectedValue));
+
+            lic.Add(new ListItem("loja", ddlLojaRelatorios.SelectedValue));
+
+            if (rbtPeriodo.Checked)
+            {
+                if (txtInicio.Text != "__/____" && txtFim.Text != "__/____")
+                {
+                    lic.Add(new ListItem("de", txtInicio.Text));
+                    lic.Add(new ListItem("ate", txtFim.Text));
+                }
+                else {
+                    divErro("Preencha os campos \"de\" e \"até\"!");
+                    return lic;
+                }
+            }
+            else if (rbtMes.Checked)
+            {
+                lic.Add(new ListItem("de", String.Empty));
+                lic.Add(new ListItem("ate", String.Empty));
+            }
+            else
+                divErro("Selecione o periodo!");
+
+            return lic;
+        }
+
+        private void ValidaAcesso()
+        {
+            if (this.User.TipoId.Equals(3))
+            {
+                ddlLojaRelatorios.Visible = false;
+                dvLoja.Visible = false;
+                dvFiltro.Visible = false;
+            }
+            else
+            {
+                ddlLojaRelatorios.Visible = true;
+                dvLoja.Visible = true;
+                dvFiltro.Visible = true;
+            }
+            dvRedes.Visible = false;
+        }
         #endregion
     }
 }
