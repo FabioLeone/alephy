@@ -27,7 +27,7 @@
                                 </div>
                                 <div id="dvLoja" runat="server" style="display:table-cell;">
                                     Loja:
-                                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" style="min-width:200px;">
+                                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" style="min-width:243px;">
                                     </asp:DropDownList>
                                 </div>
                             </div>
