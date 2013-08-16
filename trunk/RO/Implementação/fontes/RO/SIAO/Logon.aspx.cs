@@ -31,7 +31,6 @@ namespace SIAO
                     UsersBLL.SetUserSession(clsUser);
                     
                     FormsAuthentication.SetAuthCookie(clsUser.UserName, false);
-                    Global.TId = clsUser.TipoId;
 
                     Response.Redirect("Default.aspx");
                 }

@@ -19,7 +19,7 @@
                             <legend>
                                 <h2>Filtro</h2>
                             </legend>
-                            <div id="dvFiltro" style="height: 30px; width: 100%;display:table-row;">
+                            <div id="dvFiltro" runat="server" style="height: 30px; width: 100%;display:table-row;">
                                 <div id="dvRedes" runat="server" style="width:50%;display:table-cell;">
                                     Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
                                         onselectedindexchanged="ddlRedesRelatorios_SelectedIndexChanged">

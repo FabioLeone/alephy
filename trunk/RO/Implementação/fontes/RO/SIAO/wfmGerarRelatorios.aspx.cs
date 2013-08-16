@@ -353,13 +353,13 @@ namespace SIAO
             {
                 ddlLojaRelatorios.Visible = false;
                 dvLoja.Visible = false;
-                trFiltro.Visible = false;
+                dvFiltro.Visible = false;
             }
             else
             {
                 ddlLojaRelatorios.Visible = true;
                 dvLoja.Visible = true;
-                trFiltro.Visible = true;
+                dvFiltro.Visible = true;
             }
             dvRedes.Visible = false;
         }

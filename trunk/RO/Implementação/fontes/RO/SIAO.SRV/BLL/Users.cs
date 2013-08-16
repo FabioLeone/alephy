@@ -43,6 +43,13 @@ namespace SIAO.SRV.BLL
             else
                 return objUser;
         }
+
+        public static void ClearUserSession()
+        {
+            clsFuncs of = new clsFuncs();
+            String strName = HttpContext.Current.User.Identity.Name;
+            HttpContext.Current.Session[of.encr(strName)] = null;
+        }
         #endregion
         
         #region .: Search :.

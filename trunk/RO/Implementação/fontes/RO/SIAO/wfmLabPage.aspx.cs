@@ -19,11 +19,8 @@ namespace SIAO
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["user"] == null) { Response.Redirect("Logon.aspx"); }
-            else
-            {
-                clsUser = (UsersTO)Session["user"];
-            }
+            clsUser = UsersBLL.GetUserSession(new UsersTO());
+            if (clsUser.UserId == 0) { Response.Redirect("Logon.aspx"); }
 
             if (!IsPostBack)
                 PopulaDados();
