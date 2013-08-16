@@ -39,37 +39,39 @@ namespace SIAO
         #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            this.User = UsersBLL.GetUserSession(new UsersTO());
+            if (this.User.UserId == 0) { Response.Redirect("Logon.aspx"); }
         }
 
         protected void lbtnLogoff_Click1(object sender, EventArgs e)
         {
-            Session["user"] = null;
+            UsersBLL.ClearUserSession();
             FormsAuthentication.SignOut();
-            Global.TId = 0;
             Response.Redirect("Logon.aspx");
         }
         #endregion
 
         #region .: Metodos :.
         public bool VerificaEnvio() {
-            if (Global.TId == null || Global.TId == 0)
+            if (this.User.TipoId == null || this.User.TipoId == 0)
             {
                 return false;
-                Response.Redirect("Logon.aspx");
             }
             else
-                return UsersBLL.ValidaEnvio(Global.TId);
+                return UsersBLL.ValidaEnvio(this.User.TipoId);
         }
 
         public bool VerificaRelatorio() {
-            if (Global.TId == null || Global.TId == 0)
+            if (this.User.TipoId == null || this.User.TipoId == 0)
             {
                 return false;
-                Response.Redirect("Logon.aspx");
             }
             else
-                return UsersBLL.ValidaRelatorio(Global.TId);
+                return UsersBLL.ValidaRelatorio(this.User.TipoId);
+        }
+
+        public bool VerificaConfig() {
+            return this.User.TipoId.Equals(1);
         }
         #endregion
     }
