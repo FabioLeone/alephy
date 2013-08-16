@@ -192,6 +192,7 @@ h2
     margin-top: 0;
     color: #19000c;
     font-family: Raavi;
+    -webkit-margin-after: 0;
 }
 
 li {
@@ -353,22 +354,50 @@ section
     width: 200px;
 }
 
-.imgBtn
+.imgRel
 {
-    height: 70px;
-    width: 52px;
-    text-align: center;
+    background: rgba(209,209,209,0.6) url(images/app/icons/doc-icon.png) no-repeat 5px center;
+    cursor:pointer;
+    padding: 3px 20px 3px 40px;
+    color:Black;
+}
+
+.imgGra
+{
+    background: rgba(209,209,209,0.6) url(images/app/icons/Charts-icon.png) no-repeat 5px center;
+    cursor:pointer;
+    padding: 3px 20px 3px 40px;
+    color:Black;
+}
+
+.imgAna
+{
+    background: rgba(209,209,209,0.6) url(images/app/icons/Board-icon.png) no-repeat 5px center;
+    cursor:pointer;
+    padding: 3px 20px 3px 40px;
+    color:Black;
 }
 
 .iconList
 {
     list-style-type: none;
+    -webkit-padding-start: 0;
 }
 
 .iconList li
 {
-    margin-left: 18px;
-    float: left;
+    margin-bottom: 2px;
+    text-align: justify;
+}
+
+.iconList li:hover
+{
+    background: rgba(200,200,200,0.5);
+}
+
+.iconList li:active
+{
+    background: rgba(110,110,110,0.4);
 }
 
 #edRede

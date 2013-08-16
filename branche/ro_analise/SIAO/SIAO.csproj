@@ -71,8 +71,12 @@
     <Content Include="Content\fonts\BebasNeue-webfont.svg" />
     <Content Include="Content\fonts\Dharma Type Font License.txt" />
     <Content Include="Content\graphic.png" />
+    <Content Include="Content\images\app\doc.png" />
     <Content Include="Content\images\app\hex.png" />
+    <Content Include="Content\images\app\icons\Board-icon.png" />
     <Content Include="Content\images\app\icons\Charts-Combo-icon.png" />
+    <Content Include="Content\images\app\icons\Charts-icon.png" />
+    <Content Include="Content\images\app\icons\doc-icon.png" />
     <Content Include="Content\images\app\icons\Settings-icon.png" />
     <Content Include="Content\images\app\icons\user-icon.png" />
     <Content Include="Content\images\app\logo_Cas_blue_128.png" />
@@ -384,7 +388,6 @@
     <None Include="Content\fonts\BebasNeue-webfont.eot" />
     <None Include="Content\fonts\BebasNeue-webfont.ttf" />
     <None Include="Content\fonts\BebasNeue-webfont.woff" />
-    <None Include="Content\images\app\icons\Thumbs.db" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

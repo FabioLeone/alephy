@@ -173,7 +173,7 @@ namespace SIAO
             }
         }
 
-        protected void ibtnGrafic1_Click(object sender, ImageClickEventArgs e)
+        protected void lbtnGra1_Click(object sender, EventArgs e)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
 
@@ -205,7 +205,7 @@ namespace SIAO
             clsFuncs.Redirect("wfmRelatorio.aspx", "_blank", "");
         }
 
-        protected void ibtnGrafic2_Click(object sender, ImageClickEventArgs e)
+        protected void lbtnGra2_Click(object sender, EventArgs e)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
 
@@ -239,7 +239,7 @@ namespace SIAO
             clsFuncs.Redirect("wfmRelatorio.aspx", "_blank", "");
         }
 
-        protected void lblGrafic3_Click(object sender, ImageClickEventArgs e)
+        protected void lbtnGra3_Click(object sender, EventArgs e)
         {
             List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             List<Grafic2TO> clsGrafic2 = new List<Grafic2TO>();
