@@ -380,6 +380,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatory\rptGrafic3.rdlc" />
+    <EmbeddedResource Include="Relatory\rptGrafic4.rdlc" />
     <EmbeddedResource Include="Relatory\rptGraficoLab.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

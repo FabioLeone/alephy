@@ -79,7 +79,7 @@ namespace SIAO
         #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.User = clsUser = UsersBLL.GetUserSession(new UsersTO());
+            this.User = clsUser = UsersBLL.GetUserSession();
 
             if (this.User.UserId == 0) { Response.Redirect("Logon.aspx"); }
             
@@ -295,6 +295,41 @@ namespace SIAO
 
         }
 
+        protected void lbtnGra4_Click(object sender, EventArgs e)
+        {
+            List<GraficTO> clsGrafic = new List<GraficTO>();
+
+            if (rbtPeriodo.Checked)
+            {
+                if (this.RedeId > 0)
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId);
+                else
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text);
+            }
+            else if (rbtMes.Checked)
+            {
+                if (this.RedeId > 0)
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId);
+                else
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty);
+            }
+
+            CleraSessions();
+            
+            Session["grafic4"] = clsGrafic;
+
+            Global.LocalPage = "wfmGerarRelatorios.aspx";
+
+            if (clsGrafic.Count > 0)
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Grafico4",
+                    UserId = this.User.UserId
+                }, scn);
+
+            clsFuncs.Redirect("wfmRelatorio.aspx", "_blank", "");
+        }
+
         protected void rbtPeriodo_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtPeriodo.Checked)
@@ -308,6 +343,7 @@ namespace SIAO
                 txtFim.Enabled = false;
             }
         }
+        
         protected void rbtMes_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtMes.Checked)
@@ -327,6 +363,15 @@ namespace SIAO
             if(!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
                 getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
         }
+
+        protected void lbtnAna1_Click(object sender, EventArgs e)
+        {
+            if (this.RedeId > 0)
+                RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
+            else
+                RelatoriosBLL.GetAnalise(ResultData());
+        }
+
         #endregion
 
         #region .: Methods :.
@@ -418,6 +463,55 @@ namespace SIAO
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
         }
+
+        public ListItemCollection ResultData()
+        {
+            ListItemCollection lic = new ListItemCollection();
+
+            if (ddlRedesRelatorios.Visible && String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
+            {
+                divErro("Selecione a rede!");
+                return lic;
+            }
+            else
+                lic.Add(new ListItem("rede", ddlRedesRelatorios.SelectedValue));
+
+            lic.Add(new ListItem("loja", ddlLojaRelatorios.SelectedValue));
+
+            if (rbtPeriodo.Checked)
+            {
+                if (txtInicio.Text != "__/____" && txtFim.Text != "__/____")
+                {
+                    lic.Add(new ListItem("de", txtInicio.Text));
+                    lic.Add(new ListItem("ate", txtFim.Text));
+                }
+                else
+                {
+                    divErro("Preencha os campos \"de\" e \"até\"!");
+                    return lic;
+                }
+            }
+            else if (rbtMes.Checked)
+            {
+                lic.Add(new ListItem("de", String.Empty));
+                lic.Add(new ListItem("ate", String.Empty));
+            }
+            else
+                divErro("Selecione o periodo!");
+
+            return lic;
+        }
+
+        private void CleraSessions()
+        {
+            Session["grafic1"] = null;
+            Session["grafic2"] = null;
+            Session["grafic31"] = null;
+            Session["grafic32"] = null;
+            Session["grafic33"] = null;
+            Session["grafic4"] = null;
+        }
+
         #endregion
 
     }

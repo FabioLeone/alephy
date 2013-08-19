@@ -675,11 +675,11 @@ color:#09C;
     display:block;
 }
 
-.hdFilter{width: 99%; padding:0 4px; background: rgba(62, 137, 233, 0.5);}
+.hdFilter{width: 100%; background: rgba(62, 137, 233, 0.5);}
 
 .hdFilter div{height: 30px; width: 100%; display: inline-block; background:rgba(209,209,209,0.6);}
 
-.hdFilter div div{width: 50% !Important; display: block; float:left;background:rgba(209,209,209,0.1);}
+.hdFilter div div{width: 49% !Important; display: block; float:left;background:rgba(209,209,209,0.1);padding-left: 2px;}
 
 .ctApp{vertical-align:top; display: inline-block;width: 100% !important;margin-top: 3px;}
 

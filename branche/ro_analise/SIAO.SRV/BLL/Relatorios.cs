@@ -16,7 +16,8 @@ namespace SIAO.SRV
             SRV.clsControl oc = new SRV.clsControl();
             List<clsRelat1> lstReport = oc.GetCross(clsUser, strInicio, strFim, intRedeId);
 
-            lstReport.ForEach(delegate(clsRelat1 report) {
+            lstReport.ForEach(delegate(clsRelat1 report)
+            {
                 report.SomaDeValorBruto = Math.Round(report.SomaDeValorBruto, 0);
                 report.SomaDeValorLiquido = Math.Round(report.SomaDeValorLiquido, 0);
                 report.SomaDeValorDesconto = Math.Round(report.SomaDeValorDesconto, 0);
@@ -108,16 +109,16 @@ namespace SIAO.SRV
 
         public static void GetAnalise(ListItemCollection lstFiltro)
         {
-            //List<GraficTO> lst;
-            //if(lstFiltro.Count == 4)
-            //    lst = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text);
-            //else
-            //    return;
+            List<GraficTO> lst;
+            if (lstFiltro.Count > 0)
+                lst = GraficBLL.GraficList(lstFiltro.FindByText("de").Value, UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value);
+            else
+                return;
         }
 
         public static void GetAnalise(ListItemCollection lstFiltro, int intId)
         {
-            //clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId);
+            GraficBLL.GraficList(lstFiltro.FindByText("de").Value, UsersBLL.GetUserSession(), lstFiltro.FindByText("ate").Value, intId);
         }
     }
 }

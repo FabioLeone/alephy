@@ -64,7 +64,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="divGrafic" class="dvList" style="margin: 0 3px;">
+                <div id="divGrafic" class="dvList" style="margin-left:0.5%;margin-right:0.5%;">
                     <h2>
                         Gráficos</h2>
                     <ul class="iconList">
@@ -72,7 +72,7 @@
                             <asp:LinkButton ID="lbtnGra1" runat="server" OnClick="lbtnGra1_Click">
                                 <div id="G1" runat="server" class="imgGra">
                                     <p>
-                                        Grafico 1</p>
+                                        Gráfico 1</p>
                                 </div>
                             </asp:LinkButton>
                         </li>
@@ -80,7 +80,7 @@
                             <asp:LinkButton ID="lbtnGra2" runat="server" OnClick="lbtnGra2_Click">
                                 <div id="G2" runat="server" class="imgGra">
                                     <p>
-                                        Grafico 2</p>
+                                        Gráfico 2</p>
                                 </div>
                             </asp:LinkButton>
                         </li>
@@ -88,7 +88,15 @@
                             <asp:LinkButton ID="lbtnGra3" runat="server" OnClick="lbtnGra3_Click">
                                 <div id="P1" runat="server" class="imgGra">
                                     <p>
-                                        Grafico 3</p>
+                                        Gráfico 3</p>
+                                </div>
+                            </asp:LinkButton>
+                        </li>
+                        <li>
+                            <asp:LinkButton ID="lbtnGra4" runat="server" onclick="lbtnGra4_Click">
+                                <div id="Div3" runat="server" class="imgGra">
+                                    <p>
+                                        Gráfico de desconto</p>
                                 </div>
                             </asp:LinkButton>
                         </li>
@@ -99,7 +107,7 @@
                         Análise</h2>
                     <ul class="iconList">
                         <li>
-                            <asp:LinkButton ID="LinkButton1" runat="server">
+                            <asp:LinkButton ID="lbtnAna1" runat="server" onclick="lbtnAna1_Click">
                                 <div id="Div2" runat="server" class="imgAna">
                                     <p>
                                         Análise</p>

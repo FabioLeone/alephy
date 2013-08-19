@@ -19,7 +19,7 @@ namespace SIAO
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            clsUser = UsersBLL.GetUserSession(new UsersTO());
+            clsUser = UsersBLL.GetUserSession();
             if (clsUser.UserId == 0) { Response.Redirect("Logon.aspx"); }
 
             if (!IsPostBack)
