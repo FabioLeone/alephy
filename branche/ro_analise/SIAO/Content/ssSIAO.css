@@ -679,4 +679,9 @@ color:#09C;
 
 .hdFilter div{height: 30px; width: 100%; display: inline-block; background:rgba(209,209,209,0.6);}
 
-.hdFilter div div{width: 50% !Important; display: block; float:left;}
+.hdFilter div div{width: 50% !Important; display: block; float:left;background:rgba(209,209,209,0.1);}
+
+.ctApp{vertical-align:top; display: inline-block;width: 100% !important;margin-top: 3px;}
+
+.dvList{width: 33%;background: rgba(62, 137, 233, 0.5);display: block;float: left;}
+

@@ -14,14 +14,14 @@
                             OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
                         </asp:DropDownList>
                     </div>
-                    <div id="dvLoja" runat="server" style="display: block; float:left;">
+                    <div id="dvLoja" runat="server">
                         Loja:
                         <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="min-width: 243px;">
                         </asp:DropDownList>
                     </div>
                 </div>
                 <div>
-                    <div style="display: block; float:left;">
+                    <div>
                         <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server"
                             AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
                         de:
@@ -35,14 +35,14 @@
                             Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
                         </asp:MaskedEditExtender>
                     </div>
-                    <div style="display: block; float:left;">
+                    <div>
                         <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" Text="ultimos 6 meses"
                             runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
                     </div>
                 </div>
             </div>
-            <div style="vertical-align:top; display: inline-block;width: 100% !important;margin-top: 3px;">
-                <div id="divForm" style="width: 33%;background: rgba(62, 137, 233, 0.3);display: block;float: left;">
+            <div class="ctApp">
+                <div id="divForm" class="dvList">
                     <h2>
                         Relatórios</h2>
                     <ul class="iconList">
@@ -64,7 +64,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="divGrafic" style="width: 33%;background: rgba(62, 137, 233, 0.3);display: block;float: left;margin: 0 3px;">
+                <div id="divGrafic" class="dvList" style="margin: 0 3px;">
                     <h2>
                         Gráficos</h2>
                     <ul class="iconList">
@@ -94,7 +94,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="div1" style="width: 33%;background: rgba(62, 137, 233, 0.3);display: block;float: left;">
+                <div id="div1" class="dvList">
                     <h2>
                         Análise</h2>
                     <ul class="iconList">
