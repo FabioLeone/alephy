@@ -5,18 +5,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <!--<script type="text/javascript">
-                function pageLoad() {
-                    $("section").addClass("sectionb");
-                }
-
-                window.onload(pageLoad);
-            </script>-->
-            <div style="width: 99%; padding:0 4px; background: rgba(62, 137, 233, 0.3)">
+            <div class="hdFilter">
                 <h2>
                     Filtro</h2>
-                <div id="dvFiltro" runat="server" style="height: 30px; width: 100%; display: inline-block; background:rgba(209,209,209,0.6);">
-                    <div id="dvRedes" runat="server" style="width: 50% !Important; display: block; float:left;">
+                <div id="dvFiltro" runat="server">
+                    <div id="dvRedes" runat="server">
                         Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
                             OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
                         </asp:DropDownList>
@@ -27,7 +20,7 @@
                         </asp:DropDownList>
                     </div>
                 </div>
-                <div style="display: inline-block; width: 100%; background:rgba(209,209,209,0.6);">
+                <div>
                     <div style="display: block; float:left;">
                         <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server"
                             AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
