@@ -54,7 +54,32 @@
             </ul>
         </nav>
     </div>
-    <div id="inf">asdf</div>
+    <div id="inf">
+    <img src="Content/images/app/logo_Cas_blue_128.png" />
+    <hr />
+    <h3>CasBrasil</h3>
+    <p>
+    <b>Sede:</b> <br />
+    Avenida Itatiaia, 201<br />
+    Jardim Itatiaia <wr /> 
+    Campinas - SP <br />
+    CEP: 13101-310 <br /><br />
+
+    <b>Escritório:</b> <br />
+    Avenida<wr /> Governador Pedro de Toledo,<wr /> 1760, Sala 16 <br />
+    CEP: 13070-715 <br /><br />
+    </p>
+
+    <h3>Contatos</h3>
+    <p>Central: +55 19 3368-4446</p>
+    <br />
+    <p><b>Skypes:</b></p>
+    <p>
+    Antonio Silva: casbrasil1 <wr />
+    Claudemir: claudemircasbrasil<wr />
+    Felipe: casbrasil02</p>
+
+    </div>
     </header>
     <div id="fundo">
         <ul class="cb-slideshow">

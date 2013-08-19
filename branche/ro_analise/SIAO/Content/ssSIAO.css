@@ -18,8 +18,8 @@ width: 100%;
 height: 32px;
 background: rgba(23,23,23,0.9);
 bottom: 0;
-position: absolute;
-color:#CCC;
+position: fixed;
+color: rgba(0,0,0,0.8);
 text-align:center;
 vertical-align: middle;
 font-size:9px;
@@ -51,6 +51,7 @@ height: 585px;
 font-style: light;
 font-size:13pt;
 z-index:1;
+overflow: auto;
 }
 
 .button
@@ -662,12 +663,20 @@ color:#09C;
 #inf
 {
     display: none;
-    background: #ccc;
+    background: rgba(0,0,0,0.8);
     margin-top: 50px;
+    padding: 10px;
     left: 0px;
     position: fixed;
     width: 200px;
-    height: 87%;
+    height: 100%;
+    text-align: center;
+    color: #ccc;
+    
+}
+#inf:hover
+{
+    display:block;
 }
     
 .menub:hover ~ #inf
