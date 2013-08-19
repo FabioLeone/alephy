@@ -98,7 +98,8 @@ namespace SIAO.SRV.BLL
                                 Grupo = _Grafic.Grupo,
                                 Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
                                 Periodo = String.Format("{0} à {1}",strIni,strFim),
-                                Nome_Fantasia = _Grafic.Nome_Fantasia
+                                Nome_Fantasia = _Grafic.Nome_Fantasia,
+                                quantidade = _Grafic.quantidade
                             });
                         }
                     });
