@@ -411,7 +411,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>0.80665in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -427,7 +427,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Desconto.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>
@@ -587,7 +587,7 @@
         <Top>12cm</Top>
         <Left>0.00001cm</Left>
         <Height>2cm</Height>
-        <Width>6.29643cm</Width>
+        <Width>6.32157cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -639,7 +639,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79676in</Width>
+              <Width>0.79868in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -655,7 +655,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Desconto.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>14pt</FontSize>
                               </Style>
@@ -818,7 +818,7 @@
         </SortExpressions>
         <Top>26cm</Top>
         <Height>2cm</Height>
-        <Width>6.29648cm</Width>
+        <Width>6.30135cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1473,7 +1473,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>0.79868in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1489,7 +1489,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Desconto.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>14pt</FontSize>
                               </Style>
@@ -1648,7 +1648,7 @@
         </SortExpressions>
         <Top>40cm</Top>
         <Height>2cm</Height>
-        <Width>6.29646cm</Width>
+        <Width>6.30135cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -2001,7 +2001,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>0.79868in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -2017,7 +2017,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Desconto.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>14pt</FontSize>
                               </Style>
@@ -2180,7 +2180,7 @@
         </SortExpressions>
         <Top>54cm</Top>
         <Height>2cm</Height>
-        <Width>6.29646cm</Width>
+        <Width>6.30135cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -2533,7 +2533,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>0.79868in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -2549,7 +2549,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Desconto.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>14pt</FontSize>
                               </Style>
@@ -2573,6 +2573,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -2712,7 +2713,7 @@
         </SortExpressions>
         <Top>68cm</Top>
         <Height>2cm</Height>
-        <Width>6.29646cm</Width>
+        <Width>6.30135cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
