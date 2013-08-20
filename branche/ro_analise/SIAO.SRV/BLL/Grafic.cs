@@ -109,6 +109,60 @@ namespace SIAO.SRV.BLL
             return clsList;
         }
 
+        public static List<GraficTO> Grafic4(string strIni, UsersTO clsUser, string strFim, int intRedeId, string strLoja)
+        {
+            List<GraficTO> clsList = new List<GraficTO>();
+
+            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
+            {
+                strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+            }
+            else
+            {
+                strIni = strIni.Replace("/", " ");
+                strFim = strFim.Replace("/", " ");
+            }
+            
+            List<GraficTO> clsGrafic;
+
+            if(intRedeId > 0)
+                clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strFim, intRedeId);
+            else
+                clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strLoja, strFim);
+
+            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
+
+            if (clsGrafic.Count > 0)
+            {
+                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
+
+                clsGrafic.ForEach(delegate(GraficTO _Grafic)
+                {
+                    clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
+                    {
+                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
+                        {
+                            clsList.Add(new GraficTO()
+                            {
+                                Sub_Consultoria = _Grafic.Sub_Consultoria,
+                                Razao_Social = _Grafic.Razao_Social,
+                                Mes = _Grafic.Mes,
+                                Ano = _Grafic.Ano,
+                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
+                                Grupo = _Grafic.Grupo,
+                                Desconto = _Grafic.Desconto * 100,
+                                Periodo = String.Format("{0} à {1}", strIni, strFim),
+                                Nome_Fantasia = _Grafic.Nome_Fantasia,
+                                quantidade = _Grafic.quantidade
+                            });
+                        }
+                    });
+                });
+            }
+
+            return clsList;
+        }
         #endregion
 
         #region .: Search :.

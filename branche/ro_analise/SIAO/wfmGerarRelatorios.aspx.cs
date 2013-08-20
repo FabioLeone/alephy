@@ -302,16 +302,16 @@ namespace SIAO
             if (rbtPeriodo.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId);
+                    clsGrafic = GraficBLL.Grafic4(txtInicio.Text, clsUser, txtFim.Text, this.RedeId, String.Empty);
                 else
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text);
+                    clsGrafic = GraficBLL.Grafic4(txtInicio.Text, clsUser, txtFim.Text, 0, ddlLojaRelatorios.SelectedValue);
             }
             else if (rbtMes.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId);
+                    clsGrafic = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, this.RedeId, String.Empty);
                 else
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty);
+                    clsGrafic = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, 0, ddlLojaRelatorios.SelectedValue);
             }
 
             CleraSessions();
