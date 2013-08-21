@@ -11,13 +11,58 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
+        public static List<GraficTO> Analise(UsersTO clsUsers, string strLoja, string strFim, int intRedeId)
+        {
+            List<GraficTO> clsList = new List<GraficTO>();
+
+            if (String.IsNullOrEmpty(strFim))
+                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
+            else
+                strFim = strFim.Replace("/", " ");
+
+            List<GraficTO> clsGrafic;
+
+            clsGrafic = GraficDAL.GetLastMonth(clsUsers, strFim, strLoja, intRedeId);
+
+            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
+
+            if (clsGrafic.Count > 0)
+            {
+                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
+
+                clsGrafic.ForEach(delegate(GraficTO _Grafic)
+                {
+                    clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
+                    {
+                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
+                        {
+                            clsList.Add(new GraficTO()
+                            {
+                                Sub_Consultoria = _Grafic.Sub_Consultoria,
+                                Razao_Social = _Grafic.Razao_Social,
+                                Mes = _Grafic.Mes,
+                                Ano = _Grafic.Ano,
+                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
+                                Grupo = _Grafic.Grupo,
+                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
+                                Periodo = strFim,
+                                Nome_Fantasia = _Grafic.Nome_Fantasia,
+                                quantidade = _Grafic.quantidade
+                            });
+                        }
+                    });
+                });
+            }
+
+            return clsList;
+        }
         public static List<GraficTO> GraficList(string strIni, UsersTO clsUsers, string strLoja, string strFim)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
-                strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                 strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
             }
             else
@@ -60,13 +105,13 @@ namespace SIAO.SRV.BLL
             return clsList;
         }
 
-        public static List<GraficTO> GraficList(string strIni, UsersTO clsUser, string strFim, int idRede)
+        public static List<GraficTO> GraficList(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
-                strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                 strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
             }
             else
@@ -75,7 +120,7 @@ namespace SIAO.SRV.BLL
                 strFim = strFim.Replace("/", " ");
             }
 
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strFim, idRede);
+            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strFim, idRede, strCnpj);
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
             if (clsGrafic.Count > 0)
@@ -115,7 +160,7 @@ namespace SIAO.SRV.BLL
 
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
-                strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                 strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
             }
             else
@@ -127,7 +172,7 @@ namespace SIAO.SRV.BLL
             List<GraficTO> clsGrafic;
 
             if(intRedeId > 0)
-                clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strFim, intRedeId);
+                clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strFim, intRedeId, strLoja);
             else
                 clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strLoja, strFim);
 
@@ -195,11 +240,11 @@ namespace SIAO.SRV.BLL
             return GraficDAL.GetGrupos(strConnection);
         }
 
-        public static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
+        public static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
         {
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
-                strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                 strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
             }
             else
@@ -208,24 +253,24 @@ namespace SIAO.SRV.BLL
                 strFim = strFim.Replace("/", " ");
             }
 
-            return GraficDAL.Grafic31ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
+            return GraficDAL.Grafic31ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId, strCnpj).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
         }
 
-        public static List<Grafic2TO> Grafic32ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
+        public static List<Grafic2TO> Grafic32ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
         {
-            return GraficDAL.Grafic32ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId);
+            return GraficDAL.Grafic32ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId, strCnpj);
         }
 
-        public static List<Grafic2TO> Grafic33ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId)
+        public static List<Grafic2TO> Grafic33ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
         {
-            return GraficDAL.Grafic33ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId);
+            return GraficDAL.Grafic33ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId, strCnpj);
         }
 
         public static List<Grafic2TO> Grafic31ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
         {
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
-                strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
                 strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
             }
             else

@@ -674,30 +674,35 @@ namespace SIAO.SRV
         }
 
         // Utilizado pelo modelo1 c
-        public List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId)
+        public List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId, string strCnpj)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
-            string SQL = @"SELECT redesfarmaceuticas.descricao AS Razao_Social,redesfarmaceuticas.CNPJ,consolidado.Mes,consolidado.Ano,
+            StringBuilder SQL = new StringBuilder();
+            SQL.Append(@"SELECT redesfarmaceuticas.descricao AS Razao_Social,redesfarmaceuticas.CNPJ,consolidado.Mes,consolidado.Ano,
                     consolidado.Sub_Consultoria,consolidado.Grupo,SUM(consolidado.Quantidade) AS ""Soma De Quantidade"",
                     SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"", SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
-                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ";
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if (clsUser.TipoId.Equals(1)) SQL += " INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId";
-            else SQL += " LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId";
+            if (clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
 
-            SQL += @" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
+            SQL.Append(@" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
                     AND farmacias.idRede = @idRede
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
-                    (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
-                    GROUP BY redesfarmaceuticas.descricao,redesfarmaceuticas.CNPJ,consolidado.Mes,consolidado.Ano,
+                    (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
+
+            if(!String.IsNullOrEmpty(strCnpj))
+                SQL.Append(" AND consolidado.CNPJ = @CNPJ");
+
+            SQL.Append(@" GROUP BY redesfarmaceuticas.descricao,redesfarmaceuticas.CNPJ,consolidado.Mes,consolidado.Ano,
                     consolidado.Sub_Consultoria,consolidado.Grupo
-                    ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo";
+                    ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
             string strMF = DateTime.Now.Month.ToString();
             string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
@@ -705,10 +710,11 @@ namespace SIAO.SRV
             string strAF = DateTime.Now.Year.ToString();
             string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
 
-            cmm.CommandText = SQL;
+            cmm.CommandText = SQL.ToString();
             cmm.Parameters.Add("@DataIni", NpgsqlDbType.Varchar).Value = strMI + " " + strAI;
             cmm.Parameters.Add("@DataFim", NpgsqlDbType.Varchar).Value = strMF + " " + strAF;
             cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
+            cmm.Parameters.Add("@CNPJ", NpgsqlDbType.Varchar).Value = strCnpj;
 
             cmm.CommandTimeout = 9999;
 
@@ -759,7 +765,7 @@ namespace SIAO.SRV
         }
 
         // Utilizado pelo modelo1 a
-        public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, int intRedeId)
+        public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, int intRedeId, string strCnpj)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -779,8 +785,12 @@ namespace SIAO.SRV
                     WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
                     AND farmacias.idRede = @idRede
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
-                    (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
-                    GROUP BY redesfarmaceuticas.descricao,redesfarmaceuticas.CNPJ,consolidado.Mes,consolidado.Ano,
+                    (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
+
+            if(!String.IsNullOrEmpty(strCnpj))
+                SQL.Append(" AND consolidado.CNPJ = @CNPJ");
+
+            SQL.Append(@" GROUP BY redesfarmaceuticas.descricao,redesfarmaceuticas.CNPJ,consolidado.Mes,consolidado.Ano,
                     consolidado.Sub_Consultoria,consolidado.Grupo
                     ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
@@ -793,6 +803,7 @@ namespace SIAO.SRV
             cmm.Parameters.Add("@DataIni", NpgsqlDbType.Varchar).Value = ini;
             cmm.Parameters.Add("@DataFim", NpgsqlDbType.Varchar).Value = fim;
             cmm.Parameters.Add("@idRede ", NpgsqlDbType.Integer).Value = intRedeId;
+            cmm.Parameters.Add("@CNPJ", NpgsqlDbType.Varchar).Value = strCnpj;
             cmm.CommandTimeout = 9999;
 
             if (clsDB.openConnection(cmm))

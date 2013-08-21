@@ -26,7 +26,7 @@ namespace SIAO.Controls
             if (intId > 0)
                 RelatoriosBLL.GetAnalise(licFiltro, intId);
             else
-                RelatoriosBLL.GetAnalise(licFiltro);
+                RelatoriosBLL.GetAnalise(licFiltro,0);
             
         }
         #endregion

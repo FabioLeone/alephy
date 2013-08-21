@@ -11,10 +11,10 @@ namespace SIAO.SRV
     public class RelatoriosBLL
     {
         // Utilizado pelo modelo1
-        public static List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, int intRedeId)
+        public static List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, int intRedeId, string strCnpj)
         {
             SRV.clsControl oc = new SRV.clsControl();
-            List<clsRelat1> lstReport = oc.GetCross(clsUser, strInicio, strFim, intRedeId);
+            List<clsRelat1> lstReport = oc.GetCross(clsUser, strInicio, strFim, intRedeId, strCnpj);
 
             lstReport.ForEach(delegate(clsRelat1 report)
             {
@@ -41,10 +41,10 @@ namespace SIAO.SRV
             return lstReport;
         }
 
-        public static List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId)
+        public static List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId, string strCnpj)
         {
             SRV.clsControl oc = new SRV.clsControl();
-            List<clsRelat1> lstReport = oc.GetCross(clsUser, intRedeId);
+            List<clsRelat1> lstReport = oc.GetCross(clsUser, intRedeId, strCnpj);
 
             lstReport.ForEach(delegate(clsRelat1 report)
             {
@@ -89,13 +89,13 @@ namespace SIAO.SRV
             return lst;
         }
 
-        public static List<clsRelat1> GetMod2(UsersTO clsUser, TextBox txtInicio, TextBox txtFim, int intRedeId, RadioButton rbtPeriodo, RadioButton rbtMes)
+        public static List<clsRelat1> GetMod2(UsersTO clsUser, TextBox txtInicio, TextBox txtFim, int intRedeId, RadioButton rbtPeriodo, RadioButton rbtMes, DropDownList ddlLojaRelatorios)
         {
             List<clsRelat1> lst = new List<clsRelat1>();
             if (rbtPeriodo.Checked)
-                lst = RelatoriosDAL.GetMod2(clsUser, txtInicio.Text, txtFim.Text, intRedeId);
+                lst = RelatoriosDAL.GetMod2(clsUser, txtInicio.Text, txtFim.Text, intRedeId, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
             else if (rbtMes.Checked)
-                lst = RelatoriosDAL.GetMod2(clsUser, intRedeId);
+                lst = RelatoriosDAL.GetMod2(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), intRedeId);
 
             lst.ForEach(delegate(clsRelat1 report)
             {
@@ -107,18 +107,18 @@ namespace SIAO.SRV
             return lst;
         }
 
-        public static void GetAnalise(ListItemCollection lstFiltro)
+        public static List<GraficTO> GetAnalise(ListItemCollection lstFiltro, int intId)
         {
-            List<GraficTO> lst;
-            if (lstFiltro.Count > 0)
-                lst = GraficBLL.GraficList(lstFiltro.FindByText("de").Value, UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value);
-            else
-                return;
-        }
+            List<GraficTO> lstGrafic = new List<GraficTO>();
 
-        public static void GetAnalise(ListItemCollection lstFiltro, int intId)
-        {
-            GraficBLL.GraficList(lstFiltro.FindByText("de").Value, UsersBLL.GetUserSession(), lstFiltro.FindByText("ate").Value, intId);
+            if(intId > 0)
+                lstGrafic = GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, intId);
+            else
+                lstGrafic = GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, 0);
+
+
+
+            return lstGrafic;
         }
     }
 }
