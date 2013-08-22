@@ -110,6 +110,8 @@ namespace SIAO
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            int n = 0;
+
             if (txtCidade.Text == "") { divErro("Entre com a cidade."); txtCidade.Focus(); }
             else if (!of.ValidaCnpj(txtCnpj.Text))
             {
@@ -131,6 +133,11 @@ namespace SIAO
             {
                 divErro("Entre com a razão social.");
                 txtRazao.Focus();
+            }
+            else if (!int.TryParse(txtNum.Text, out n))
+            {
+                divErro("Número inválido.");
+                txtNum.Focus();
             }
             else
             {
