@@ -587,7 +587,7 @@
         <Top>12cm</Top>
         <Left>0.00001cm</Left>
         <Height>2cm</Height>
-        <Width>6.29645cm</Width>
+        <Width>6.29643cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -790,11 +790,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>End</BreakLocation>
-        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -816,9 +812,9 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>26cm</Top>
+        <Top>33cm</Top>
         <Height>2cm</Height>
-        <Width>6.29646cm</Width>
+        <Width>6.29648cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1114,7 +1110,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>14cm</Top>
+        <Top>21cm</Top>
         <Left>0.00001cm</Left>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
@@ -1416,7 +1412,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>28cm</Top>
+        <Top>42cm</Top>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
         <ZIndex>4</ZIndex>
@@ -1646,8 +1642,8 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>40cm</Top>
-        <Height>1.99999cm</Height>
+        <Top>54cm</Top>
+        <Height>2cm</Height>
         <Width>6.29646cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
@@ -1944,7 +1940,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>42cm</Top>
+        <Top>63cm</Top>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
         <ZIndex>6</ZIndex>
@@ -2152,11 +2148,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>End</BreakLocation>
-        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -2178,8 +2170,8 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>54cm</Top>
-        <Height>1.99999cm</Height>
+        <Top>75cm</Top>
+        <Height>2cm</Height>
         <Width>6.29646cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
@@ -2476,7 +2468,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>55.96472cm</Top>
+        <Top>84cm</Top>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
         <ZIndex>8</ZIndex>
@@ -2684,11 +2676,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>End</BreakLocation>
-        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -2710,7 +2698,7 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>68cm</Top>
+        <Top>96.00001cm</Top>
         <Height>2cm</Height>
         <Width>6.29646cm</Width>
         <ZIndex>9</ZIndex>
@@ -2721,7 +2709,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>70cm</Height>
+    <Height>98.00001cm</Height>
     <Style />
   </Body>
   <Width>29.70001cm</Width>
@@ -2752,7 +2740,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="Quantidade Vendida - Loja - " + Fields!Razao_Social.Value + "Periodo - " + Fields!Periodo.Value</Value>
+                  <Value>="Quantidade Vendida - Loja - " + Fields!Nome_Fantasia.Value + "Periodo - " + Fields!Periodo.Value</Value>
                   <Style>
                     <FontFamily>Arial Rounded MT Bold</FontFamily>
                     <FontSize>14pt</FontSize>

@@ -30,24 +30,16 @@
           <DataField>CNPJ</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="NomeFantasia">
-          <DataField>NomeFantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="quantidade">
-          <DataField>quantidade</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="Razao_Social">
           <DataField>Razao_Social</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Mes">
           <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Grupo">
@@ -65,6 +57,18 @@
         <Field Name="Desconto">
           <DataField>Desconto</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantidade">
+          <DataField>quantidade</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
       </Fields>
       <Query>
@@ -85,24 +89,16 @@
           <DataField>CNPJ</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="NomeFantasia">
-          <DataField>NomeFantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="quantidade">
-          <DataField>quantidade</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="Razao_Social">
           <DataField>Razao_Social</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Mes">
           <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Grupo">
@@ -120,6 +116,18 @@
         <Field Name="Desconto">
           <DataField>Desconto</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantidade">
+          <DataField>quantidade</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
       </Fields>
       <Query>
@@ -140,24 +148,16 @@
           <DataField>CNPJ</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="NomeFantasia">
-          <DataField>NomeFantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="quantidade">
-          <DataField>quantidade</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="Razao_Social">
           <DataField>Razao_Social</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Mes">
           <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Grupo">
@@ -175,6 +175,18 @@
         <Field Name="Desconto">
           <DataField>Desconto</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantidade">
+          <DataField>quantidade</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
       </Fields>
       <Query>
@@ -416,7 +428,7 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>Gráfico 1</Caption>
+            <Caption>=" Grafico 3.1 Venda Liquida \n Loja - " + Fields!Nome_Fantasia.Value + "\n Periodo - " + Fields!Periodo.Value</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -443,7 +455,7 @@
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
         <Height>21cm</Height>
-        <Width>23cm</Width>
+        <Width>22.70896cm</Width>
         <Style>
           <Border>
             <Color>LightGrey</Color>
@@ -677,7 +689,7 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>Gráfico 2</Caption>
+            <Caption>=" Grafico 3.2 Venda Liquida \n Loja - " + Fields!Nome_Fantasia.Value + "\n Periodo - " + Fields!Periodo.Value</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -705,7 +717,7 @@
         <DataSetName>DataSet2</DataSetName>
         <Top>21cm</Top>
         <Height>21cm</Height>
-        <Width>23cm</Width>
+        <Width>22.70896cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -940,7 +952,7 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>Gráfico 3</Caption>
+            <Caption>=" Grafico 3.3 Venda Liquida \n Loja - " + Fields!Nome_Fantasia.Value + "\n Periodo - " + Fields!Periodo.Value</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -968,7 +980,7 @@
         <DataSetName>DataSet3</DataSetName>
         <Top>42cm</Top>
         <Height>21cm</Height>
-        <Width>23cm</Width>
+        <Width>22.70896cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1019,7 +1031,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.16585in</Width>
+              <Width>1.22314in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1116,7 +1128,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.47195in</Size>
+                <Size>1.52924in</Size>
                 <CellContents>
                   <Textbox Name="Grupo">
                     <CanGrow>true</CanGrow>
@@ -1153,9 +1165,9 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Left>23cm</Left>
+        <Left>22.70896cm</Left>
         <Height>1cm</Height>
-        <Width>6.7cm</Width>
+        <Width>6.99105cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -1203,7 +1215,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.1501in</Width>
+              <Width>1.20739in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1300,7 +1312,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.4877in</Size>
+                <Size>1.54499in</Size>
                 <CellContents>
                   <Textbox Name="Grupo2">
                     <CanGrow>true</CanGrow>
@@ -1338,9 +1350,9 @@
           <BreakLocation>End</BreakLocation>
         </PageBreak>
         <Top>21cm</Top>
-        <Left>23cm</Left>
+        <Left>22.70896cm</Left>
         <Height>1cm</Height>
-        <Width>6.7cm</Width>
+        <Width>6.99105cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -1388,7 +1400,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.1501in</Width>
+              <Width>1.20739in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1485,7 +1497,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.47195in</Size>
+                <Size>1.52924in</Size>
                 <CellContents>
                   <Textbox Name="Sub_Consultoria">
                     <CanGrow>true</CanGrow>
@@ -1520,9 +1532,9 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet3</DataSetName>
         <Top>42cm</Top>
-        <Left>23cm</Left>
+        <Left>22.70896cm</Left>
         <Height>1cm</Height>
-        <Width>6.66cm</Width>
+        <Width>6.95105cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -1534,7 +1546,7 @@
     <Height>63cm</Height>
     <Style />
   </Body>
-  <Width>29.7cm</Width>
+  <Width>29.70001cm</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
