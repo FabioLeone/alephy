@@ -5,6 +5,7 @@ using System.Text;
 using SIAO.SRV.TO;
 using System.Web.UI.WebControls;
 using SIAO.SRV.BLL;
+using System.IO;
 
 namespace SIAO.SRV
 {
@@ -107,18 +108,16 @@ namespace SIAO.SRV
             return lst;
         }
 
-        public static List<GraficTO> GetAnalise(ListItemCollection lstFiltro, int intId)
+        public static MemoryStream GetAnalise(ListItemCollection lstFiltro, int intId)
         {
-            List<GraficTO> lstGrafic = new List<GraficTO>();
+            MemoryStream mstr = new MemoryStream();
 
             if(intId > 0)
-                lstGrafic = GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, intId);
+                mstr = GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, intId);
             else
-                lstGrafic = GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, 0);
+                mstr = GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, 0);
 
-
-
-            return lstGrafic;
+            return mstr;
         }
     }
 }

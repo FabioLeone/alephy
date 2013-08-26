@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using SIAO.SRV.TO;
 using SIAO.SRV.DAL;
+using System.Net;
+using System.IO;
 
 namespace SIAO.SRV.BLL
 {
@@ -11,7 +13,7 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static List<GraficTO> Analise(UsersTO clsUsers, string strLoja, string strFim, int intRedeId)
+        public static MemoryStream Analise(UsersTO clsUsers, string strLoja, string strFim, int intRedeId)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
@@ -20,15 +22,19 @@ namespace SIAO.SRV.BLL
             else
                 strFim = strFim.Replace("/", " ");
 
-            List<GraficTO> clsGrafic;
-
-            clsGrafic = GraficDAL.GetLastMonth(clsUsers, strFim, strLoja, intRedeId);
+            List<GraficTO> clsGrafic = GraficDAL.GetLastMonth(clsUsers, strFim, strLoja, intRedeId);
 
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
+
+            List<AnaliseTO> lstAnalise = AnaliseBLL.GetAnaliseAll();
+
+            WebClient client = new WebClient();
+            String htmlCode = client.DownloadString(@"http://localhost:43889/Content/html/analise.htm");
 
             if (clsGrafic.Count > 0)
             {
                 decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
+                StringBuilder sb = new StringBuilder();
 
                 clsGrafic.ForEach(delegate(GraficTO _Grafic)
                 {
@@ -36,26 +42,39 @@ namespace SIAO.SRV.BLL
                     {
                         if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
                         {
-                            clsList.Add(new GraficTO()
+                            sb.Append("<div>");
+                            decimal d = 0;
+                            d = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2);
+
+                            if (d > 100)
+                            { 
+                                sb.Append(String.Format("<p>{0}</p>",lstAnalise.Find(a=>a.reference == 101 && a.itemid == 0).text.Replace("{grupo}",_Grafic.Grupo)));
+                                sb.Append(String.Format("<p>{0}</p>", lstAnalise.Find(a => a.reference == 101 && a.itemid == 1).text));
+                            }
+                            else if (d <= 100 && d > 80) {
+                                sb.Append(String.Format("<p>{0}</p>", lstAnalise.Find(a => (a.reference <= 100 && a.reference > 80) && a.itemid == 0).text.Replace("{grupo}", _Grafic.Grupo)));
+                                sb.Append(String.Format("<p>{0}</p>", lstAnalise.Find(a => (a.reference <= 100 && a.reference > 80) && a.itemid == 1).text));
+                            }
+                            else if (d <= 80 && d > 60)
                             {
-                                Sub_Consultoria = _Grafic.Sub_Consultoria,
-                                Razao_Social = _Grafic.Razao_Social,
-                                Mes = _Grafic.Mes,
-                                Ano = _Grafic.Ano,
-                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
-                                Grupo = _Grafic.Grupo,
-                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
-                                Periodo = strFim,
-                                Nome_Fantasia = _Grafic.Nome_Fantasia,
-                                quantidade = _Grafic.quantidade
-                            });
+                                sb.Append(String.Format("<p>{0}</p>", lstAnalise.Find(a => (a.reference <= 80 && a.reference > 60) && a.itemid == 0).text.Replace("{grupo}", _Grafic.Grupo)));
+                                sb.Append(String.Format("<p>{0}</p>", lstAnalise.Find(a => (a.reference <= 80 && a.reference > 60) && a.itemid == 1).text));
+                            }
+                            else {
+                                sb.Append(String.Format("<p>{0}</p>", lstAnalise.Find(a => a.reference <= 60 && a.itemid == 0).text.Replace("{grupo}", _Grafic.Grupo)));
+                                sb.Append(String.Format("<p>{0}</p>", lstAnalise.Find(a => a.reference <= 60 && a.itemid == 1).text));
+                            }
+                            sb.Append("</div>");
                         }
                     });
                 });
+
+                htmlCode = htmlCode.Replace("{content}", sb.ToString());
             }
 
-            return clsList;
+            return FilesBLL.CreatePDFFromMemoryStream(htmlCode);
         }
+
         public static List<GraficTO> GraficList(string strIni, UsersTO clsUsers, string strLoja, string strFim)
         {
             List<GraficTO> clsList = new List<GraficTO>();

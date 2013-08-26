@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SIAO.SRV.TO;
-using SIAO.SRV.DAL;
-using System.Xml;
 using System.Data;
+using System.IO;
+using System.Linq;
+using System.Xml;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using SIAO.SRV.DAL;
+using SIAO.SRV.TO;
 
 namespace SIAO.SRV.BLL
 {
@@ -119,6 +121,24 @@ namespace SIAO.SRV.BLL
 
             ds.ReadXml(new XmlNodeReader(xd));
             return ds.Tables[0];
+        }
+
+        internal static MemoryStream CreatePDFFromMemoryStream(string htmlCode)
+        {
+            Document doc = new Document();
+            MemoryStream ms = new MemoryStream();
+            StreamWriter sw = new StreamWriter(ms);
+            sw.Write(htmlCode);
+            sw.Flush();
+            ms.Position = 0;
+            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+            doc.Open();
+            doc.Add(new Paragraph("Some Text"));
+            writer.CloseStream = false;
+            doc.Close();
+            ms.Position = 0;
+
+            return ms;
         }
         #endregion
 

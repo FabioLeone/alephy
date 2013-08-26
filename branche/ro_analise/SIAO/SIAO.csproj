@@ -13,6 +13,7 @@
     <RootNamespace>SIAO</RootNamespace>
     <AssemblyName>SIAO</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,6 +72,7 @@
     <Content Include="Content\fonts\BebasNeue-webfont.svg" />
     <Content Include="Content\fonts\Dharma Type Font License.txt" />
     <Content Include="Content\graphic.png" />
+    <Content Include="Content\html\analise.htm" />
     <Content Include="Content\images\app\doc.png" />
     <Content Include="Content\images\app\hex.png" />
     <Content Include="Content\images\app\icons\Board-icon.png" />

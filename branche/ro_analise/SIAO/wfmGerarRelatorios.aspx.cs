@@ -7,6 +7,8 @@ using SIAO.SRV.TO;
 using SIAO.SRV.BLL;
 using System.Data;
 using SIAO.SRV;
+using System.IO;
+using System.Web;
 
 namespace SIAO
 {
@@ -314,7 +316,7 @@ namespace SIAO
                     clsGrafic = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, 0, ddlLojaRelatorios.SelectedValue);
             }
 
-            CleraSessions();
+            ClearSessions();
             
             Session["grafic4"] = clsGrafic;
 
@@ -366,10 +368,34 @@ namespace SIAO
 
         protected void lbtnAna1_Click(object sender, EventArgs e)
         {
+            MemoryStream ms;
+
             if (this.RedeId > 0)
-                RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
+                ms = RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
             else
-                RelatoriosBLL.GetAnalise(ResultData(),0);
+                ms = RelatoriosBLL.GetAnalise(ResultData(),0);
+
+            try
+            {
+                HttpContext.Current.Response.Clear();
+                HttpContext.Current.Response.ClearContent();
+                HttpContext.Current.Response.ClearHeaders();
+                HttpContext.Current.Response.ContentType = "application/pdf";
+                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=abcTeste.pdf");
+                HttpContext.Current.Response.Buffer = true;
+                ms.WriteTo(Response.OutputStream);
+                //Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
+                //Response.OutputStream.Flush();
+                //Response.OutputStream.Close();
+                //Response.End();
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+                ms.Close();
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
         }
 
         #endregion
@@ -493,7 +519,7 @@ namespace SIAO
             return lic;
         }
 
-        private void CleraSessions()
+        private void ClearSessions()
         {
             Session["grafic1"] = null;
             Session["grafic2"] = null;
