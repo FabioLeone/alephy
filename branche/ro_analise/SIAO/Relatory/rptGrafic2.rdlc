@@ -1649,7 +1649,7 @@
           </SortExpression>
         </SortExpressions>
         <Top>40cm</Top>
-        <Height>1.99999cm</Height>
+        <Height>2cm</Height>
         <Width>6.29646cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
@@ -2180,7 +2180,7 @@
           </SortExpression>
         </SortExpressions>
         <Top>54cm</Top>
-        <Height>1.99999cm</Height>
+        <Height>2cm</Height>
         <Width>6.29646cm</Width>
         <ZIndex>7</ZIndex>
         <Style>

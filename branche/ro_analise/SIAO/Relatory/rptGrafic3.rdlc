@@ -715,6 +715,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet2</DataSetName>
+        <PageBreak>
+          <BreakLocation>Start</BreakLocation>
+        </PageBreak>
         <Top>21cm</Top>
         <Height>21cm</Height>
         <Width>22.70896cm</Width>
@@ -978,6 +981,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet3</DataSetName>
+        <PageBreak>
+          <BreakLocation>Start</BreakLocation>
+        </PageBreak>
         <Top>42cm</Top>
         <Height>21cm</Height>
         <Width>22.70896cm</Width>
@@ -1162,9 +1168,6 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>End</BreakLocation>
-        </PageBreak>
         <Left>22.70896cm</Left>
         <Height>1cm</Height>
         <Width>6.99105cm</Width>
@@ -1346,9 +1349,6 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet2</DataSetName>
-        <PageBreak>
-          <BreakLocation>End</BreakLocation>
-        </PageBreak>
         <Top>21cm</Top>
         <Left>22.70896cm</Left>
         <Height>1cm</Height>
@@ -1534,7 +1534,7 @@
         <Top>42cm</Top>
         <Left>22.70896cm</Left>
         <Height>1cm</Height>
-        <Width>6.95105cm</Width>
+        <Width>6.95104cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
