@@ -6,6 +6,7 @@ using SIAO.SRV.TO;
 using SIAO.SRV.DAL;
 using System.Net;
 using System.IO;
+using System.Configuration;
 
 namespace SIAO.SRV.BLL
 {
@@ -13,7 +14,7 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static MemoryStream Analise(UsersTO clsUsers, string strLoja, string strFim, int intRedeId)
+        public static Boolean Analise(UsersTO clsUsers, string strLoja, string strFim, int intRedeId)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
@@ -29,7 +30,7 @@ namespace SIAO.SRV.BLL
             List<AnaliseTO> lstAnalise = AnaliseBLL.GetAnaliseAll();
 
             WebClient client = new WebClient();
-            String htmlCode = client.DownloadString(@"http://localhost:43889/Content/html/analise.htm");
+            String htmlCode = client.DownloadString(ConfigurationManager.AppSettings["PATH_ANALISE"]);
 
             if (clsGrafic.Count > 0)
             {
@@ -66,13 +67,21 @@ namespace SIAO.SRV.BLL
                             }
                             sb.Append("</div>");
                         }
+                        _Grafic.Periodo = String.Format("{0}/{1}", _Grafic.Mes, _Grafic.Ano);
                     });
                 });
 
                 htmlCode = htmlCode.Replace("{content}", sb.ToString());
             }
 
-            return FilesBLL.CreatePDFFromMemoryStream(htmlCode);
+            string strFile = clsFuncs.SetFileName("Analise", clsGrafic);
+            
+            if (FilesBLL.CreatePDFFromHTMLFile(htmlCode, strFile))
+            {
+                clsFuncs.Redirect("uploads/" + strFile + ".pdf", "_blank", "");
+                return true;
+            }else
+                return false;
         }
 
         public static List<GraficTO> GraficList(string strIni, UsersTO clsUsers, string strLoja, string strFim)
@@ -227,6 +236,7 @@ namespace SIAO.SRV.BLL
 
             return clsList;
         }
+
         #endregion
 
         #region .: Search :.

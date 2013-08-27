@@ -143,8 +143,8 @@ nav .lavalamp-object {
 
 .center
 {
-    width:100%
-    margin:0 auto!important;
+    width:100%;
+    margin: 0 auto!important;
     }
 
 .logo{
@@ -161,11 +161,11 @@ nav .lavalamp-object {
 	height: 50px;
 	color:#FFF;
 }
+
 .menub > span{
 	color: #FFF;
 	font-size: 37px;
 	height:50px;
-		
 }
 
 ul, menu, dir {

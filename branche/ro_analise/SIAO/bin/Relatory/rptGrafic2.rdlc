@@ -812,7 +812,7 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>33cm</Top>
+        <Top>26cm</Top>
         <Height>2cm</Height>
         <Width>6.29648cm</Width>
         <ZIndex>2</ZIndex>
@@ -1101,6 +1101,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
+        <PageBreak>
+          <BreakLocation>Start</BreakLocation>
+        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -1110,7 +1113,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>21cm</Top>
+        <Top>14cm</Top>
         <Left>0.00001cm</Left>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
@@ -1403,6 +1406,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
+        <PageBreak>
+          <BreakLocation>Start</BreakLocation>
+        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -1412,7 +1418,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>42cm</Top>
+        <Top>28cm</Top>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
         <ZIndex>4</ZIndex>
@@ -1642,8 +1648,8 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>54cm</Top>
-        <Height>2cm</Height>
+        <Top>40cm</Top>
+        <Height>1.99999cm</Height>
         <Width>6.29646cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
@@ -1931,6 +1937,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
+        <PageBreak>
+          <BreakLocation>Start</BreakLocation>
+        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -1940,7 +1949,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>63cm</Top>
+        <Top>42cm</Top>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
         <ZIndex>6</ZIndex>
@@ -2170,8 +2179,8 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>75cm</Top>
-        <Height>2cm</Height>
+        <Top>54cm</Top>
+        <Height>1.99999cm</Height>
         <Width>6.29646cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
@@ -2459,6 +2468,9 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
+        <PageBreak>
+          <BreakLocation>Start</BreakLocation>
+        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -2468,7 +2480,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>84cm</Top>
+        <Top>56cm</Top>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
         <ZIndex>8</ZIndex>
@@ -2698,7 +2710,7 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>96.00001cm</Top>
+        <Top>68.00001cm</Top>
         <Height>2cm</Height>
         <Width>6.29646cm</Width>
         <ZIndex>9</ZIndex>
@@ -2709,7 +2721,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>98.00001cm</Height>
+    <Height>70.00001cm</Height>
     <Style />
   </Body>
   <Width>29.70001cm</Width>
@@ -2740,10 +2752,10 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="Quantidade Vendida - Loja - " + Fields!Nome_Fantasia.Value + "Periodo - " + Fields!Periodo.Value</Value>
+                  <Value>="Gráfico 2 - Quantidade Vendida" + System.Environment.NewLine + "Loja - " + Fields!Nome_Fantasia.Value + System.Environment.NewLine + "Periodo - " + Fields!Periodo.Value</Value>
                   <Style>
                     <FontFamily>Arial Rounded MT Bold</FontFamily>
-                    <FontSize>14pt</FontSize>
+                    <FontSize>12pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -2777,6 +2789,8 @@
     </PageHeader>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
+    <InteractiveHeight>21cm</InteractiveHeight>
+    <InteractiveWidth>29.7cm</InteractiveWidth>
     <LeftMargin>0cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
     <TopMargin>0cm</TopMargin>

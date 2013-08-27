@@ -8,13 +8,16 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using SIAO.SRV.DAL;
 using SIAO.SRV.TO;
+using System.Configuration;
+using iTextSharp.text.html.simpleparser;
 
 namespace SIAO.SRV.BLL
 {
     public class FilesBLL
     {
         #region .:Searches:.
-        public static List<FilesTO> GetByYear(int intAno, string strConnection) {
+        public static List<FilesTO> GetByYear(int intAno, string strConnection)
+        {
             return FilesDAL.GetByYear(intAno, strConnection);
         }
 
@@ -78,7 +81,7 @@ namespace SIAO.SRV.BLL
                         msg = oc.AddTxt(dt, clsUser, of.Meses(), of.Cnpj());
                     }
                 }
-                else { msg ="Selecione apenas arquivos com extenção '.XML' ou '.TXT'."; }
+                else { msg = "Selecione apenas arquivos com extenção '.XML' ou '.TXT'."; }
             }
             else
             {
@@ -98,7 +101,7 @@ namespace SIAO.SRV.BLL
             DataTable auxDt = new DataTable();
             int count = 0;
 
-            auxDt = dt.DefaultView.ToTable(true,"cnpj");
+            auxDt = dt.DefaultView.ToTable(true, "cnpj");
             if (auxDt.Rows.Count > 0)
             {
                 for (int i = 0; i < auxDt.Rows.Count; i++)
@@ -123,22 +126,25 @@ namespace SIAO.SRV.BLL
             return ds.Tables[0];
         }
 
-        internal static MemoryStream CreatePDFFromMemoryStream(string htmlCode)
+        public static Boolean CreatePDFFromHTMLFile(string HtmlStream, string FileName)
         {
-            Document doc = new Document();
-            MemoryStream ms = new MemoryStream();
-            StreamWriter sw = new StreamWriter(ms);
-            sw.Write(htmlCode);
-            sw.Flush();
-            ms.Position = 0;
-            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
-            doc.Open();
-            doc.Add(new Paragraph("Some Text"));
-            writer.CloseStream = false;
-            doc.Close();
-            ms.Position = 0;
+            try
+            {
+                Document doc = new Document();
+                PdfWriter.GetInstance(doc, new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + FileName + ".pdf", FileMode.OpenOrCreate));
+                doc.Open();
+                iTextSharp.text.html.simpleparser.HTMLWorker hw =
+                             new iTextSharp.text.html.simpleparser.HTMLWorker(doc);
 
-            return ms;
+                hw.Parse(new StringReader(HtmlStream));
+                doc.Close();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         #endregion
 

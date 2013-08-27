@@ -9,6 +9,9 @@ using System.Data;
 using SIAO.SRV;
 using System.IO;
 using System.Web;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
 
 namespace SIAO
 {
@@ -84,7 +87,7 @@ namespace SIAO
             this.User = clsUser = UsersBLL.GetUserSession();
 
             if (this.User.UserId == 0) { Response.Redirect("Logon.aspx"); }
-            
+
             if (!IsPostBack)
             {
                 getRedes();
@@ -139,7 +142,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
-                clsFuncs.Redirect("wfmRelatMod1.aspx","_blank", "");
+                clsFuncs.Redirect("wfmRelatMod1.aspx", "_blank", "");
             }
             else
             {
@@ -154,7 +157,7 @@ namespace SIAO
                 lr1 = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, this.RedeId, rbtPeriodo, rbtMes, ddlLojaRelatorios);
             else
                 lr1 = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, ddlRedesRelatorios, ddlLojaRelatorios, rbtPeriodo, rbtMes);
-            
+
             if (lr1.Count > 0)
             {
                 Session["cross"] = lr1;
@@ -317,7 +320,7 @@ namespace SIAO
             }
 
             ClearSessions();
-            
+
             Session["grafic4"] = clsGrafic;
 
             Global.LocalPage = "wfmGerarRelatorios.aspx";
@@ -345,7 +348,7 @@ namespace SIAO
                 txtFim.Enabled = false;
             }
         }
-        
+
         protected void rbtMes_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtMes.Checked)
@@ -362,40 +365,17 @@ namespace SIAO
 
         protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
+            if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
                 getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
         }
 
         protected void lbtnAna1_Click(object sender, EventArgs e)
         {
-            MemoryStream ms;
 
             if (this.RedeId > 0)
-                ms = RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
+                RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
             else
-                ms = RelatoriosBLL.GetAnalise(ResultData(),0);
-
-            try
-            {
-                HttpContext.Current.Response.Clear();
-                HttpContext.Current.Response.ClearContent();
-                HttpContext.Current.Response.ClearHeaders();
-                HttpContext.Current.Response.ContentType = "application/pdf";
-                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment;filename=abcTeste.pdf");
-                HttpContext.Current.Response.Buffer = true;
-                ms.WriteTo(Response.OutputStream);
-                //Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
-                //Response.OutputStream.Flush();
-                //Response.OutputStream.Close();
-                //Response.End();
-                HttpContext.Current.ApplicationInstance.CompleteRequest();
-                ms.Close();
-            }
-            catch (Exception ex)
-            {
-                
-                throw;
-            }
+                RelatoriosBLL.GetAnalise(ResultData(), 0);
         }
 
         #endregion
@@ -412,8 +392,8 @@ namespace SIAO
                 ddlRedesRelatorios.DataTextField = ds.Tables[0].Columns[1].ToString();
                 ddlRedesRelatorios.DataValueField = ds.Tables[0].Columns[0].ToString();
                 ddlRedesRelatorios.DataBind();
-                ddlRedesRelatorios.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-                ddlRedesRelatorios.Items.Insert(1, new ListItem("Independentes", "0"));
+                ddlRedesRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem(String.Empty, String.Empty));
+                ddlRedesRelatorios.Items.Insert(1, new System.Web.UI.WebControls.ListItem("Independentes", "0"));
                 ddlRedesRelatorios.SelectedIndex = 0;
             }
         }
@@ -435,7 +415,7 @@ namespace SIAO
                     ddlLojaRelatorios.DataTextField = "NomeFantasia";
                     ddlLojaRelatorios.DataValueField = "Cnpj";
                     ddlLojaRelatorios.DataBind();
-                    ddlLojaRelatorios.Items.Insert(0, new ListItem("Todas", string.Empty));
+                    ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
                     ddlLojaRelatorios.SelectedIndex = 0;
                     break;
                 case 3:
@@ -451,7 +431,7 @@ namespace SIAO
             ddlLojaRelatorios.DataTextField = "NomeFantasia";
             ddlLojaRelatorios.DataValueField = "Cnpj";
             ddlLojaRelatorios.DataBind();
-            ddlLojaRelatorios.Items.Insert(0, new ListItem("Todas", string.Empty));
+            ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
             ddlLojaRelatorios.SelectedIndex = 0;
         }
 
@@ -475,7 +455,7 @@ namespace SIAO
             divInfo.ID = "msgInfo";
             divInfo.Attributes.Add("class", "success");
             divInfo.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
-            divInfo.Style.Add("bottom","4.6%");
+            divInfo.Style.Add("bottom", "4.6%");
             divInfo.InnerHtml = "<p>Loja cadastrada com sucesso.</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divInfo);
@@ -491,16 +471,16 @@ namespace SIAO
                 return lic;
             }
             else
-                lic.Add(new ListItem("rede", ddlRedesRelatorios.SelectedValue));
+                lic.Add(new System.Web.UI.WebControls.ListItem("rede", ddlRedesRelatorios.SelectedValue));
 
-            lic.Add(new ListItem("loja", ddlLojaRelatorios.SelectedValue));
+            lic.Add(new System.Web.UI.WebControls.ListItem("loja", ddlLojaRelatorios.SelectedValue));
 
             if (rbtPeriodo.Checked)
             {
                 if (txtInicio.Text != "__/____" && txtFim.Text != "__/____")
                 {
-                    lic.Add(new ListItem("de", txtInicio.Text));
-                    lic.Add(new ListItem("ate", txtFim.Text));
+                    lic.Add(new System.Web.UI.WebControls.ListItem("de", txtInicio.Text));
+                    lic.Add(new System.Web.UI.WebControls.ListItem("ate", txtFim.Text));
                 }
                 else
                 {
@@ -510,8 +490,8 @@ namespace SIAO
             }
             else if (rbtMes.Checked)
             {
-                lic.Add(new ListItem("de", String.Empty));
-                lic.Add(new ListItem("ate", String.Empty));
+                lic.Add(new System.Web.UI.WebControls.ListItem("de", String.Empty));
+                lic.Add(new System.Web.UI.WebControls.ListItem("ate", String.Empty));
             }
             else
                 divErro("Selecione o periodo!");
