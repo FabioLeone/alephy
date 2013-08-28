@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using SIAO.SRV.DAL;
 using SIAO.SRV.TO;
-using System.Configuration;
-using iTextSharp.text.html.simpleparser;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace SIAO.SRV.BLL
 {
@@ -131,7 +130,12 @@ namespace SIAO.SRV.BLL
             try
             {
                 Document doc = new Document();
-                PdfWriter.GetInstance(doc, new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + FileName + ".pdf", FileMode.OpenOrCreate));
+                PdfWriter w = PdfWriter.GetInstance(doc, new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + FileName + ".pdf", FileMode.OpenOrCreate));
+
+                Image imageHeader = Image.GetInstance("http://localhost:43889/Content/images/app/logo_Cas_blue_128.png");
+
+                w.PageEvent = new iTPageEventHandler() { ImageHeader = imageHeader};
+
                 doc.Open();
                 iTextSharp.text.html.simpleparser.HTMLWorker hw =
                              new iTextSharp.text.html.simpleparser.HTMLWorker(doc);
