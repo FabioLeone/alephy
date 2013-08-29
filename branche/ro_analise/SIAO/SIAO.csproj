@@ -80,7 +80,6 @@
     <Content Include="Content\fonts\Dharma Type Font License.txt" />
     <Content Include="Content\graphic.png" />
     <Content Include="Content\html\analise.htm" />
-    <Content Include="Content\images\app\doc.png" />
     <Content Include="Content\images\app\hex.png" />
     <Content Include="Content\images\app\icons\Board-icon.png" />
     <Content Include="Content\images\app\icons\Charts-Combo-icon.png" />

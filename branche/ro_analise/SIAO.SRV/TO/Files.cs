@@ -25,31 +25,29 @@ namespace SIAO.SRV.TO
 
         public override void OnEndPage(PdfWriter writer, Document document)
         {
-            float cellHeight = document.TopMargin;
-            Rectangle page = document.PageSize;
+            ImageHeader.SetAbsolutePosition(30, 755);
+            ImageHeader.ScalePercent(50);
+            document.Add(ImageHeader);
 
-            PdfPTable head = new PdfPTable(2);
-            head.TotalWidth = page.Width;
+            //float cellHeight = document.TopMargin;
+            //Rectangle page = document.PageSize;
 
-            PdfPCell c = new PdfPCell(ImageHeader, true);
-            c.HorizontalAlignment = Element.ALIGN_RIGHT;
-            c.FixedHeight = cellHeight;
-            c.Border = PdfPCell.NO_BORDER;
-            head.AddCell(c);
+            //PdfPTable head = new PdfPTable(2);
+            //head.TotalWidth = page.Width;
+            
+            //PdfPCell c = new PdfPCell(ImageHeader, true);
+            //c.HorizontalAlignment = Element.ALIGN_RIGHT;
+            //c.FixedHeight = cellHeight;
+            //c.Border = PdfPCell.NO_BORDER;
+            //head.AddCell(c);
 
-            c = new PdfPCell(new Phrase("Analise de vendas"));
-            c.Border = PdfPCell.NO_BORDER;
-            c.VerticalAlignment = Element.ALIGN_MIDDLE;
-            c.FixedHeight = cellHeight;
-            head.AddCell(c);
+            //c = new PdfPCell(new Phrase("Analise de vendas"));
+            //c.Border = PdfPCell.NO_BORDER;
+            //c.VerticalAlignment = Element.ALIGN_MIDDLE;
+            //c.FixedHeight = cellHeight;
+            //head.AddCell(c);
 
-            head.WriteSelectedRows(
-              0, -1,  // first/last row; -1 flags all write all rows
-              0,      // left offset
-                // ** bottom** yPos of the table
-              page.Height - cellHeight + head.TotalHeight,
-              writer.DirectContent
-            );
+            //head.WriteSelectedRows(0, -1, 0, page.Height - cellHeight + head.TotalHeight, writer.DirectContent);
         }
     }
 }
