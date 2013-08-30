@@ -468,6 +468,7 @@ namespace SIAO
             if (ddlRedesRelatorios.Visible && String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
             {
                 divErro("Selecione a rede!");
+                lic.Add(new System.Web.UI.WebControls.ListItem("st", "false"));
                 return lic;
             }
             else
@@ -485,6 +486,7 @@ namespace SIAO
                 else
                 {
                     divErro("Preencha os campos \"de\" e \"até\"!");
+                    lic.Add(new System.Web.UI.WebControls.ListItem("st", "false"));
                     return lic;
                 }
             }
@@ -494,7 +496,13 @@ namespace SIAO
                 lic.Add(new System.Web.UI.WebControls.ListItem("ate", String.Empty));
             }
             else
+            {
                 divErro("Selecione o periodo!");
+                lic.Add(new System.Web.UI.WebControls.ListItem("st", "false"));
+            }
+
+            if (lic.FindByText("st") == null)
+                lic.Add(new System.Web.UI.WebControls.ListItem("st", "true"));
 
             return lic;
         }

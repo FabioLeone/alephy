@@ -129,7 +129,7 @@ namespace SIAO.SRV.BLL
         {
             try
             {
-                Document doc = new Document();
+                Document doc = new Document(PageSize.A4,30f,30f,50f,50f);
                 PdfWriter w = PdfWriter.GetInstance(doc, new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + FileName + ".pdf", FileMode.OpenOrCreate));
 
                 Image imageHeader = Image.GetInstance("http://localhost:43889/Content/images/app/logo_Cas_blue_128.png");
@@ -141,6 +141,39 @@ namespace SIAO.SRV.BLL
                              new iTextSharp.text.html.simpleparser.HTMLWorker(doc);
 
                 hw.Parse(new StringReader(HtmlStream));
+                doc.Close();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        internal static bool CreatePDFFromHTMLFile(List<string> lstHtml, string FileName)
+        {
+            try
+            {
+                Document doc = new Document(PageSize.A4);
+                PdfWriter w = PdfWriter.GetInstance(doc, new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + FileName + ".pdf", FileMode.OpenOrCreate));
+
+                Image imageHeader = Image.GetInstance("http://localhost:43889/Content/images/app/logo_Cas_blue_128.png");
+
+                w.PageEvent = new iTPageEventHandler() { ImageHeader = imageHeader };
+
+                doc.Open();
+
+                lstHtml.ForEach(delegate(string pag)
+                {
+                    doc.NewPage();
+
+                    iTextSharp.text.html.simpleparser.HTMLWorker hw =
+                                 new iTextSharp.text.html.simpleparser.HTMLWorker(doc);
+
+                    hw.Parse(new StringReader(pag));
+                });
+
                 doc.Close();
 
                 return true;
