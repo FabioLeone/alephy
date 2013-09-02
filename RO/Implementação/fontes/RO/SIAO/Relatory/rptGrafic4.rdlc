@@ -103,11 +103,11 @@
         </ChartSeriesHierarchy>
         <ChartData>
           <ChartSeriesCollection>
-            <ChartSeries Name="quantidade">
+            <ChartSeries Name="Desconto">
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Sum(Fields!quantidade.Value)</Y>
+                    <Y>=Sum(Fields!Desconto.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
@@ -227,7 +227,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Quantidade</Caption>
+                  <Caption>Desconto</Caption>
                   <Style>
                     <FontSize>14pt</FontSize>
                   </Style>
@@ -411,7 +411,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>0.80665in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -420,14 +420,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="quantidade">
+                    <Textbox Name="Desconto">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!quantidade.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>
@@ -438,7 +438,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>quantidade</rd:DefaultName>
+                      <rd:DefaultName>Desconto</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -587,7 +587,7 @@
         <Top>12cm</Top>
         <Left>0.00001cm</Left>
         <Height>2cm</Height>
-        <Width>6.29643cm</Width>
+        <Width>6.32157cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -639,7 +639,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79676in</Width>
+              <Width>0.79868in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -655,7 +655,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!quantidade.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>14pt</FontSize>
                               </Style>
@@ -790,7 +790,11 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
+        <PageBreak>
+          <BreakLocation>End</BreakLocation>
+        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -814,7 +818,7 @@
         </SortExpressions>
         <Top>26cm</Top>
         <Height>2cm</Height>
-        <Width>6.29648cm</Width>
+        <Width>6.30135cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -857,11 +861,11 @@
         </ChartSeriesHierarchy>
         <ChartData>
           <ChartSeriesCollection>
-            <ChartSeries Name="quantidade">
+            <ChartSeries Name="Desconto">
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Sum(Fields!quantidade.Value)</Y>
+                    <Y>=Sum(Fields!Desconto.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
@@ -981,7 +985,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Quantidade</Caption>
+                  <Caption>Desconto</Caption>
                   <Style>
                     <FontSize>14pt</FontSize>
                   </Style>
@@ -1101,9 +1105,6 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>Start</BreakLocation>
-        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -1162,11 +1163,11 @@
         </ChartSeriesHierarchy>
         <ChartData>
           <ChartSeriesCollection>
-            <ChartSeries Name="quantidade">
+            <ChartSeries Name="Desconto">
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Sum(Fields!quantidade.Value)</Y>
+                    <Y>=Sum(Fields!Desconto.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
@@ -1286,7 +1287,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Quantidade</Caption>
+                  <Caption>Desconto</Caption>
                   <Style>
                     <FontSize>14pt</FontSize>
                   </Style>
@@ -1406,9 +1407,6 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>Start</BreakLocation>
-        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -1475,7 +1473,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>0.79868in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1491,7 +1489,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!quantidade.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>14pt</FontSize>
                               </Style>
@@ -1650,7 +1648,7 @@
         </SortExpressions>
         <Top>40cm</Top>
         <Height>2cm</Height>
-        <Width>6.29646cm</Width>
+        <Width>6.30135cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -1693,11 +1691,11 @@
         </ChartSeriesHierarchy>
         <ChartData>
           <ChartSeriesCollection>
-            <ChartSeries Name="quantidade">
+            <ChartSeries Name="Desconto">
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Sum(Fields!quantidade.Value)</Y>
+                    <Y>=Sum(Fields!Desconto.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
@@ -1817,7 +1815,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Quantidade</Caption>
+                  <Caption>Desconto</Caption>
                   <Style>
                     <FontSize>14pt</FontSize>
                   </Style>
@@ -1937,9 +1935,6 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>Start</BreakLocation>
-        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -2006,7 +2001,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>0.79868in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -2022,7 +2017,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!quantidade.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>14pt</FontSize>
                               </Style>
@@ -2157,7 +2152,11 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
+        <PageBreak>
+          <BreakLocation>End</BreakLocation>
+        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -2181,7 +2180,7 @@
         </SortExpressions>
         <Top>54cm</Top>
         <Height>2cm</Height>
-        <Width>6.29646cm</Width>
+        <Width>6.30135cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -2224,11 +2223,11 @@
         </ChartSeriesHierarchy>
         <ChartData>
           <ChartSeriesCollection>
-            <ChartSeries Name="quantidade">
+            <ChartSeries Name="Desconto">
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Sum(Fields!quantidade.Value)</Y>
+                    <Y>=Sum(Fields!Desconto.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
@@ -2348,7 +2347,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Quantidade</Caption>
+                  <Caption>Desconto</Caption>
                   <Style>
                     <FontSize>14pt</FontSize>
                   </Style>
@@ -2468,9 +2467,6 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <PageBreak>
-          <BreakLocation>Start</BreakLocation>
-        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -2480,7 +2476,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>56cm</Top>
+        <Top>55.96472cm</Top>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
         <ZIndex>8</ZIndex>
@@ -2537,7 +2533,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>0.79868in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -2553,7 +2549,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!quantidade.Value)</Value>
+                              <Value>=FormatNumber(Sum(Fields!Desconto.Value),2) + "%"</Value>
                               <Style>
                                 <FontSize>14pt</FontSize>
                               </Style>
@@ -2577,6 +2573,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -2688,7 +2685,11 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
+        <PageBreak>
+          <BreakLocation>End</BreakLocation>
+        </PageBreak>
         <Filters>
           <Filter>
             <FilterExpression>=Fields!Sub_Consultoria.Value</FilterExpression>
@@ -2710,9 +2711,9 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>68.00001cm</Top>
+        <Top>68cm</Top>
         <Height>2cm</Height>
-        <Width>6.29646cm</Width>
+        <Width>6.30135cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -2721,7 +2722,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>70.00001cm</Height>
+    <Height>70cm</Height>
     <Style />
   </Body>
   <Width>29.70001cm</Width>
@@ -2752,10 +2753,10 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="Gráfico 2 - Quantidade Vendida" + System.Environment.NewLine + "Loja - " + Fields!Nome_Fantasia.Value + System.Environment.NewLine + "Periodo - " + Fields!Periodo.Value</Value>
+                  <Value>="Quantidade Vendida - Loja - " + Fields!Razao_Social.Value + "Periodo - " + Fields!Periodo.Value</Value>
                   <Style>
                     <FontFamily>Arial Rounded MT Bold</FontFamily>
-                    <FontSize>12pt</FontSize>
+                    <FontSize>14pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -2789,8 +2790,6 @@
     </PageHeader>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
-    <InteractiveHeight>21cm</InteractiveHeight>
-    <InteractiveWidth>29.7cm</InteractiveWidth>
     <LeftMargin>0cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
     <TopMargin>0cm</TopMargin>

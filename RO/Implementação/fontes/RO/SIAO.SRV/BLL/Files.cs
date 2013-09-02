@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SIAO.SRV.TO;
-using SIAO.SRV.DAL;
-using System.Xml;
+using System.Configuration;
 using System.Data;
+using System.IO;
+using System.Linq;
+using System.Xml;
+using SIAO.SRV.DAL;
+using SIAO.SRV.TO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace SIAO.SRV.BLL
 {
     public class FilesBLL
     {
         #region .:Searches:.
-        public static List<FilesTO> GetByYear(int intAno, string strConnection) {
+        public static List<FilesTO> GetByYear(int intAno, string strConnection)
+        {
             return FilesDAL.GetByYear(intAno, strConnection);
         }
 
@@ -76,7 +80,7 @@ namespace SIAO.SRV.BLL
                         msg = oc.AddTxt(dt, clsUser, of.Meses(), of.Cnpj());
                     }
                 }
-                else { msg ="Selecione apenas arquivos com extenção '.XML' ou '.TXT'."; }
+                else { msg = "Selecione apenas arquivos com extenção '.XML' ou '.TXT'."; }
             }
             else
             {
@@ -96,7 +100,7 @@ namespace SIAO.SRV.BLL
             DataTable auxDt = new DataTable();
             int count = 0;
 
-            auxDt = dt.DefaultView.ToTable(true,"cnpj");
+            auxDt = dt.DefaultView.ToTable(true, "cnpj");
             if (auxDt.Rows.Count > 0)
             {
                 for (int i = 0; i < auxDt.Rows.Count; i++)
@@ -119,6 +123,39 @@ namespace SIAO.SRV.BLL
 
             ds.ReadXml(new XmlNodeReader(xd));
             return ds.Tables[0];
+        }
+
+        internal static bool CreatePDFFromHTMLFile(List<string> lstHtml, string FileName)
+        {
+            try
+            {
+                Document doc = new Document(PageSize.A4);
+                PdfWriter w = PdfWriter.GetInstance(doc, new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + FileName + ".pdf", FileMode.Create));
+
+                Image imageHeader = Image.GetInstance(ConfigurationManager.AppSettings["PATH_LOGO"]);
+
+                w.PageEvent = new iTPageEventHandler() { ImageHeader = imageHeader };
+
+                doc.Open();
+
+                lstHtml.ForEach(delegate(string pag)
+                {
+                    doc.NewPage();
+
+                    iTextSharp.text.html.simpleparser.HTMLWorker hw =
+                                 new iTextSharp.text.html.simpleparser.HTMLWorker(doc);
+
+                    hw.Parse(new StringReader(pag));
+                });
+
+                doc.Close();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         #endregion
 

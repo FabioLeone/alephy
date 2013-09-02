@@ -31,8 +31,9 @@ namespace SIAO.SRV.BLL
             HttpContext.Current.Session[of.encr(objUser.UserName)] = of.encr(jssObject);
         }
 
-        public static UsersTO GetUserSession(UsersTO objUser)
+        public static UsersTO GetUserSession()
         {
+            UsersTO objUser = new UsersTO();
             JavaScriptSerializer jssObject = new JavaScriptSerializer();
             clsFuncs of = new clsFuncs();
             Type t = objUser.GetType();

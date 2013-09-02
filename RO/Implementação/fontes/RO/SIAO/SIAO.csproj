@@ -13,6 +13,7 @@
     <RootNamespace>SIAO</RootNamespace>
     <AssemblyName>SIAO</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +35,13 @@
   <ItemGroup>
     <Reference Include="AjaxControlToolkit, Version=4.1.51116.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="itextsharp, Version=4.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker">
+      <HintPath>..\SIAO.SRV\bin\Debug\itextsharp.xmlworker.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -71,8 +79,12 @@
     <Content Include="Content\fonts\BebasNeue-webfont.svg" />
     <Content Include="Content\fonts\Dharma Type Font License.txt" />
     <Content Include="Content\graphic.png" />
+    <Content Include="Content\html\analise.htm" />
     <Content Include="Content\images\app\hex.png" />
+    <Content Include="Content\images\app\icons\Board-icon.png" />
     <Content Include="Content\images\app\icons\Charts-Combo-icon.png" />
+    <Content Include="Content\images\app\icons\Charts-icon.png" />
+    <Content Include="Content\images\app\icons\doc-icon.png" />
     <Content Include="Content\images\app\icons\Settings-icon.png" />
     <Content Include="Content\images\app\icons\user-icon.png" />
     <Content Include="Content\images\app\logo_Cas_blue_128.png" />
@@ -376,6 +388,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatory\rptGrafic3.rdlc" />
+    <EmbeddedResource Include="Relatory\rptGrafic4.rdlc" />
     <EmbeddedResource Include="Relatory\rptGraficoLab.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -384,7 +397,6 @@
     <None Include="Content\fonts\BebasNeue-webfont.eot" />
     <None Include="Content\fonts\BebasNeue-webfont.ttf" />
     <None Include="Content\fonts\BebasNeue-webfont.woff" />
-    <None Include="Content\images\app\icons\Thumbs.db" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

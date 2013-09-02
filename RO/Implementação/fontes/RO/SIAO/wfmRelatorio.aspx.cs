@@ -27,7 +27,7 @@ namespace SIAO
         #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
-            clsUser = UsersBLL.GetUserSession(new UsersTO());
+            clsUser = UsersBLL.GetUserSession();
             if (clsUser.UserId == 0) { Response.Redirect("Logon.aspx"); }
 
 
@@ -50,8 +50,14 @@ namespace SIAO
                     clsGrafic33 = (List<Grafic2TO>)Session["grafic33"];
                     loadRelat3(clsGrafic31, clsGrafic32, clsGrafic33, clsUser);
                 }
+                else if (Session["grafic4"] != null)
+                {
+                    clsGrafic = (List<GraficTO>)Session["grafic4"];
+                    loadRelat4(clsGrafic, clsUser);
+                }
             }
         }
+
         #endregion
 
         #region .: Methods :.
@@ -92,6 +98,18 @@ namespace SIAO
 
             ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic3.rdlc";
             ReportViewer2.LocalReport.DisplayName = clsFuncs.SetFileName("Grafico_3", clsGrafic1);
+            ReportViewer2.DataBind();
+        }
+
+        private void loadRelat4(List<GraficTO> clsGrafic, UsersTO clsUser)
+        {
+            Microsoft.Reporting.WebForms.ReportDataSource Rds = new Microsoft.Reporting.WebForms.ReportDataSource("DataSet1", clsGrafic);
+            ReportViewer2.Reset();
+            ReportViewer2.LocalReport.Dispose();
+            ReportViewer2.LocalReport.DataSources.Add(Rds);
+
+            ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic4.rdlc";
+            ReportViewer2.LocalReport.DisplayName = clsFuncs.SetFileName("Grafico_4", clsGrafic);
             ReportViewer2.DataBind();
         }
         #endregion
