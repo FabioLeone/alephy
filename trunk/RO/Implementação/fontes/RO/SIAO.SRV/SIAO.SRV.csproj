@@ -31,6 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.4.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa, Version=5.4.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\itextsharp.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xtra, Version=5.4.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\itextsharp.xtra.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Mono.Security.dll</HintPath>
@@ -51,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\Analise.cs" />
     <Compile Include="BLL\Files.cs" />
     <Compile Include="BLL\Grafic.cs" />
     <Compile Include="BLL\GraficoLab.cs" />
@@ -63,6 +76,7 @@
     <Compile Include="clsDB.cs" />
     <Compile Include="clsFuncs.cs" />
     <Compile Include="clsRelat1.cs" />
+    <Compile Include="DAL\Analise.cs" />
     <Compile Include="DAL\CDM.cs" />
     <Compile Include="DAL\DbHelper.cs" />
     <Compile Include="DAL\Files.cs" />
@@ -76,6 +90,7 @@
     <Compile Include="Loja.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rede.cs" />
+    <Compile Include="TO\Analise.cs" />
     <Compile Include="TO\Files.cs" />
     <Compile Include="TO\Grafic.cs" />
     <Compile Include="TO\GraficoLab.cs" />

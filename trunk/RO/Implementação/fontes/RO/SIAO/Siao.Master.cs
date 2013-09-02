@@ -39,7 +39,7 @@ namespace SIAO
         #region .: Events :.
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.User = UsersBLL.GetUserSession(new UsersTO());
+            this.User = UsersBLL.GetUserSession();
             if (this.User.UserId == 0) { Response.Redirect("Logon.aspx"); }
         }
 

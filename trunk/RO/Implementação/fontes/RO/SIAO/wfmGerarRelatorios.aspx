@@ -4,116 +4,119 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <contenttemplate>
-            <script type="text/javascript">
-                function pageLoad() {
-                    $("section").addClass("sectionb");
-                }
-
-                window.onload(pageLoad);
-            </script>
-            <table style="width: 99.5%;">
-                <tr id="trFiltro" runat="server">
-                    <td colspan="2">
-                        <fieldset style="width: 96.5%;">
-                            <legend>
-                                <h2>Filtro</h2>
-                            </legend>
-                            <div id="dvFiltro" runat="server" style="height: 30px; width: 100%;display:table-row;">
-                                <div id="dvRedes" runat="server" style="width:50%;display:table-cell;">
-                                    Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
-                                        onselectedindexchanged="ddlRedesRelatorios_SelectedIndexChanged">
-                                    </asp:DropDownList>
+        <ContentTemplate>
+            <div class="hdFilter">
+                <h2>
+                    Filtro</h2>
+                <div id="dvFiltro" runat="server">
+                    <div id="dvRedes" runat="server">
+                        Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
+                            OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
+                        </asp:DropDownList>
+                    </div>
+                    <div id="dvLoja" runat="server">
+                        Loja:
+                        <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="min-width: 243px;">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server"
+                            AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
+                        de:
+                        <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
+                        <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
+                            Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
+                        </asp:MaskedEditExtender>
+                        até:
+                        <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
+                        <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
+                            Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
+                        </asp:MaskedEditExtender>
+                    </div>
+                    <div>
+                        <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" Text="ultimos 6 meses"
+                            runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
+                    </div>
+                </div>
+            </div>
+            <div class="ctApp">
+                <div id="divForm" class="dvList">
+                    <h2>
+                        Relatórios</h2>
+                    <ul class="iconList">
+                        <li>
+                            <asp:LinkButton ID="lbtnRel1" runat="server" OnClick="btnAdm_Click">
+                                <div id="M1" runat="server" class="imgRel">
+                                    <p>
+                                        Modelo 1</p>
                                 </div>
-                                <div id="dvLoja" runat="server" style="display:table-cell;">
-                                    Loja:
-                                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" style="min-width:243px;">
-                                    </asp:DropDownList>
+                            </asp:LinkButton>
+                        </li>
+                        <li>
+                            <asp:LinkButton ID="lbtnRel2" runat="server" OnClick="btnRelat2_Click">
+                                <div id="M2" runat="server" class="imgRel">
+                                    <p>
+                                        Modelo 2</p>
                                 </div>
-                            </div>
-                            <div style="display:table-row;width:100%;">
-                                <div style="display:table-cell;">
-                                <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server" 
-                                            AutoPostBack="true" oncheckedchanged="rbtPeriodo_CheckedChanged" />
-                                        de: <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
-                                        <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
-                                    Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
-                                </asp:MaskedEditExtender>
-                                        até: <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
-                                        <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
-                                    Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
-                                    </asp:MaskedEditExtender>
+                            </asp:LinkButton>
+                        </li>
+                    </ul>
+                </div>
+                <div id="divGrafic" class="dvList" style="margin-left:0.5%;margin-right:0.5%;">
+                    <h2>
+                        Gráficos</h2>
+                    <ul class="iconList">
+                        <li>
+                            <asp:LinkButton ID="lbtnGra1" runat="server" OnClick="lbtnGra1_Click">
+                                <div id="G1" runat="server" class="imgGra">
+                                    <p>
+                                        Gráfico 1</p>
                                 </div>
-                                <div style="display:table-cell;">
-                                <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" 
-                                    Text="ultimos 6 meses" runat="server" 
-                                    oncheckedchanged="rbtMes_CheckedChanged" />
+                            </asp:LinkButton>
+                        </li>
+                        <li>
+                            <asp:LinkButton ID="lbtnGra2" runat="server" OnClick="lbtnGra2_Click">
+                                <div id="G2" runat="server" class="imgGra">
+                                    <p>
+                                        Gráfico 2</p>
                                 </div>
-                            </div>
-                        </fieldset>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">
-                        <fieldset style="width: 93%;">
-                            <legend>
-                                <h2>
-                                    Relatórios</h2>
-                            </legend>
-                            <div id="divForm" style="height: 300px; width: 100%;">
-                                    <ul class="iconList">
-                                        <li>
-                                            <p id="M1" runat="server" class="imgBtn">
-                                                <asp:ImageButton ID="ibtnRelat1" runat="server" OnClick="btnAdm_Click" AlternateText="Modelo1"
-                                                    ImageUrl="~/Content/document.png" ToolTip="Modelo1" />
-                                                <asp:Label ID="lblRelat1" runat="server" AssociatedControlID="ibtnRelat1">Modelo1</asp:Label>
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p id="M2" runat="server" class="imgBtn">
-                                                <asp:ImageButton ID="ibtnRelat2" runat="server" OnClick="btnRelat2_Click" AlternateText="Modelo2"
-                                                    ImageUrl="~/Content/document.png" ToolTip="Modelo2" />
-                                                <asp:Label ID="Label1" runat="server" AssociatedControlID="ibtnRelat2">Modelo2</asp:Label>
-                                            </p>
-                                        </li>
-                                    </ul>
-                            </div>
-                        </fieldset>
-                    </td>
-                    <td style="width: 50%;">
-                        <fieldset style="width: 93%;">
-                            <legend>
-                                <h2>Gráficos</h2>
-                            </legend>
-                            <div id="divGrafic" style="height: 300px; width: 100%;">
-                                <ul class="iconList">
-                                    <li>
-                                        <p id="G1" runat="server" class="imgBtn">
-                                            <asp:ImageButton ID="ibtnGrafic1" runat="server" AlternateText="Grafico1" ImageUrl="~/Content/graphic.png"
-                                                ToolTip="Grafico1" OnClick="ibtnGrafic1_Click" />
-                                            <asp:Label ID="lblGrafic1" runat="server" AssociatedControlID="ibtnGrafic1">Grafico1</asp:Label>
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p id="G2" runat="server" class="imgBtn">
-                                            <asp:ImageButton ID="ibtnGrafic2" runat="server" AlternateText="Grafico2" ImageUrl="~/Content/graphic.png"
-                                                ToolTip="Grafico2" OnClick="ibtnGrafic2_Click" />
-                                            <asp:Label ID="lblGrafic2" runat="server" AssociatedControlID="ibtnGrafic2">Grafico2</asp:Label>
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <p id="P1" runat="server" class="imgBtn">
-                                            <asp:ImageButton ID="ibtnGrafic3" runat="server" AlternateText="Grafico3" ImageUrl="~/Content/graphic.png"
-                                                ToolTip="Grafico3" onclick="lblGrafic3_Click" />
-                                            <asp:Label ID="Label2" runat="server" AssociatedControlID="ibtnGrafic3">Grafico3</asp:Label>
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </fieldset>
-                    </td>
-                </tr>
-            </table>
-        </contenttemplate>
+                            </asp:LinkButton>
+                        </li>
+                        <li>
+                            <asp:LinkButton ID="lbtnGra3" runat="server" OnClick="lbtnGra3_Click">
+                                <div id="P1" runat="server" class="imgGra">
+                                    <p>
+                                        Gráfico 3</p>
+                                </div>
+                            </asp:LinkButton>
+                        </li>
+                        <li>
+                            <asp:LinkButton ID="lbtnGra4" runat="server" onclick="lbtnGra4_Click">
+                                <div id="Div3" runat="server" class="imgGra">
+                                    <p>
+                                        Gráfico de desconto</p>
+                                </div>
+                            </asp:LinkButton>
+                        </li>
+                    </ul>
+                </div>
+                <div id="div1" class="dvList">
+                    <h2>
+                        Análise</h2>
+                    <ul class="iconList">
+                        <li>
+                            <asp:LinkButton ID="lbtnAna1" runat="server" onclick="lbtnAna1_Click" ToolTip="Os dados exibidos neste relatório, são referentes apenas ao último mês do período selecionado.">
+                                <div id="Div2" runat="server" class="imgAna">
+                                    <p>
+                                        Análise</p>
+                                </div>
+                            </asp:LinkButton>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

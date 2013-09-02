@@ -15,7 +15,7 @@ namespace SIAO.Controls
         #region .:Events:.
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (UsersBLL.GetUserSession(new UsersTO()).UserId == 0) { Response.Redirect("Logon.aspx"); }
+            if (UsersBLL.GetUserSession().UserId == 0) { Response.Redirect("Logon.aspx"); }
         }
 
         protected void btnAnalise_ServerClick(object sender, EventArgs e)
@@ -26,7 +26,7 @@ namespace SIAO.Controls
             if (intId > 0)
                 RelatoriosBLL.GetAnalise(licFiltro, intId);
             else
-                RelatoriosBLL.GetAnalise(licFiltro);
+                RelatoriosBLL.GetAnalise(licFiltro,0);
             
         }
         #endregion

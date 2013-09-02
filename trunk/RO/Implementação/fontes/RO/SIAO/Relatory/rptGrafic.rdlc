@@ -372,7 +372,7 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>="Participação por Grupo - \n" + "Loja - " + Fields!Nome_Fantasia.Value + " \n " + "Periodo - " + Fields!Periodo.Value.ToString</Caption>
+            <Caption>="Grafico 1 - Participação por Grupo \n" + "Loja - " + Fields!Nome_Fantasia.Value + " \n " + "Periodo - " + Fields!Periodo.Value.ToString</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>

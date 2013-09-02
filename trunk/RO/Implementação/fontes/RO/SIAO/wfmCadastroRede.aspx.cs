@@ -17,7 +17,7 @@ namespace SIAO
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (UsersBLL.GetUserSession(new UsersTO()).UserId == 0) { Response.Redirect("Logon.aspx"); }
+            if (UsersBLL.GetUserSession().UserId == 0) { Response.Redirect("Logon.aspx"); }
 
             if (Session["editR"] != null) { rede.RedeId = (int)Session["editR"]; }
 
