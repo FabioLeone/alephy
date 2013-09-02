@@ -633,15 +633,33 @@ color:#09C;
 #inf
 {
     display: none;
-    background: #ccc;
+    background: rgba(0,0,0,0.8);
     margin-top: 50px;
+    padding: 10px;
     left: 0px;
     position: fixed;
     width: 200px;
-    height: 87%;
+    height: 100%;
+    text-align: center;
+    color: #ccc;
+    
+}
+#inf:hover
+{
+    display:block;
 }
     
 .menub:hover ~ #inf
 {
     display:block;
 }
+
+.hdFilter{width: 100%; background: rgba(62, 137, 233, 0.5);}
+
+.hdFilter div{height: 30px; width: 100%; display: inline-block; background:rgba(209,209,209,0.6);}
+
+.hdFilter div div{width: 49% !Important; display: block; float:left;background:rgba(209,209,209,0.1);padding-left: 2px;}
+
+.ctApp{vertical-align:top; display: inline-block;width: 100% !important;margin-top: 3px;}
+
+.dvList{width: 33%;background: rgba(62, 137, 233, 0.5);display: block;float: left;}
