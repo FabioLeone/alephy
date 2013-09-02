@@ -108,15 +108,15 @@ namespace SIAO.SRV
             return lst;
         }
 
-        public static void GetAnalise(ListItemCollection lstFiltro, int intId)
+        public static bool GetAnalise(ListItemCollection lstFiltro, int intId)
         {
             if (lstFiltro.FindByText("st").Value.Equals("false"))
-                return;
+                return false;
 
             if(intId > 0)
-                GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, intId);
+                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, intId);
             else
-                GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, 0);
+                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, 0);
         }
     }
 }

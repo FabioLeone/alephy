@@ -371,11 +371,15 @@ namespace SIAO
 
         protected void lbtnAna1_Click(object sender, EventArgs e)
         {
+            Boolean blnOk = false;
 
             if (this.RedeId > 0)
-                RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
+                blnOk = RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
             else
-                RelatoriosBLL.GetAnalise(ResultData(), 0);
+                blnOk = RelatoriosBLL.GetAnalise(ResultData(), 0);
+
+            if (!blnOk)
+                divErro("Não há itens a serem listados.");
         }
 
         #endregion

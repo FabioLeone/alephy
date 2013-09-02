@@ -90,12 +90,16 @@ namespace SIAO.SRV.BLL
             }
 
             string strFile = clsFuncs.SetFileName("Analise", clsGrafic);
-            
-            if (FilesBLL.CreatePDFFromHTMLFile(lstHtml, strFile))
-            {
-                clsFuncs.Redirect("uploads/" + strFile + ".pdf", "_blank", "");
-                return true;
-            }else
+
+            if (clsGrafic.Count > 0)
+                if (FilesBLL.CreatePDFFromHTMLFile(lstHtml, strFile))
+                {
+                    clsFuncs.Redirect("uploads/" + strFile + ".pdf", "_blank", "");
+                    return true;
+                }
+                else
+                    return false;
+            else
                 return false;
         }
 
