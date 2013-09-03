@@ -119,6 +119,37 @@ namespace SIAO.SRV
             return intRedeId;
         }
 
+        internal static Rede GetRedeById(int intId)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            Rede r = new Rede();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao FROM  redesfarmaceuticas 
+            WHERE (redesfarmaceuticas.Id = @Id)";
+
+            cmm.Parameters.Add("@Id", NpgsqlDbType.Integer).Value = intId;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Rede");
+            }
+            clsDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                if (ds.Tables[0].Rows[0]["Id"] != DBNull.Value)
+                {
+                    r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
+                    r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
+                }
+            }
+
+            return r;
+        }
+
         public static Loja GetLojaByCNPJ(string strCNPJ)
         {
             DataSet ds = new DataSet();
@@ -403,6 +434,38 @@ namespace SIAO.SRV
             clsDB.closeConnection(cmm);
 
             return ds;
+        }
+
+        internal static Loja GetLojaById(int intLoja)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            Loja objLoja = new Loja();
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT id,Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
+            WHERE farmacias.id = @id";
+
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@id", NpgsqlDbType.Integer).Value = intLoja;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            clsDB.closeConnection(cmm);
+
+            if (ds.Tables["Farmacias"].Rows.Count > 0)
+            {
+                objLoja.Cnpj = ds.Tables["Farmacias"].Rows[0]["Cnpj"].ToString();
+                objLoja.GerenteId = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["GerenteId"].ToString());
+                objLoja.Id = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["id"].ToString());
+                objLoja.idRede = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["idRede"].ToString());
+                objLoja.NomeFantasia = ds.Tables["Farmacias"].Rows[0]["NomeFantasia"].ToString();
+                objLoja.ProprietarioId = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["ProprietarioID"].ToString());
+            }
+
+            return objLoja;
         }
 
         public static DataSet GetGrupos(string scn)

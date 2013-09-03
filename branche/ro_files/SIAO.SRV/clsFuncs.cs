@@ -184,6 +184,24 @@ namespace SIAO.SRV
             return sbName.ToString();
         }
 
+        public static string GetPartFileName(string strReport, string strName)
+        {
+            StringBuilder sbName = new StringBuilder();
+            string a = "";
+            Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+            sbName.Append(strReport);
+
+            if (!String.IsNullOrEmpty(strName))
+            {
+                a = strName.Replace(" ", "");
+                a = r.Replace(a, String.Empty);
+                sbName.Append("_" + a);
+            }
+
+            return sbName.ToString();
+        }
+
         public static void Redirect(string url, string target, string windowFeatures)
         {
             HttpContext context = HttpContext.Current;

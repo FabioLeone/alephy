@@ -9,6 +9,7 @@ using SIAO.SRV.DAL;
 using SIAO.SRV.TO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Web.UI.WebControls;
 
 namespace SIAO.SRV.BLL
 {
@@ -132,7 +133,7 @@ namespace SIAO.SRV.BLL
                 Document doc = new Document(PageSize.A4);
                 PdfWriter w = PdfWriter.GetInstance(doc, new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + FileName + ".pdf", FileMode.Create));
 
-                Image imageHeader = Image.GetInstance(ConfigurationManager.AppSettings["PATH_LOGO"]);
+                iTextSharp.text.Image imageHeader = iTextSharp.text.Image.GetInstance(ConfigurationManager.AppSettings["PATH_LOGO"]);
 
                 w.PageEvent = new iTPageEventHandler() { ImageHeader = imageHeader };
 
@@ -156,6 +157,27 @@ namespace SIAO.SRV.BLL
             {
                 return false;
             }
+        }
+
+        public static ListItemCollection GetFiles(string strReport, int intId, bool bln)
+        {
+            String strName;
+            String[] files;
+            ListItemCollection lic = new ListItemCollection();
+
+            if(bln)
+                strName = clsFuncs.GetPartFileName(strReport, clsControl.GetLojaById(intId).NomeFantasia);
+            else
+                strName = clsFuncs.GetPartFileName(strReport, clsControl.GetRedeById(intId).RedeName);
+
+            files = Directory.GetFiles(ConfigurationManager.AppSettings["PATH_DOWNLOAD"]);
+
+            foreach (String file in files) {
+                if(file.Contains(strName))
+                    lic.Add(new System.Web.UI.WebControls.ListItem(file.Replace("\\",";").Split(';').Last(),file));
+            }
+
+            return lic;
         }
         #endregion
 
