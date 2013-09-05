@@ -71,14 +71,14 @@ namespace SIAO.SRV.BLL
                         if (!DataValidation(dt))
                             msg = "CNPJ não cadastrado";
                         else
-                            msg = oc.AddXml(dt, clsUser);
+                            msg = oc.NewAddXml(dt, clsUser);
                     }
                     else
                     {
                         DataTable dt = new DataTable();
                         dt = of.txtDtConvert(fuArquivo.FileContent);
 
-                        msg = oc.AddTxt(dt, clsUser, of.Meses(), of.Cnpj());
+                        msg = oc.NewAddTxt(dt, clsUser);
                     }
                 }
                 else { msg = "Selecione apenas arquivos com extenção '.XML' ou '.TXT'."; }
