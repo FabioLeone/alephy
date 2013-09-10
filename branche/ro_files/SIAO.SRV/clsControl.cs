@@ -442,6 +442,8 @@ namespace SIAO.SRV
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             NpgsqlCommand cmm = new NpgsqlCommand();
             Loja objLoja = new Loja();
+            Int32 intGerenteId = 0, intProprietarioId = 0;
+
             cmm.Connection = cnn;
             cmm.CommandText = @"SELECT id,Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
             WHERE farmacias.id = @id";
@@ -458,11 +460,13 @@ namespace SIAO.SRV
             if (ds.Tables["Farmacias"].Rows.Count > 0)
             {
                 objLoja.Cnpj = ds.Tables["Farmacias"].Rows[0]["Cnpj"].ToString();
-                objLoja.GerenteId = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["GerenteId"].ToString());
+                Int32.TryParse(ds.Tables["Farmacias"].Rows[0]["GerenteId"].ToString(), out intGerenteId);
+                objLoja.GerenteId = intGerenteId;
                 objLoja.Id = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["id"].ToString());
                 objLoja.idRede = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["idRede"].ToString());
                 objLoja.NomeFantasia = ds.Tables["Farmacias"].Rows[0]["NomeFantasia"].ToString();
-                objLoja.ProprietarioId = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["ProprietarioID"].ToString());
+                Int32.TryParse(ds.Tables["Farmacias"].Rows[0]["ProprietarioID"].ToString(),out intProprietarioId);
+                objLoja.ProprietarioId = intProprietarioId;
             }
 
             return objLoja;

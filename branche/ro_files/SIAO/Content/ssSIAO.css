@@ -693,3 +693,34 @@ color:#09C;
 .ctApp{vertical-align:top; display: inline-block;width: 100% !important;margin-top: 3px;}
 
 .dvList{width: 33%;background: rgba(62, 137, 233, 0.5);display: block;float: left;}
+
+#dvArq
+{
+    display: none;
+    background: rgba(0,0,0,0.6);
+    margin-top: 50px;
+    padding: 10px;
+    right: 0px;
+    position: fixed;
+    width: 213px;
+    height: 100%;
+    text-align: center;
+    color: #ccc;
+    
+}
+
+#dvArq:hover
+{
+    display:block;
+}
+
+.menuc{
+	float: right;
+	width: 110px;
+	height: 50px;
+	color:#FFF;
+	line-height: 50px;
+    font-weight: 700;
+}
+
+.menuc:hover ~#dvArq{display:block;}

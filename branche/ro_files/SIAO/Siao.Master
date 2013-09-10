@@ -54,6 +54,7 @@
             </ul>
         </nav>
     </div>
+    <a id="arq" href="#" class="menuc">Arquivos gerados</a>
     <div id="inf">
     <img src="Content/images/app/logo_Cas_blue_128.png" />
     <hr />
@@ -79,6 +80,20 @@
     Claudemir: claudemircasbrasil<wr />
     Felipe: casbrasil02</p>
 
+    </div>
+    <div id="dvArq">
+        <div id="dvFiltro" runat="server">
+            <div id="dvRedes" runat="server">
+                Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true" Width="170px">
+                </asp:DropDownList>
+            </div>
+            <div id="dvLoja" runat="server">
+                Loja:
+                <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 162px;">
+                </asp:DropDownList>
+            </div>
+        </div>
+        <ul id="ulArq" runat="server"></ul>
     </div>
     </header>
     <div id="fundo">

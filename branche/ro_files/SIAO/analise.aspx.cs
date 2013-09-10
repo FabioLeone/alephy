@@ -12,7 +12,7 @@ namespace SIAO
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            FilesBLL.GetFiles("Analise", 7,true);
+            
         }
     }
 }
