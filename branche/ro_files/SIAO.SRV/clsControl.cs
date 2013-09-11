@@ -396,9 +396,9 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID 
-            FROM farmacias 
-            INNER JOIN usuarios_vinculos ON farmacias.id = usuarios_vinculos.LinkId
+            cmm.CommandText = @"SELECT f.id, Cnpj, NomeFantasia, GerenteId, ProprietarioID 
+            FROM farmacias f
+            INNER JOIN usuarios_vinculos ON f.id = usuarios_vinculos.LinkId
             WHERE usuarios_vinculos.usuarioid = @usuarioid
             ORDER BY NomeFantasia";
 
@@ -421,7 +421,7 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
+            cmm.CommandText = @"SELECT id, Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
             WHERE farmacias.idRede = @idRede ORDER BY NomeFantasia";
 
             cmm.Parameters.Clear();

@@ -43,6 +43,16 @@ namespace SIAO
         {
             this.User = UsersBLL.GetUserSession();
             if (this.User.UserId == 0) { Response.Redirect("Logon.aspx"); }
+
+            if (!IsPostBack)
+            { 
+                if (UsersBLL.ValidaAcesso(this.User, ref dvRedes, ref dvLoja, ref dvFiltro))
+                {
+                    getLojas();
+                }
+                else
+                    getRedes();
+            }
         }
 
         protected void lbtnLogoff_Click1(object sender, EventArgs e)
@@ -52,6 +62,16 @@ namespace SIAO
             Response.Redirect("Logon.aspx");
         }
 
+        protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
+                getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+        }
+
+        protected void btnBusca_Click(object sender, EventArgs e)
+        {
+            getFiles(ddlLojaRelatorios.SelectedValue);
+        }
         #endregion
 
         #region .: Metodos :.
@@ -94,25 +114,30 @@ namespace SIAO
             }
         }
 
-        private void ValidaAcesso()
-        {
-            ddlLojaRelatorios.Visible = true;
-            dvLoja.Visible = true;
-            dvFiltro.Visible = true;
-            dvRedes.Visible = false;
-        }
-
         private void getLojas()
         {
+            DataSet ds = new DataSet();
+
             switch (this.User.TipoId)
             {
                 case 2:
-                    ddlLojaRelatorios.DataSource = clsControl.GetLojaByUserId(clsUser.UserId);
-                    ddlLojaRelatorios.DataTextField = "NomeFantasia";
-                    ddlLojaRelatorios.DataValueField = "Cnpj";
-                    ddlLojaRelatorios.DataBind();
-                    ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
-                    ddlLojaRelatorios.SelectedIndex = 0;
+                    ds = clsControl.GetLojaByUserId(clsUser.UserId);
+
+                    if (ds.Tables[0].Rows.Count > 1)
+                    {
+                        ddlLojaRelatorios.DataSource = ds;
+                        ddlLojaRelatorios.DataTextField = "NomeFantasia";
+                        ddlLojaRelatorios.DataValueField = "id";
+                        ddlLojaRelatorios.DataBind();
+                        ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
+                        ddlLojaRelatorios.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        dvFiltro.Visible = false;
+                        getFiles(ds.Tables[0].Rows[0]["id"]);
+                    }
+
                     break;
                 case 3:
                     getLojas(clsControl.GetRedeByUserId(this.User.UserId).RedeId);
@@ -120,15 +145,24 @@ namespace SIAO
             }
         }
 
+        private void getFiles(object o)
+        {
+            int intId = 0;
+            int.TryParse(o.ToString(),out intId);
+
+            ulArq.InnerHtml = FilesBLL.GetFiles("Analise", intId, true);
+        }
+
         private void getLojas(int intRedeId)
         {
             ddlLojaRelatorios.DataSource = clsControl.GetLojaByRedeId(intRedeId);
             ddlLojaRelatorios.DataTextField = "NomeFantasia";
-            ddlLojaRelatorios.DataValueField = "Cnpj";
+            ddlLojaRelatorios.DataValueField = "id";
             ddlLojaRelatorios.DataBind();
             ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
             ddlLojaRelatorios.SelectedIndex = 0;
         }
         #endregion
+
     }
 }

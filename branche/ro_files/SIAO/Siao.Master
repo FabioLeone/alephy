@@ -84,7 +84,7 @@
     <div id="dvArq">
         <div id="dvFiltro" runat="server">
             <div id="dvRedes" runat="server">
-                Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true" Width="170px">
+                Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true" Width="170px" OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
                 </asp:DropDownList>
             </div>
             <div id="dvLoja" runat="server">
@@ -92,8 +92,11 @@
                 <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 162px;">
                 </asp:DropDownList>
             </div>
+            <asp:Button ID="btnBusca" CssClass="button blue" runat="server" Text="Buscar" 
+                onclick="btnBusca_Click" />
         </div>
-        <ul id="ulArq" runat="server"></ul>
+        <br />
+        <ul id="ulArq" runat="server" class="iconList"></ul>
     </div>
     </header>
     <div id="fundo">

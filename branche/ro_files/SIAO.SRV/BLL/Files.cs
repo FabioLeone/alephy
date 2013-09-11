@@ -10,6 +10,7 @@ using SIAO.SRV.TO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Web.UI.WebControls;
+using System.Text;
 
 namespace SIAO.SRV.BLL
 {
@@ -159,11 +160,11 @@ namespace SIAO.SRV.BLL
             }
         }
 
-        public static ListItemCollection GetFiles(string strReport, int intId, bool bln)
+        public static String GetFiles(string strReport, int intId, bool bln)
         {
             String strName;
             String[] files;
-            ListItemCollection lic = new ListItemCollection();
+            StringBuilder sb = new StringBuilder();
 
             if(bln)
                 strName = clsFuncs.GetPartFileName(strReport, clsControl.GetLojaById(intId).NomeFantasia);
@@ -173,11 +174,11 @@ namespace SIAO.SRV.BLL
             files = Directory.GetFiles(ConfigurationManager.AppSettings["PATH_DOWNLOAD"]);
 
             foreach (String file in files) {
-                if(file.Contains(strName))
-                    lic.Add(new System.Web.UI.WebControls.ListItem(file.Replace("\\",";").Split(';').Last(),file));
+                if (file.Contains(strName))
+                    sb.Append(String.Format("<li><a href='uploads/{0}' target='_blank'><div class='imgAna'><p>{0}</p></div></a></li>", file.Replace("\\", ";").Split(';').Last()));
             }
 
-            return lic;
+            return sb.ToString();
         }
         #endregion
 
