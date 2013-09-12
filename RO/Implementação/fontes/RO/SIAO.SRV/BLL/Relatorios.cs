@@ -114,9 +114,9 @@ namespace SIAO.SRV
                 return false;
 
             if(intId > 0)
-                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, intId);
+                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, intId);
             else
-                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("ate").Value, 0);
+                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, 0);
         }
     }
 }
