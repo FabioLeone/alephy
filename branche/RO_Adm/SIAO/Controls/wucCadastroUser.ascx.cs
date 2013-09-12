@@ -246,12 +246,9 @@ namespace SIAO.Controls
         }
         private void LoadData()
         {
-            ddlAcess.DataSource = UsersBLL.GetTiposAll();
-            ddlAcess.DataTextField = "Tipo";
-            ddlAcess.DataValueField = "id";
-            ddlAcess.DataBind();
-            ddlAcess.Items.Insert(0, new ListItem("Selecione", "0"));
-            ddlAcess.SelectedIndex = 0;
+            UsersBLL.GetTiposAll(ref ddlAcess);
+
+            UsersBLL.GetNiveis(ref ddlNivel);
         }
         #endregion
     }

@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using SIAO.SRV.DAL;
 using SIAO.SRV.TO;
+using System.Web.UI.WebControls;
 
 namespace SIAO.SRV.BLL
 {
@@ -73,6 +74,43 @@ namespace SIAO.SRV.BLL
                     return false;
             }
         }
+
+        public static void GetNiveis(ref System.Web.UI.WebControls.DropDownList ddlNivel)
+        {
+            if (GetUserSession().Nivel.Equals((int)Nivel.a))
+            {
+                ddlNivel.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                ddlNivel.Items.Insert(1, new ListItem("A", "0"));
+                ddlNivel.Items.Insert(2, new ListItem("R", "1"));
+                ddlNivel.Items.Insert(3, new ListItem("L", "2"));
+                ddlNivel.Items.Insert(4, new ListItem("I", "3"));
+                ddlNivel.SelectedIndex = 0;
+                ddlNivel.Visible = true;
+            }
+            else
+                ddlNivel.Visible = false;
+        }
+
+        public static void GetTiposAll(ref DropDownList ddlAcess)
+        {
+            switch (GetUserSession().Nivel)
+            {
+                case (int)Nivel.a:
+                    ddlAcess.DataSource = UsersBLL.GetTiposAll();
+                    ddlAcess.DataTextField = "Tipo";
+                    ddlAcess.DataValueField = "id";
+                    ddlAcess.DataBind();
+                    ddlAcess.Items.Insert(0, new ListItem("Selecione", "0"));
+                    ddlAcess.SelectedIndex = 0;
+                    break;
+                case (int)Nivel.r:
+                    ddlAcess.Items.Insert(0, new ListItem("Drogaria", "2"));
+                    ddlAcess.SelectedIndex = 0;
+                    ddlAcess.Enabled = false;
+                    break;
+            }
+            
+        }
         #endregion
         
         #region .: Search :.
@@ -136,6 +174,15 @@ namespace SIAO.SRV.BLL
             return UsersDAL.Delete(clsUsers, strConnection);
         }
 
+        #endregion
+
+        #region .: Enum :.
+        internal enum Nivel { 
+            a = 0,
+            r = 1,
+            l = 2,
+            i = 4
+        }
         #endregion
 
     }

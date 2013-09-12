@@ -22,6 +22,7 @@ namespace SIAO.SRV.TO
         public int FarmaciaId { get; set; }
         public List<string> Cnpj { get; set; }
         public string Tipo { get; set; }
+        public int Nivel { get; set; }
     }
 
     [Serializable]

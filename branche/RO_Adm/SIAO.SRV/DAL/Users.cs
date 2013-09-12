@@ -48,6 +48,15 @@ namespace SIAO.SRV.DAL
                 clsUsers.Tipo = ""; 
             }
 
+            try
+            {
+                if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("nivel"))) { clsUsers.Nivel = drdUsers.GetInt32(drdUsers.GetOrdinal("nivel")); } else { clsUsers.Nivel = 0; }
+            }
+            catch
+            {
+                clsUsers.Nivel = 0;
+            }
+
             return clsUsers;
         }
 
@@ -172,11 +181,13 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,");
-                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
-                strSQL.Append(" memberships.Access, memberships.Name, usuarios_farmacias.FarmaciaId,users.TipoId");
-                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
-                strSQL.Append(" WHERE memberships.Name=@Name AND memberships.Password=@Password");
+                strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, m.Password,
+                m.Email, m.Inactive, m.CreateDate, m.ExpirationDate,
+                m.Access, m.Name, uf.FarmaciaId,u.TipoId,u.nivel
+                FROM users u 
+                LEFT JOIN memberships m ON u.UserId = m.UserId 
+                LEFT JOIN usuarios_farmacias uf ON u.UserId = uf.UserId");
+                strSQL.Append(" WHERE m.Name=@Name AND m.Password=@Password");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
