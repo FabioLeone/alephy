@@ -92,7 +92,7 @@
                 <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 162px;">
                 </asp:DropDownList>
             </div>
-            <asp:Button ID="btnBusca" CssClass="button blue" runat="server" Text="Buscar" 
+            <asp:Button ID="btnBusca" CssClass="button gray" runat="server" Text="Buscar" 
                 onclick="btnBusca_Click" />
         </div>
         <br />

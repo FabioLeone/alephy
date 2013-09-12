@@ -175,7 +175,7 @@ namespace SIAO.SRV.BLL
 
             foreach (String file in files) {
                 if (file.Contains(strName))
-                    sb.Append(String.Format("<li><a href='uploads/{0}' target='_blank'><div class='imgAna'><p>{0}</p></div></a></li>", file.Replace("\\", ";").Split(';').Last()));
+                    sb.Append(String.Format("<li><a href='uploads/{0}' target='_blank'><div class='imgAna'><p>{0}</p></div></a></li>", file.Replace("/", ";").Split(';').Last()));
             }
 
             return sb.ToString();
