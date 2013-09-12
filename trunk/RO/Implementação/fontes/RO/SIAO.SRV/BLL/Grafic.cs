@@ -14,7 +14,7 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static Boolean Analise(UsersTO clsUsers, string strLoja, string strFim, int intRedeId)
+        public static Boolean Analise(UsersTO clsUsers, string strLoja, string strIni, string strFim, int intRedeId)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
@@ -23,7 +23,7 @@ namespace SIAO.SRV.BLL
             else
                 strFim = strFim.Replace("/", " ");
 
-            List<GraficTO> clsGrafic = GraficDAL.GetLastMonth(clsUsers, strFim, strLoja, intRedeId);
+            List<GraficTO> clsGrafic = GraficDAL.GetLastMonth(clsUsers, strIni, strFim, strLoja, intRedeId);
 
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 

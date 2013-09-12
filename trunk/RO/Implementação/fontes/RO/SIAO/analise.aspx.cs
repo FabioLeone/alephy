@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using SIAO.SRV.BLL;
 
 namespace SIAO
 {
@@ -11,7 +12,7 @@ namespace SIAO
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }

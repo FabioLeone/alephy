@@ -9,6 +9,8 @@ using SIAO.SRV.DAL;
 using SIAO.SRV.TO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Web.UI.WebControls;
+using System.Text;
 
 namespace SIAO.SRV.BLL
 {
@@ -70,14 +72,14 @@ namespace SIAO.SRV.BLL
                         if (!DataValidation(dt))
                             msg = "CNPJ não cadastrado";
                         else
-                            msg = oc.AddXml(dt, clsUser);
+                            msg = oc.NewAddXml(dt, clsUser);
                     }
                     else
                     {
                         DataTable dt = new DataTable();
                         dt = of.txtDtConvert(fuArquivo.FileContent);
 
-                        msg = oc.AddTxt(dt, clsUser, of.Meses(), of.Cnpj());
+                        msg = oc.NewAddTxt(dt, clsUser);
                     }
                 }
                 else { msg = "Selecione apenas arquivos com extenção '.XML' ou '.TXT'."; }
@@ -132,7 +134,7 @@ namespace SIAO.SRV.BLL
                 Document doc = new Document(PageSize.A4);
                 PdfWriter w = PdfWriter.GetInstance(doc, new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + FileName + ".pdf", FileMode.Create));
 
-                Image imageHeader = Image.GetInstance(ConfigurationManager.AppSettings["PATH_LOGO"]);
+                iTextSharp.text.Image imageHeader = iTextSharp.text.Image.GetInstance(ConfigurationManager.AppSettings["PATH_LOGO"]);
 
                 w.PageEvent = new iTPageEventHandler() { ImageHeader = imageHeader };
 
@@ -156,6 +158,27 @@ namespace SIAO.SRV.BLL
             {
                 return false;
             }
+        }
+
+        public static String GetFiles(string strReport, int intId, bool bln)
+        {
+            String strName;
+            String[] files;
+            StringBuilder sb = new StringBuilder();
+
+            if(bln)
+                strName = clsFuncs.GetPartFileName(strReport, clsControl.GetLojaById(intId).NomeFantasia);
+            else
+                strName = clsFuncs.GetPartFileName(strReport, clsControl.GetRedeById(intId).RedeName);
+
+            files = Directory.GetFiles(ConfigurationManager.AppSettings["PATH_DOWNLOAD"]);
+
+            foreach (String file in files) {
+                if (file.Contains(strName))
+                    sb.Append(String.Format("<li><a href='uploads/{0}' target='_blank'><div class='imgAna'><p>{0}</p></div></a></li>", file.Replace("\\", ";").Split(';').Last()));
+            }
+
+            return sb.ToString();
         }
         #endregion
 

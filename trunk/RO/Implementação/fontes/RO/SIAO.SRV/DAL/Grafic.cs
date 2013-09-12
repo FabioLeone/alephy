@@ -965,7 +965,7 @@ namespace SIAO.SRV.DAL
             return clsGrupos;
         }
 
-        internal static List<GraficTO> GetLastMonth(UsersTO clsUser, string strFim, string strLoja, int intRedeId)
+        internal static List<GraficTO> GetLastMonth(UsersTO clsUser, string strIni, string strFim, string strLoja, int intRedeId)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -1005,26 +1005,33 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
 
-                if (clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+                if (clsUser.TipoId.Equals(1)) strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
+                SELECT c.Mes || ' ' || c.Ano FROM consolidado c LEFT JOIN farmacias f ON c.cnpj = f.cnpj");
+                else strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
+                FROM consolidado c 
+                LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
+                INNER JOIN usuarios_vinculos uv ON f.Id = uv.LinkId OR f.idRede = uv.LinkId");
 
-                strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(@fim, 'MM yyyy'))");
+                strSQL.Append(@" WHERE (to_date(to_char(Mes,'99') || to_char(Ano,'9999'), 'MM yyyy') >= to_date(@ini,'MM yyyy'))
+                and (to_date(to_char(mes,'99') || to_char(ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
 
                 if(intRedeId > 0)
-                    strSQL.Append(" AND farmacias.idRede = @idRede");
+                    strSQL.Append(@" AND f.idRede = @idRede ORDER BY ano DESC, mes DESC LIMIT 1
+                ), 'MM yyyy')) AND farmacias.idRede = @idRede");
                 
                 if (!String.IsNullOrEmpty(strLoja))
-                    strSQL.Append(" AND farmacias.Cnpj = '" + strLoja + "'");
+                    strSQL.Append(" AND f.Cnpj = '" + strLoja + "' ORDER BY ano DESC, mes DESC LIMIT 1), 'MM yyyy')) AND farmacias.Cnpj = '" + strLoja + "'");
                 else if (!clsUser.TipoId.Equals(1))
-                    strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+                    strSQL.Append(" AND uv.usuarioid = @UsuarioId ORDER BY ano DESC, mes DESC LIMIT 1), 'MM yyyy')) AND usuarios_vinculos.UsuarioId = @UsuarioId");
 
-                strSQL.Append(" ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
+                strSQL.Append(" ORDER BY Ano,Mes,Sub_Consultoria,Grupo");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
                 cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", intRedeId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
 
                 cmdGrafic.CommandTimeout = 9999;

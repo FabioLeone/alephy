@@ -51,6 +51,28 @@ namespace SIAO.SRV.BLL
             String strName = HttpContext.Current.User.Identity.Name;
             HttpContext.Current.Session[of.encr(strName)] = null;
         }
+
+        public static bool ValidaAcesso(UsersTO users,ref System.Web.UI.HtmlControls.HtmlGenericControl dvRedes,ref System.Web.UI.HtmlControls.HtmlGenericControl dvLoja,ref System.Web.UI.HtmlControls.HtmlGenericControl dvFiltro)
+        {
+            switch (users.TipoId)
+            {   
+                case 1:
+                    dvFiltro.Visible = true;
+                    dvLoja.Visible = true;
+                    dvRedes.Visible = true;
+                    return false;
+                case 2:
+                    dvFiltro.Visible = true;
+                    dvLoja.Visible = true;
+                    dvRedes.Visible = false;
+                    return true;
+                default:
+                    dvFiltro.Visible = true;
+                    dvLoja.Visible = true;
+                    dvRedes.Visible = false;
+                    return false;
+            }
+        }
         #endregion
         
         #region .: Search :.

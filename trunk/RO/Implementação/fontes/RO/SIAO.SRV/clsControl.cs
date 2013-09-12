@@ -119,6 +119,37 @@ namespace SIAO.SRV
             return intRedeId;
         }
 
+        internal static Rede GetRedeById(int intId)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            Rede r = new Rede();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao FROM  redesfarmaceuticas 
+            WHERE (redesfarmaceuticas.Id = @Id)";
+
+            cmm.Parameters.Add("@Id", NpgsqlDbType.Integer).Value = intId;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Rede");
+            }
+            clsDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                if (ds.Tables[0].Rows[0]["Id"] != DBNull.Value)
+                {
+                    r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
+                    r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
+                }
+            }
+
+            return r;
+        }
+
         public static Loja GetLojaByCNPJ(string strCNPJ)
         {
             DataSet ds = new DataSet();
@@ -365,9 +396,9 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID 
-            FROM farmacias 
-            INNER JOIN usuarios_vinculos ON farmacias.id = usuarios_vinculos.LinkId
+            cmm.CommandText = @"SELECT f.id, Cnpj, NomeFantasia, GerenteId, ProprietarioID 
+            FROM farmacias f
+            INNER JOIN usuarios_vinculos ON f.id = usuarios_vinculos.LinkId
             WHERE usuarios_vinculos.usuarioid = @usuarioid
             ORDER BY NomeFantasia";
 
@@ -390,7 +421,7 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
+            cmm.CommandText = @"SELECT id, Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
             WHERE farmacias.idRede = @idRede ORDER BY NomeFantasia";
 
             cmm.Parameters.Clear();
@@ -403,6 +434,42 @@ namespace SIAO.SRV
             clsDB.closeConnection(cmm);
 
             return ds;
+        }
+
+        internal static Loja GetLojaById(int intLoja)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            Loja objLoja = new Loja();
+            Int32 intGerenteId = 0, intProprietarioId = 0;
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT id,Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
+            WHERE farmacias.id = @id";
+
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@id", NpgsqlDbType.Integer).Value = intLoja;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            clsDB.closeConnection(cmm);
+
+            if (ds.Tables["Farmacias"].Rows.Count > 0)
+            {
+                objLoja.Cnpj = ds.Tables["Farmacias"].Rows[0]["Cnpj"].ToString();
+                Int32.TryParse(ds.Tables["Farmacias"].Rows[0]["GerenteId"].ToString(), out intGerenteId);
+                objLoja.GerenteId = intGerenteId;
+                objLoja.Id = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["id"].ToString());
+                objLoja.idRede = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["idRede"].ToString());
+                objLoja.NomeFantasia = ds.Tables["Farmacias"].Rows[0]["NomeFantasia"].ToString();
+                Int32.TryParse(ds.Tables["Farmacias"].Rows[0]["ProprietarioID"].ToString(),out intProprietarioId);
+                objLoja.ProprietarioId = intProprietarioId;
+            }
+
+            return objLoja;
         }
 
         public static DataSet GetGrupos(string scn)
@@ -1095,8 +1162,6 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
 
             string msg = "";
-            List<int> mes = new List<int>();
-            List<int> ano = new List<int>();
 
             if (dt.Rows.Count > 0)
             {
@@ -1138,6 +1203,79 @@ namespace SIAO.SRV
             else { msg = "Erro ao converter o xml."; }
 
             return msg;
+        }
+
+        public string NewAddXml(DataTable dt, UsersTO clsUser)
+        {
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            string msg = "";
+
+            if (dt.Rows.Count > 0)
+            {
+                var sql = "copy base_cliente_espera (Cnpj, Barras, Descricao, Fabricante, Ano, Mes, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto) from stdin with delimiter '|'";
+
+                cmm = new NpgsqlCommand(sql, cnn);
+
+                cnn.Open();
+
+                var copy = new NpgsqlCopyIn(cmm, cnn);
+                try
+                {
+                    copy.Start();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        var data = SerializeData(row.ItemArray);
+                        var raw = Encoding.UTF8.GetBytes(string.Concat(data, "\n"));
+                        copy.CopyStream.Write(raw, 0, raw.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    copy.Cancel("Undo copy");
+                    msg = ex.Message;
+                }
+                finally
+                {
+                    if (copy.CopyStream != null)
+                    {
+                        copy.CopyStream.Close();
+                    }
+                    copy.End();
+                }
+
+                if (String.IsNullOrEmpty(msg))
+                    AddXmlData(dt, clsUser);
+
+            }
+            else { msg = "Erro ao converter o xml."; }
+
+            return msg;
+        }
+
+        private object SerializeData(object[] data)
+        {
+            var sb = new StringBuilder();
+            foreach (var d in data)
+            {
+                if (d == null)
+                {
+                    sb.Append("\\N");
+                }
+                else if (d is DateTime)
+                {
+                    sb.Append(((DateTime)d).ToString("yyyy-MM-dd HH:mm:ss"));
+                }
+                else if (d is Enum)
+                {
+                    sb.Append(((Enum)d).ToString("d"));
+                }
+                else
+                {
+                    sb.Append(d.ToString().Replace(",", "."));
+                }
+                sb.Append("|");
+            }
+            return sb.Remove(sb.Length - 1, 1).ToString();
         }
 
         private void AddXmlData(DataTable dt, UsersTO clsUser)
@@ -1300,6 +1438,54 @@ namespace SIAO.SRV
             return msg;
         }
 
+        public string NewAddTxt(DataTable dt, UsersTO clsUser)
+        {
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            cmm.Connection = cnn;
+
+            string msg = "";
+
+            if (dt.Rows.Count > 0)
+            {
+                var sql = "copy base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto) from stdin with delimiter '|'";
+
+                cmm = new NpgsqlCommand(sql, cnn);
+
+                cnn.Open();
+
+                var copy = new NpgsqlCopyIn(cmm, cnn);
+                try
+                {
+                    copy.Start();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        var data = SerializeData(row.ItemArray);
+                        var raw = Encoding.UTF8.GetBytes(string.Concat(data, "\n"));
+                        copy.CopyStream.Write(raw, 0, raw.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    copy.Cancel("Undo copy");
+                    msg = ex.Message;
+                }
+                finally
+                {
+                    if (copy.CopyStream != null)
+                    {
+                        copy.CopyStream.Close();
+                    }
+                    copy.End();
+                }
+
+                if (String.IsNullOrEmpty(msg))
+                    this.AddTxtData(dt, clsUser);
+
+            }
+            else { msg = "Erro ao converter o txt."; }
+
+            return msg;
+        }
         private void AddTxtData(DataTable dt, UsersTO clsUser)
         {
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
