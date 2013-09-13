@@ -75,7 +75,7 @@ namespace SIAO.SRV.BLL
             }
         }
 
-        public static void GetNiveis(ref System.Web.UI.WebControls.DropDownList ddlNivel)
+        public static void GetNiveis(ref DropDownList ddlNivel, ref System.Web.UI.HtmlControls.HtmlTableCell tdNA)
         {
             if (GetUserSession().Nivel.Equals((int)Nivel.a))
             {
@@ -86,9 +86,13 @@ namespace SIAO.SRV.BLL
                 ddlNivel.Items.Insert(4, new ListItem("I", "3"));
                 ddlNivel.SelectedIndex = 0;
                 ddlNivel.Visible = true;
+                tdNA.Visible = true;
             }
             else
+            {
                 ddlNivel.Visible = false;
+                tdNA.Visible = false;
+            }
         }
 
         public static void GetTiposAll(ref DropDownList ddlAcess)
@@ -111,6 +115,55 @@ namespace SIAO.SRV.BLL
             }
             
         }
+
+        public static string AddUser(DropDownList ddlAcess, TextBox txtAcsName, TextBox txtEmail, CheckBox cbxAtivo, TextBox txtNome, TextBox txtSenha, TextBox txtValidade, DropDownList ddlNivel)
+        {
+            UsersTO clsUser = new UsersTO()
+            {
+                TipoId = Convert.ToInt32(ddlAcess.SelectedValue), 
+                Name = txtAcsName.Text,
+                CreateDate = DateTime.Today,
+                Email = txtEmail.Text,
+                Inactive = !cbxAtivo.Checked,
+                UserName = txtNome.Text,
+                Password = txtSenha.Text,
+                ExpirationDate = Convert.ToDateTime(txtValidade.Text)
+            };
+
+            if (ddlNivel.Visible && !String.IsNullOrEmpty(ddlNivel.SelectedValue))
+                clsUser.Nivel = Convert.ToInt32(ddlNivel.SelectedValue);
+            else
+                clsUser.Nivel = 0;
+
+            return clsControl.AddUser(clsUser);
+        }
+
+        public static string UpdateUser(UsersTO user, DropDownList ddlAcess, TextBox txtAcsName, TextBox txtEmail, CheckBox cbxAtivo, TextBox txtNome, TextBox txtSenha, TextBox txtValidade, DropDownList ddlNivel)
+        {
+            UsersTO clsUser = new UsersTO();
+
+            clsUser.UserId = user.UserId;
+            clsUser.TipoId = Convert.ToInt32(ddlAcess.SelectedValue);
+            clsUser.Name = txtAcsName.Text;
+            clsUser.CreateDate = DateTime.Today;
+            clsUser.Email = txtEmail.Text;
+            clsUser.Inactive = !cbxAtivo.Checked;
+            clsUser.UserName = txtNome.Text;
+
+            if (!string.IsNullOrEmpty(txtSenha.Text))
+                clsUser.Password = txtSenha.Text;
+            else
+                clsUser.Password = user.Password;
+
+            clsUser.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
+
+            if (ddlNivel.Visible && !String.IsNullOrEmpty(ddlNivel.SelectedValue))
+                clsUser.Nivel = Convert.ToInt32(ddlNivel.SelectedValue);
+            else
+                clsUser.Nivel = 0;
+
+            return clsControl.UpdateUser(clsUser);
+        }
         #endregion
         
         #region .: Search :.
@@ -119,8 +172,8 @@ namespace SIAO.SRV.BLL
             return UsersDAL.GetAll(strConnection);
         }
 
-        public static UsersTO GetById(int intUserId, string strConnection) {
-            return UsersDAL.GetById(intUserId, strConnection);
+        public static UsersTO GetById(int intUserId) {
+            return UsersDAL.GetById(intUserId);
         }
 
         #endregion

@@ -978,8 +978,12 @@ namespace SIAO.SRV
         #endregion
 
         #region .:Persistence:.
-        public string AddUser(UsersTO clsUser, string scn)
+
+        internal static string AddUser(UsersTO clsUser)
         {
+            clsFuncs o = new clsFuncs();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            clsDB clsDB = new clsDB();
             string msg = "";
 
             try
@@ -987,7 +991,7 @@ namespace SIAO.SRV
                 string pass = o.encr(clsUser.Password);
                 string nme = o.encr(clsUser.Name.ToUpper());
 
-                NpgsqlConnection cnn = new NpgsqlConnection(scn);
+                NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
                 cmm.Connection = cnn;
 
                 if (clsDB.openConnection(cmm))
@@ -999,11 +1003,12 @@ namespace SIAO.SRV
                     int id = 0;
                     if (clsDB.Query(id, ref cmm) == DBNull.Value)
                     {
-                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId) VALUES (@UserName, @LastActivityDate, @TipoId)";
+                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId, nivel) VALUES (@UserName, @LastActivityDate, @TipoId, @nivel)";
                         cmm.Parameters.Clear();
                         cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
                         cmm.Parameters.Add("@LastActivityDate", NpgsqlDbType.Date).Value = DateTime.Now.Date;
                         cmm.Parameters.Add("@TipoId", NpgsqlDbType.Integer).Value = clsUser.TipoId;
+                        cmm.Parameters.Add("@nivel", NpgsqlDbType.Integer).Value = clsUser.Nivel;
 
                         clsDB.Execute(ref cmm);
 
@@ -1486,6 +1491,7 @@ namespace SIAO.SRV
 
             return msg;
         }
+        
         private void AddTxtData(DataTable dt, UsersTO clsUser)
         {
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -1520,8 +1526,11 @@ namespace SIAO.SRV
             }
         }
 
-        public string UpdateUser(UsersTO clsUser, string scn)
+        internal static string UpdateUser(UsersTO clsUser)
         {
+            clsFuncs o = new clsFuncs();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            clsDB clsDB = new clsDB();
             string msg = "";
 
             try
@@ -1529,7 +1538,7 @@ namespace SIAO.SRV
                 string pass = o.encr(clsUser.Password);
                 string nme = o.encr(clsUser.Name.ToUpper());
 
-                NpgsqlConnection cnn = new NpgsqlConnection(scn);
+                NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
                 cmm.Connection = cnn;
 
                 if (clsDB.openConnection(cmm))
@@ -1539,9 +1548,10 @@ namespace SIAO.SRV
                     stbSQL.Append("UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '" + lDate + "'");
                     if (clsUser.TipoId > 0) stbSQL.Append(",TipoId = @TipoId");
 
-                    stbSQL.Append(" WHERE UserId = " + clsUser.UserId);
+                    stbSQL.Append(",nivel = @nivel WHERE UserId = " + clsUser.UserId);
                     cmm.CommandText = stbSQL.ToString();
                     cmm.Parameters.Add("@TipoId", NpgsqlDbType.Integer).Value = clsUser.TipoId;
+                    cmm.Parameters.Add("@nivel", NpgsqlDbType.Integer).Value = clsUser.Nivel;
 
                     clsDB.Execute(ref cmm);
 
@@ -1564,6 +1574,5 @@ namespace SIAO.SRV
         }
 
         #endregion
-
     }
 }

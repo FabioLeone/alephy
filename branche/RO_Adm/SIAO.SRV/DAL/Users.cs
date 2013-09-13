@@ -129,21 +129,20 @@ namespace SIAO.SRV.DAL
             return clsUsers;
         }
 
-        public static UsersTO GetById(int intUserId, string strConnection)
+        public static UsersTO GetById(int intUserId)
         {
             UsersTO clsUsers = new UsersTO();
 
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
-                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.Name, usuarios_farmacias.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
-                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId LEFT JOIN
-                usuarios_tipos ON users.TipoId = usuarios_tipos.id
-                WHERE users.UserId=@UserId");
+                strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, m.Password,m.Email, m.Inactive, 
+                m.CreateDate, m.ExpirationDate,m.Access, m.Name, uf.FarmaciaId,u.TipoId,ut.Tipo,u.nivel
+                FROM users u LEFT JOIN memberships m ON u.UserId = m.UserId 
+                LEFT JOIN usuarios_farmacias uf ON u.UserId = uf.UserId LEFT JOIN
+                usuarios_tipos ut ON u.TipoId = ut.id WHERE u.UserId=@UserId");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();

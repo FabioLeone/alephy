@@ -80,7 +80,7 @@
                     <td>
                         <asp:CheckBox ID="cbxAtivo" Text="Ativo:" TextAlign="Left" runat="server" />
                     </td>
-                    <td>
+                    <td id="tdNA" runat="server">
                         Nível de Acesso:
                         <asp:DropDownList ID="ddlNivel" runat="server" ToolTip="Nível de acesso." Width="72px"></asp:DropDownList>
                     </td>
