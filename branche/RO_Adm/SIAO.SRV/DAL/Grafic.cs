@@ -530,8 +530,8 @@ namespace SIAO.SRV.DAL
 
                 if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
-                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
                 }
                 else
                 {
@@ -619,8 +619,8 @@ namespace SIAO.SRV.DAL
 
                 if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
-                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); 
-                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); 
+                    strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
                 }
                 else
                 {
@@ -702,8 +702,8 @@ namespace SIAO.SRV.DAL
 
                 if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
-                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
                 }
                 else
                 {
@@ -790,8 +790,8 @@ namespace SIAO.SRV.DAL
 
                 if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
-                    strFim = DateTime.Now.Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
                 }
                 else
                 {

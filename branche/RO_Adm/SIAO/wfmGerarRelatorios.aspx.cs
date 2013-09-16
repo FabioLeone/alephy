@@ -91,9 +91,11 @@ namespace SIAO
             if (!IsPostBack)
             {
                 getRedes();
-                if (!clsUser.TipoId.Equals(1))
-                    ValidaAcesso();
+                
+                ValidaAcesso();
+                
                 getLojas();
+                
                 txtInicio.Enabled = false;
                 txtFim.Enabled = false;
             }
@@ -405,10 +407,7 @@ namespace SIAO
 
         private void ValidaAcesso()
         {
-            ddlLojaRelatorios.Visible = true;
-            dvLoja.Visible = true;
-            dvFiltro.Visible = true;
-            dvRedes.Visible = false;
+            UsersBLL.ValidaAcesso(UsersBLL.GetUserSession(), dvRedes, dvLoja, dvFiltro);
         }
 
         private void getLojas()

@@ -53,14 +53,24 @@ namespace SIAO.SRV.BLL
             HttpContext.Current.Session[of.encr(strName)] = null;
         }
 
-        public static bool ValidaAcesso(UsersTO users,ref System.Web.UI.HtmlControls.HtmlGenericControl dvRedes,ref System.Web.UI.HtmlControls.HtmlGenericControl dvLoja,ref System.Web.UI.HtmlControls.HtmlGenericControl dvFiltro)
+        public static bool ValidaAcesso(UsersTO users, System.Web.UI.HtmlControls.HtmlGenericControl dvRedes, System.Web.UI.HtmlControls.HtmlGenericControl dvLoja, System.Web.UI.HtmlControls.HtmlGenericControl dvFiltro)
         {
             switch (users.TipoId)
-            {   
+            {
                 case 1:
-                    dvFiltro.Visible = true;
+                    switch (users.Nivel)
+                    {
+                        case 1:
+                            dvFiltro.Visible = true;
                     dvLoja.Visible = true;
                     dvRedes.Visible = true;
+                            break;
+                        default:
+                            dvFiltro.Visible = true;
+                    dvLoja.Visible = true;
+                    dvRedes.Visible = true;
+                            break;
+                    }
                     return false;
                 case 2:
                     dvFiltro.Visible = true;
@@ -108,19 +118,20 @@ namespace SIAO.SRV.BLL
                     ddlAcess.SelectedIndex = 0;
                     break;
                 case (int)Nivel.r:
-                    ddlAcess.Items.Insert(0, new ListItem("Drogaria", "2"));
+                    ddlAcess.Items.Insert(0, new ListItem("Selecione", "0"));
+                    ddlAcess.Items.Insert(1, new ListItem("Drogaria", "2"));
+                    ddlAcess.Items.Insert(2, new ListItem("Rede", "3"));
                     ddlAcess.SelectedIndex = 0;
-                    ddlAcess.Enabled = false;
                     break;
             }
-            
+
         }
 
         public static string AddUser(DropDownList ddlAcess, TextBox txtAcsName, TextBox txtEmail, CheckBox cbxAtivo, TextBox txtNome, TextBox txtSenha, TextBox txtValidade, DropDownList ddlNivel)
         {
             UsersTO clsUser = new UsersTO()
             {
-                TipoId = Convert.ToInt32(ddlAcess.SelectedValue), 
+                TipoId = Convert.ToInt32(ddlAcess.SelectedValue),
                 Name = txtAcsName.Text,
                 CreateDate = DateTime.Today,
                 Email = txtEmail.Text,
@@ -134,6 +145,9 @@ namespace SIAO.SRV.BLL
                 clsUser.Nivel = Convert.ToInt32(ddlNivel.SelectedValue);
             else
                 clsUser.Nivel = 0;
+
+            if (!UsersBLL.GetUserSession().Nivel.Equals((int)UsersBLL.Nivel.a))
+                clsUser.owner = UsersBLL.GetUserSession().UserId;
 
             return clsControl.AddUser(clsUser);
         }
@@ -164,15 +178,38 @@ namespace SIAO.SRV.BLL
 
             return clsControl.UpdateUser(clsUser);
         }
-        #endregion
-        
-        #region .: Search :.
 
-        public static List<UsersTO> GetAll(string strConnection) {
-            return UsersDAL.GetAll(strConnection);
+        public static void GetList(GridView gvwUsers)
+        {
+            List<UsersTO> lstUsers;
+            UsersTO objUser = GetUserSession();
+
+            switch (objUser.Nivel)
+            {
+                case (int)Nivel.r:
+                    lstUsers = GetAllMinion(objUser);
+                    break;
+                default:
+                    lstUsers = GetAll();
+                    break;
+            }
+
+            gvwUsers.DataSource = lstUsers;
+            gvwUsers.EmptyDataText = "Nenhum registro encontrado.";
+            gvwUsers.DataBind();
         }
 
-        public static UsersTO GetById(int intUserId) {
+        #endregion
+
+        #region .: Search :.
+
+        private static List<UsersTO> GetAll()
+        {
+            return UsersDAL.GetAll();
+        }
+
+        public static UsersTO GetById(int intUserId)
+        {
             return UsersDAL.GetById(intUserId);
         }
 
@@ -207,13 +244,34 @@ namespace SIAO.SRV.BLL
 
         public static List<Usuarios_TiposTO> GetTiposAll()
         {
-            return UsersDAL.GetTiposAll();
+            List<Usuarios_TiposTO> lstUsers = UsersDAL.GetTiposAll();
+
+            switch (GetUserSession().Nivel)
+            {
+                case (int)Nivel.r:
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(1)));
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(4)));
+                    break;
+                case (int)Nivel.l:
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(1)));
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(3)));
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(4)));
+                    break;
+            }
+
+            return lstUsers;
+        }
+
+        private static List<UsersTO> GetAllMinion(UsersTO owner)
+        {
+            return UsersDAL.GetAllMinion(owner);
         }
         #endregion
 
         #region .: Persistence :.
 
-        public static UsersTO Insert(UsersTO clsUsers, string strConnection) {
+        public static UsersTO Insert(UsersTO clsUsers, string strConnection)
+        {
             return UsersDAL.Insert(clsUsers, strConnection);
         }
 
@@ -230,13 +288,13 @@ namespace SIAO.SRV.BLL
         #endregion
 
         #region .: Enum :.
-        internal enum Nivel { 
+        internal enum Nivel
+        {
             a = 0,
             r = 1,
             l = 2,
             i = 4
         }
         #endregion
-
     }
 }

@@ -23,6 +23,11 @@ namespace SIAO.SRV.BLL
             else
                 strFim = strFim.Replace("/", " ");
 
+            if (String.IsNullOrEmpty(strIni))
+                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
+            else
+                strIni = strIni.Replace("/", " ");
+
             List<GraficTO> clsGrafic = GraficDAL.GetLastMonth(clsUsers, strIni, strFim, strLoja, intRedeId);
 
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
@@ -147,7 +152,7 @@ namespace SIAO.SRV.BLL
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
                 strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
             }
             else
             {
@@ -196,7 +201,7 @@ namespace SIAO.SRV.BLL
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
                 strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
             }
             else
             {
@@ -245,7 +250,7 @@ namespace SIAO.SRV.BLL
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
                 strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
             }
             else
             {
@@ -330,7 +335,7 @@ namespace SIAO.SRV.BLL
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
                 strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
             }
             else
             {
@@ -356,7 +361,7 @@ namespace SIAO.SRV.BLL
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
                 strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-7).Month.ToString() + " " + DateTime.Now.AddMonths(-7).Year.ToString();
+                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
             }
             else
             {

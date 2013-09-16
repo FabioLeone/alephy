@@ -41,17 +41,19 @@ namespace SIAO.Controls
                 LoadTipos();
             }
         }
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             this.Vinculos = VinculoBLL.GetByTipoIdAndSearch(Convert.ToInt32(ddlTipos.SelectedValue), txtSearch.Text);
             LoadList();
         }
+
         protected void txtCNPJ_TextChanged(object sender, EventArgs e)
         {
             TextBox txtCNPJ = sender as TextBox;
-            VinculoTO clsVinculo;
+            String msg = String.Empty;
 
-            if (VinculoBLL.GetByCNPJ(txtCNPJ.Text).id > 0 || txtCNPJ.Text.Equals("__.___.___/____-__"))
+            if (txtCNPJ.Text.Equals("__.___.___/____-__"))
             {
                 txtCNPJ.Focus();
                 return;
@@ -70,51 +72,15 @@ namespace SIAO.Controls
                         Literal litEmpresa = (Literal)item.FindControl("litEmpresa");
                         Literal litID = (Literal)item.FindControl("litID");
 
-                        clsVinculo = new VinculoTO();
-                        clsVinculo = this.Vinculos.Find(v => v.LinkId == Convert.ToInt32(hfLinkId.Value) && v.UsuarioId == Convert.ToInt32(litID.Text));
+                        if (VinculoBLL.ValidaVinculo(txtCNPJ, hfUsuarioTipoId))
+                            msg = VinculoBLL.SetVinculo(this.Vinculos, hfLinkId, litID, txtCNPJ, hfUsuarioTipoId);
+                        else
+                            return;
 
-                        if (String.IsNullOrEmpty(clsVinculo.CNPJ))
+                        if (!String.IsNullOrEmpty(msg))
                         {
-                            clsVinculo.CNPJ = txtCNPJ.Text;
-
-                            switch (Convert.ToInt32(hfUsuarioTipoId.Value))
-                            {
-                                case 2:
-                                    {
-                                        Loja clsLoja = clsControl.GetLojaByCNPJ(txtCNPJ.Text);
-                                        if (clsLoja.Id == 0)
-                                        {
-                                            divErro("CNPJ não corresponde a uma Drogaria ou não cadastrado");
-                                            txtCNPJ.Text = String.Empty;
-                                            txtCNPJ.Focus();
-                                            return;
-                                        }
-
-                                        clsVinculo.Empresa = clsLoja.NomeFantasia;
-                                        clsVinculo.LinkId = clsLoja.Id;
-                                        break;
-                                    }
-                                case 3:
-                                    {
-                                        Rede clsRede = clsControl.GetRedeByCNPJ(txtCNPJ.Text);
-                                        if (clsRede.RedeId == 0)
-                                        {
-                                            divErro("CNPJ não corresponde a uma Rede ou não cadastrado");
-                                            txtCNPJ.Text = String.Empty;
-                                            txtCNPJ.Focus();
-                                            return;
-                                        }
-
-                                        clsVinculo.Empresa = clsRede.RedeName;
-                                        clsVinculo.LinkId = clsRede.RedeId;
-                                        break;
-                                    }
-                            }
-
-                            if (clsVinculo.id > 0)
-                                VinculoBLL.Update(clsVinculo);
-                            else
-                                VinculoBLL.Insert(clsVinculo);
+                            divErro(msg);
+                            return;
                         }
                     }
                 }
@@ -141,7 +107,8 @@ namespace SIAO.Controls
 
                     LoadList();
                 }
-                else {
+                else
+                {
                     divErro("Usuário não cadastrado!");
                     return;
                 }
@@ -155,11 +122,11 @@ namespace SIAO.Controls
             foreach (ListViewDataItem item in lvwVinculos.Items)
             {
                 foreach (Control ctrl in item.Controls)
-                { 
+                {
                     LinkButton lbtn = ctrl as LinkButton;
                     if (lbtn != null && lbtn.ClientID == lbtnExcluir.ClientID)
                     {
-                        VinculoBLL.Delete(this.Vinculos.Find(v=>v.id == Convert.ToInt32(lbtnExcluir.CommandArgument)));
+                        VinculoBLL.Delete(this.Vinculos.Find(v => v.id == Convert.ToInt32(lbtnExcluir.CommandArgument)));
 
                         this.Vinculos = VinculoBLL.GetByTipoIdAndSearch(Convert.ToInt32(ddlTipos.SelectedValue), txtSearch.Text);
                         LoadList();
@@ -167,11 +134,12 @@ namespace SIAO.Controls
                 }
             }
         }
+
         protected void lvwVinculos_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             LinkButton lbtnExcluir = (LinkButton)e.Item.FindControl("lbtnExcluir");
 
-            if(lbtnExcluir != null)
+            if (lbtnExcluir != null)
                 lbtnExcluir.OnClientClick = "return confirm('Você deseja realmente excluir este registro?')";
         }
 
@@ -195,6 +163,7 @@ namespace SIAO.Controls
             lvwVinculos.DataSource = this.Vinculos;
             lvwVinculos.DataBind();
         }
+
         private void div(string strMsg)
         {
             System.Web.UI.HtmlControls.HtmlGenericControl divInfo = new System.Web.UI.HtmlControls.HtmlGenericControl("div");

@@ -93,7 +93,7 @@ namespace SIAO.Controls
         }
         protected void gvwUsers_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gvwUsers.DataSource = UsersBLL.GetAll(strConnection);
+            UsersBLL.GetList(gvwUsers);
             gvwUsers.PageIndex = e.NewPageIndex;
             gvwUsers.DataBind();
         }
@@ -103,9 +103,7 @@ namespace SIAO.Controls
         #region .: Metodos :.
         private void LoadDados()
         {
-            gvwUsers.DataSource = UsersBLL.GetAll(strConnection);
-            gvwUsers.EmptyDataText = "Nenhum registro encontrado.";
-            gvwUsers.DataBind();
+            UsersBLL.GetList(gvwUsers);
         }
 
         #endregion

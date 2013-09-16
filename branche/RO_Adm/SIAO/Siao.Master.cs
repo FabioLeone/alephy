@@ -46,7 +46,7 @@ namespace SIAO
 
             if (!IsPostBack)
             { 
-                if (UsersBLL.ValidaAcesso(this.User, ref dvRedes, ref dvLoja, ref dvFiltro))
+                if (UsersBLL.ValidaAcesso(this.User, dvRedes, dvLoja, dvFiltro))
                 {
                     getLojas();
                 }

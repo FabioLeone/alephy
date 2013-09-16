@@ -215,7 +215,7 @@ namespace SIAO.Controls
                     }
                 }
 
-                if (tdNA.Visible)
+                if (ddlNivel.Items.Count > 0)
                     ddlNivel.SelectedValue = clsUser.Nivel.ToString();
 
                 this.User = clsUser;

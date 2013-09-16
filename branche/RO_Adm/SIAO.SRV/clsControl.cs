@@ -639,11 +639,11 @@ namespace SIAO.SRV
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
-            string strMF = DateTime.Now.Month.ToString();
-            string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
+            string strMF = DateTime.Now.AddMonths(-1).Month.ToString();
+            string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
 
             string strAF = DateTime.Now.Year.ToString();
-            string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
+            string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
 
             StringBuilder SQL = new StringBuilder();
             SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,farmacias.nomefantasia, consolidado.CNPJ,
@@ -771,11 +771,11 @@ namespace SIAO.SRV
                     consolidado.Sub_Consultoria,consolidado.Grupo
                     ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
-            string strMF = DateTime.Now.Month.ToString();
-            string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
+            string strMF = DateTime.Now.AddMonths(-1).Month.ToString();
+            string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
 
             string strAF = DateTime.Now.Year.ToString();
-            string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
+            string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
 
             cmm.CommandText = SQL.ToString();
             cmm.Parameters.Add("@DataIni", NpgsqlDbType.Varchar).Value = strMI + " " + strAI;
@@ -1003,12 +1003,13 @@ namespace SIAO.SRV
                     int id = 0;
                     if (clsDB.Query(id, ref cmm) == DBNull.Value)
                     {
-                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId, nivel) VALUES (@UserName, @LastActivityDate, @TipoId, @nivel)";
+                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId, nivel, owner) VALUES (@UserName, @LastActivityDate, @TipoId, @nivel, @owner)";
                         cmm.Parameters.Clear();
                         cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
                         cmm.Parameters.Add("@LastActivityDate", NpgsqlDbType.Date).Value = DateTime.Now.Date;
                         cmm.Parameters.Add("@TipoId", NpgsqlDbType.Integer).Value = clsUser.TipoId;
                         cmm.Parameters.Add("@nivel", NpgsqlDbType.Integer).Value = clsUser.Nivel;
+                        cmm.Parameters.Add("@owner", NpgsqlDbType.Integer).Value = clsUser.owner;
 
                         clsDB.Execute(ref cmm);
 
@@ -1548,10 +1549,11 @@ namespace SIAO.SRV
                     stbSQL.Append("UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '" + lDate + "'");
                     if (clsUser.TipoId > 0) stbSQL.Append(",TipoId = @TipoId");
 
-                    stbSQL.Append(",nivel = @nivel WHERE UserId = " + clsUser.UserId);
+                    stbSQL.Append(",nivel = @nivel, owner = @owner WHERE UserId = " + clsUser.UserId);
                     cmm.CommandText = stbSQL.ToString();
                     cmm.Parameters.Add("@TipoId", NpgsqlDbType.Integer).Value = clsUser.TipoId;
                     cmm.Parameters.Add("@nivel", NpgsqlDbType.Integer).Value = clsUser.Nivel;
+                    cmm.Parameters.Add("@owner", NpgsqlDbType.Integer).Value = clsUser.owner;
 
                     clsDB.Execute(ref cmm);
 
@@ -1574,5 +1576,79 @@ namespace SIAO.SRV
         }
 
         #endregion
+
+        #region .:Methods:.
+        public static void GetOption(System.Web.UI.HtmlControls.HtmlGenericControl ulConf, UsersTO ouser)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(@"<li class='nav-item-a fade fade-50'>
+            </li>
+            <li class='nav-item-b fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmUsers.aspx' title=''>Cadastro de usuários</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>");
+
+            if (ouser.Nivel.Equals(0))
+                sb.Append(@"
+            <li class='nav-item-c fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmCadastroRede.aspx' title=''>Cadastro de redes</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>");
+
+            sb.Append(@"
+            <li class='nav-item-d fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmCadastroLojas.aspx' title=''>Cadastro de lojas</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>
+            <li class='nav-item-f fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmVinculos.aspx' title=''>Vincular usuário</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>");
+
+            if (ouser.Nivel.Equals(0))
+                sb.Append(@"
+            <li class='nav-item-e fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmFiles.aspx' title=''>Histórico de uploads</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>
+            <li class='nav-item-g fade fade-30'>
+                <div class='hex'>
+                    <a href='wfmBanco.aspx' title=''>Gerênciamento do banco</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>");
+
+            ulConf.InnerHtml = sb.ToString();
+        }
+        #endregion
+
     }
 }
