@@ -154,8 +154,8 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
 
-                if (clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+                if (clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
                 strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
                 AND (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
@@ -234,8 +234,8 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
                 
-                if(clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+                if(clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
                 
                 strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
                 AND (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))
@@ -365,7 +365,7 @@ namespace SIAO.SRV.DAL
                 FROM
                 consolidado
                 INNER JOIN farmacias ON farmacias.cnpj = consolidado.cnpj
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede                
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede                
                 WHERE
                 UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
@@ -433,7 +433,7 @@ namespace SIAO.SRV.DAL
                 INNER JOIN farmacias ON farmacias.cnpj = consolidado.cnpj");
 
                 if (!clsUser.TipoId.Equals(1))
-                    strSQL.Append(@" INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede");
+                    strSQL.Append(@" INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede");
 
                 strSQL.Append(@" WHERE
                 UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
@@ -515,7 +515,7 @@ namespace SIAO.SRV.DAL
                 FROM
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede
                 WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
                 AND farmacias.idRede = @idRede");
@@ -600,7 +600,7 @@ namespace SIAO.SRV.DAL
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
                 if(!clsUser.TipoId.Equals(1))
-                    strSQL.Append(" INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede");
+                    strSQL.Append(" INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede");
 
                 strSQL.Append(@" WHERE 
                 (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
@@ -687,7 +687,7 @@ namespace SIAO.SRV.DAL
                 FROM
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede
+                INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede
                 WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
                 AND farmacias.idRede = @idRede");
@@ -772,7 +772,7 @@ namespace SIAO.SRV.DAL
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
                 if (!clsUser.TipoId.Equals(1))
-                    strSQL.Append(" INNER JOIN usuarios_vinculos ON usuarios_vinculos.LinkId = farmacias.id OR usuarios_vinculos.LinkId = farmacias.idRede");
+                    strSQL.Append(" INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede");
 
                 strSQL.Append(@" WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
@@ -1005,12 +1005,12 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
 
-                if (clsUser.TipoId.Equals(1)) strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
+                if (clsUser.TipoId.Equals(1)) strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
                 SELECT c.Mes || ' ' || c.Ano FROM consolidado c LEFT JOIN farmacias f ON c.cnpj = f.cnpj");
-                else strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
+                else strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
                 FROM consolidado c 
                 LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
-                INNER JOIN usuarios_vinculos uv ON f.Id = uv.LinkId OR f.idRede = uv.LinkId");
+                INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
 
                 strSQL.Append(@" WHERE (to_date(to_char(Mes,'99') || to_char(Ano,'9999'), 'MM yyyy') >= to_date(@ini,'MM yyyy'))
                 and (to_date(to_char(mes,'99') || to_char(ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");

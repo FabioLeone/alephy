@@ -94,8 +94,6 @@ namespace SIAO
                 
                 ValidaAcesso();
                 
-                getLojas();
-                
                 txtInicio.Enabled = false;
                 txtFim.Enabled = false;
             }
@@ -369,7 +367,7 @@ namespace SIAO
         protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
-                getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+                LojasBLL.getLojasApp(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
         }
 
         protected void lbtnAna1_Click(object sender, EventArgs e)
@@ -407,36 +405,9 @@ namespace SIAO
 
         private void ValidaAcesso()
         {
-            UsersBLL.ValidaAcesso(UsersBLL.GetUserSession(), dvRedes, dvLoja, dvFiltro);
-        }
-
-        private void getLojas()
-        {
-            switch (this.User.TipoId)
-            {
-                case 2:
-                    ddlLojaRelatorios.DataSource = clsControl.GetLojaByUserId(clsUser.UserId);
-                    ddlLojaRelatorios.DataTextField = "NomeFantasia";
-                    ddlLojaRelatorios.DataValueField = "Cnpj";
-                    ddlLojaRelatorios.DataBind();
-                    ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
-                    ddlLojaRelatorios.SelectedIndex = 0;
-                    break;
-                case 3:
-                    this.RedeId = clsControl.GetRedeByUserId(this.User.UserId).RedeId;
-                    getLojas(this.RedeId);
-                    break;
-            }
-        }
-
-        private void getLojas(int intRedeId)
-        {
-            ddlLojaRelatorios.DataSource = clsControl.GetLojaByRedeId(intRedeId);
-            ddlLojaRelatorios.DataTextField = "NomeFantasia";
-            ddlLojaRelatorios.DataValueField = "Cnpj";
-            ddlLojaRelatorios.DataBind();
-            ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
-            ddlLojaRelatorios.SelectedIndex = 0;
+            if(UsersBLL.ValidaAcesso(UsersBLL.GetUserSession(), dvRedes, dvLoja, dvFiltro))
+                LojasBLL.getLojasApp(this.User,ddlLojaRelatorios,dvFiltro, dvLoja);
+                
         }
 
         private void divErro(string msg)

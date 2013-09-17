@@ -52,8 +52,8 @@ namespace SIAO.SRV
             consolidado
             INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if(clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            if(clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
             AND (to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') >= to_date( @DataIni, 'MM yyyy')
@@ -188,8 +188,8 @@ namespace SIAO.SRV
             consolidado
             INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if(clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            if(clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(String.Format(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
             AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND

@@ -61,27 +61,23 @@ namespace SIAO.SRV.BLL
                     switch (users.Nivel)
                     {
                         case 1:
+                        case 2:
                             dvFiltro.Visible = true;
-                    dvLoja.Visible = true;
-                    dvRedes.Visible = true;
-                            break;
+                            dvLoja.Visible = true;
+                            dvRedes.Visible = false;
+                            return true;
                         default:
                             dvFiltro.Visible = true;
-                    dvLoja.Visible = true;
-                    dvRedes.Visible = true;
+                            dvLoja.Visible = true;
+                            dvRedes.Visible = true;
                             break;
                     }
                     return false;
-                case 2:
-                    dvFiltro.Visible = true;
-                    dvLoja.Visible = true;
-                    dvRedes.Visible = false;
-                    return true;
                 default:
                     dvFiltro.Visible = true;
                     dvLoja.Visible = true;
                     dvRedes.Visible = false;
-                    return false;
+                    return true;
             }
         }
 
