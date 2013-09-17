@@ -18,19 +18,23 @@
                 <tr>
                     <td>
                         <div id="loja">
-                            Redes:<asp:DropDownList ID="ddlEdRedes" Width="220px" runat="server">
-                            </asp:DropDownList>
-                            <asp:Button ID="btnLoadLoja" runat="server" Text=">" CssClass="button gray" 
-                                onclick="btnLoadLoja_Click" />
-                            &nbsp;
-                            Loja:<asp:DropDownList ID="ddlLoja" Width="220px" runat="server" EnableViewState="true">
-                            </asp:DropDownList>
-                            <asp:Button ID="btnEdit" runat="server" Text="Editar" CssClass="button gray" OnClick="btnEdit_Click" />
+                            <div id="dvRede" runat="server">
+                                Redes:<asp:DropDownList ID="ddlEdRedes" Width="220px" runat="server">
+                                </asp:DropDownList>
+                                <asp:Button ID="btnLoadLoja" runat="server" Text=">" CssClass="button gray" 
+                                    onclick="btnLoadLoja_Click" />
+                            </div>
+                            <div id="dvLoja" runat="server">
+                                &nbsp;
+                                Loja:<asp:DropDownList ID="ddlLoja" Width="220px" runat="server" EnableViewState="true">
+                                </asp:DropDownList>
+                                <asp:Button ID="btnEdit" runat="server" Text="Editar" CssClass="button gray" OnClick="btnEdit_Click" />
+                            </div>
                         </div>
                     </td>
                 </tr>
             </table>
-            <fieldset style="width: 96.5%;">
+            <fieldset style="width: 96.1%;">
                 <legend>
                     <h2>
                         Cadastro de Lojas</h2>

@@ -415,6 +415,11 @@ section
     height: 30px;
 }
 
+#loja div
+{
+    float:left;
+    }
+
 .CheckBoxDiv
 {
     height: 325px;

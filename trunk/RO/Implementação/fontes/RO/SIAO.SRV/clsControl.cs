@@ -74,7 +74,7 @@ namespace SIAO.SRV
 
             cmm.Connection = cnn;
             cmm.CommandText = @"SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,usuarios_vinculos.usuarioId FROM  redesfarmaceuticas 
-            INNER JOIN usuarios_vinculos ON redesfarmaceuticas.Id = usuarios_vinculos.LinkId
+            INNER JOIN usuarios_vinculos ON redesfarmaceuticas.Id = usuarios_vinculos.redeid
             WHERE (usuarios_vinculos.usuarioId = @usuarioId)";
 
             cmm.Parameters.Add("@usuarioId", NpgsqlDbType.Integer).Value = intUserId;
@@ -398,7 +398,8 @@ namespace SIAO.SRV
             cmm.Connection = cnn;
             cmm.CommandText = @"SELECT f.id, Cnpj, NomeFantasia, GerenteId, ProprietarioID 
             FROM farmacias f
-            INNER JOIN usuarios_vinculos ON f.id = usuarios_vinculos.LinkId
+            INNER JOIN usuarios_vinculos ON f.id = usuarios_vinculos.farmaciaid
+            OR f.idrede = usuarios_vinculos.redeid
             WHERE usuarios_vinculos.usuarioid = @usuarioid
             ORDER BY NomeFantasia";
 
@@ -542,8 +543,8 @@ namespace SIAO.SRV
                     consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
@@ -639,11 +640,11 @@ namespace SIAO.SRV
             DataSet ds = new DataSet();
 
             cmm.Connection = cnn;
-            string strMF = DateTime.Now.Month.ToString();
-            string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
+            string strMF = DateTime.Now.AddMonths(-1).Month.ToString();
+            string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
 
             string strAF = DateTime.Now.Year.ToString();
-            string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
+            string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
 
             StringBuilder SQL = new StringBuilder();
             SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,farmacias.nomefantasia, consolidado.CNPJ,
@@ -654,8 +655,8 @@ namespace SIAO.SRV
                         consolidado.Valor_Desconto AS ""Soma De Valor desconto"" FROM consolidado
                         INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(String.Format(@" WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
                         AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND
@@ -755,8 +756,8 @@ namespace SIAO.SRV
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if (clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            if (clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(@" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
@@ -771,11 +772,11 @@ namespace SIAO.SRV
                     consolidado.Sub_Consultoria,consolidado.Grupo
                     ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
 
-            string strMF = DateTime.Now.Month.ToString();
-            string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
+            string strMF = DateTime.Now.AddMonths(-1).Month.ToString();
+            string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
 
             string strAF = DateTime.Now.Year.ToString();
-            string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
+            string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
 
             cmm.CommandText = SQL.ToString();
             cmm.Parameters.Add("@DataIni", NpgsqlDbType.Varchar).Value = strMI + " " + strAI;
@@ -845,8 +846,8 @@ namespace SIAO.SRV
                     SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"", SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
-            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(@" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
@@ -978,8 +979,12 @@ namespace SIAO.SRV
         #endregion
 
         #region .:Persistence:.
-        public string AddUser(UsersTO clsUser, string scn)
+
+        internal static string AddUser(UsersTO clsUser)
         {
+            clsFuncs o = new clsFuncs();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            clsDB clsDB = new clsDB();
             string msg = "";
 
             try
@@ -987,7 +992,7 @@ namespace SIAO.SRV
                 string pass = o.encr(clsUser.Password);
                 string nme = o.encr(clsUser.Name.ToUpper());
 
-                NpgsqlConnection cnn = new NpgsqlConnection(scn);
+                NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
                 cmm.Connection = cnn;
 
                 if (clsDB.openConnection(cmm))
@@ -999,11 +1004,13 @@ namespace SIAO.SRV
                     int id = 0;
                     if (clsDB.Query(id, ref cmm) == DBNull.Value)
                     {
-                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId) VALUES (@UserName, @LastActivityDate, @TipoId)";
+                        cmm.CommandText = @"INSERT INTO users (UserName, LastActivityDate, TipoId, nivel, owner) VALUES (@UserName, @LastActivityDate, @TipoId, @nivel, @owner)";
                         cmm.Parameters.Clear();
                         cmm.Parameters.Add("@UserName", NpgsqlDbType.Varchar).Value = clsUser.UserName;
                         cmm.Parameters.Add("@LastActivityDate", NpgsqlDbType.Date).Value = DateTime.Now.Date;
                         cmm.Parameters.Add("@TipoId", NpgsqlDbType.Integer).Value = clsUser.TipoId;
+                        cmm.Parameters.Add("@nivel", NpgsqlDbType.Integer).Value = clsUser.Nivel;
+                        cmm.Parameters.Add("@owner", NpgsqlDbType.Integer).Value = clsUser.owner;
 
                         clsDB.Execute(ref cmm);
 
@@ -1486,6 +1493,7 @@ namespace SIAO.SRV
 
             return msg;
         }
+        
         private void AddTxtData(DataTable dt, UsersTO clsUser)
         {
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -1520,8 +1528,11 @@ namespace SIAO.SRV
             }
         }
 
-        public string UpdateUser(UsersTO clsUser, string scn)
+        internal static string UpdateUser(UsersTO clsUser)
         {
+            clsFuncs o = new clsFuncs();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            clsDB clsDB = new clsDB();
             string msg = "";
 
             try
@@ -1529,7 +1540,7 @@ namespace SIAO.SRV
                 string pass = o.encr(clsUser.Password);
                 string nme = o.encr(clsUser.Name.ToUpper());
 
-                NpgsqlConnection cnn = new NpgsqlConnection(scn);
+                NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
                 cmm.Connection = cnn;
 
                 if (clsDB.openConnection(cmm))
@@ -1539,9 +1550,11 @@ namespace SIAO.SRV
                     stbSQL.Append("UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '" + lDate + "'");
                     if (clsUser.TipoId > 0) stbSQL.Append(",TipoId = @TipoId");
 
-                    stbSQL.Append(" WHERE UserId = " + clsUser.UserId);
+                    stbSQL.Append(",nivel = @nivel, owner = @owner WHERE UserId = " + clsUser.UserId);
                     cmm.CommandText = stbSQL.ToString();
                     cmm.Parameters.Add("@TipoId", NpgsqlDbType.Integer).Value = clsUser.TipoId;
+                    cmm.Parameters.Add("@nivel", NpgsqlDbType.Integer).Value = clsUser.Nivel;
+                    cmm.Parameters.Add("@owner", NpgsqlDbType.Integer).Value = clsUser.owner;
 
                     clsDB.Execute(ref cmm);
 
@@ -1563,6 +1576,79 @@ namespace SIAO.SRV
             return msg;
         }
 
+        #endregion
+
+        #region .:Methods:.
+        public static void GetOption(System.Web.UI.HtmlControls.HtmlGenericControl ulConf, UsersTO ouser)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(@"<li class='nav-item-a fade fade-50'>
+            </li>
+            <li class='nav-item-b fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmUsers.aspx' title=''>Cadastro de usuários</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>");
+
+            if (ouser.Nivel.Equals(0))
+                sb.Append(@"
+            <li class='nav-item-c fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmCadastroRede.aspx' title=''>Cadastro de redes</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>");
+
+            sb.Append(@"
+            <li class='nav-item-d fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmCadastroLojas.aspx' title=''>Cadastro de lojas</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>
+            <li class='nav-item-f fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmVinculos.aspx' title=''>Vincular usuário</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>");
+
+            if (ouser.Nivel.Equals(0))
+                sb.Append(@"
+            <li class='nav-item-e fade fade-60'>
+                <div class='hex'>
+                    <a href='wfmFiles.aspx' title=''>Histórico de uploads</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>
+            <li class='nav-item-g fade fade-30'>
+                <div class='hex'>
+                    <a href='wfmBanco.aspx' title=''>Gerênciamento do banco</a>
+                    <div class='corner-1'>
+                    </div>
+                    <div class='corner-2'>
+                    </div>
+                </div>
+            </li>");
+
+            ulConf.InnerHtml = sb.ToString();
+        }
         #endregion
 
     }

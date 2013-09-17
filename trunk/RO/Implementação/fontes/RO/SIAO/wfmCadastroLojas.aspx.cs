@@ -19,12 +19,14 @@ namespace SIAO
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (UsersBLL.GetUserSession().UserId == 0) { Response.Redirect("Logon.aspx"); }
+            UsersTO oUser = UsersBLL.GetUserSession();
+            if (oUser.UserId == 0) { Response.Redirect("Logon.aspx"); }
 
             if (Session["editL"] != null) { clsLoja.Id = (int)Session["editL"]; }
 
             if (!IsPostBack)
             {
+                UsersBLL.ValidaAcesso(oUser, dvRede, dvLoja, ddlRede, ddlEdRedes,ddlLoja);
                 LoadRedes();
                 LoadUf();
                 txtNomeFantasia.Focus();
@@ -71,14 +73,6 @@ namespace SIAO
                 ddlRede.DataBind();
                 ddlRede.Items.Insert(0, new ListItem(String.Empty, String.Empty));
                 ddlRede.SelectedIndex = 0;
-
-                ddlEdRedes.DataSource = ds.Tables[0];
-                ddlEdRedes.DataTextField = ds.Tables[0].Columns[1].ToString();
-                ddlEdRedes.DataValueField = ds.Tables[0].Columns[0].ToString();
-                ddlEdRedes.DataBind();
-                ddlEdRedes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-                ddlEdRedes.Items.Insert(1, new ListItem("Independentes", "0"));
-                ddlEdRedes.SelectedIndex = 0;
             }
         }
 
@@ -160,7 +154,11 @@ namespace SIAO
                     clsLoja.Fone = txtFone.Text;
                     clsLoja.Fone2 = txtFone2.Text;
                     clsLoja.Gerente = txtGerente.Text;
-                    clsLoja.idRede = ddlRede.SelectedValue == "" ? 0 : Convert.ToInt32(ddlRede.SelectedValue);
+                    if (ddlRede.Enabled)
+                        clsLoja.idRede = ddlRede.SelectedValue == "" ? 0 : Convert.ToInt32(ddlRede.SelectedValue);
+                    else
+                        clsLoja.idRede = clsControl.GetRedeByUserId(UsersBLL.GetUserSession().UserId).RedeId;
+
                     clsLoja.Msn = txtMsn.Text;
                     clsLoja.NomeFantasia = txtNomeFantasia.Text;
                     clsLoja.Proprietario = txtProprietario.Text;
