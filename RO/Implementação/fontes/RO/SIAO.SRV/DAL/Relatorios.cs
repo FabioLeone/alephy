@@ -52,8 +52,8 @@ namespace SIAO.SRV
             consolidado
             INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if(clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            if(clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
             AND (to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') >= to_date( @DataIni, 'MM yyyy')
@@ -150,11 +150,11 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
-            string strMF = DateTime.Now.Month.ToString();
-            string strMI = DateTime.Now.AddMonths(-7).Month.ToString();
+            string strMF = DateTime.Now.AddMonths(-1).Month.ToString();
+            string strMI = DateTime.Now.AddMonths(-6).Month.ToString();
 
             string strAF = DateTime.Now.Year.ToString();
-            string strAI = DateTime.Now.AddMonths(-7).Year.ToString();
+            string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
 
             StringBuilder SQL = new StringBuilder();
             SQL.Append(@"SELECT 
@@ -188,8 +188,8 @@ namespace SIAO.SRV
             consolidado
             INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if(clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.LinkId OR farmacias.idRede = usuarios_vinculos.LinkId");
+            if(clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(String.Format(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
             AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND

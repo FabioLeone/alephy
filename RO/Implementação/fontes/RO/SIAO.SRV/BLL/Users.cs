@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using SIAO.SRV.DAL;
 using SIAO.SRV.TO;
+using System.Web.UI.WebControls;
 
 namespace SIAO.SRV.BLL
 {
@@ -52,37 +53,189 @@ namespace SIAO.SRV.BLL
             HttpContext.Current.Session[of.encr(strName)] = null;
         }
 
-        public static bool ValidaAcesso(UsersTO users,ref System.Web.UI.HtmlControls.HtmlGenericControl dvRedes,ref System.Web.UI.HtmlControls.HtmlGenericControl dvLoja,ref System.Web.UI.HtmlControls.HtmlGenericControl dvFiltro)
+        public static bool ValidaAcesso(UsersTO users, System.Web.UI.HtmlControls.HtmlGenericControl dvRedes, System.Web.UI.HtmlControls.HtmlGenericControl dvLoja, System.Web.UI.HtmlControls.HtmlGenericControl dvFiltro)
         {
             switch (users.TipoId)
-            {   
+            {
                 case 1:
-                    dvFiltro.Visible = true;
-                    dvLoja.Visible = true;
-                    dvRedes.Visible = true;
+                    switch (users.Nivel)
+                    {
+                        case 1:
+                        case 2:
+                            dvFiltro.Visible = true;
+                            dvLoja.Visible = true;
+                            dvRedes.Visible = false;
+                            return true;
+                        default:
+                            dvFiltro.Visible = true;
+                            dvLoja.Visible = true;
+                            dvRedes.Visible = true;
+                            break;
+                    }
                     return false;
-                case 2:
-                    dvFiltro.Visible = true;
-                    dvLoja.Visible = true;
-                    dvRedes.Visible = false;
-                    return true;
                 default:
                     dvFiltro.Visible = true;
                     dvLoja.Visible = true;
                     dvRedes.Visible = false;
-                    return false;
+                    return true;
             }
         }
-        #endregion
-        
-        #region .: Search :.
 
-        public static List<UsersTO> GetAll(string strConnection) {
-            return UsersDAL.GetAll(strConnection);
+        public static void ValidaAcesso(UsersTO oUser, System.Web.UI.HtmlControls.HtmlGenericControl dvRede, System.Web.UI.HtmlControls.HtmlGenericControl dvLoja, DropDownList ddlRede, DropDownList ddlEdRedes, DropDownList ddlLoja)
+        {
+            switch (oUser.TipoId)
+            {
+                case 1:
+                    switch (oUser.Nivel)
+                    {
+                        case 1:
+                        case 2:
+                            dvLoja.Visible = true;
+                            dvRede.Visible = false;
+                            LojasBLL.LoadLojas(oUser, ddlLoja);
+                            ddlRede.Enabled = false;
+                            break;
+                        default:
+                            dvLoja.Visible = true;
+                            dvRede.Visible = true;
+                            RedesBLL.LoadRedes(ddlEdRedes);
+                            break;
+                    }
+                    break;
+                default:
+                    dvLoja.Visible = true;
+                    dvRede.Visible = false;
+                    LojasBLL.LoadLojas(oUser, ddlLoja);
+                    break;
+            }
         }
 
-        public static UsersTO GetById(int intUserId, string strConnection) {
-            return UsersDAL.GetById(intUserId, strConnection);
+        public static void GetNiveis(ref DropDownList ddlNivel, ref System.Web.UI.HtmlControls.HtmlTableCell tdNA)
+        {
+            if (GetUserSession().Nivel.Equals((int)Nivel.a))
+            {
+                ddlNivel.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                ddlNivel.Items.Insert(1, new ListItem("A", "0"));
+                ddlNivel.Items.Insert(2, new ListItem("R", "1"));
+                ddlNivel.Items.Insert(3, new ListItem("L", "2"));
+                ddlNivel.Items.Insert(4, new ListItem("I", "3"));
+                ddlNivel.SelectedIndex = 0;
+                ddlNivel.Visible = true;
+                tdNA.Visible = true;
+            }
+            else
+            {
+                ddlNivel.Visible = false;
+                tdNA.Visible = false;
+            }
+        }
+
+        public static void GetTiposAll(ref DropDownList ddlAcess)
+        {
+            switch (GetUserSession().Nivel)
+            {
+                case (int)Nivel.a:
+                    ddlAcess.DataSource = UsersBLL.GetTiposAll();
+                    ddlAcess.DataTextField = "Tipo";
+                    ddlAcess.DataValueField = "id";
+                    ddlAcess.DataBind();
+                    ddlAcess.Items.Insert(0, new ListItem("Selecione", "0"));
+                    ddlAcess.SelectedIndex = 0;
+                    break;
+                case (int)Nivel.r:
+                    ddlAcess.Items.Insert(0, new ListItem("Selecione", "0"));
+                    ddlAcess.Items.Insert(1, new ListItem("Drogaria", "2"));
+                    ddlAcess.Items.Insert(2, new ListItem("Rede", "3"));
+                    ddlAcess.SelectedIndex = 0;
+                    break;
+            }
+
+        }
+
+        public static string AddUser(DropDownList ddlAcess, TextBox txtAcsName, TextBox txtEmail, CheckBox cbxAtivo, TextBox txtNome, TextBox txtSenha, TextBox txtValidade, DropDownList ddlNivel)
+        {
+            UsersTO clsUser = new UsersTO()
+            {
+                TipoId = Convert.ToInt32(ddlAcess.SelectedValue),
+                Name = txtAcsName.Text,
+                CreateDate = DateTime.Today,
+                Email = txtEmail.Text,
+                Inactive = !cbxAtivo.Checked,
+                UserName = txtNome.Text,
+                Password = txtSenha.Text,
+                ExpirationDate = Convert.ToDateTime(txtValidade.Text)
+            };
+
+            if (ddlNivel.Visible && !String.IsNullOrEmpty(ddlNivel.SelectedValue))
+                clsUser.Nivel = Convert.ToInt32(ddlNivel.SelectedValue);
+            else
+                clsUser.Nivel = 0;
+
+            if (!UsersBLL.GetUserSession().Nivel.Equals((int)UsersBLL.Nivel.a))
+                clsUser.owner = UsersBLL.GetUserSession().UserId;
+
+            return clsControl.AddUser(clsUser);
+        }
+
+        public static string UpdateUser(UsersTO user, DropDownList ddlAcess, TextBox txtAcsName, TextBox txtEmail, CheckBox cbxAtivo, TextBox txtNome, TextBox txtSenha, TextBox txtValidade, DropDownList ddlNivel)
+        {
+            UsersTO clsUser = new UsersTO();
+
+            clsUser.UserId = user.UserId;
+            clsUser.TipoId = Convert.ToInt32(ddlAcess.SelectedValue);
+            clsUser.Name = txtAcsName.Text;
+            clsUser.CreateDate = DateTime.Today;
+            clsUser.Email = txtEmail.Text;
+            clsUser.Inactive = !cbxAtivo.Checked;
+            clsUser.UserName = txtNome.Text;
+
+            if (!string.IsNullOrEmpty(txtSenha.Text))
+                clsUser.Password = txtSenha.Text;
+            else
+                clsUser.Password = user.Password;
+
+            clsUser.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
+
+            if (ddlNivel.Visible && !String.IsNullOrEmpty(ddlNivel.SelectedValue))
+                clsUser.Nivel = Convert.ToInt32(ddlNivel.SelectedValue);
+            else
+                clsUser.Nivel = 0;
+
+            return clsControl.UpdateUser(clsUser);
+        }
+
+        public static void GetList(GridView gvwUsers)
+        {
+            List<UsersTO> lstUsers;
+            UsersTO objUser = GetUserSession();
+
+            switch (objUser.Nivel)
+            {
+                case (int)Nivel.r:
+                    lstUsers = GetAllMinion(objUser);
+                    break;
+                default:
+                    lstUsers = GetAll();
+                    break;
+            }
+
+            gvwUsers.DataSource = lstUsers;
+            gvwUsers.EmptyDataText = "Nenhum registro encontrado.";
+            gvwUsers.DataBind();
+        }
+
+        #endregion
+
+        #region .: Search :.
+
+        private static List<UsersTO> GetAll()
+        {
+            return UsersDAL.GetAll();
+        }
+
+        public static UsersTO GetById(int intUserId)
+        {
+            return UsersDAL.GetById(intUserId);
         }
 
         #endregion
@@ -116,13 +269,34 @@ namespace SIAO.SRV.BLL
 
         public static List<Usuarios_TiposTO> GetTiposAll()
         {
-            return UsersDAL.GetTiposAll();
+            List<Usuarios_TiposTO> lstUsers = UsersDAL.GetTiposAll();
+
+            switch (GetUserSession().Nivel)
+            {
+                case (int)Nivel.r:
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(1)));
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(4)));
+                    break;
+                case (int)Nivel.l:
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(1)));
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(3)));
+                    lstUsers.Remove(lstUsers.Find(u => u.id.Equals(4)));
+                    break;
+            }
+
+            return lstUsers;
+        }
+
+        private static List<UsersTO> GetAllMinion(UsersTO owner)
+        {
+            return UsersDAL.GetAllMinion(owner);
         }
         #endregion
 
         #region .: Persistence :.
 
-        public static UsersTO Insert(UsersTO clsUsers, string strConnection) {
+        public static UsersTO Insert(UsersTO clsUsers, string strConnection)
+        {
             return UsersDAL.Insert(clsUsers, strConnection);
         }
 
@@ -136,6 +310,16 @@ namespace SIAO.SRV.BLL
             return UsersDAL.Delete(clsUsers, strConnection);
         }
 
+        #endregion
+
+        #region .: Enum :.
+        internal enum Nivel
+        {
+            a = 0,
+            r = 1,
+            l = 2,
+            i = 4
+        }
         #endregion
 
     }

@@ -23,6 +23,7 @@ namespace SIAO.Controls
             if (!IsPostBack)
             {
                 LoadDados();
+                Global.LocalPage = String.Empty;
             }
         }
 
@@ -42,15 +43,14 @@ namespace SIAO.Controls
         protected void gvwUsers_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int intId = Convert.ToInt32(gvwUsers.DataKeys[e.RowIndex].Value);
-            UsersBLL.Delete(UsersBLL.GetById(intId, strConnection), strConnection);
+            UsersBLL.Delete(UsersBLL.GetById(intId), strConnection);
             LoadDados();
         }
 
         protected void gvwUsers_RowEditing(object sender, GridViewEditEventArgs e)
         {
             int intId = Convert.ToInt32(gvwUsers.DataKeys[e.NewEditIndex].Value);
-            wucCadastroUser1.PopulaDados(UsersBLL.GetById(intId, strConnection));
-            Global.LocalPage = "wfmUsers.aspx";
+            wucCadastroUser1.PopulaDados(UsersBLL.GetById(intId));
             mvwUsers.ActiveViewIndex = 1;
         }
 
@@ -58,7 +58,6 @@ namespace SIAO.Controls
         {
             UsersTO clsUsers = new UsersTO();
             wucCadastroUser1.PopulaDados(clsUsers);
-            Global.LocalPage = "wfmUsers.aspx";
             mvwUsers.ActiveViewIndex = 1;
         }
         protected void gvwUsers_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -68,7 +67,7 @@ namespace SIAO.Controls
             if (e.Row.RowIndex > -1)
             {
                 int intUserId = (int)gvwUsers.DataKeys[e.Row.RowIndex].Value;
-                UsersTO clsUser = UsersBLL.GetById(intUserId, strConnection);
+                UsersTO clsUser = UsersBLL.GetById(intUserId);
                 
                 if(clsUser.TipoId == 0)
                     switch (clsUser.Access)
@@ -93,7 +92,7 @@ namespace SIAO.Controls
         }
         protected void gvwUsers_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gvwUsers.DataSource = UsersBLL.GetAll(strConnection);
+            UsersBLL.GetList(gvwUsers);
             gvwUsers.PageIndex = e.NewPageIndex;
             gvwUsers.DataBind();
         }
@@ -103,9 +102,7 @@ namespace SIAO.Controls
         #region .: Metodos :.
         private void LoadDados()
         {
-            gvwUsers.DataSource = UsersBLL.GetAll(strConnection);
-            gvwUsers.EmptyDataText = "Nenhum registro encontrado.";
-            gvwUsers.DataBind();
+            UsersBLL.GetList(gvwUsers);
         }
 
         #endregion

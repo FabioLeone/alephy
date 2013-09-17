@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SIAO.SRV.BLL;
 using SIAO.SRV.TO;
+using SIAO.SRV;
 
 namespace SIAO
 {
@@ -26,6 +27,9 @@ namespace SIAO
             Control li = Master.FindControl("l2");
             if (li != null)
                 ((System.Web.UI.HtmlControls.HtmlControl)li).Attributes.Add("class", "active");
+
+            if (!IsPostBack)
+                clsControl.GetOption(ulConf, UsersBLL.GetUserSession());
         }
     }
 }

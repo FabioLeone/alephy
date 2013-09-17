@@ -113,38 +113,12 @@ namespace SIAO.Controls
 
                     if (this.User.UserId > 0)
                     {
-                        clsUser.UserId = this.User.UserId;
-                        clsUser.TipoId = Convert.ToInt32(ddlAcess.SelectedValue);
-                        clsUser.Name = txtAcsName.Text;
-                        clsUser.CreateDate = DateTime.Today;
-                        clsUser.Email = txtEmail.Text;
-                        clsUser.Inactive = !cbxAtivo.Checked;
-                        clsUser.UserName = txtNome.Text;
-
-                        if (!string.IsNullOrEmpty(txtSenha.Text))
-                            clsUser.Password = txtSenha.Text;
-                        else
-                            clsUser.Password = this.User.Password;
-
-                        clsUser.ExpirationDate = Convert.ToDateTime(txtValidade.Text);
-
-                        msg = oCtl.UpdateUser(clsUser, scn);
+                        msg = UsersBLL.UpdateUser(this.User, ddlAcess, txtAcsName, txtEmail, cbxAtivo, txtNome, txtSenha, txtValidade, ddlNivel);
                         ed = true;
                     }
                     else
                     {
-                        clsUser = new UsersTO()
-                        {
-                            TipoId = Convert.ToInt32(ddlAcess.SelectedValue),
-                            Name = txtAcsName.Text,
-                            CreateDate = DateTime.Today,
-                            Email = txtEmail.Text,
-                            Inactive = !cbxAtivo.Checked,
-                            UserName = txtNome.Text,
-                            Password = txtSenha.Text,
-                            ExpirationDate = Convert.ToDateTime(txtValidade.Text),
-                        };
-                        msg = oCtl.AddUser(clsUser, scn);
+                        msg = UsersBLL.AddUser(ddlAcess, txtAcsName, txtEmail, cbxAtivo, txtNome, txtSenha, txtValidade, ddlNivel);
                     }
 
                     if (msg != "")
@@ -241,17 +215,17 @@ namespace SIAO.Controls
                     }
                 }
 
+                if (ddlNivel.Items.Count > 0)
+                    ddlNivel.SelectedValue = clsUser.Nivel.ToString();
+
                 this.User = clsUser;
             }
         }
         private void LoadData()
         {
-            ddlAcess.DataSource = UsersBLL.GetTiposAll();
-            ddlAcess.DataTextField = "Tipo";
-            ddlAcess.DataValueField = "id";
-            ddlAcess.DataBind();
-            ddlAcess.Items.Insert(0, new ListItem("Selecione", "0"));
-            ddlAcess.SelectedIndex = 0;
+            UsersBLL.GetTiposAll(ref ddlAcess);
+
+            UsersBLL.GetNiveis(ref ddlNivel, ref tdNA);
         }
         #endregion
     }

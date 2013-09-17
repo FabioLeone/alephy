@@ -67,6 +67,8 @@
     <Compile Include="BLL\Files.cs" />
     <Compile Include="BLL\Grafic.cs" />
     <Compile Include="BLL\GraficoLab.cs" />
+    <Compile Include="BLL\Lojas.cs" />
+    <Compile Include="BLL\Redes.cs" />
     <Compile Include="BLL\Relatorios.cs" />
     <Compile Include="BLL\RelatoriosVisualizados.cs" />
     <Compile Include="BLL\RolesBLL.cs" />

@@ -46,9 +46,9 @@ namespace SIAO
 
             if (!IsPostBack)
             { 
-                if (UsersBLL.ValidaAcesso(this.User, ref dvRedes, ref dvLoja, ref dvFiltro))
+                if (UsersBLL.ValidaAcesso(this.User, dvRedes, dvLoja, dvFiltro))
                 {
-                    getLojas();
+                    LojasBLL.getLojas(this.User, ddlLojaRelatorios, dvFiltro, ulArq);
                 }
                 else
                     getRedes();
@@ -65,12 +65,12 @@ namespace SIAO
         protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
-                getLojas(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+                LojasBLL.getLojas(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
         }
 
         protected void btnBusca_Click(object sender, EventArgs e)
         {
-            getFiles(ddlLojaRelatorios.SelectedValue);
+            LojasBLL.getFiles(ddlLojaRelatorios.SelectedValue, ulArq);
         }
         #endregion
 
@@ -114,55 +114,6 @@ namespace SIAO
             }
         }
 
-        private void getLojas()
-        {
-            DataSet ds = new DataSet();
-
-            switch (this.User.TipoId)
-            {
-                case 2:
-                    ds = clsControl.GetLojaByUserId(clsUser.UserId);
-
-                    if (ds.Tables[0].Rows.Count > 1)
-                    {
-                        ddlLojaRelatorios.DataSource = ds;
-                        ddlLojaRelatorios.DataTextField = "NomeFantasia";
-                        ddlLojaRelatorios.DataValueField = "id";
-                        ddlLojaRelatorios.DataBind();
-                        ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
-                        ddlLojaRelatorios.SelectedIndex = 0;
-                    }
-                    else
-                    {
-                        dvFiltro.Visible = false;
-                        getFiles(ds.Tables[0].Rows[0]["id"]);
-                    }
-
-                    break;
-                case 3:
-                    getLojas(clsControl.GetRedeByUserId(this.User.UserId).RedeId);
-                    break;
-            }
-        }
-
-        private void getFiles(object o)
-        {
-            int intId = 0;
-            if (int.TryParse(o.ToString(), out intId))
-                ulArq.InnerHtml = FilesBLL.GetFiles("Analise", intId, true);
-            else
-                return;
-        }
-
-        private void getLojas(int intRedeId)
-        {
-            ddlLojaRelatorios.DataSource = clsControl.GetLojaByRedeId(intRedeId);
-            ddlLojaRelatorios.DataTextField = "NomeFantasia";
-            ddlLojaRelatorios.DataValueField = "id";
-            ddlLojaRelatorios.DataBind();
-            ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
-            ddlLojaRelatorios.SelectedIndex = 0;
-        }
         #endregion
 
     }
