@@ -396,12 +396,20 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT f.id, Cnpj, NomeFantasia, GerenteId, ProprietarioID 
-            FROM farmacias f
-            INNER JOIN usuarios_vinculos ON f.id = usuarios_vinculos.farmaciaid
-            OR f.idrede = usuarios_vinculos.redeid
-            WHERE usuarios_vinculos.usuarioid = @usuarioid
-            ORDER BY NomeFantasia";
+            cmm.CommandText = @"SELECT DISTINCT id, Cnpj, NomeFantasia, GerenteId, ProprietarioID
+            FROM (
+            SELECT f.id, Cnpj, NomeFantasia, GerenteId, ProprietarioID
+                        FROM farmacias f
+                        INNER JOIN usuarios_vinculos ON f.id = usuarios_vinculos.farmaciaid
+                        WHERE usuarios_vinculos.usuarioid = @usuarioid
+            UNION
+            SELECT f.id, Cnpj, NomeFantasia, GerenteId, ProprietarioID
+                        FROM farmacias f
+                        INNER JOIN usuarios_vinculos ON f.idrede = usuarios_vinculos.redeid
+                        WHERE usuarios_vinculos.usuarioid = @usuarioid
+            AND idrede > 0
+                  ) as v
+                  ORDER BY NomeFantasia";
 
             cmm.Parameters.Clear();
             cmm.Parameters.Add("@usuarioid", NpgsqlDbType.Integer).Value = intUserId;
@@ -1606,7 +1614,8 @@ namespace SIAO.SRV
                 </div>
             </li>");
 
-            sb.Append(@"
+            if (!ouser.Nivel.Equals(2))
+                sb.Append(@"
             <li class='nav-item-d fade fade-60'>
                 <div class='hex'>
                     <a href='wfmCadastroLojas.aspx' title=''>Cadastro de lojas</a>
@@ -1615,7 +1624,9 @@ namespace SIAO.SRV
                     <div class='corner-2'>
                     </div>
                 </div>
-            </li>
+            </li>");
+
+            sb.Append(@"
             <li class='nav-item-f fade fade-60'>
                 <div class='hex'>
                     <a href='wfmVinculos.aspx' title=''>Vincular usuário</a>
