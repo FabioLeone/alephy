@@ -178,6 +178,9 @@ namespace SIAO.SRV.BLL
                     sb.Append(String.Format("<li><a href='uploads/{0}' target='_blank'><div class='imgAna'><p>{0}</p></div></a></li>", file.Replace("/", ";").Split(';').Last()));
             }
 
+            if (String.IsNullOrEmpty(sb.ToString()))
+                sb.Append("Não há itens a serem listados.");
+
             return sb.ToString();
         }
         #endregion
