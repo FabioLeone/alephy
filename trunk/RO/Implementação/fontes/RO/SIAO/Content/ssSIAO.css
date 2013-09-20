@@ -379,6 +379,14 @@ section
     color:Black;
 }
 
+.imgCon
+{
+    background: rgba(209,209,209,0.6) url(images/app/icons/Settings-icon.png) no-repeat 5px center;
+    cursor:pointer;
+    padding: 3px 20px 3px 40px;
+    color:Black;
+}
+
 .iconList
 {
     list-style-type: none;
@@ -397,6 +405,30 @@ section
 }
 
 .iconList li:active
+{
+    background: rgba(110,110,110,0.4);
+}
+
+.colList
+{
+    list-style-type: none;
+    -webkit-padding-start: 0;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 2px;
+}
+
+.colList li
+{
+    margin-bottom: 2px;
+    text-align: justify;
+}
+
+.colList li:hover
+{
+    background: rgba(200,200,200,0.5);
+}
+
+.colList li:active
 {
     background: rgba(110,110,110,0.4);
 }
