@@ -360,11 +360,9 @@ namespace SIAO.SRV
                 }
                 else {
                     DataRow dr = dt.NewRow();
-                  
-                    for (int j = 0; j < line.Length; j++)
-                    {
-                        dr[j] = line[j].Trim();
 
+                    for (int j = 0; j < dt.Columns.Count; j++)
+                    {
                         if (j.Equals(2)) {
                             if (!intMes.Equals(Convert.ToInt32(line[j])))
                             {
@@ -373,11 +371,14 @@ namespace SIAO.SRV
                             }
                         }
                         if (j.Equals(1)) {
+                            line[j] = RemoveMaskCnpj(line[j]);
+                            
                             if (!strCnpj.Equals(line[j])) {
-                                strCnpj = RemoveMaskCnpj(line[j]);
+                                strCnpj = line[j];
                                 lstCnpj.Add(strCnpj);
                             }
                         }
+                        dr[j] = line[j].Trim();
                     }
                     dt.Rows.Add(dr);
                 }

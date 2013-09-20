@@ -17,7 +17,7 @@ namespace SIAO
         {
             clsUser = UsersBLL.GetUserSession();
 
-            //if (clsUser.UserId == 0) { Response.Redirect("Logon.aspx"); } 
+            if (clsUser.UserId == 0) { Response.Redirect("Logon.aspx"); } 
 
             Control ul = Master.FindControl("navlist");
 
