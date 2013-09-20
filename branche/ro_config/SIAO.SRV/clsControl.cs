@@ -474,7 +474,7 @@ namespace SIAO.SRV
                 objLoja.Id = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["id"].ToString());
                 objLoja.idRede = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["idRede"].ToString());
                 objLoja.NomeFantasia = ds.Tables["Farmacias"].Rows[0]["NomeFantasia"].ToString();
-                Int32.TryParse(ds.Tables["Farmacias"].Rows[0]["ProprietarioID"].ToString(),out intProprietarioId);
+                Int32.TryParse(ds.Tables["Farmacias"].Rows[0]["ProprietarioID"].ToString(), out intProprietarioId);
                 objLoja.ProprietarioId = intProprietarioId;
             }
 
@@ -773,7 +773,7 @@ namespace SIAO.SRV
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
                     (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
-            if(!String.IsNullOrEmpty(strCnpj))
+            if (!String.IsNullOrEmpty(strCnpj))
                 SQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
             SQL.Append(@" GROUP BY redesfarmaceuticas.descricao,redesfarmaceuticas.CNPJ,consolidado.Mes,consolidado.Ano,
@@ -863,7 +863,7 @@ namespace SIAO.SRV
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
                     (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
-            if(!String.IsNullOrEmpty(strCnpj))
+            if (!String.IsNullOrEmpty(strCnpj))
                 SQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
             SQL.Append(@" GROUP BY redesfarmaceuticas.descricao,redesfarmaceuticas.CNPJ,consolidado.Mes,consolidado.Ano,
@@ -1430,10 +1430,10 @@ namespace SIAO.SRV
                     cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar, 255, "Descricao");
                     cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar, 255, "Fabricante");
                     cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer, 255, "Quantidade");
-                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric,15, "Valorbruto");
+                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric, 15, "Valorbruto");
                     cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Numeric, 15, "Valorliquido");
                     cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Numeric, 15, "Valordesconto");
-                    
+
                     cnn.Open();
                     NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmm);
                     adapter.InsertCommand = cmm;
@@ -1501,7 +1501,7 @@ namespace SIAO.SRV
 
             return msg;
         }
-        
+
         private void AddTxtData(DataTable dt, UsersTO clsUser)
         {
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -1590,73 +1590,60 @@ namespace SIAO.SRV
         public static void GetOption(System.Web.UI.HtmlControls.HtmlGenericControl ulConf, UsersTO ouser)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(@"<li class='nav-item-a fade fade-50'>
-            </li>
-            <li class='nav-item-b fade fade-60'>
-                <div class='hex'>
-                    <a href='wfmUsers.aspx' title=''>Cadastro de usuários</a>
-                    <div class='corner-1'>
+            sb.Append(@"
+            <li>
+                <a href='wfmUsers.aspx' title=''>
+                    <div class='imgCon'>
+                        <p>Cadastro de usuários</p>
                     </div>
-                    <div class='corner-2'>
-                    </div>
-                </div>
+                </a>
             </li>");
 
             if (ouser.Nivel.Equals(0))
                 sb.Append(@"
-            <li class='nav-item-c fade fade-60'>
-                <div class='hex'>
-                    <a href='wfmCadastroRede.aspx' title=''>Cadastro de redes</a>
-                    <div class='corner-1'>
-                    </div>
-                    <div class='corner-2'>
-                    </div>
-                </div>
-            </li>");
+                <li>
+                    <a href='wfmCadastroRede.aspx' title=''>
+                        <div class='imgCon'>
+                            <p>Cadastro de redes</p>
+                        </div>
+                    </a>
+                </li>");
 
             if (!ouser.Nivel.Equals(2))
                 sb.Append(@"
-            <li class='nav-item-d fade fade-60'>
-                <div class='hex'>
-                    <a href='wfmCadastroLojas.aspx' title=''>Cadastro de lojas</a>
-                    <div class='corner-1'>
-                    </div>
-                    <div class='corner-2'>
-                    </div>
-                </div>
-            </li>");
+                <li>
+                    <a href='wfmCadastroLojas.aspx' title=''>
+                        <div class='imgCon'>
+                            <p>Cadastro de lojas</p>
+                        </div>
+                    </a>
+                </li>");
 
             sb.Append(@"
-            <li class='nav-item-f fade fade-60'>
-                <div class='hex'>
-                    <a href='wfmVinculos.aspx' title=''>Vincular usuário</a>
-                    <div class='corner-1'>
+            <li>
+                <a href='wfmVinculos.aspx' title=''>
+                    <div class='imgCon'>
+                        <p>Vincular usuário</p>
                     </div>
-                    <div class='corner-2'>
-                    </div>
-                </div>
+                </a>
             </li>");
 
             if (ouser.Nivel.Equals(0))
                 sb.Append(@"
-            <li class='nav-item-e fade fade-60'>
-                <div class='hex'>
-                    <a href='wfmFiles.aspx' title=''>Histórico de uploads</a>
-                    <div class='corner-1'>
-                    </div>
-                    <div class='corner-2'>
-                    </div>
-                </div>
-            </li>
-            <li class='nav-item-g fade fade-30'>
-                <div class='hex'>
-                    <a href='wfmBanco.aspx' title=''>Gerênciamento do banco</a>
-                    <div class='corner-1'>
-                    </div>
-                    <div class='corner-2'>
-                    </div>
-                </div>
-            </li>");
+                <li>
+                    <a href='wfmFiles.aspx' title=''>
+                        <div class='imgCon'>
+                            <p>Histórico de uploads</p>
+                        </div>
+                    </a>    
+                </li>
+                <li>
+                    <a href='wfmBanco.aspx' title=''>
+                            <div class='imgCon'>
+                            <p>Gerênciamento do banco</p>
+                        </div>
+                    </a>
+                </li>");
 
             ulConf.InnerHtml = sb.ToString();
         }

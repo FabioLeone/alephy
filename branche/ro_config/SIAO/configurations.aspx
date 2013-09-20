@@ -5,9 +5,6 @@
     <link href="Content/css/Animations.css" rel="Stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="no-js">
-        <ul id="ulConf" runat="server" class="conav" role="navigation">
-            
-        </ul>
-    </div>
+    <ul id="ulConf" runat="server" class="colList">
+    </ul>
 </asp:Content>
