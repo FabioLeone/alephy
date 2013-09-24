@@ -551,8 +551,31 @@ namespace SIAO.SRV
                     consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            if ((clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0)) || !clsUser.TipoId.Equals(1))
+            {
+                switch (clsUser.TipoId)
+                {
+                    case 1:
+                        {
+                            switch (clsUser.Nivel)
+                            {
+                                case 1:
+                                    SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                                    break;
+                                case 2:
+                                    SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                                    break;
+                            }
+                        }
+                        break;
+                    case 2:
+                        SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                        break;
+                    case 3:
+                        SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                        break;
+                }
+            }
 
             SQL.Append(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
@@ -563,7 +586,7 @@ namespace SIAO.SRV
             ini = strInicio.Replace('/', ' ');
             fim = strFim.Replace('/', ' ');
 
-            if (clsUser.TipoId.Equals(1))
+            if (clsUser.TipoId.Equals(1) && clsUser.Nivel.Equals(0))
             {
                 if (!String.IsNullOrEmpty(strCnpj))
                 {
@@ -574,13 +597,17 @@ namespace SIAO.SRV
                     SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
-                SQL.Append(" ORDER BY usuarios_vinculos.UsuarioId,consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+                SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
             else
             {
                 if (!String.IsNullOrEmpty(strCnpj))
                 {
                     SQL.Append(" AND farmacias.Cnpj = @Cnpj");
+                }
+                else if (intRedeId > 0)
+                {
+                    SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
                 SQL.Append(@" AND usuarios_vinculos.UsuarioId = @UsuarioId
@@ -663,14 +690,37 @@ namespace SIAO.SRV
                         consolidado.Valor_Desconto AS ""Soma De Valor desconto"" FROM consolidado
                         INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+            if ((clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0)) || !clsUser.TipoId.Equals(1))
+            {
+                switch (clsUser.TipoId)
+                {
+                    case 1:
+                        {
+                            switch (clsUser.Nivel)
+                            {
+                                case 1:
+                                    SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                                    break;
+                                case 2:
+                                    SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                                    break;
+                            }
+                        }
+                        break;
+                    case 2:
+                        SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                        break;
+                    case 3:
+                        SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                        break;
+                }
+            }
 
             SQL.Append(String.Format(@" WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
                         AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND
                         (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') <= to_date('{2} {3}','MM-yyyy'))", strMI, strAI, strMF, strAF));
 
-            if (clsUser.TipoId.Equals(1))
+            if (clsUser.TipoId.Equals(1) && clsUser.Nivel.Equals(0))
             {
                 if (!String.IsNullOrEmpty(strCnpj))
                 {
@@ -681,7 +731,7 @@ namespace SIAO.SRV
                     SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
-                SQL.Append(" ORDER BY usuarios_vinculos.UsuarioId,consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+                SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
             else
             {
@@ -763,9 +813,6 @@ namespace SIAO.SRV
                     SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"", SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
-
-            if (clsUser.TipoId.Equals(1)) SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
-            else SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
 
             SQL.Append(@" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
@@ -854,9 +901,7 @@ namespace SIAO.SRV
                     SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"", SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
-            if (clsUser.TipoId.Equals(1)) SQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
-            else SQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
-
+            
             SQL.Append(@" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
                     AND farmacias.idRede = @idRede

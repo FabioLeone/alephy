@@ -61,11 +61,11 @@ namespace SIAO.SRV.DAL
             {
                 if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
             }
-            catch 
+            catch
             {
-                clsGrafic.Liquido = 0; 
+                clsGrafic.Liquido = 0;
             }
-            
+
 
             return clsGrafic;
         }
@@ -154,8 +154,31 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
 
-                if (clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
-                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
+                if ((clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0)) || !clsUser.TipoId.Equals(1))
+                {
+                    switch (clsUser.TipoId)
+                    {
+                        case 1:
+                            {
+                                switch (clsUser.Nivel)
+                                {
+                                    case 1:
+                                        strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                                        break;
+                                    case 2:
+                                        strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                                        break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                            break;
+                        case 3:
+                            strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                            break;
+                    }
+                }
 
                 strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
                 AND (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
@@ -164,7 +187,7 @@ namespace SIAO.SRV.DAL
 
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND farmacias.Cnpj = '" + strLoja + "'");
-                else if(!clsUser.TipoId.Equals(1))
+                else if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
 
                 strSQL.Append(" ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
@@ -172,8 +195,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/"," ")));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/"," ")));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
                 cmdGrafic.CommandTimeout = 9999;
 
                 msc.Open();
@@ -194,7 +217,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<GraficTO> GetGraficMes(string strIni, UsersTO clsUser, string strFim, int idRede,string strCnpj)
+        internal static List<GraficTO> GetGraficMes(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -233,15 +256,12 @@ namespace SIAO.SRV.DAL
 			        GROUP BY cnpj, mes, ano
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
-                
-                if(clsUser.TipoId.Equals(1)) strSQL.Append(" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
-                else strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid");
-                
+
                 strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy'))
                 AND (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))
                 AND farmacias.idRede = @idRede");
 
-                if(!String.IsNullOrEmpty(strCnpj))
+                if (!String.IsNullOrEmpty(strCnpj))
                     strSQL.Append(" AND xTemp.CNPJ = @CNPJ");
 
                 strSQL.Append(" ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
@@ -253,7 +273,7 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", idRede));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ",strCnpj));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strCnpj));
 
                 cmdGrafic.CommandTimeout = 9999;
 
@@ -344,7 +364,7 @@ namespace SIAO.SRV.DAL
             return clsIndicesGrafic;
         }
 
-        internal static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId,string strCnpj)
+        internal static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
         {
             List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -365,14 +385,12 @@ namespace SIAO.SRV.DAL
                 FROM
                 consolidado
                 INNER JOIN farmacias ON farmacias.cnpj = consolidado.cnpj
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede                
-                WHERE
-                UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
+                WHERE UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
                 AND farmacias.idRede = @idRede");
 
-                if(!String.IsNullOrEmpty(strCnpj))
+                if (!String.IsNullOrEmpty(strCnpj))
                     strSQL.Append(" AND consolidado.cnpj = @cnpj");
 
                 strSQL.Append(@" GROUP BY consolidado.cnpj,
@@ -432,17 +450,40 @@ namespace SIAO.SRV.DAL
                 consolidado
                 INNER JOIN farmacias ON farmacias.cnpj = consolidado.cnpj");
 
-                if (!clsUser.TipoId.Equals(1))
-                    strSQL.Append(@" INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede");
+                if ((clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0)) || !clsUser.TipoId.Equals(1))
+                {
+                    switch (clsUser.TipoId)
+                    {
+                        case 1:
+                            {
+                                switch (clsUser.Nivel)
+                                {
+                                    case 1:
+                                        strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                                        break;
+                                    case 2:
+                                        strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                                        break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                            break;
+                        case 3:
+                            strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                            break;
+                    }
+                }
 
                 strSQL.Append(@" WHERE
                 UPPER(consolidado.grupo) like any ('{PROPAGADOS,ALTERNATIVOS,GENÉRICOS}')
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
-                if (!clsUser.TipoId.Equals(1))
+                if (!clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
-                
+
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.cnpj = @cnpj");
 
@@ -515,12 +556,11 @@ namespace SIAO.SRV.DAL
                 FROM
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede
                 WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
                 AND farmacias.idRede = @idRede");
 
-                if(!String.IsNullOrEmpty(strCnpj))
+                if (!String.IsNullOrEmpty(strCnpj))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
                 strSQL.Append(@" ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
@@ -599,19 +639,42 @@ namespace SIAO.SRV.DAL
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-                if(!clsUser.TipoId.Equals(1))
-                    strSQL.Append(" INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede");
+                if ((clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0)) || !clsUser.TipoId.Equals(1))
+                {
+                    switch (clsUser.TipoId)
+                    {
+                        case 1:
+                            {
+                                switch (clsUser.Nivel)
+                                {
+                                    case 1:
+                                        strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                                        break;
+                                    case 2:
+                                        strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                                        break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                            break;
+                        case 3:
+                            strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                            break;
+                    }
+                }
 
                 strSQL.Append(@" WHERE 
                 (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
-                if (!clsUser.TipoId.Equals(1))
+                if (!clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
-                
+
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
-                
+
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
                 ORDER BY Ano, Mes DESC");
 
@@ -619,7 +682,7 @@ namespace SIAO.SRV.DAL
 
                 if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
                 {
-                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); 
+                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
                     strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
                 }
                 else
@@ -687,12 +750,11 @@ namespace SIAO.SRV.DAL
                 FROM
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
-                INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede
                 WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))
                 AND farmacias.idRede = @idRede");
 
-                if(!String.IsNullOrEmpty(strCnpj))
+                if (!String.IsNullOrEmpty(strCnpj))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
                 strSQL.Append(@" ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
@@ -771,15 +833,38 @@ namespace SIAO.SRV.DAL
                 consolidado
                 INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
-                if (!clsUser.TipoId.Equals(1))
-                    strSQL.Append(" INNER JOIN usuarios_vinculos ON usuarios_vinculos.farmaciaid = farmacias.id OR usuarios_vinculos.redeid = farmacias.idRede");
+                if ((clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0)) || !clsUser.TipoId.Equals(1))
+                {
+                    switch (clsUser.TipoId)
+                    {
+                        case 1:
+                            {
+                                switch (clsUser.Nivel)
+                                {
+                                    case 1:
+                                        strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                                        break;
+                                    case 2:
+                                        strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                                        break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid");
+                            break;
+                        case 3:
+                            strSQL.Append(" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid");
+                            break;
+                    }
+                }
 
                 strSQL.Append(@" WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) 
                 AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
 
-                if (!clsUser.TipoId.Equals(1))
+                if (!clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
-                
+
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
@@ -823,7 +908,7 @@ namespace SIAO.SRV.DAL
 
             return clsGrafic;
         }
-      
+
         internal static IndicesGraficTO GetIndicesById(int intId, string strConnection)
         {
             IndicesGraficTO clsIndicesGrafic = new IndicesGraficTO();
@@ -1005,23 +1090,50 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
 
-                if (clsUser.TipoId.Equals(1)) strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
-                SELECT c.Mes || ' ' || c.Ano FROM consolidado c LEFT JOIN farmacias f ON c.cnpj = f.cnpj");
-                else strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid OR farmacias.idRede = usuarios_vinculos.redeid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
-                FROM consolidado c 
-                LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
-                INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
+                if ((clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0)) || !clsUser.TipoId.Equals(1))
+                {
+                    switch (clsUser.TipoId)
+                    {
+                        case 1:
+                            {
+                                switch (clsUser.Nivel)
+                                {
+                                    case 1:
+                                        strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
+                                        SELECT c.Mes || ' ' || c.Ano FROM consolidado c LEFT JOIN farmacias f ON c.cnpj = f.cnpj");
+                                        break;
+                                    case 2:
+                                        strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
+                                        SELECT c.Mes || ' ' || c.Ano FROM consolidado c LEFT JOIN farmacias f ON c.cnpj = f.cnpj");
+                                        break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
+                            FROM consolidado c 
+                            LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
+                            INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
+                            break;
+                        case 3:
+                            strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
+                            FROM consolidado c 
+                            LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
+                            INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
+                            break;
+                    }
+                }
 
                 strSQL.Append(@" WHERE (to_date(to_char(Mes,'99') || to_char(Ano,'9999'), 'MM yyyy') >= to_date(@ini,'MM yyyy'))
                 and (to_date(to_char(mes,'99') || to_char(ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
 
-                if(intRedeId > 0)
+                if (intRedeId > 0)
                     strSQL.Append(@" AND f.idRede = @idRede ORDER BY ano DESC, mes DESC LIMIT 1
                 ), 'MM yyyy')) AND farmacias.idRede = @idRede");
-                
+
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND f.Cnpj = '" + strLoja + "' ORDER BY ano DESC, mes DESC LIMIT 1), 'MM yyyy')) AND farmacias.Cnpj = '" + strLoja + "'");
-                else if (!clsUser.TipoId.Equals(1))
+                else if (!clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0))
                     strSQL.Append(" AND uv.usuarioid = @UsuarioId ORDER BY ano DESC, mes DESC LIMIT 1), 'MM yyyy')) AND usuarios_vinculos.UsuarioId = @UsuarioId");
 
                 strSQL.Append(" ORDER BY Ano,Mes,Sub_Consultoria,Grupo");
