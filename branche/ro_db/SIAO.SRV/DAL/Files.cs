@@ -6,6 +6,9 @@ using SIAO.SRV.TO;
 using System.Data;
 using Npgsql;
 using System.Data.Common;
+using System.Configuration;
+using System.IO;
+using NpgsqlTypes;
 
 namespace SIAO.SRV.DAL
 {
@@ -79,6 +82,7 @@ namespace SIAO.SRV.DAL
 
             return clsFiles;
         }
+        
         internal static List<FilesTO> GetByYearAndRedeId(int intAno, int intRedeId, string scn)
         {
             List<FilesTO> clsFiles = new List<FilesTO>();
@@ -152,5 +156,41 @@ namespace SIAO.SRV.DAL
         }
         #endregion
 
+        #region .: Persistence :.
+        internal static string Insert(string strPath)
+        {
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
+
+            cmm.Connection = cnn;
+
+            string msg = string.Empty;
+
+            if (File.Exists(strPath))
+            {
+                var sql = String.Format("COPY base_cliente_espera ( cnpj,mes,ano,barras,quantidade,valor_bruto,valor_liquido,valor_desconto ) FROM '{0}' WITH DELIMITER ';' CSV HEADER",strPath);
+
+                cmm = new NpgsqlCommand(sql, cnn);
+                
+                cnn.Open();
+
+                try
+                {
+                    cmm.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                }
+                finally
+                {
+                    cnn.Close();
+                }
+            }
+            else { msg = "Erro ao converter o txt."; }
+
+            return msg;
+        }
+        #endregion
     }
 }

@@ -183,6 +183,54 @@ namespace SIAO.SRV.BLL
 
             return sb.ToString();
         }
+
+        public static string UploadFile(UsersTO clsUser, FileUpload fuArquivo)
+        {
+            string msg = String.Empty;
+            SRV.clsFuncs of = new SRV.clsFuncs();
+            SRV.clsControl oc = new SRV.clsControl();
+
+            if (fuArquivo.PostedFile.FileName == "")
+            {
+                msg = "Selecione um arquivo.";
+            }
+            else if (of.ValidaExt(fuArquivo.PostedFile.FileName))
+            {
+                if (fuArquivo.HasFile)
+                {
+                    if (System.IO.Path.GetExtension(fuArquivo.PostedFile.FileName).ToUpper() == ".XML")
+                    {
+                        XmlDocument xd = new XmlDocument();
+
+                        xd.Load(fuArquivo.FileContent);
+
+                        DataTable dt = ConvertXML(xd);
+
+                        if (!DataValidation(dt))
+                            msg = "CNPJ não cadastrado";
+                        else
+                            msg = oc.NewAddXml(dt, clsUser);
+                    }
+                    else
+                    {
+                        string strPath = ConfigurationManager.AppSettings["PATH_UPLOAD"] + fuArquivo.PostedFile.FileName;
+                        fuArquivo.PostedFile.SaveAs(strPath);
+
+                        msg = FilesDAL.Insert(strPath);
+
+                        if (!String.IsNullOrEmpty(strPath))
+                            File.Delete(strPath);
+                    }
+                }
+                else { msg = "Selecione apenas arquivos com extenção '.XML' ou '.TXT'."; }
+            }
+            else
+            {
+                msg = "Selecione apenas arquivos com extenção '.XML' ou '.TXT'.";
+            }
+
+            return msg;
+        }
         #endregion
 
     }
