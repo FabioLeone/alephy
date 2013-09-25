@@ -1099,24 +1099,28 @@ namespace SIAO.SRV.DAL
                                 switch (clsUser.Nivel)
                                 {
                                     case 1:
-                                        strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
+                                        strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid 
+                                        WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
                                         SELECT c.Mes || ' ' || c.Ano FROM consolidado c LEFT JOIN farmacias f ON c.cnpj = f.cnpj");
                                         break;
                                     case 2:
-                                        strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
+                                        strSQL.Append(@" LEFT JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid 
+                                        WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date((
                                         SELECT c.Mes || ' ' || c.Ano FROM consolidado c LEFT JOIN farmacias f ON c.cnpj = f.cnpj");
                                         break;
                                 }
                             }
                             break;
                         case 2:
-                            strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
+                            strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.Id = usuarios_vinculos.farmaciaid 
+                            WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
                             FROM consolidado c 
                             LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
                             INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
                             break;
                         case 3:
-                            strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
+                            strSQL.Append(@" INNER JOIN usuarios_vinculos ON farmacias.idRede = usuarios_vinculos.redeid 
+                            WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
                             FROM consolidado c 
                             LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
                             INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
@@ -1124,8 +1128,10 @@ namespace SIAO.SRV.DAL
                     }
                 }
 
-                strSQL.Append(@" WHERE (to_date(to_char(Mes,'99') || to_char(Ano,'9999'), 'MM yyyy') >= to_date(@ini,'MM yyyy'))
-                and (to_date(to_char(mes,'99') || to_char(ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
+                strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
+                            FROM consolidado c 
+                            LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
+                            INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
 
                 if (intRedeId > 0)
                     strSQL.Append(@" AND f.idRede = @idRede ORDER BY ano DESC, mes DESC LIMIT 1
