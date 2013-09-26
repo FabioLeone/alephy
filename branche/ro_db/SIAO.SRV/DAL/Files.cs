@@ -132,7 +132,7 @@ namespace SIAO.SRV.DAL
             {
                 StringBuilder strSQL = new StringBuilder();
                 //TODO - busca por ano
-                strSQL.Append(String.Format("SELECT arquivosenviados.data FROM arquivosenviados WHERE EXTRACT(YEAR FROM data) = '{0}' AND cnpj = '{1}' ORDER BY `data`;", strAno, strCnpj));
+                strSQL.Append(String.Format("SELECT arquivosenviados.data FROM arquivosenviados WHERE EXTRACT(YEAR FROM data) = '{0}' AND cnpj = '{1}' ORDER BY data;", strAno, strCnpj));
 
                 DbCommand cmdFile = msc.CreateCommand();
                 cmdFile.CommandText = strSQL.ToString();

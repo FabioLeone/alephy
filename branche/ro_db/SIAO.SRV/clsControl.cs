@@ -1490,7 +1490,7 @@ namespace SIAO.SRV
                     clsDB.closeConnection(cmm);
                 }
 
-                this.AddTxtData(dt, clsUser);
+                AddTxtData(dt, clsUser);
 
             }
             else { msg = "Erro ao converter o txt."; }
@@ -1539,7 +1539,7 @@ namespace SIAO.SRV
                 }
 
                 if (String.IsNullOrEmpty(msg))
-                    this.AddTxtData(dt, clsUser);
+                    AddTxtData(dt, clsUser);
 
             }
             else { msg = "Erro ao converter o txt."; }
@@ -1547,9 +1547,10 @@ namespace SIAO.SRV
             return msg;
         }
 
-        private void AddTxtData(DataTable dt, UsersTO clsUser)
+        public static void AddTxtData(DataTable dt, UsersTO clsUser)
         {
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
             cmm.Connection = cnn;
             DataTable auxDt = new DataTable();
             auxDt = dt.DefaultView.ToTable(true, "cnpj", "ano", "mes");

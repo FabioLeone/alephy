@@ -94,7 +94,7 @@ namespace SIAO.SRV
         }
 
         // Executa SQL
-        public void Execute(ref NpgsqlCommand cmm)
+        public static void Execute(ref NpgsqlCommand cmm)
         {
             try
             {

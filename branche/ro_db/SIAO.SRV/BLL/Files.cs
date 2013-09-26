@@ -218,6 +218,9 @@ namespace SIAO.SRV.BLL
 
                         msg = FilesDAL.Insert(strPath);
 
+                        if (String.IsNullOrEmpty(msg))
+                            clsControl.AddTxtData(of.txtDtConvert(fuArquivo.FileContent), clsUser);
+
                         if (!String.IsNullOrEmpty(strPath))
                             File.Delete(strPath);
                     }
