@@ -157,7 +157,7 @@
                             <td colspan="2">
                                 <asp:TextBox ID="txtFone" runat="server"></asp:TextBox>
                             </td>
-                            <td style="width: 100px; text-align: right;">
+                            <td style="width: 130px; font-size:12pt; text-align: right;">
                                 Telefone 2:
                             </td>
                             <td>
@@ -182,12 +182,6 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtSkype" runat="server"></asp:TextBox>
-                            </td>
-                            <td style="text-align: right;">
-                                Msn:
-                            </td>
-                            <td>
-                                <asp:TextBox ID="txtMsn" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>

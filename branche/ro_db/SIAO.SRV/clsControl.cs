@@ -165,7 +165,7 @@ namespace SIAO.SRV
             farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,
             farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,
             farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,
-            farmacias.Site, farmacias.Skype, farmacias.Msn, farmacias.Ativo, farmacias.idRede,farmacias.CEP
+            farmacias.Site, farmacias.Skype, farmacias.Ativo, farmacias.idRede,farmacias.CEP
             FROM farmacias WHERE (farmacias.Cnpj = @Cnpj)");
 
             string scnpj = strCNPJ.Replace(".", "");
@@ -205,7 +205,6 @@ namespace SIAO.SRV
                     clsLoja.Celular = ds.Tables["Loja"].Rows[0]["Celular"].ToString();
                     clsLoja.Site = ds.Tables["Loja"].Rows[0]["Site"].ToString();
                     clsLoja.Skype = ds.Tables["Loja"].Rows[0]["Skype"].ToString();
-                    clsLoja.Msn = ds.Tables["Loja"].Rows[0]["Msn"].ToString();
                     clsLoja.Ativo = (ds.Tables["Loja"].Rows[0]["Ativo"].ToString() == "1" ? true : false);
                     clsLoja.idRede = Convert.ToInt32(ds.Tables["Loja"].Rows[0]["idRede"].ToString());
                     clsLoja.CEP = ds.Tables["Loja"].Rows[0]["CEP"].ToString();
@@ -346,7 +345,7 @@ namespace SIAO.SRV
             farmacias.Email2, farmacias.NomeFantasia, farmacias.RazaoSocial, farmacias.Cnpj,
             farmacias.Endereco, farmacias.Numero, farmacias.Bairro, farmacias.Complemento,
             farmacias.Cidade, farmacias.UF, farmacias.Tel1, farmacias.Tel2, farmacias.Celular,
-            farmacias.Site, farmacias.Skype, farmacias.Msn, farmacias.Ativo, farmacias.idRede,farmacias.CEP
+            farmacias.Site, farmacias.Skype, farmacias.Ativo, farmacias.idRede,farmacias.CEP
             FROM farmacias WHERE (farmacias.Id = @Id)");
 
             cmm.CommandText = strSQL.ToString();
@@ -380,7 +379,6 @@ namespace SIAO.SRV
                 clsLoja.Celular = ds.Tables["LojaEd"].Rows[0]["Celular"].ToString();
                 clsLoja.Site = ds.Tables["LojaEd"].Rows[0]["Site"].ToString();
                 clsLoja.Skype = ds.Tables["LojaEd"].Rows[0]["Skype"].ToString();
-                clsLoja.Msn = ds.Tables["LojaEd"].Rows[0]["Msn"].ToString();
                 clsLoja.Ativo = (ds.Tables["LojaEd"].Rows[0]["Ativo"].ToString() == "1" ? true : false);
                 clsLoja.idRede = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["idRede"].ToString());
                 clsLoja.CEP = ds.Tables["LojaEd"].Rows[0]["CEP"].ToString();
@@ -489,7 +487,8 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = msc;
-            cmm.CommandText = "SELECT DISTINCT Grupo FROM produtos_base WHERE Grupo NOT IN ('Fitoterápicos', 'DERMOCOSMETICOS') ORDER BY Grupo";
+            cmm.CommandText = @"SELECT id, CASE WHEN (apelido is null or apelido = '') THEN nome ELSE apelido END as Grupo
+            FROM produtos_grupos WHERE nome NOT IN ('Fitoterápicos', 'DERMOCOSMETICOS') ORDER BY nome";
 
             if (clsDB.openConnection(cmm))
             {
@@ -508,7 +507,7 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = msc;
-            cmm.CommandText = "SELECT DISTINCT Sub_Consultoria FROM produtos_base WHERE Sub_Consultoria <> '' ORDER BY Sub_Consultoria";
+            cmm.CommandText = "SELECT id, nome FROM produtos_subgrupos ORDER BY nome";
 
             if (clsDB.openConnection(cmm))
             {
@@ -999,12 +998,12 @@ namespace SIAO.SRV
             UsersTO clsUser = new UsersTO();
 
             cmm.Connection = cnn;
-            cmm.CommandText = "SELECT users.UserId, users.UserName, memberships.Email,"
-                + " memberships.Inactive, memberships.ExpirationDate, memberships.Access, "
-                + " memberships.Name, usuarios_farmacias.FarmaciaId, memberships.`Password`"
-                + " FROM  users INNER JOIN"
-                + " memberships ON users.UserId = memberships.UserId LEFT OUTER JOIN"
-                + " usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId"
+            cmm.CommandText = @"SELECT users.UserId, users.UserName, memberships.Email,
+                memberships.Inactive, memberships.ExpirationDate, memberships.Access, 
+                memberships.Name, usuarios_vinculos.FarmaciaId, memberships.Password
+                FROM  users INNER JOIN
+                memberships ON users.UserId = memberships.UserId LEFT OUTER JOIN
+                usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId"
                 + " WHERE (memberships.Inactive = 0) AND (users.UserId = " + p + ")";
 
             if (clsDB.openConnection(cmm))
@@ -1157,12 +1156,12 @@ namespace SIAO.SRV
             scnpj = scnpj.Replace("-", "");
 
             cmm.CommandText = @"INSERT INTO farmacias (Proprietario, Gerente, Email, Email2, NomeFantasia, RazaoSocial, Cnpj, Endereco, Numero,
-            Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, Msn, Ativo, idRede, CEP)"
+            Bairro, Complemento, Cidade, UF, Tel1, Tel2, Celular, Site, Skype, Ativo, idRede, CEP)"
                 + " VALUES ('" + ol.Proprietario + "', '" + ol.Gerente + "', '" + ol.Email + "', '" + ol.Email2 + "', '"
                 + ol.NomeFantasia + "', '" + ol.Razao + "', '" + scnpj + "', '" + ol.Endereco + "', '" + ol.EndNumero
                 + "', '" + ol.Bairro + "', '" + ol.Complemento + "', '" + ol.Cidade + "', '" + ol.Uf + "', '" + ol.Fone
                 + "', '" + ol.Fone2 + "', '" + ol.Celular + "', '" + ol.Site + "', '" + ol.Skype + "', "
-                + " '" + ol.Msn + "', " + (ol.Ativo == true ? 1 : 0) + ", " + ol.idRede + ",'" + ol.CEP + "')";
+                + (ol.Ativo == true ? 1 : 0) + ", " + ol.idRede + ",'" + ol.CEP + "')";
 
             try
             {
@@ -1196,8 +1195,7 @@ namespace SIAO.SRV
                 + "', RazaoSocial = '" + clsLoja.Razao + "', Cnpj = '" + scnpj + "', Endereco = '" + clsLoja.Endereco + "', Numero = '"
                 + clsLoja.EndNumero + "', Bairro = '" + clsLoja.Bairro + "', Complemento = '" + clsLoja.Complemento + "', Cidade = '"
                 + clsLoja.Cidade + "', UF = '" + clsLoja.Uf + "', Tel1 = '" + clsLoja.Fone + "', Tel2 = '" + clsLoja.Fone2 + "', Celular = '"
-                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', " + " Msn = " + " '" + clsLoja.Msn
-                + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0) + ", idRede = " + clsLoja.idRede + ",CEP = '" + clsLoja.CEP + "' WHERE Id = "
+                + clsLoja.Celular + "', Site = '" + clsLoja.Site + "', Skype = '" + clsLoja.Skype + "', Ativo = " + (clsLoja.Ativo == true ? 1 : 0) + ", idRede = " + clsLoja.idRede + ",CEP = '" + clsLoja.CEP + "' WHERE Id = "
                 + clsLoja.Id;
 
             try

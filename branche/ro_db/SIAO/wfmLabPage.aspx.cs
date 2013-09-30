@@ -47,13 +47,13 @@ namespace SIAO
             //Grupos
             cblGrupos.DataSource = clsControl.GetGrupos(scn);
             cblGrupos.DataTextField = "Grupo";
-            cblGrupos.DataValueField = "Grupo";
+            cblGrupos.DataValueField = "id";
             cblGrupos.DataBind();
 
             //Subgrupos
             cblCategoria.DataSource = clsControl.GetSubCategorias(scn);
-            cblCategoria.DataTextField = "Sub_Consultoria";
-            cblCategoria.DataValueField = "Sub_Consultoria";
+            cblCategoria.DataTextField = "nome";
+            cblCategoria.DataValueField = "id";
             cblCategoria.DataBind();
         }
 

@@ -28,7 +28,6 @@ namespace SIAO.SRV
         public string Celular { get; set; }
         public string Site { get; set; }
         public string Skype { get; set; }
-        public string Msn { get; set; }
         public string Rede { get; set; }
         public int idRede { get; set; }
         public bool Ativo { get; set; }
