@@ -82,7 +82,7 @@ namespace SIAO
             Global.LocalPage = "wfmLabPage.aspx";
             Session["graficoLab"] = clsGraficoLab;
 
-            Response.Redirect("wfmLabRelat.aspx");
+            clsFuncs.Redirect("wfmLabRelat.aspx", "_blank", "");
         }
     }
 }
