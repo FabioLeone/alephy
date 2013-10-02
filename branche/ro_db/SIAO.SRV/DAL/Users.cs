@@ -359,11 +359,11 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name` FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN farmacias ON farmacias.ProprietarioID = users.UserId ");
+                strSQL.Append("SELECT users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name` FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_vinculos u ON u.usuarioid = users.UserId ");
                 if (intRedeId > 0)
-                    strSQL.Append(" WHERE farmacias.idRede = @idRede");
+                    strSQL.Append(" WHERE u.redeid = @idRede");
                 else
-                    strSQL.Append(String.Format(" WHERE (farmacias.idRede = 0 Or farmacias.idRede IS NULL) AND memberships.Access <> '{0}'", CDM.Cript("adm")));
+                    strSQL.Append(String.Format(" WHERE (u.Redeid = 0 Or u.Redeid IS NULL) AND memberships.Access <> '{0}'", CDM.Cript("adm")));
                 strSQL.Append(" GROUP BY users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name`");
                 
                 DbCommand cmdUsers = msc.CreateCommand();

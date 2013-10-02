@@ -394,14 +394,14 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT DISTINCT id, Cnpj, NomeFantasia, GerenteId, ProprietarioID
+            cmm.CommandText = @"SELECT DISTINCT id, Cnpj, NomeFantasia
             FROM (
-            SELECT f.id, Cnpj, NomeFantasia, GerenteId, ProprietarioID
+            SELECT f.id, Cnpj, NomeFantasia
                         FROM farmacias f
                         INNER JOIN usuarios_vinculos ON f.id = usuarios_vinculos.farmaciaid
                         WHERE usuarios_vinculos.usuarioid = @usuarioid
             UNION
-            SELECT f.id, Cnpj, NomeFantasia, GerenteId, ProprietarioID
+            SELECT f.id, Cnpj, NomeFantasia
                         FROM farmacias f
                         INNER JOIN usuarios_vinculos ON f.idrede = usuarios_vinculos.redeid
                         WHERE usuarios_vinculos.usuarioid = @usuarioid
@@ -428,7 +428,7 @@ namespace SIAO.SRV
             NpgsqlCommand cmm = new NpgsqlCommand();
 
             cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT id, Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
+            cmm.CommandText = @"SELECT id, Cnpj, NomeFantasia, idRede FROM farmacias
             WHERE farmacias.idRede = @idRede ORDER BY NomeFantasia";
 
             cmm.Parameters.Clear();
@@ -449,10 +449,9 @@ namespace SIAO.SRV
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             NpgsqlCommand cmm = new NpgsqlCommand();
             Loja objLoja = new Loja();
-            Int32 intGerenteId = 0, intProprietarioId = 0;
 
             cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT id,Cnpj, NomeFantasia, GerenteId, ProprietarioID,idRede FROM farmacias
+            cmm.CommandText = @"SELECT id,Cnpj, NomeFantasia, idRede FROM farmacias
             WHERE farmacias.id = @id";
 
             cmm.Parameters.Clear();
@@ -467,13 +466,9 @@ namespace SIAO.SRV
             if (ds.Tables["Farmacias"].Rows.Count > 0)
             {
                 objLoja.Cnpj = ds.Tables["Farmacias"].Rows[0]["Cnpj"].ToString();
-                Int32.TryParse(ds.Tables["Farmacias"].Rows[0]["GerenteId"].ToString(), out intGerenteId);
-                objLoja.GerenteId = intGerenteId;
                 objLoja.Id = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["id"].ToString());
                 objLoja.idRede = Convert.ToInt32(ds.Tables["Farmacias"].Rows[0]["idRede"].ToString());
                 objLoja.NomeFantasia = ds.Tables["Farmacias"].Rows[0]["NomeFantasia"].ToString();
-                Int32.TryParse(ds.Tables["Farmacias"].Rows[0]["ProprietarioID"].ToString(), out intProprietarioId);
-                objLoja.ProprietarioId = intProprietarioId;
             }
 
             return objLoja;
