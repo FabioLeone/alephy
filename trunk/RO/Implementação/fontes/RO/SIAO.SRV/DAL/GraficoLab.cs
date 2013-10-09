@@ -32,31 +32,29 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(" select `redesfarmaceuticas`.Id,`redesfarmaceuticas`.`Descricao`,`base_clientes`.`Ano`,`base_clientes`.`Mes`,");
-                strSQL.Append(" `produtos_base`.`NomeLab`,sum(`base_clientes`.`Valor_Liquido`) AS `Valor_Liquido` ");
-                strSQL.Append(" from (((`base_clientes` join `farmacias` on((`base_clientes`.`Cnpj` = `farmacias`.`Cnpj`))) ");
-                strSQL.Append(" join `redesfarmaceuticas` on((`farmacias`.`idRede` = `redesfarmaceuticas`.`Id`))) ");
-                strSQL.Append(" join `produtos_base` on((`produtos_base`.`CodBarra` = `base_clientes`.`Barras`))) ");
-                strSQL.Append(" where (`base_clientes`.`Ano` = "+ intAno +") ");
+                strSQL.Append(@"select redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,base_clientes.Ano,base_clientes.Mes, produtos_base.NomeLab,
+                sum(base_clientes.Valor_Liquido) AS Valor_Liquido  from (((base_clientes join farmacias on((base_clientes.Cnpj = farmacias.Cnpj)))  
+                join redesfarmaceuticas on((farmacias.idRede = redesfarmaceuticas.Id)))  join produtos_base on((produtos_base.CodBarra = base_clientes.Barras)))");
+                strSQL.Append(" where (base_clientes.Ano = "+ intAno +") ");
 
-                if (intId > 0) { strSQL.Append(" and (`redesfarmaceuticas`.Id = "+ intId +")"); }
+                if (intId > 0) { strSQL.Append(" and (redesfarmaceuticas.Id = "+ intId +")"); }
                 if (lstGrupos.Count > 0) {
                     string strGrupo = string.Empty;
                     int i = 0;
                     lstGrupos.ForEach(delegate(string _grupo) {
-                        if (i == 0) { strGrupo = " '" + _grupo + "'"; i++; } else { strGrupo += ", '" + _grupo + "'"; i++; }    
+                        if (i == 0) { strGrupo = _grupo; i++; } else { strGrupo += ", " + _grupo; i++; }    
                     });
-                    strSQL.Append(" and (`produtos_base`.`Grupo` in ("+ strGrupo +"))");
+                    strSQL.Append(" and (produtos_base.\"grupoID\" in ("+ strGrupo +"))");
                 }
                 if (lstSubGrupos.Count > 0) {
                     string strSubGrupo = string.Empty;
                     int i = 0;
                     lstSubGrupos.ForEach(delegate(string _subGrupo) {
-                        if (i == 0) { strSubGrupo = " '" + _subGrupo + "'"; i++; } else { strSubGrupo += ", '" + _subGrupo + "'"; i++; }
+                        if (i == 0) { strSubGrupo = _subGrupo; i++; } else { strSubGrupo += ", " + _subGrupo; i++; }
                     });
-                    strSQL.Append(" and (`produtos_base`.`Sub_Consultoria` in (" + strSubGrupo + "))");
+                    strSQL.Append(" and (produtos_base.\"subID\" in (" + strSubGrupo + "))");
                 }
-                strSQL.Append(" group by `redesfarmaceuticas`.Id,`redesfarmaceuticas`.`Descricao`,`base_clientes`.`Ano`,`base_clientes`.`Mes`,`produtos_base`.`NomeLab`");
+                strSQL.Append(" group by redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,base_clientes.Ano,base_clientes.Mes,produtos_base.NomeLab");
 
                 DbCommand cmdGraficoLab = msc.CreateCommand();
                 cmdGraficoLab.CommandText = strSQL.ToString();
@@ -85,23 +83,20 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(" select `redesfarmaceuticas`.Id,'TotalMes' as `Descricao`,`base_clientes`.`Ano`,`base_clientes`.`Mes`,");
-                strSQL.Append(" '' as `NomeLab`,sum(`base_clientes`.`Valor_Liquido`) AS `Valor_Liquido` ");
-                strSQL.Append(" from (((`base_clientes` join `farmacias` on((`base_clientes`.`Cnpj` = `farmacias`.`Cnpj`))) ");
-                strSQL.Append(" join `redesfarmaceuticas` on((`farmacias`.`idRede` = `redesfarmaceuticas`.`Id`))) ");
-                strSQL.Append(" join `produtos_base` on((`produtos_base`.`CodBarra` = `base_clientes`.`Barras`))) ");
-                strSQL.Append(" where (`base_clientes`.`Ano` = " + intAno + ") ");
+                strSQL.Append(@" select redesfarmaceuticas.Id,'TotalMes' as Descricao,base_clientes.Ano,base_clientes.Mes, '' as NomeLab,sum(base_clientes.Valor_Liquido) AS Valor_Liquido  
+                from (((base_clientes join farmacias on((base_clientes.Cnpj = farmacias.Cnpj)))  join redesfarmaceuticas on((farmacias.idRede = redesfarmaceuticas.Id)))  
+                join produtos_base on((produtos_base.CodBarra = base_clientes.Barras)))  where (base_clientes.Ano = " + intAno + ") ");
 
-                if (intId > 0) { strSQL.Append(" and (`redesfarmaceuticas`.Id = " + intId + ")"); }
+                if (intId > 0) { strSQL.Append(" and (redesfarmaceuticas.Id = " + intId + ")"); }
                 if (lstGrupos.Count > 0)
                 {
                     string strGrupo = string.Empty;
                     int i = 0;
                     lstGrupos.ForEach(delegate(string _grupo)
                     {
-                        if (i == 0) { strGrupo = " '" + _grupo + "'"; i++; } else { strGrupo += ", '" + _grupo + "'"; i++; }
+                        if (i == 0) { strGrupo = _grupo; i++; } else { strGrupo += ", " + _grupo; i++; }
                     });
-                    strSQL.Append(" and (`produtos_base`.`Grupo` in (" + strGrupo + "))");
+                    strSQL.Append(" and (produtos_base.\"grupoID\" in (" + strGrupo + "))");
                 }
                 if (lstSubGrupos.Count > 0)
                 {
@@ -109,11 +104,11 @@ namespace SIAO.SRV.DAL
                     int i = 0;
                     lstSubGrupos.ForEach(delegate(string _subGrupo)
                     {
-                        if (i == 0) { strSubGrupo = " '" + _subGrupo + "'"; i++; } else { strSubGrupo += ", '" + _subGrupo + "'"; i++; }
+                        if (i == 0) { strSubGrupo = _subGrupo; i++; } else { strSubGrupo += ", " + _subGrupo; i++; }
                     });
-                    strSQL.Append(" and (`produtos_base`.`Sub_Consultoria` in (" + strSubGrupo + "))");
+                    strSQL.Append(" and (produtos_base.\"subID\" in (" + strSubGrupo + "))");
                 }
-                strSQL.Append(" group by `redesfarmaceuticas`.Id,`redesfarmaceuticas`.`Descricao`,`base_clientes`.`Ano`,`base_clientes`.`Mes`");
+                strSQL.Append(" group by redesfarmaceuticas.Id,redesfarmaceuticas.Descricao,base_clientes.Ano,base_clientes.Mes");
 
                 DbCommand cmdGraficoLab = msc.CreateCommand();
                 cmdGraficoLab.CommandText = strSQL.ToString();

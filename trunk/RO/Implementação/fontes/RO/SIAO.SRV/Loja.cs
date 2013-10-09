@@ -11,9 +11,7 @@ namespace SIAO.SRV
         public string NomeFantasia { get; set; }
         public string Razao { get; set; }
         public string Proprietario { get; set; }
-        public int ProprietarioId { get; set; }
         public string Gerente { get; set; }
-        public int GerenteId { get; set; }
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Cnpj { get; set; }
@@ -28,7 +26,6 @@ namespace SIAO.SRV
         public string Celular { get; set; }
         public string Site { get; set; }
         public string Skype { get; set; }
-        public string Msn { get; set; }
         public string Rede { get; set; }
         public int idRede { get; set; }
         public bool Ativo { get; set; }

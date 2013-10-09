@@ -77,7 +77,8 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT roles.RoleId,roles.UserId,roles.Envio,roles.RelatoriosTodos FROM roles LEFT JOIN farmacias ON roles.UserId = farmacias.ProprietarioID WHERE farmacias.idRede =@idRede GROUP BY RoleId");
+                strSQL.Append(@"SELECT roles.RoleId,roles.UserId,roles.Envio,roles.RelatoriosTodos FROM roles LEFT JOIN usuarios_vinculos u ON roles.UserId = u.usuarioid
+                WHERE u.redeid = @idRede GROUP BY RoleId");
 
                 DbCommand cmdUsers = msc.CreateCommand();
 

@@ -102,9 +102,9 @@ namespace SIAO.SRV.DAL
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
                 memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.Name, usuarios_farmacias.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
+                memberships.Access, memberships.Name, uv.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
                 FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN 
-                usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId LEFT JOIN
+                usuarios_vinculos uv ON users.UserId = uv.UsuarioId LEFT JOIN
                 usuarios_tipos ON users.TipoId = usuarios_tipos.id
                 ORDER BY users.UserName");
 
@@ -139,9 +139,9 @@ namespace SIAO.SRV.DAL
             {
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, m.Password,m.Email, m.Inactive, 
-                m.CreateDate, m.ExpirationDate,m.Access, m.Name, uf.FarmaciaId,u.TipoId,ut.Tipo,u.nivel
+                m.CreateDate, m.ExpirationDate,m.Access, m.Name, uv.FarmaciaId,u.TipoId,ut.Tipo,u.nivel
                 FROM users u LEFT JOIN memberships m ON u.UserId = m.UserId 
-                LEFT JOIN usuarios_farmacias uf ON u.UserId = uf.UserId LEFT JOIN
+                LEFT JOIN usuarios_vinculos uv ON u.UserId = uv.UsuarioId LEFT JOIN
                 usuarios_tipos ut ON u.TipoId = ut.id WHERE u.UserId=@UserId");
 
                 DbCommand cmdUsers = msc.CreateCommand();
@@ -182,10 +182,10 @@ namespace SIAO.SRV.DAL
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, m.Password,
                 m.Email, m.Inactive, m.CreateDate, m.ExpirationDate,
-                m.Access, m.Name, uf.FarmaciaId,u.TipoId,u.nivel
+                m.Access, m.Name, uv.FarmaciaId,u.TipoId,u.nivel
                 FROM users u 
-                LEFT JOIN memberships m ON u.UserId = m.UserId 
-                LEFT JOIN usuarios_farmacias uf ON u.UserId = uf.UserId");
+                LEFT JOIN memberships m ON u.UserId = m.UserId
+                LEFT JOIN usuarios_vinculos uv ON u.UserId = uv.usuarioid");
                 strSQL.Append(" WHERE m.Name=@Name AND m.Password=@Password");
 
                 DbCommand cmdUsers = msc.CreateCommand();
@@ -224,12 +224,13 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,");
-                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
-                strSQL.Append(" memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId");
-                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
-                strSQL.Append(" WHERE users.UserName LIKE @UserName");
-                strSQL.Append(" ORDER BY users.UserName");
+                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.Name, usuarios_vinculos.FarmaciaId
+                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId 
+                LEFT JOIN usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId
+                WHERE users.UserName LIKE @UserName
+                ORDER BY users.UserName");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
@@ -264,10 +265,11 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,");
-                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
-                strSQL.Append(" memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId");
-                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
+                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.Name, usuarios_vinculos.FarmaciaId
+                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId 
+                LEFT JOIN usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId");
                 strSQL.Append(" WHERE memberships.Access=@Access");
                 strSQL.Append(" ORDER BY users.UserName");
 
@@ -318,9 +320,9 @@ namespace SIAO.SRV.DAL
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
                 memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.Name, usuarios_farmacias.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
+                memberships.Access, memberships.Name, usuarios_vinculos.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
                 FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN 
-                usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId LEFT JOIN
+                usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId LEFT JOIN
                 usuarios_tipos ON users.TipoId = usuarios_tipos.id
                 WHERE UPPER(users.UserName) LIKE @Name
                 ORDER BY users.UserName");
@@ -357,11 +359,11 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name` FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN farmacias ON farmacias.ProprietarioID = users.UserId ");
+                strSQL.Append("SELECT users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name` FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_vinculos u ON u.usuarioid = users.UserId ");
                 if (intRedeId > 0)
-                    strSQL.Append(" WHERE farmacias.idRede = @idRede");
+                    strSQL.Append(" WHERE u.redeid = @idRede");
                 else
-                    strSQL.Append(String.Format(" WHERE (farmacias.idRede = 0 Or farmacias.idRede IS NULL) AND memberships.Access <> '{0}'", CDM.Cript("adm")));
+                    strSQL.Append(String.Format(" WHERE (u.Redeid = 0 Or u.Redeid IS NULL) AND memberships.Access <> '{0}'", CDM.Cript("adm")));
                 strSQL.Append(" GROUP BY users.UserId,users.UserName,users.LastActivityDate,memberships.`Password`,memberships.Email,memberships.Inactive,memberships.CreateDate,memberships.ExpirationDate,memberships.Access,memberships.`Name`");
                 
                 DbCommand cmdUsers = msc.CreateCommand();
@@ -483,11 +485,12 @@ namespace SIAO.SRV.DAL
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("SET NOCOUNT=ON;");
                 strSQL.Append("INSERT INTO users (UserName, LastActivityDate) VALUES (@UserName, @LastActivityDate);");
-                strSQL.Append("SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.`Password`,");
-                strSQL.Append(" memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,");
-                strSQL.Append(" memberships.Access, memberships.`Name`, usuarios_farmacias.FarmaciaId");
-                strSQL.Append(" FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN usuarios_farmacias ON users.UserId = usuarios_farmacias.UserId");
-                strSQL.Append(" WHERE users.UserId=@@IDENTITY");
+                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.Name, usuarios_vinculos.FarmaciaId
+                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId 
+                LEFT JOIN usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId
+                WHERE users.UserId=@@IDENTITY");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
@@ -523,15 +526,6 @@ namespace SIAO.SRV.DAL
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript(clsUsers.Access)));
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", CDM.Cript(clsUsers.Name)));
                 cmdUsers.ExecuteNonQuery();
-
-                strSQL.Clear();
-                strSQL.Append("INSERT INTO usuarios_farmacias (UserId, FarmaciaId) VALUES ( @UserId, @FarmaciaId)");
-
-                cmdUsers.CommandText = strSQL.ToString();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@FarmaciaId", clsUsers.FarmaciaId));
-                cmdUsers.ExecuteNonQuery();
-
             }
             finally
             {
@@ -580,15 +574,7 @@ namespace SIAO.SRV.DAL
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript(clsUsers.Access)));
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", CDM.Cript(clsUsers.Name)));
                 cmdUsers.ExecuteNonQuery();
-
-                strSQL.Clear();
-                strSQL.Append("UPDATE usuarios_farmacias SET FarmaciaId = @FarmaciaId WHERE UserId = @UserId");
-
-                cmdUsers.CommandText = strSQL.ToString();
-                cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@FarmaciaId", clsUsers.FarmaciaId));
-                cmdUsers.ExecuteNonQuery();
+                
                 return true;
             }
             catch
@@ -608,17 +594,8 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("DELETE FROM usuarios_farmacias WHERE UserId = @UserId");
 
                 DbCommand cmdUsers = msc.CreateCommand();
-                cmdUsers.CommandText = strSQL.ToString();
-
-                cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
-
-                msc.Open();
-
-                cmdUsers.ExecuteNonQuery();
 
                 strSQL.Clear();
                 strSQL.Append("DELETE FROM memberships WHERE UserId = @UserId");
@@ -626,6 +603,9 @@ namespace SIAO.SRV.DAL
                 cmdUsers.CommandText = strSQL.ToString();
                 cmdUsers.Parameters.Clear();
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
+
+                msc.Open();
+                
                 cmdUsers.ExecuteNonQuery();
 
                 strSQL.Clear();

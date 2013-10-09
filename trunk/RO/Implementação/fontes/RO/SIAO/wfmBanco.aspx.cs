@@ -17,7 +17,6 @@ namespace SIAO
         protected void Page_Load(object sender, EventArgs e)
         {
             if (UsersBLL.GetUserSession().UserId == 0) { Response.Redirect("Logon.aspx"); }
-            divSces();
         }
 
         protected void btnEnviar_Click(object sender, EventArgs e)
