@@ -159,7 +159,6 @@ namespace SIAO
                     else
                         clsLoja.idRede = clsControl.GetRedeByUserId(UsersBLL.GetUserSession().UserId).RedeId;
 
-                    clsLoja.Msn = txtMsn.Text;
                     clsLoja.NomeFantasia = txtNomeFantasia.Text;
                     clsLoja.Proprietario = txtProprietario.Text;
                     clsLoja.Razao = txtRazao.Text;
@@ -190,7 +189,6 @@ namespace SIAO
                         Fone2 = txtFone2.Text,
                         Gerente = txtGerente.Text,
                         idRede = ddlRede.SelectedValue == "" ? 0 : Convert.ToInt32(ddlRede.SelectedValue),
-                        Msn = txtMsn.Text,
                         NomeFantasia = txtNomeFantasia.Text,
                         Proprietario = txtProprietario.Text,
                         Razao = txtRazao.Text,
@@ -234,7 +232,6 @@ namespace SIAO
             txtFone.Text = "";
             txtFone2.Text = "";
             txtProprietario.Text = "";
-            txtMsn.Text = "";
             txtNomeFantasia.Text = "";
             txtNum.Text = "";
             txtGerente.Text = "";
@@ -279,7 +276,6 @@ namespace SIAO
                 txtFone.Text = ol.Fone;
                 txtFone2.Text = ol.Fone2;
                 txtGerente.Text = ol.Gerente;
-                txtMsn.Text = ol.Msn;
                 txtNomeFantasia.Text = ol.NomeFantasia;
                 txtNum.Text = ol.EndNumero.ToString();
                 try

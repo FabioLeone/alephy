@@ -47,13 +47,13 @@ namespace SIAO
             //Grupos
             cblGrupos.DataSource = clsControl.GetGrupos(scn);
             cblGrupos.DataTextField = "Grupo";
-            cblGrupos.DataValueField = "Grupo";
+            cblGrupos.DataValueField = "id";
             cblGrupos.DataBind();
 
             //Subgrupos
             cblCategoria.DataSource = clsControl.GetSubCategorias(scn);
-            cblCategoria.DataTextField = "Sub_Consultoria";
-            cblCategoria.DataValueField = "Sub_Consultoria";
+            cblCategoria.DataTextField = "nome";
+            cblCategoria.DataValueField = "id";
             cblCategoria.DataBind();
         }
 
@@ -82,7 +82,7 @@ namespace SIAO
             Global.LocalPage = "wfmLabPage.aspx";
             Session["graficoLab"] = clsGraficoLab;
 
-            Response.Redirect("wfmLabRelat.aspx");
+            clsFuncs.Redirect("wfmLabRelat.aspx", "_blank", "");
         }
     }
 }

@@ -67,18 +67,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="analise.aspx" />
-    <Content Include="aplicativos.aspx" />
     <Content Include="configurations.aspx" />
-    <Content Include="Content\a_Logo.jpg" />
     <Content Include="Content\css\Animations.css" />
     <Content Include="Content\css\style1.css" />
     <Content Include="Content\delete.png" />
-    <Content Include="Content\document.png" />
     <Content Include="Content\edit.png" />
     <Content Include="Content\fonts\BebasNeue-webfont.svg" />
     <Content Include="Content\fonts\Dharma Type Font License.txt" />
-    <Content Include="Content\graphic.png" />
     <Content Include="Content\html\analise.htm" />
     <Content Include="Content\images\app\hex.png" />
     <Content Include="Content\images\app\icons\Board-icon.png" />
@@ -110,12 +105,8 @@
     <Content Include="Content\js\jquery.lavalamp.js" />
     <Content Include="Content\js\jquery.lavalamp.min.js" />
     <Content Include="Content\js\modernizr.custom.86080.js" />
-    <Content Include="Content\report.gif" />
-    <Content Include="Content\report.png" />
-    <Content Include="Content\Search.png" />
     <Content Include="Content\ssSIAO.css" />
     <Content Include="Content\images\app\success.png" />
-    <Content Include="Controls\wucAnalise.ascx" />
     <Content Include="Controls\wucCadastroUser.ascx" />
     <Content Include="Controls\wucFilter.ascx" />
     <Content Include="Controls\wucListaUsers.ascx" />
@@ -152,33 +143,12 @@
     <Content Include="wfmRelatorio.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="analise.aspx.cs">
-      <DependentUpon>analise.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="analise.aspx.designer.cs">
-      <DependentUpon>analise.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="aplicativos.aspx.cs">
-      <DependentUpon>aplicativos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="aplicativos.aspx.designer.cs">
-      <DependentUpon>aplicativos.aspx</DependentUpon>
-    </Compile>
     <Compile Include="configurations.aspx.cs">
       <DependentUpon>configurations.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="configurations.aspx.designer.cs">
       <DependentUpon>configurations.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\wucAnalise.ascx.cs">
-      <DependentUpon>wucAnalise.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\wucAnalise.ascx.designer.cs">
-      <DependentUpon>wucAnalise.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\wucCadastroUser.ascx.cs">
       <DependentUpon>wucCadastroUser.ascx</DependentUpon>
