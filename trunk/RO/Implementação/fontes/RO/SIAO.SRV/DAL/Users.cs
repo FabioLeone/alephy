@@ -309,11 +309,64 @@ namespace SIAO.SRV.DAL
             return clsUsers;
         }
 
-        internal static List<UsersTO> GetIndicesByFiltro(string strNome, string strConnection)
+        internal static List<UsersTO> GetIndicesByFiltro(string strNome, UsersTO objUser)
         {
             List<UsersTO> clsUsers = new List<UsersTO>();
 
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, memberships.Password,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.Name, uv.FarmaciaId,u.TipoId,usuarios_tipos.Tipo
+                FROM users u LEFT JOIN memberships ON u.UserId = memberships.UserId LEFT JOIN 
+                usuarios_tipos ON u.TipoId = usuarios_tipos.id
+                LEFT JOIN usuarios_vinculos uv ON u.userid = uv.usuarioid
+                LEFT JOIN farmacias f ON f.id = uv.farmaciaid
+                WHERE  u.TipoId <> 1 AND UPPER(u.UserName) LIKE @Name");
+
+                if (objUser.Nivel.Equals(1))
+                    strSQL.Append(@" AND (uv.redeid = (SELECT redeid FROM usuarios_vinculos WHERE usuarioid = @usuarioid) 
+                    OR f.idrede = (SELECT redeid FROM usuarios_vinculos WHERE usuarioid = @usuarioid)
+                    OR u.owner = @usuarioid)");
+                else if (objUser.Nivel.Equals(2))
+                    strSQL.Append(@" AND (uv.farmaciaid = (SELECT farmaciaid FROM usuarios_vinculos WHERE usuarioid = @usuarioid) 
+					OR f.id = (SELECT farmaciaid FROM usuarios_vinculos WHERE usuarioid = @usuarioid)
+                    OR u.owner = @usuarioid)");
+
+                strSQL.Append(" ORDER BY u.UserName");
+
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Clear();
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", string.Format("%{0}%", strNome.ToUpper())));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@usuarioid", objUser.UserId));
+
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
+                {
+                    while (drdUsers.Read())
+                    {
+                        clsUsers.Add(Load(drdUsers));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsUsers;
+        }
+
+        internal static List<UsersTO> GetIndicesByFiltro(string strNome)
+        {
+            List<UsersTO> clsUsers = new List<UsersTO>();
+
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {

@@ -257,9 +257,21 @@ namespace SIAO.SRV.BLL
             return UsersDAL.GetByAccessType(strAccess, strConnection);
         }
 
-        public static object GetIndicesByFiltro(string strNome, string strConnection)
+        public static object GetIndicesByFiltro(string strNome)
         {
-            return UsersDAL.GetIndicesByFiltro(strNome, strConnection);
+            List<UsersTO> lstUsers;
+            UsersTO objUser = GetUserSession();
+
+            switch (objUser.Nivel)
+            {
+                case (int)Nivel.a:
+                    lstUsers = UsersDAL.GetIndicesByFiltro(strNome);
+                    break;
+                default:
+                    lstUsers = UsersDAL.GetIndicesByFiltro(strNome, objUser);
+                    break;
+            }
+            return lstUsers;
         }
 
         public static List<UsersTO> GetByRedeId(int intRedeId, string strConnection)

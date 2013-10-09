@@ -35,7 +35,7 @@ namespace SIAO.Controls
 
         protected void btnFiltro_Click(object sender, EventArgs e)
         {
-            gvwUsers.DataSource = UsersBLL.GetIndicesByFiltro(txtNome.Text, strConnection);
+            gvwUsers.DataSource = UsersBLL.GetIndicesByFiltro(txtNome.Text);
             gvwUsers.EmptyDataText = "Nenhum registro encontrado.";
             gvwUsers.DataBind();
         }
