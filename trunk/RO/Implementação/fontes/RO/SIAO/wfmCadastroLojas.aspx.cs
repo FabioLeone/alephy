@@ -192,12 +192,16 @@ namespace SIAO
                         NomeFantasia = txtNomeFantasia.Text,
                         Proprietario = txtProprietario.Text,
                         Razao = txtRazao.Text,
-                        Rede = ddlRede.SelectedItem.Text,
                         Site = txtSite.Text,
                         Skype = txtSkype.Text,
                         Uf = ddlUf.SelectedValue,
                         CEP = txtCep.Text
                     };
+
+                    if (ddlRede.Enabled)
+                        clsLoja.idRede = ddlRede.SelectedValue == "" ? 0 : Convert.ToInt32(ddlRede.SelectedValue);
+                    else
+                        clsLoja.idRede = clsControl.GetRedeByUserId(UsersBLL.GetUserSession().UserId).RedeId;
 
                     msg = o.AddLoja(scn, clsLoja);
                 }

@@ -168,7 +168,7 @@ namespace SIAO.SRV.DAL
 
             if (File.Exists(strPath))
             {
-                var sql = String.Format("COPY base_cliente_espera ( cnpj,mes,ano,barras,quantidade,valor_bruto,valor_liquido,valor_desconto ) FROM '{0}' WITH DELIMITER ';' CSV HEADER",strPath);
+                var sql = String.Format("COPY base_cliente_espera ( razao_social, cnpj, mes, ano, barras, descricao, fabricante, grupo, total_custo, quantidade, valor_bruto, valor_liquido, valor_desconto ) FROM '{0}' WITH DELIMITER ';' CSV HEADER", strPath);
 
                 cmm = new NpgsqlCommand(sql, cnn);
                 
