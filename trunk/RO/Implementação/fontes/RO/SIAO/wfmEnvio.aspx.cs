@@ -61,9 +61,9 @@ namespace SIAO
 
         protected void btnEnviar_Click(object sender, EventArgs e)
         {
-            //string msg = FilesBLL.LoadArquivo(clsUser,fuArquivo);
+            string msg = FilesBLL.LoadArquivo(clsUser,fuArquivo);
 
-            string msg = FilesBLL.UploadFile(clsUser, fuArquivo);
+            //string msg = FilesBLL.UploadFile(clsUser, fuArquivo);
 
             if (String.IsNullOrEmpty(msg)) divSces();
             else divErro(msg);

@@ -384,15 +384,6 @@ namespace SIAO.SRV
                 }
             }
 
-            try
-            {
-                dt.Columns.Remove("Totalcusto");
-                dt.Columns.Remove("Grupo");
-            }
-            catch
-            {
-            }
-
             return dt;
         }
 
