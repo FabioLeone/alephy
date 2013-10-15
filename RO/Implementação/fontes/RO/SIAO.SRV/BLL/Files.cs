@@ -67,12 +67,20 @@ namespace SIAO.SRV.BLL
 
                         xd.Load(fuArquivo.FileContent);
 
-                        DataTable dt = ConvertXML(xd);
+                        try
+                        {
+                            DataTable dt = ConvertXML(xd);
+                            
+                            if (!DataValidation(dt))
+                                msg = "CNPJ não cadastrado";
+                            else
+                                msg = oc.NewAddXml(dt, clsUser);
+                        }
+                        catch
+                        {
+                            msg = "Erro ao converter o xml. Favor verificar o arquivo.";
+                        }
 
-                        if (!DataValidation(dt))
-                            msg = "CNPJ não cadastrado";
-                        else
-                            msg = oc.NewAddXml(dt, clsUser);
                     }
                     else
                     {
@@ -204,12 +212,19 @@ namespace SIAO.SRV.BLL
 
                         xd.Load(fuArquivo.FileContent);
 
-                        DataTable dt = ConvertXML(xd);
+                        try
+                        {
+                            DataTable dt = ConvertXML(xd);
 
-                        if (!DataValidation(dt))
-                            msg = "CNPJ não cadastrado";
-                        else
-                            msg = oc.NewAddXml(dt, clsUser);
+                            if (!DataValidation(dt))
+                                msg = "CNPJ não cadastrado";
+                            else
+                                msg = oc.NewAddXml(dt, clsUser);
+                        }
+                        catch 
+                        {
+                            msg = "Erro ao converter o xml. Favor verificar o arquivo.";
+                        }
                     }
                     else
                     {

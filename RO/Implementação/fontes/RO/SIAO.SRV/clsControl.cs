@@ -1324,7 +1324,7 @@ namespace SIAO.SRV
                 }
                 else
                 {
-                    sb.Append(d.ToString().Replace(",", "."));
+                    sb.Append(d.ToString().Replace(".", "").Replace(",", "."));
                 }
                 sb.Append("|");
             }
@@ -1500,7 +1500,7 @@ namespace SIAO.SRV
 
             if (dt.Rows.Count > 0)
             {
-                var sql = "copy base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao, Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto) from stdin with delimiter '|'";
+                var sql = "copy base_cliente_espera (razao_social, cnpj, mes, ano, barras, descricao, fabricante, grupo, total_custo, quantidade, valor_bruto, valor_liquido, valor_desconto) from stdin with delimiter '|'";
 
                 cmm = new NpgsqlCommand(sql, cnn);
 
