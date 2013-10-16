@@ -1127,15 +1127,16 @@ namespace SIAO.SRV.DAL
                             break;
                     }
                 }
-
-                strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
-                            FROM consolidado c 
-                            LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
-                            INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
+                else
+                    strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') = to_date(( SELECT c.Mes || ' ' || c.Ano 
+                                        FROM consolidado c 
+                                        LEFT JOIN farmacias f ON c.cnpj = f.cnpj 
+                                        INNER JOIN usuarios_vinculos uv ON f.Id = uv.farmaciaid OR f.idRede = uv.redeid");
 
                 if (intRedeId > 0)
                     strSQL.Append(@" AND f.idRede = @idRede ORDER BY ano DESC, mes DESC LIMIT 1
                 ), 'MM yyyy')) AND farmacias.idRede = @idRede");
+                
 
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND f.Cnpj = '" + strLoja + "' ORDER BY ano DESC, mes DESC LIMIT 1), 'MM yyyy')) AND farmacias.Cnpj = '" + strLoja + "'");
