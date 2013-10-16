@@ -25,7 +25,8 @@ namespace JobConsolidacao
             List<CNPJ> lstCnpj = TransfereDados();
             if (lstCnpj.Count > 0)
             {
-                lstCnpj.ForEach(delegate(CNPJ _cnpj) {
+                lstCnpj.ForEach(delegate(CNPJ _cnpj)
+                {
                     if (_cnpj.Return)
                     {
                         NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
@@ -60,6 +61,9 @@ namespace JobConsolidacao
                         {
                             msc.Close();
                         }
+
+                        if (blnOk)
+                            blnOk = AtualizaProdutosCliente(_cnpj);
                     }
                 });
             }
@@ -71,7 +75,7 @@ namespace JobConsolidacao
         }
 
         #region .: Metodos :.
-        
+
         protected static Boolean VerificaConteudo()
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
@@ -92,7 +96,7 @@ namespace JobConsolidacao
                 {
                     if (drd.Read())
                     {
-                        if (!drd.IsDBNull(drd.GetOrdinal("Qtde"))) intQtde = drd.GetInt64(drd.GetOrdinal("Qtde"));  else intQtde = 0; 
+                        if (!drd.IsDBNull(drd.GetOrdinal("Qtde"))) intQtde = drd.GetInt64(drd.GetOrdinal("Qtde")); else intQtde = 0;
                     }
                 }
             }
@@ -170,7 +174,7 @@ namespace JobConsolidacao
                 {
                     while (drd.Read())
                     {
-                        if (!drd.IsDBNull(drd.GetOrdinal("Cnpj"))) lstCnpj.Add(objCnpj = new CNPJ(){ Cnpj = drd.GetString(drd.GetOrdinal("Cnpj"))});
+                        if (!drd.IsDBNull(drd.GetOrdinal("Cnpj"))) lstCnpj.Add(objCnpj = new CNPJ() { Cnpj = drd.GetString(drd.GetOrdinal("Cnpj")) });
                     }
                 }
             }
@@ -181,7 +185,7 @@ namespace JobConsolidacao
 
             return lstCnpj;
         }
-        
+
         private static void DeletaDados()
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
@@ -209,7 +213,7 @@ namespace JobConsolidacao
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
             List<Files> lstFiles = new List<Files>();
-            
+
             try
             {
                 StringBuilder strSQL = new StringBuilder();
@@ -301,6 +305,165 @@ namespace JobConsolidacao
                 msc.Close();
             }
         }
+
+        private static bool AtualizaProdutosCliente(CNPJ _cnpj)
+        {
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+            Boolean blnOK = false;
+            List<string> lstean = GetListProd(_cnpj);
+            StringBuilder strSQL;
+            StringBuilder strBarras = new StringBuilder();
+
+            if (lstean.Count > 0)
+            {
+                strSQL = new StringBuilder();
+
+                strSQL.Append(@"update produtos_clientes set nome = be.descricao, grupo = be.grupo, ""ultimaModf"" = current_date
+                    from ( select b.descricao, b.grupo, f.id, b.barras 
+                    from base_cliente_espera b 
+                    inner join farmacias f on f.cnpj = b.cnpj 
+                    WHERE b.Cnpj = @Cnpj
+                    group by b.cnpj, b.descricao, b.grupo, f.id, b.barras 
+                    order by b.descricao) be where produtos_clientes.cliente_id = be.id and produtos_clientes.codbarra = be.barras;");
+
+                try
+                {
+                    NpgsqlCommand cmdUsers = msc.CreateCommand();
+
+                    cmdUsers.CommandText = strSQL.ToString();
+                    cmdUsers.CommandTimeout = 9999;
+                    cmdUsers.Parameters.Clear();
+                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+
+                    msc.Open();
+                    cmdUsers.ExecuteNonQuery();
+                    blnOK = true;
+                }
+                catch
+                {
+                    blnOK = false;
+                }
+                finally
+                {
+                    msc.Close();
+                }
+
+                int i = 0;
+                lstean.ForEach(delegate(string ean) {
+                    if (i == 0)
+                    {
+                        strBarras.Append("('" + ean + "'");
+                        i++;
+                    }
+                    else {
+                        strBarras.Append(",'" + ean + "'");
+                    }
+
+                });
+
+                strBarras.Append(")");
+
+                strSQL = new StringBuilder();
+                strSQL.Append(String.Format(@"INSERT INTO produtos_clientes (nome, grupo, cliente_id, ""ultimaModf"", codbarra) 
+                    select b.descricao, b.grupo, f.id, current_date, b.barras 
+                    from base_cliente_espera b 
+                    inner join farmacias f on f.cnpj = b.cnpj 
+                    WHERE b.Cnpj = @Cnpj and b.barras not in {0}
+                    group by b.cnpj, b.descricao, b.grupo, f.id, b.barras order by b.descricao",strBarras));
+
+                try
+                {
+                    NpgsqlCommand cmdUsers = msc.CreateCommand();
+
+                    cmdUsers.CommandText = strSQL.ToString();
+                    cmdUsers.CommandTimeout = 9999;
+                    cmdUsers.Parameters.Clear();
+                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+                    cmdUsers.Parameters.Add("@barras", NpgsqlDbType.Varchar).Value = strBarras;
+
+                    msc.Open();
+                    cmdUsers.ExecuteNonQuery();
+                    blnOK = true;
+                }
+                catch
+                {
+                    blnOK = false;
+                }
+                finally
+                {
+                    msc.Close();
+                }
+            }
+            else
+            {
+                try
+                {
+                    strSQL = new StringBuilder();
+                    strSQL.Append(@"INSERT INTO produtos_clientes (nome, grupo, cliente_id, ""ultimaModf"", codbarra) 
+                    select b.descricao, b.grupo, f.id, current_date, b.barras 
+                    from base_cliente_espera b 
+                    inner join farmacias f on f.cnpj = b.cnpj 
+                    WHERE b.Cnpj = @Cnpj 
+                    group by b.cnpj, b.descricao, b.grupo, f.id, b.barras order by b.descricao");
+
+                    NpgsqlCommand cmdUsers = msc.CreateCommand();
+
+                    cmdUsers.CommandText = strSQL.ToString();
+                    cmdUsers.CommandTimeout = 9999;
+                    cmdUsers.Parameters.Clear();
+                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+
+                    msc.Open();
+                    cmdUsers.ExecuteNonQuery();
+                    blnOK = true;
+                }
+                catch
+                {
+                    blnOK = false;
+                }
+                finally
+                {
+                    msc.Close();
+                }
+            }
+
+            return blnOK;
+        }
+
+        private static List<string> GetListProd(CNPJ _cnpj)
+        {
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
+            List<string> lst = new List<string>();
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+
+                strSQL.Append("select distinct codbarra from produtos_clientes p inner join farmacias f on p.cliente_id = f.id where f.cnpj = @cnpj");
+
+                NpgsqlCommand cmd = msc.CreateCommand();
+
+                cmd.CommandText = strSQL.ToString();
+                cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+
+                msc.Open();
+
+                using (IDataReader drd = cmd.ExecuteReader())
+                {
+                    while (drd.Read())
+                    {
+                        if (!drd.IsDBNull(drd.GetOrdinal("codbarra"))) lst.Add(drd.GetString(drd.GetOrdinal("codbarra")));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return lst;
+        }
+
         #endregion
     }
 }
