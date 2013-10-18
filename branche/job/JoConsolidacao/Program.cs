@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Text;
 using Npgsql;
 using NpgsqlTypes;
+using System.Web.UI.WebControls;
 
 namespace JobConsolidacao
 {
@@ -310,7 +311,7 @@ namespace JobConsolidacao
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
             Boolean blnOK = false;
-            List<string> lstean = GetListProd(_cnpj);
+            List<ListItem> lstean = GetListProd(_cnpj);
             StringBuilder strSQL;
             StringBuilder strBarras = new StringBuilder();
 
@@ -324,7 +325,7 @@ namespace JobConsolidacao
                     inner join farmacias f on f.cnpj = b.cnpj 
                     WHERE b.Cnpj = @Cnpj
                     group by b.cnpj, b.descricao, b.grupo, f.id, b.barras 
-                    order by b.descricao) be where produtos_clientes.cliente_id = be.id and produtos_clientes.codbarra = be.barras;");
+                    order by b.descricao) be where produtos_clientes.cliente_id = be.id and (case when be.barras is null or be.barras = '' then produtos_clientes.nome = be.descricao else produtos_clientes.codbarra = be.barras end);");
 
                 try
                 {
@@ -349,27 +350,29 @@ namespace JobConsolidacao
                 }
 
                 int i = 0;
-                lstean.ForEach(delegate(string ean) {
+                lstean.ForEach(delegate(ListItem item)
+                {
                     if (i == 0)
                     {
-                        strBarras.Append("('" + ean + "'");
+                        strBarras.Append("('" + item.Value + "'");
                         i++;
                     }
-                    else {
-                        strBarras.Append(",'" + ean + "'");
+                    else
+                    {
+                        strBarras.Append(",'" + item.Value + "'");
                     }
 
                 });
-
+                                
                 strBarras.Append(")");
 
                 strSQL = new StringBuilder();
                 strSQL.Append(String.Format(@"INSERT INTO produtos_clientes (nome, grupo, cliente_id, ""ultimaModf"", codbarra) 
                     select b.descricao, b.grupo, f.id, current_date, b.barras 
-                    from base_cliente_espera b 
-                    inner join farmacias f on f.cnpj = b.cnpj 
-                    WHERE b.Cnpj = @Cnpj and b.barras not in {0}
-                    group by b.cnpj, b.descricao, b.grupo, f.id, b.barras order by b.descricao",strBarras));
+	                from base_cliente_espera b inner join farmacias f on f.cnpj = b.cnpj 
+	                left join produtos_clientes p on b.id = p.cliente_id
+	                WHERE b.Cnpj = @Cnpj and b.barras not in {0} and p.nome <> b.descricao
+	                group by b.cnpj, b.descricao, b.grupo, f.id, b.barras order by b.descricao", strBarras));
 
                 try
                 {
@@ -403,7 +406,7 @@ namespace JobConsolidacao
                     select b.descricao, b.grupo, f.id, current_date, b.barras 
                     from base_cliente_espera b 
                     inner join farmacias f on f.cnpj = b.cnpj 
-                    WHERE b.Cnpj = @Cnpj 
+                    WHERE b.Cnpj = @Cnpj
                     group by b.cnpj, b.descricao, b.grupo, f.id, b.barras order by b.descricao");
 
                     NpgsqlCommand cmdUsers = msc.CreateCommand();
@@ -430,16 +433,16 @@ namespace JobConsolidacao
             return blnOK;
         }
 
-        private static List<string> GetListProd(CNPJ _cnpj)
+        private static List<ListItem> GetListProd(CNPJ _cnpj)
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Connection_String"].ConnectionString);
-            List<string> lst = new List<string>();
+            List<ListItem> lst = new List<ListItem>();
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
 
-                strSQL.Append("select distinct codbarra from produtos_clientes p inner join farmacias f on p.cliente_id = f.id where f.cnpj = @cnpj");
+                strSQL.Append("select distinct codbarra, nome from produtos_clientes p inner join farmacias f on p.cliente_id = f.id where f.cnpj = @cnpj");
 
                 NpgsqlCommand cmd = msc.CreateCommand();
 
@@ -452,7 +455,7 @@ namespace JobConsolidacao
                 {
                     while (drd.Read())
                     {
-                        if (!drd.IsDBNull(drd.GetOrdinal("codbarra"))) lst.Add(drd.GetString(drd.GetOrdinal("codbarra")));
+                        if (!drd.IsDBNull(drd.GetOrdinal("nome"))) lst.Add(new ListItem(drd.GetString(drd.GetOrdinal("nome")), drd.GetString(drd.GetOrdinal("codbarra"))));
                     }
                 }
             }
