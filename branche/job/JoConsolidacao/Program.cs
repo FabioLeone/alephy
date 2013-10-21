@@ -371,7 +371,8 @@ namespace JobConsolidacao
                     select b.descricao, b.grupo, f.id, current_date, b.barras 
 	                from base_cliente_espera b inner join farmacias f on f.cnpj = b.cnpj 
 	                left join produtos_clientes p on b.id = p.cliente_id
-	                WHERE b.Cnpj = @Cnpj and b.barras not in {0} and p.nome <> b.descricao
+	                WHERE b.Cnpj = @Cnpj and b.barras not in {0}
+                    and case when b.barras is null or b.barras = '' then p.nome <> b.descricao else b.descricao <> '' end
 	                group by b.cnpj, b.descricao, b.grupo, f.id, b.barras order by b.descricao", strBarras));
 
                 try
