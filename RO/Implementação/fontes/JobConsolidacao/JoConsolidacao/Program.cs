@@ -34,15 +34,13 @@ namespace JobConsolidacao
                         {
                             StringBuilder strSQL = new StringBuilder();
                             strSQL.Append(@"INSERT INTO consolidado (CNPJ,Mes,Ano,Grupo,Sub_Consultoria,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto,Importado,farmaciaid) 
-                                SELECT b.Cnpj,b.Mes,b.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,
-                                Sum(b.Quantidade),Sum(b.Valor_Bruto),Sum(b.Valor_Liquido),
-                                Sum(b.Valor_Desconto),produtos_base.Importado,f.id
-                                FROM base_cliente_espera b
-                                INNER JOIN produtos_base ON b.Barras = produtos_base.CodBarra
-                                INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
-                                WHERE b.Cnpj = @Cnpj
-                                GROUP BY b.Cnpj,b.Mes,b.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,
-                                produtos_base.Importado,f.id");
+                                SELECT Cnpj,Mes,Ano,Grupo,Sub_Consultoria, Sum(Quantidade),Sum(Valor_Bruto),Sum(Valor_Liquido),
+                                Sum(Valor_Desconto),Importado,id FROM (
+                                SELECT DISTINCT b.Cnpj,b.Mes,b.Ano,produtos_base.Grupo,produtos_base.Sub_Consultoria,
+                                b.Quantidade,b.Valor_Bruto,b.Valor_Liquido, b.Valor_Desconto,produtos_base.Importado,f.id
+                                FROM base_cliente_espera b INNER JOIN produtos_base ON b.Barras = produtos_base.CodBarra
+                                INNER JOIN farmacias f ON b.Cnpj = f.Cnpj WHERE b.Cnpj = @Cnpj
+                                ) t GROUP BY Cnpj,Mes,Ano,Grupo,Sub_Consultoria,Importado,id");
 
                             NpgsqlCommand cmdUsers = msc.CreateCommand();
 
@@ -116,7 +114,7 @@ namespace JobConsolidacao
                     {
                         StringBuilder strSQL = new StringBuilder();
                         strSQL.Append("INSERT INTO base_clientes (Razao_Social,Cnpj,Mes,Ano,Barras,Descricao,Fabricante,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto,farmaciaid)");
-                        strSQL.Append(@" SELECT b.Razao_Social,b.Cnpj,b.Mes,b.Ano,b.Barras,b.Descricao,b.Fabricante,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,f.id
+                        strSQL.Append(@" SELECT distinct b.Razao_Social,b.Cnpj,b.Mes,b.Ano,b.Barras,b.Descricao,b.Fabricante,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,f.id
                                 FROM base_cliente_espera b
                                 INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
                                 WHERE b.Cnpj = @Cnpj");
