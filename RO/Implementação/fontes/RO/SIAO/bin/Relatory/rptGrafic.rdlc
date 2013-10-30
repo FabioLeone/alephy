@@ -117,7 +117,7 @@
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Avg(Fields!Liquido.Value)</Y>
+                    <Y>=Fields!Liquido.Value</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>

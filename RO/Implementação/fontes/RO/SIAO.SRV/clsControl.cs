@@ -1265,12 +1265,12 @@ namespace SIAO.SRV
 
             if (dt.Rows.Count > 0)
             {
-                var sql = "copy base_cliente_espera (Cnpj, Barras, Descricao, Fabricante, Ano, Mes, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto";
+                var sql = "copy base_cliente_espera (Cnpj, Barras, Descricao";
 
                 if (dt.Columns.Contains("grupo"))
                     sql += ", grupo";
 
-                sql += ") from stdin with delimiter '|'";
+                sql += ", Fabricante, Ano, Mes, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto) from stdin with delimiter '|'";
 
                 cmm = new NpgsqlCommand(sql, cnn);
 
