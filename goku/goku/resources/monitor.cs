@@ -21,6 +21,8 @@ namespace consolidate.resources
         private List<string> lstCnpj = new List<string>();
         private string strPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "files\\";
         public Thread t;
+        private readonly string[] columns = { "RazaoSocial", "Cnpj", "Mes", "Ano", "Barras", "Descricao", "Fabricante", "Grupo", "Totalcusto", "Quantidade", "Valorbruto", "Valorliquido", "Valordesconto" };
+
 
         public monitor()
         {
@@ -166,13 +168,21 @@ namespace consolidate.resources
                 else
                 {
                     DataTable dt = new DataTable();
-                    dt = txtDtConvert(strP);
+                    Object o = new Object();
 
-                    lst = charValidation(dt);
-                    if (lst.Count > 0)
-                        msg.Append(string.Format("O arquivo contém os seguintes caracteres especiais: {0}", lst.Aggregate((i, j) => i + " " + j)));
-                    else
-                        msg.Append(dal.inserTxt(dt));
+                    o = txtDtConvert(strP);
+
+                    if (o.GetType() == typeof(List<string>))
+                        msg.Append(string.Format("O arquivo deve conter as seguintes colunas: {0}{1}", Environment.NewLine, ((List<string>)o).Aggregate((i, j) => i + Environment.NewLine + j)));
+                    else {
+                        dt = (DataTable)o;
+                        lst = charValidation(dt);
+                        
+                        if (lst.Count > 0)
+                            msg.Append(string.Format("O arquivo contém os seguintes caracteres especiais: {0}", lst.Aggregate((i, j) => i + " " + j)));
+                        else
+                            msg.Append(dal.inserTxt(dt));
+                    }
                 }
             }
 
@@ -225,7 +235,7 @@ namespace consolidate.resources
             }
         }
 
-        private DataTable txtDtConvert(string stream)
+        private dynamic txtDtConvert(string stream)
         {
             DataTable dt = new DataTable();
             StreamReader sr = new StreamReader(stream, Encoding.GetEncoding("Windows-1252"), true);
@@ -233,6 +243,7 @@ namespace consolidate.resources
             int i = 0;
             int intMes = 0;
             string strCnpj = string.Empty;
+            List<string> lstc = new List<string>();
 
             while (!sr.EndOfStream)
             {
@@ -245,9 +256,17 @@ namespace consolidate.resources
                         dt.Columns.Add(RemoveSpecialChar(line[j].Trim()));
                     }
                     i++;
+
+                    if (dt.Columns.Count != 13)
+                        lstc = columns.Where(c => !dt.Columns.Contains(c)).ToList();
                 }
                 else
                 {
+                    if (lstc.Count > 0){
+                        sr.Dispose();
+                        return lstc;
+                    }
+                     
                     DataRow dr = dt.NewRow();
 
                     for (int j = 0; j < dt.Columns.Count; j++)
@@ -313,7 +332,7 @@ namespace consolidate.resources
 
         private List<string> charValidation(DataTable dt)
         {
-            Regex r = new Regex(@"(?:[^a-z0-9 _\-\.\,\()\/\%\+\*\$\:\=\@\\]|(?<=['""])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+            Regex r = new Regex(@"(?:[^a-z0-9 _\-\.\,\()\/\%\+\*\$\:\=\&\""\?\`\[\]\@\\]|(?<=['""])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
             List<string> lstr = new List<string>();
 
