@@ -8,6 +8,8 @@ using SIAO.SRV.TO;
 using System.Configuration;
 using SIAO.SRV;
 using SIAO.SRV.BLL;
+using Microsoft.Reporting.WebForms;
+using System.IO;
 
 namespace SIAO
 {
@@ -71,6 +73,19 @@ namespace SIAO
             ReportViewer2.LocalReport.ReportPath = "Relatory/rptGrafic.rdlc";
             ReportViewer2.LocalReport.DisplayName = clsFuncs.SetFileName("Grafico_1", clsGrafic);
             ReportViewer2.DataBind();
+
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string filenameExtension;
+
+            byte[] bytes = ReportViewer2.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension,out streamids, out warnings);
+
+            using (FileStream fs = new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + "FileName" + ".pdf", FileMode.Create))
+            {
+                fs.Write(bytes, 0, bytes.Length);
+            }
         }
 
         private void loadRelat2(List<GraficTO> clsGrafic, UsersTO clsUser)
