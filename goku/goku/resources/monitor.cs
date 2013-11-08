@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace consolidate.resources
@@ -162,6 +163,7 @@ namespace consolidate.resources
                     catch (Exception e)
                     {
                         msg.Append(e.Message);
+                        MessageBox.Show(e.Message);
                     }
 
                 }
@@ -295,6 +297,7 @@ namespace consolidate.resources
                 }
             }
 
+            sr.Dispose();
             return dt;
         }
 
