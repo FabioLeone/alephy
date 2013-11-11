@@ -118,5 +118,6 @@ namespace SIAO.SRV
             else
                 return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, 0);
         }
+
     }
 }

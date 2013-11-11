@@ -249,6 +249,18 @@ namespace SIAO.SRV.BLL
 
             return msg;
         }
+
+        public static string SaveFile(string filename, byte[] b)
+        {
+            string strFile = filename + ".pdf";
+            using (FileStream fs = new FileStream(ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + strFile, FileMode.Create))
+            {
+                fs.Write(b, 0, b.Length);
+            }
+
+            return "uploads/" + strFile;
+        }
+
         #endregion
 
     }
