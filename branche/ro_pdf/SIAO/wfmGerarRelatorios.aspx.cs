@@ -175,16 +175,16 @@ namespace SIAO
             if (rbtPeriodo.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text, false);
             }
             else if (rbtMes.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty, false);
             }
 
             if (clsGrafic.Count > 0)
@@ -204,16 +204,16 @@ namespace SIAO
             if (rbtPeriodo.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text, false);
             }
             else if (rbtMes.Checked)
             {
                 if (this.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId, ddlLojaRelatorios.SelectedValue);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty, false);
             }
 
             if (clsGrafic.Count > 0)
@@ -348,6 +348,56 @@ namespace SIAO
 
             if (!blnOk)
                 divErro("Não há itens a serem listados.");
+        }
+
+        protected void lbtnGroup_Click(object sender, EventArgs e)
+        {
+            List<clsRelat1> lst = new List<clsRelat1>();
+            List<GraficTO> lst2 = new List<GraficTO>();
+            List<GraficTO> lst3 = new List<GraficTO>();
+            List<GraficTO> lst4 = new List<GraficTO>();
+            
+            String strPath = String.Empty;
+
+            if (this.RedeId > 0)
+                lst = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, this.RedeId, rbtPeriodo, rbtMes, ddlLojaRelatorios);
+            else
+                lst = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, ddlRedesRelatorios, ddlLojaRelatorios, rbtPeriodo, rbtMes);
+
+            lst2 = GraficBLL.GraficList(rbtPeriodo, rbtMes, txtInicio.Text, clsUser, txtFim.Text, this.RedeId, ddlLojaRelatorios.SelectedValue, true);
+            lst3 = GraficBLL.GraficList(rbtPeriodo, rbtMes, txtInicio.Text, clsUser, txtFim.Text, this.RedeId, ddlLojaRelatorios.SelectedValue, false);
+
+            if (rbtPeriodo.Checked)
+            {
+                if (this.RedeId > 0)
+                    lst4 = GraficBLL.Grafic4(txtInicio.Text, clsUser, txtFim.Text, this.RedeId, ddlLojaRelatorios.SelectedValue);
+                else
+                    lst4 = GraficBLL.Grafic4(txtInicio.Text, clsUser, txtFim.Text, 0, ddlLojaRelatorios.SelectedValue);
+            }
+            else if (rbtMes.Checked)
+            {
+                if (this.RedeId > 0)
+                    lst4 = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, this.RedeId, ddlLojaRelatorios.SelectedValue);
+                else
+                    lst4 = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, 0, ddlLojaRelatorios.SelectedValue);
+            }
+
+            if (lst.Count > 0 || lst2.Count > 0 || lst3.Count > 0 || lst4.Count > 0)
+            {
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Consolidado",
+                    UserId = this.User.UserId
+                }, scn);
+
+                strPath = setPdf(lst, lst2, lst3, lst4, "Consolidado", "Relatory/rptCross2.rdlc", "Relatory/rptGrafic.rdlc", "Relatory/rptGrafic2.rdlc", "Relatory/rptGrafic4.rdlc");
+
+                clsFuncs.Redirect(strPath, "_blank", "");
+            }
+            else
+            {
+                divErro("Não há itens a serem listados.");
+            }
         }
 
         #endregion
@@ -514,6 +564,71 @@ namespace SIAO
             rv.DataBind();
 
             byte[] b = rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+            return FilesBLL.SaveFile(filename, b);
+        }
+
+        private string setPdf(List<clsRelat1> lst, List<GraficTO> lst2, List<GraficTO> lst3, List<GraficTO> lst4, string strName, string strPath, string strPath2, string strPath3, string strPath4)
+        {
+            ReportDataSource rds = new ReportDataSource("DataSet1", lst);
+            ReportDataSource rds2 = new ReportDataSource("DataSet1", lst2);
+            ReportDataSource rds3 = new ReportDataSource("DataSet1", lst3);
+            ReportDataSource rds4 = new ReportDataSource("DataSet1", lst4);
+
+            String filename = clsFuncs.SetFileName(strName, lst);
+
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string filenameExtension;
+
+            rv.Reset();
+            rv.LocalReport.Dispose();
+            rv.LocalReport.DataSources.Add(rds);
+
+            rv.LocalReport.ReportPath = strPath;
+            rv.LocalReport.DisplayName = filename;
+            rv.DataBind();
+
+            List<byte[]> b = new List<byte[]>();
+            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
+
+            rv.Reset();
+            rv.LocalReport.Dispose();
+            rv.LocalReport.DataSources.Add(rds2);
+
+            rv.LocalReport.ReportPath = strPath2;
+            rv.DataBind();
+
+            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
+
+            rv.Reset();
+            rv.LocalReport.Dispose();
+            rv.LocalReport.DataSources.Add(rds3);
+
+            rv.LocalReport.ReportPath = strPath2;
+            rv.DataBind();
+
+            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
+
+            rv.Reset();
+            rv.LocalReport.Dispose();
+            rv.LocalReport.DataSources.Add(rds3);
+
+            rv.LocalReport.ReportPath = strPath3;
+            rv.DataBind();
+
+            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
+
+            rv.Reset();
+            rv.LocalReport.Dispose();
+            rv.LocalReport.DataSources.Add(rds4);
+
+            rv.LocalReport.ReportPath = strPath4;
+            rv.DataBind();
+
+            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
+
             return FilesBLL.SaveFile(filename, b);
         }
 

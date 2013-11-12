@@ -66,6 +66,13 @@
                                 </div>
                             </asp:LinkButton>
                         </li>
+                        <li>
+                            <asp:LinkButton ID="lbtnGroup" runat="server" OnClick="lbtnGroup_Click">
+                                <div id="Div4" runat="server" class="imgRel">
+                                    <p>Consolidado</p>
+                                </div>
+                            </asp:LinkButton>
+                        </li>
                     </ul>
                 </div>
                 <div id="divGrafic" class="dvList" style="margin-left:0.5%;margin-right:0.5%;">
