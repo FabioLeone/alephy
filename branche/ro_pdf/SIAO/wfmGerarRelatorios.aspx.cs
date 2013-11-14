@@ -10,6 +10,7 @@ using SIAO.SRV;
 using SIAO.SRV.BLL;
 using SIAO.SRV.TO;
 using System.Linq;
+using System.Drawing.Printing;
 
 namespace SIAO
 {
@@ -390,9 +391,14 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
-                strPath = setPdf(lst, lst2, lst3, lst4, "Consolidado", "Relatory/rptCross2.rdlc", "Relatory/rptGrafic.rdlc", "Relatory/rptGrafic2.rdlc", "Relatory/rptGrafic4.rdlc");
+                List<string> lstFiles = new List<string>();
 
-                clsFuncs.Redirect(strPath, "_blank", "");
+                lstFiles.Add(setPdf(lst, "Modelo_2", "Relatory/rptCross2.rdlc"));
+                lstFiles.Add(setPdf(lst2, "Grafico_1", "Relatory/rptGrafic.rdlc"));
+                lstFiles.Add(setPdf(lst3, "Grafico_1_2", "Relatory/rptGrafic.rdlc"));
+                lstFiles.Add(setPdf(lst3, "Grafico_2", "Relatory/rptGrafic2.rdlc"));
+                lstFiles.Add(setPdf(lst4, "Grafico_4", "Relatory/rptGrafic4.rdlc"));
+
             }
             else
             {
@@ -564,71 +570,6 @@ namespace SIAO
             rv.DataBind();
 
             byte[] b = rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
-            return FilesBLL.SaveFile(filename, b);
-        }
-
-        private string setPdf(List<clsRelat1> lst, List<GraficTO> lst2, List<GraficTO> lst3, List<GraficTO> lst4, string strName, string strPath, string strPath2, string strPath3, string strPath4)
-        {
-            ReportDataSource rds = new ReportDataSource("DataSet1", lst);
-            ReportDataSource rds2 = new ReportDataSource("DataSet1", lst2);
-            ReportDataSource rds3 = new ReportDataSource("DataSet1", lst3);
-            ReportDataSource rds4 = new ReportDataSource("DataSet1", lst4);
-
-            String filename = clsFuncs.SetFileName(strName, lst);
-
-            Warning[] warnings;
-            string[] streamids;
-            string mimeType;
-            string encoding;
-            string filenameExtension;
-
-            rv.Reset();
-            rv.LocalReport.Dispose();
-            rv.LocalReport.DataSources.Add(rds);
-
-            rv.LocalReport.ReportPath = strPath;
-            rv.LocalReport.DisplayName = filename;
-            rv.DataBind();
-
-            List<byte[]> b = new List<byte[]>();
-            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
-
-            rv.Reset();
-            rv.LocalReport.Dispose();
-            rv.LocalReport.DataSources.Add(rds2);
-
-            rv.LocalReport.ReportPath = strPath2;
-            rv.DataBind();
-
-            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
-
-            rv.Reset();
-            rv.LocalReport.Dispose();
-            rv.LocalReport.DataSources.Add(rds3);
-
-            rv.LocalReport.ReportPath = strPath2;
-            rv.DataBind();
-
-            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
-
-            rv.Reset();
-            rv.LocalReport.Dispose();
-            rv.LocalReport.DataSources.Add(rds3);
-
-            rv.LocalReport.ReportPath = strPath3;
-            rv.DataBind();
-
-            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
-
-            rv.Reset();
-            rv.LocalReport.Dispose();
-            rv.LocalReport.DataSources.Add(rds4);
-
-            rv.LocalReport.ReportPath = strPath4;
-            rv.DataBind();
-
-            b.Add(rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings));
-
             return FilesBLL.SaveFile(filename, b);
         }
 
