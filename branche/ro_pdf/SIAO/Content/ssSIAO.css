@@ -42,6 +42,7 @@ padding: 0;
 
 a {
 text-decoration: none;
+cursor:inherit;
 }
 
 #main {
@@ -358,7 +359,7 @@ section
 .imgRel
 {
     background: rgba(209,209,209,0.6) url(images/app/icons/doc-icon.png) no-repeat 5px center;
-    cursor:pointer;
+    cursor:inherit;
     padding: 3px 20px 3px 40px;
     color:Black;
 }
@@ -366,7 +367,7 @@ section
 .imgGra
 {
     background: rgba(209,209,209,0.6) url(images/app/icons/Charts-icon.png) no-repeat 5px center;
-    cursor:pointer;
+    cursor:inherit;
     padding: 3px 20px 3px 40px;
     color:Black;
 }
@@ -374,7 +375,7 @@ section
 .imgAna
 {
     background: rgba(209,209,209,0.6) url(images/app/icons/Board-icon.png) no-repeat 5px center;
-    cursor:pointer;
+    cursor:inherit;
     padding: 3px 20px 3px 40px;
     color:Black;
 }
@@ -382,7 +383,7 @@ section
 .imgCon
 {
     background: rgba(209,209,209,0.6) url(images/app/icons/Settings-icon.png) no-repeat 5px center;
-    cursor:pointer;
+    cursor:inherit;
     padding: 3px 20px 3px 40px;
     color:Black;
 }

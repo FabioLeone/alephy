@@ -108,10 +108,10 @@ namespace SIAO.SRV
             return lst;
         }
 
-        public static bool GetAnalise(ListItemCollection lstFiltro, int intId)
+        public static string GetAnalise(ListItemCollection lstFiltro, int intId)
         {
             if (lstFiltro.FindByText("st").Value.Equals("false"))
-                return false;
+                return String.Empty;
 
             if(intId > 0)
                 return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, intId);

@@ -4,13 +4,14 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Web.UI.WebControls;
 using System.Xml;
-using SIAO.SRV.DAL;
-using SIAO.SRV.TO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.Web.UI.WebControls;
-using System.Text;
+using SIAO.SRV.DAL;
+using SIAO.SRV.TO;
+using Ionic.Zip;
 
 namespace SIAO.SRV.BLL
 {
@@ -70,7 +71,7 @@ namespace SIAO.SRV.BLL
                         try
                         {
                             DataTable dt = ConvertXML(xd);
-                            
+
                             if (!DataValidation(dt))
                                 msg = "CNPJ não cadastrado";
                             else
@@ -174,14 +175,15 @@ namespace SIAO.SRV.BLL
             String[] files;
             StringBuilder sb = new StringBuilder();
 
-            if(bln)
+            if (bln)
                 strName = clsFuncs.GetPartFileName(strReport, clsControl.GetLojaById(intId).NomeFantasia);
             else
                 strName = clsFuncs.GetPartFileName(strReport, clsControl.GetRedeById(intId).RedeName);
 
             files = Directory.GetFiles(ConfigurationManager.AppSettings["PATH_DOWNLOAD"]);
 
-            foreach (String file in files) {
+            foreach (String file in files)
+            {
                 if (file.Contains(strName))
                     sb.Append(String.Format("<li><a href='uploads/{0}' target='_blank'><div class='imgAna'><p>{0}</p></div></a></li>", file.Replace("/", ";").Split(';').Last()));
             }
@@ -221,7 +223,7 @@ namespace SIAO.SRV.BLL
                             else
                                 msg = oc.NewAddXml(dt, clsUser);
                         }
-                        catch 
+                        catch
                         {
                             msg = "Erro ao converter o xml. Favor verificar o arquivo.";
                         }
@@ -259,6 +261,40 @@ namespace SIAO.SRV.BLL
             }
 
             return "uploads/" + strFile;
+        }
+
+        public static string SaveFile(string filename, byte[] b, string strDirName)
+        {
+            string strFile = filename + ".pdf";
+            string strPath = ConfigurationManager.AppSettings["PATH_DOWNLOAD"] + strDirName;
+
+            if (!Directory.Exists(strPath))
+                Directory.CreateDirectory(strPath);
+
+            using (FileStream fs = new FileStream(strPath + "/" + strFile, FileMode.Create))
+            {
+                fs.Write(b, 0, b.Length);
+            }
+
+            return strPath;
+        }
+
+        public static string ZipFolder(string strPath)
+        {
+            try
+            {
+                using (ZipFile zf = new ZipFile())
+                {
+                    zf.AddDirectory(strPath);
+                    zf.Save(strPath + ".zip");
+                }
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+            return strPath.Replace("SIAO/", "|").Split('|')[1] + ".zip";
         }
 
         #endregion

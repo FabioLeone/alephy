@@ -137,10 +137,12 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
+                cursor();
                 clsFuncs.Redirect(setPdf(lr1, "Modelo_1", "Relatory/rptCross.rdlc"), "_blank", "");
             }
             else
             {
+                cursor();
                 divErro("Não há itens a serem listados.");
             }
         }
@@ -161,10 +163,12 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
+                cursor();
                 clsFuncs.Redirect(setPdf(lr1, "Modelo_2", "Relatory/rptCross2.rdlc"), "_blank", "");
             }
             else
             {
+                cursor();
                 divErro("Não há itens a serem listados.");
             }
         }
@@ -195,6 +199,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
+            cursor();
             clsFuncs.Redirect(setPdf(clsGrafic, "Grafico_1", "Relatory/rptGrafic.rdlc"), "_blank", "");
         }
 
@@ -224,6 +229,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
+            cursor();
             clsFuncs.Redirect(setPdf(clsGrafic, "Grafico_2", "Relatory/rptGrafic2.rdlc"), "_blank", "");
         }
 
@@ -271,6 +277,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
+            cursor();
             clsFuncs.Redirect(setPdf(clsGrafic, clsGrafic2, clsGrafic3, "Grafico_3", "Relatory/rptGrafic3.rdlc"), "_blank", "");
         }
 
@@ -300,6 +307,7 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
+            cursor();
             clsFuncs.Redirect(setPdf(clsGrafic, "Grafico_4", "Relatory/rptGrafic4.rdlc"), "_blank", "");
         }
 
@@ -340,15 +348,23 @@ namespace SIAO
 
         protected void lbtnAna1_Click(object sender, EventArgs e)
         {
-            Boolean blnOk = false;
+            String strFile = String.Empty;
 
             if (this.RedeId > 0)
-                blnOk = RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
+                strFile = RelatoriosBLL.GetAnalise(ResultData(), this.RedeId);
             else
-                blnOk = RelatoriosBLL.GetAnalise(ResultData(), 0);
+                strFile = RelatoriosBLL.GetAnalise(ResultData(), 0);
 
-            if (!blnOk)
+            if (String.IsNullOrEmpty(strFile))
+            {
+                cursor();
                 divErro("Não há itens a serem listados.");
+            }
+            else
+            {
+                cursor();
+                clsFuncs.Redirect("uploads/" + strFile + ".pdf", "_blank", "");
+            }
         }
 
         protected void lbtnGroup_Click(object sender, EventArgs e)
@@ -391,17 +407,16 @@ namespace SIAO
                     UserId = this.User.UserId
                 }, scn);
 
-                List<string> lstFiles = new List<string>();
+                strPath = MultPdf(lst, lst2, lst3, lst4, "Modelo_2", "Grafico_1", "Grafico_1_2", "Grafico_2"
+                    , "Grafico_4", "Relatory/rptCross2.rdlc", "Relatory/rptGrafic.rdlc"
+                    , "Relatory/rptGrafic.rdlc", "Relatory/rptGrafic2.rdlc", "Relatory/rptGrafic4.rdlc");
 
-                lstFiles.Add(setPdf(lst, "Modelo_2", "Relatory/rptCross2.rdlc"));
-                lstFiles.Add(setPdf(lst2, "Grafico_1", "Relatory/rptGrafic.rdlc"));
-                lstFiles.Add(setPdf(lst3, "Grafico_1_2", "Relatory/rptGrafic.rdlc"));
-                lstFiles.Add(setPdf(lst3, "Grafico_2", "Relatory/rptGrafic2.rdlc"));
-                lstFiles.Add(setPdf(lst4, "Grafico_4", "Relatory/rptGrafic4.rdlc"));
-
+                cursor();
+                clsFuncs.Redirect(strPath, "_blank", "");
             }
             else
             {
+                cursor();
                 divErro("Não há itens a serem listados.");
             }
         }
@@ -505,16 +520,6 @@ namespace SIAO
             return lic;
         }
 
-        private void ClearSessions()
-        {
-            Session["grafic1"] = null;
-            Session["grafic2"] = null;
-            Session["grafic31"] = null;
-            Session["grafic32"] = null;
-            Session["grafic33"] = null;
-            Session["grafic4"] = null;
-        }
-
         private string setPdf(Object lr1, String strName, String strPath)
         {
             ReportDataSource rds = new ReportDataSource("DataSet1", lr1);
@@ -542,6 +547,8 @@ namespace SIAO
             rv.DataBind();
 
             byte[] b = rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+
             return FilesBLL.SaveFile(filename,b);
         }
 
@@ -573,6 +580,55 @@ namespace SIAO
             return FilesBLL.SaveFile(filename, b);
         }
 
+        private string MultPdf(List<clsRelat1> lst, List<GraficTO> lst2, List<GraficTO> lst3, List<GraficTO> lst4, string p, string p_2, string p_3, string p_4, string p_5, string p_6, string p_7, string p_8, string p_9, string p_10)
+        {
+            string stResult = string.Empty;
+            string strDir = clsFuncs.SetDirName(lst);
+
+            stResult = setPdf(lst, "Modelo_2", "Relatory/rptCross2.rdlc", strDir);
+            setPdf(lst2, "Grafico_1", "Relatory/rptGrafic.rdlc", strDir);
+            setPdf(lst3, "Grafico_1_2", "Relatory/rptGrafic.rdlc", strDir);
+            setPdf(lst3, "Grafico_2", "Relatory/rptGrafic2.rdlc", strDir);
+            setPdf(lst4, "Grafico_4", "Relatory/rptGrafic4.rdlc", strDir);
+
+            return FilesBLL.ZipFolder(stResult);
+        }
+
+        private string setPdf(Object lr1, String strName, String strPath, string strDir)
+        {
+            ReportDataSource rds = new ReportDataSource("DataSet1", lr1);
+            String filename = String.Empty;
+
+            if (lr1.GetType() == typeof(List<clsRelat1>))
+                filename = clsFuncs.SetFileName(strName, (lr1 as List<clsRelat1>));
+            else if (lr1.GetType() == typeof(List<GraficTO>))
+                filename = clsFuncs.SetFileName(strName, (lr1 as List<GraficTO>));
+            else
+                filename = clsFuncs.SetFileName(strName, (lr1 as List<Grafic2TO>));
+
+            Warning[] warnings;
+            string[] streamids;
+            string mimeType;
+            string encoding;
+            string filenameExtension;
+
+            rv.Reset();
+            rv.LocalReport.Dispose();
+            rv.LocalReport.DataSources.Add(rds);
+
+            rv.LocalReport.ReportPath = strPath;
+            rv.LocalReport.DisplayName = filename;
+            rv.DataBind();
+
+            byte[] b = rv.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+
+            return FilesBLL.SaveFile(filename, b, strDir);
+        }
+
+        private void cursor() {
+            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "key", "ToggleCursor(0);", true);
+        }
         #endregion
 
     }

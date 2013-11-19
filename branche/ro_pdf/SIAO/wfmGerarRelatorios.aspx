@@ -51,7 +51,7 @@
                         Relatórios</h2>
                     <ul class="iconList">
                         <li>
-                            <asp:LinkButton ID="lbtnRel1" runat="server" OnClick="btnAdm_Click">
+                            <asp:LinkButton ID="lbtnRel1" runat="server" OnClick="btnAdm_Click" OnClientClick="ToggleCursor(1);">
                                 <div id="M1" runat="server" class="imgRel">
                                     <p>
                                         Modelo 1</p>
@@ -59,7 +59,7 @@
                             </asp:LinkButton>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lbtnRel2" runat="server" OnClick="btnRelat2_Click">
+                            <asp:LinkButton ID="lbtnRel2" runat="server" OnClick="btnRelat2_Click" OnClientClick="ToggleCursor(1);">
                                 <div id="M2" runat="server" class="imgRel">
                                     <p>
                                         Modelo 2</p>
@@ -67,7 +67,7 @@
                             </asp:LinkButton>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lbtnGroup" runat="server" OnClick="lbtnGroup_Click">
+                            <asp:LinkButton ID="lbtnGroup" runat="server" OnClick="lbtnGroup_Click" OnClientClick="ToggleCursor(1);">
                                 <div id="Div4" runat="server" class="imgRel">
                                     <p>Consolidado</p>
                                 </div>
@@ -80,7 +80,7 @@
                         Gráficos</h2>
                     <ul class="iconList">
                         <li>
-                            <asp:LinkButton ID="lbtnGra1" runat="server" OnClick="lbtnGra1_Click">
+                            <asp:LinkButton ID="lbtnGra1" runat="server" OnClick="lbtnGra1_Click" OnClientClick="ToggleCursor(1);">
                                 <div id="G1" runat="server" class="imgGra">
                                     <p>
                                         Gráfico 1</p>
@@ -88,7 +88,7 @@
                             </asp:LinkButton>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lbtnGra2" runat="server" OnClick="lbtnGra2_Click">
+                            <asp:LinkButton ID="lbtnGra2" runat="server" OnClick="lbtnGra2_Click" OnClientClick="ToggleCursor(1);">
                                 <div id="G2" runat="server" class="imgGra">
                                     <p>
                                         Gráfico 2</p>
@@ -96,7 +96,7 @@
                             </asp:LinkButton>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lbtnGra3" runat="server" OnClick="lbtnGra3_Click">
+                            <asp:LinkButton ID="lbtnGra3" runat="server" OnClick="lbtnGra3_Click" OnClientClick="ToggleCursor(1);">
                                 <div id="P1" runat="server" class="imgGra">
                                     <p>
                                         Gráfico 3</p>
@@ -104,7 +104,7 @@
                             </asp:LinkButton>
                         </li>
                         <li>
-                            <asp:LinkButton ID="lbtnGra4" runat="server" onclick="lbtnGra4_Click">
+                            <asp:LinkButton ID="lbtnGra4" runat="server" onclick="lbtnGra4_Click" OnClientClick="ToggleCursor(1);">
                                 <div id="Div3" runat="server" class="imgGra">
                                     <p>
                                         Gráfico de desconto</p>
@@ -118,7 +118,7 @@
                         Análise</h2>
                     <ul class="iconList">
                         <li>
-                            <asp:LinkButton ID="lbtnAna1" runat="server" onclick="lbtnAna1_Click" ToolTip="Os dados exibidos neste relatório, são referentes apenas ao último mês do período selecionado.">
+                            <asp:LinkButton ID="lbtnAna1" runat="server" onclick="lbtnAna1_Click" OnClientClick="ToggleCursor(1);" ToolTip="Os dados exibidos neste relatório, são referentes apenas ao último mês do período selecionado.">
                                 <div id="Div2" runat="server" class="imgAna">
                                     <p>
                                         Análise</p>

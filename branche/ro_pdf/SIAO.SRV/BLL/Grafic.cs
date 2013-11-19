@@ -14,7 +14,7 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static Boolean Analise(UsersTO clsUsers, string strLoja, string strIni, string strFim, int intRedeId)
+        public static string Analise(UsersTO clsUsers, string strLoja, string strIni, string strFim, int intRedeId)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
@@ -99,13 +99,12 @@ namespace SIAO.SRV.BLL
             if (clsGrafic.Count > 0)
                 if (FilesBLL.CreatePDFFromHTMLFile(lstHtml, strFile))
                 {
-                    clsFuncs.Redirect("uploads/" + strFile + ".pdf", "_blank", "");
-                    return true;
+                    return strFile;
                 }
                 else
-                    return false;
+                    return string.Empty;
             else
-                return false;
+                return string.Empty;
         }
 
         private static string SetOthers(decimal d, List<AnaliseTO> lstAnalise)
