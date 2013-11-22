@@ -36,18 +36,20 @@ namespace JobConsolidacao
                         {
                             StringBuilder strSQL = new StringBuilder();
                             strSQL.Append(@"INSERT INTO consolidado (CNPJ,Mes,Ano,Grupo,Sub_Consultoria,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto,Importado,farmaciaid) 
-                                SELECT b.Cnpj,b.Mes,b.Ano,CASE WHEN (p.apelido is null or p.apelido = '') THEN p.nome ELSE p.apelido END,
-                                ps.nome,
-                                Sum(b.Quantidade),Sum(b.Valor_Bruto),Sum(b.Valor_Liquido),
-                                Sum(b.Valor_Desconto),produtos_base.Importado,f.id
-                                FROM base_cliente_espera b
-                                INNER JOIN produtos_base ON b.Barras = produtos_base.CodBarra
-                                INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
-                                INNER JOIN produtos_grupos p ON produtos_base.""grupoID"" = p.id
-                                INNER JOIN produtos_subgrupos ps ON produtos_base.""subID"" = ps.id
-                                WHERE b.Cnpj = @Cnpj
-                                GROUP BY b.Cnpj,b.Mes,b.Ano,p.apelido,p.nome,ps.nome,
-                                produtos_base.Importado,f.id");
+                            SELECT Cnpj,Mes,Ano,apelido,nome,Sum(Quantidade),Sum(Valor_Bruto),Sum(Valor_Liquido),Sum(Valor_Desconto),Importado,id
+                            FROM (
+                            SELECT distinct b.Cnpj,b.Mes,b.Ano,CASE WHEN (p.apelido is null or p.apelido = '') THEN p.nome ELSE p.apelido END as apelido,
+                            ps.nome
+                            ,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,produtos_base.Importado,f.id,
+                            b.barras
+                            FROM base_cliente_espera b
+                            INNER JOIN produtos_base ON b.Barras = produtos_base.CodBarra
+                            INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
+                            INNER JOIN produtos_grupos p ON produtos_base.""grupoID"" = p.id
+                            INNER JOIN produtos_subgrupos ps ON produtos_base.""subID"" = ps.id
+                            WHERE b.Cnpj = @Cnpj
+                            ) t
+                            GROUP BY Cnpj,Mes,Ano,apelido,nome,nome,Importado,id");
 
                             NpgsqlCommand cmdUsers = msc.CreateCommand();
 
@@ -124,7 +126,7 @@ namespace JobConsolidacao
                     {
                         StringBuilder strSQL = new StringBuilder();
                         strSQL.Append(@"INSERT INTO base_clientes (Cnpj,Mes,Ano,Barras,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto,farmaciaid)
-                        SELECT b.Cnpj,b.Mes,b.Ano,b.Barras,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,f.id
+                        SELECT distinct b.Cnpj,b.Mes,b.Ano,b.Barras,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,f.id
                         FROM base_cliente_espera b
                         INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
                         WHERE b.Cnpj = @Cnpj");

@@ -38,3 +38,13 @@ D:\Projects\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\D
 D:\Projects\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
 D:\Projects\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\bin\Debug\policy.2.0.Npgsql.config
 D:\Projects\trunk\RO\Implementação\fontes\JobConsolidacao\JoConsolidacao\obj\x86\Debug\JobConsolidacao.csprojResolveAssemblyReference.cache
+D:\Projects\branche\job\JoConsolidacao\bin\Debug\JobConsolidacao.exe.config
+D:\Projects\branche\job\JoConsolidacao\obj\x86\Debug\JobConsolidacao.exe
+D:\Projects\branche\job\JoConsolidacao\obj\x86\Debug\JobConsolidacao.pdb
+D:\Projects\branche\job\JoConsolidacao\bin\Debug\JobConsolidacao.exe
+D:\Projects\branche\job\JoConsolidacao\bin\Debug\JobConsolidacao.pdb
+D:\Projects\branche\job\JoConsolidacao\bin\Debug\Mono.Security.dll
+D:\Projects\branche\job\JoConsolidacao\bin\Debug\Npgsql.dll
+D:\Projects\branche\job\JoConsolidacao\bin\Debug\policy.2.0.Npgsql.dll
+D:\Projects\branche\job\JoConsolidacao\bin\Debug\policy.2.0.Npgsql.config
+D:\Projects\branche\job\JoConsolidacao\obj\x86\Debug\JobConsolidacao.csprojResolveAssemblyReference.cache
