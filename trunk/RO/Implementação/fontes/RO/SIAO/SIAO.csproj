@@ -81,6 +81,7 @@
     <Content Include="Content\images\app\icons\Charts-icon.png" />
     <Content Include="Content\images\app\icons\doc-icon.png" />
     <Content Include="Content\images\app\icons\Settings-icon.png" />
+    <Content Include="Content\images\app\icons\search.png" />
     <Content Include="Content\images\app\icons\user-icon.png" />
     <Content Include="Content\images\app\logo_Cas_blue_128.png" />
     <Content Include="Content\images\app\logo_Cas_blue_128_transparente.png" />
