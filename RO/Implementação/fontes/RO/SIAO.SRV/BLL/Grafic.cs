@@ -14,7 +14,7 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static Boolean Analise(UsersTO clsUsers, string strLoja, string strIni, string strFim, int intRedeId)
+        public static string Analise(UsersTO clsUsers, string strLoja, string strIni, string strFim, int intRedeId)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
@@ -99,13 +99,12 @@ namespace SIAO.SRV.BLL
             if (clsGrafic.Count > 0)
                 if (FilesBLL.CreatePDFFromHTMLFile(lstHtml, strFile))
                 {
-                    clsFuncs.Redirect("uploads/" + strFile + ".pdf", "_blank", "");
-                    return true;
+                    return strFile;
                 }
                 else
-                    return false;
+                    return string.Empty;
             else
-                return false;
+                return string.Empty;
         }
 
         private static string SetOthers(decimal d, List<AnaliseTO> lstAnalise)
@@ -145,19 +144,28 @@ namespace SIAO.SRV.BLL
             return sb.ToString();
         }
 
-        public static List<GraficTO> GraficList(string strIni, UsersTO clsUsers, string strLoja, string strFim)
+        public static List<GraficTO> GraficList(string strIni, UsersTO clsUsers, string strLoja, string strFim, bool blnLast)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
+                if(blnLast)
+                    strIni = strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
+                else{
+                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
+                    strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
+                }
             }
             else
             {
-                strIni = strIni.Replace("/", " ");
-                strFim = strFim.Replace("/", " ");
+                if (blnLast)
+                    strIni = strFim = strFim.Replace("/", " ");
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
             }
 
             List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(strIni, clsUsers, strLoja,strFim);
@@ -194,19 +202,32 @@ namespace SIAO.SRV.BLL
             return clsList;
         }
 
-        public static List<GraficTO> GraficList(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj)
+        public static List<GraficTO> GraficList(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj, bool blnLast)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
             if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
             {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
+                if (blnLast)
+                {
+                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.AddMonths(-1).Year.ToString();
+                }
+                else
+                {
+                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                    strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
+                }
             }
             else
             {
-                strIni = strIni.Replace("/", " ");
-                strFim = strFim.Replace("/", " ");
+                if (blnLast)
+                    strIni = strFim = strFim.Replace("/", " ");
+                else
+                {
+                    strIni = strIni.Replace("/", " ");
+                    strFim = strFim.Replace("/", " ");
+                }
             }
 
             List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(strIni, clsUser, strFim, idRede, strCnpj);
@@ -241,6 +262,28 @@ namespace SIAO.SRV.BLL
             }
 
             return clsList;
+        }
+                                                
+        public static List<GraficTO> GraficList(System.Web.UI.WebControls.RadioButton rbtPeriodo, System.Web.UI.WebControls.RadioButton rbtMes, string strIni, UsersTO clsUser, string strFim, int intRedeId, string strLoja, bool blnLast)
+        {
+            List<GraficTO> lst = new List<GraficTO>();
+
+            if (rbtPeriodo.Checked)
+            {
+                if (intRedeId > 0)
+                    lst = GraficBLL.GraficList(strIni, clsUser, strFim, intRedeId, strLoja, blnLast);
+                else
+                    lst = GraficBLL.GraficList(strIni, clsUser, strLoja, strFim, blnLast);
+            }
+            else if (rbtMes.Checked)
+            {
+                if (intRedeId > 0)
+                    lst = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, intRedeId, strLoja, blnLast);
+                else
+                    lst = GraficBLL.GraficList(string.Empty, clsUser, strLoja, string.Empty, blnLast);
+            }
+
+            return lst;
         }
 
         public static List<GraficTO> Grafic4(string strIni, UsersTO clsUser, string strFim, int intRedeId, string strLoja)

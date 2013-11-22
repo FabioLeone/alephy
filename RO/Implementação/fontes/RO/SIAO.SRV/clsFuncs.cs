@@ -85,7 +85,7 @@ namespace SIAO.SRV
                 return cnpj;
             }
         }
-        
+
         public static string RemoveMaskCnpj(string p)
         {
             string cnpj = "";
@@ -93,7 +93,7 @@ namespace SIAO.SRV
                 return cnpj;
             else
             {
-                cnpj = p.Replace(".","");
+                cnpj = p.Replace(".", "");
                 cnpj = cnpj.Replace("/", "");
                 cnpj = cnpj.Replace("-", "");
 
@@ -121,7 +121,7 @@ namespace SIAO.SRV
         public static string SetFileName(string strRelatorio, List<clsRelat1> lr)
         {
             StringBuilder sbName = new StringBuilder();
-            string a = "",b = "";
+            string a = "", b = "";
             Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
             sbName.Append(strRelatorio);
@@ -205,7 +205,7 @@ namespace SIAO.SRV
         public static void Redirect(string url, string target, string windowFeatures)
         {
             HttpContext context = HttpContext.Current;
- 
+
             if ((String.IsNullOrEmpty(target) ||
                 target.Equals("_self", StringComparison.OrdinalIgnoreCase)) &&
                 String.IsNullOrEmpty(windowFeatures))
@@ -221,7 +221,7 @@ namespace SIAO.SRV
                         "Cannot redirect to new window outside Page context.");
                 }
                 url = page.ResolveClientUrl(url);
- 
+
                 string script;
                 if (!String.IsNullOrEmpty(windowFeatures))
                 {
@@ -231,16 +231,44 @@ namespace SIAO.SRV
                 {
                     script = @"window.open('{0}', '{1}');";
                 }
- 
+
                 script = String.Format(script, url, target, windowFeatures);
- 
+
                 ScriptManager scm = ScriptManager.GetCurrent(page);
-                if(scm != null)
+                if (scm != null)
                     ScriptManager.RegisterStartupScript(page, typeof(Page), "Redirect", script, true);
                 else
                     page.ClientScript.RegisterStartupScript(page.GetType(), "Redirect", script, true);
-               
+
             }
+        }
+
+        public static string SetDirName(object lr)
+        {
+            StringBuilder sbName = new StringBuilder();
+            string a = "";
+            Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+            if (lr.GetType() == typeof(List<clsRelat1>))
+            {
+                a = (lr as List<clsRelat1>)[0].NomeFantasia.Replace(" ", "");
+                a = r.Replace(a, String.Empty);
+                sbName.Append(a);
+            }
+            else if (lr.GetType() == typeof(List<GraficTO>))
+            {
+                a = (lr as List<GraficTO>)[0].Nome_Fantasia.Replace(" ", "");
+                a = r.Replace(a, String.Empty);
+                sbName.Append(a);
+            }
+            else
+            {
+                a = (lr as List<Grafic2TO>)[0].Nome_Fantasia.Replace(" ", "");
+                a = r.Replace(a, String.Empty);
+                sbName.Append(a);
+            }
+
+            return sbName.ToString();
         }
 
         #endregion
@@ -325,8 +353,9 @@ namespace SIAO.SRV
             return cnpj.EndsWith(digito);
 
         }
-        
-        public bool ValidaExt(string arq) {
+
+        public bool ValidaExt(string arq)
+        {
             if (System.IO.Path.GetExtension(arq).ToUpper() == ".XML" || System.IO.Path.GetExtension(arq).ToUpper() == ".TXT") { return true; } else { return false; }
         }
 
@@ -346,10 +375,10 @@ namespace SIAO.SRV
             int intMes = 0;
             string strCnpj = string.Empty;
 
-            while (! sr.EndOfStream)
+            while (!sr.EndOfStream)
             {
                 line = sr.ReadLine().Split(';');
-                
+
                 if (i == 0)
                 {
                     for (int j = 0; j < line.Length; j++)
@@ -358,22 +387,26 @@ namespace SIAO.SRV
                     }
                     i++;
                 }
-                else {
+                else
+                {
                     DataRow dr = dt.NewRow();
 
                     for (int j = 0; j < dt.Columns.Count; j++)
                     {
-                        if (j.Equals(2)) {
+                        if (j.Equals(2))
+                        {
                             if (!intMes.Equals(Convert.ToInt32(line[j])))
                             {
                                 intMes = Convert.ToInt32(line[j]);
                                 lstMeses.Add(Convert.ToInt32(line[j]));
                             }
                         }
-                        if (j.Equals(1)) {
+                        if (j.Equals(1))
+                        {
                             line[j] = RemoveMaskCnpj(line[j]);
-                            
-                            if (!strCnpj.Equals(line[j])) {
+
+                            if (!strCnpj.Equals(line[j]))
+                            {
                                 strCnpj = line[j];
                                 lstCnpj.Add(strCnpj);
                             }
