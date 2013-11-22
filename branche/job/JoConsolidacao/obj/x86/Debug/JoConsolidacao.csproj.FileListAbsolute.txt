@@ -1,6 +1,0 @@
-d:\users\fabio\documents\visual studio 2010\Projects\JoConsolidacao\JoConsolidacao\bin\Debug\JoConsolidacao.exe.config
-d:\users\fabio\documents\visual studio 2010\Projects\JoConsolidacao\JoConsolidacao\bin\Debug\JoConsolidacao.exe
-d:\users\fabio\documents\visual studio 2010\Projects\JoConsolidacao\JoConsolidacao\bin\Debug\JoConsolidacao.pdb
-d:\users\fabio\documents\visual studio 2010\Projects\JoConsolidacao\JoConsolidacao\obj\x86\Debug\ResolveAssemblyReference.cache
-d:\users\fabio\documents\visual studio 2010\Projects\JoConsolidacao\JoConsolidacao\obj\x86\Debug\JoConsolidacao.exe
-d:\users\fabio\documents\visual studio 2010\Projects\JoConsolidacao\JoConsolidacao\obj\x86\Debug\JoConsolidacao.pdb
