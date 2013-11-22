@@ -156,7 +156,7 @@
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Avg(Fields!Desconto.Value)</Y>
+                    <Y>=Fields!Desconto.Value</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
