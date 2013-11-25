@@ -9,7 +9,7 @@ namespace goku
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Ferramenta para verificação e envido de aquivos para o ro.
         /// </summary>
         [STAThread]
         static void Main()
