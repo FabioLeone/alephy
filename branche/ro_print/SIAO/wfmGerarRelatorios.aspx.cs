@@ -411,6 +411,8 @@ namespace SIAO
                     , "Grafico_4", "Relatory/rptCross2.rdlc", "Relatory/rptGrafic.rdlc"
                     , "Relatory/rptGrafic.rdlc", "Relatory/rptGrafic2.rdlc", "Relatory/rptGrafic4.rdlc");
 
+                FilesBLL.MultPrintPDFs(strPath);
+
                 cursor();
                 clsFuncs.Redirect(strPath, "_blank", "");
             }
@@ -443,7 +445,7 @@ namespace SIAO
 
         private void ValidaAcesso()
         {
-            if(UsersBLL.ValidaAcesso(UsersBLL.GetUserSession(), dvRedes, dvLoja, dvFiltro))
+            if (UsersBLL.ValidaAcesso(UsersBLL.GetUserSession(), dvRedes, dvLoja, dvFiltro, lbtnGroup))
                 LojasBLL.getLojasApp(this.User,ddlLojaRelatorios,dvFiltro, dvLoja);
                 
         }

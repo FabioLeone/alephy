@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.UI.WebControls;
 using System.Xml;
+using Ionic.Zip;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using SIAO.SRV.DAL;
 using SIAO.SRV.TO;
-using Ionic.Zip;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
+
 
 namespace SIAO.SRV.BLL
 {
@@ -298,6 +302,71 @@ namespace SIAO.SRV.BLL
         }
 
         #endregion
+
+        public static void MultPrintPDFs(string strPath)
+        {
+            string[] s = Directory.GetFiles(strPath.Replace("uploads/", ConfigurationManager.AppSettings["PATH_DOWNLOAD"]).Replace(".zip", ""));
+            foreach (var item in s)
+            {
+                PrintPDFs(item.Replace("\\","/"));
+            }
+        }
+
+        public static Boolean PrintPDFs(string pdfFileName)
+        {
+            try
+            {
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                proc.StartInfo.FileName = acrobat();
+                proc.StartInfo.Arguments = String.Format(@"/p /h {0}", pdfFileName);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+                FindAndKillProcess("AcroRd32");
+                
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static string acrobat() {
+            var adobe = Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("Microsoft").OpenSubKey("Windows").OpenSubKey("CurrentVersion").OpenSubKey("App Paths").OpenSubKey("AcroRd32.exe");
+            var path = adobe.GetValue("");
+
+            /*var adobeOtherWay = Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("Classes").OpenSubKey("acrobat").OpenSubKey("shell").OpenSubKey("open").OpenSubKey("command");
+            var pathOtherWay = adobeOtherWay.GetValue("");*/
+
+            return path.ToString();
+        }
+
+        public static bool FindAndKillProcess(string name)
+        {
+            foreach (Process clsProcess in Process.GetProcesses())
+            {
+                if (clsProcess.ProcessName.StartsWith(name))
+                {
+                    clsProcess.Kill();
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
 }
