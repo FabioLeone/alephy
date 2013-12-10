@@ -205,11 +205,18 @@ namespace goku.resources
                 }
                 finally
                 {
-                    if (copy.CopyStream != null)
+                    try
                     {
-                        copy.CopyStream.Close();
+                        if (copy.CopyStream != null)
+                        {
+                            copy.CopyStream.Close();
+                        }
+                        copy.End();
                     }
-                    copy.End();
+                    catch (Exception ex1)
+                    {
+                        msg = ex1.Message;
+                    }
                 }
 
                 if (String.IsNullOrEmpty(msg))
@@ -229,7 +236,7 @@ namespace goku.resources
             cmm.Connection = cnn;
             DataTable auxDt = new DataTable();
             auxDt = dt.DefaultView.ToTable(true, "cnpj", "ano", "mes");
-            
+
             if (auxDt.Rows.Count > 0)
             {
                 try
@@ -642,9 +649,9 @@ namespace goku.resources
             {
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("DELETE FROM base_cliente_espera where Cnpj=@cnpj");
-                
+
                 NpgsqlCommand cmd = msc.CreateCommand();
-                
+
                 cmd.CommandText = strSQL.ToString();
                 cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
 

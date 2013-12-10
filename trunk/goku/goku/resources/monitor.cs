@@ -291,6 +291,35 @@ namespace consolidate.resources
                                 lstCnpj.Add(strCnpj);
                             }
                         }
+                        if (j > 2)
+                        {
+                            line[j] = line[j].Replace('°', ' ');
+                            line[j] = line[j].Replace('º', ' ');
+                            line[j] = line[j].Replace('ª', ' ');
+                            line[j] = line[j].Replace('\'', ' ');
+                            line[j] = line[j].Replace('\\', '/');
+                            line[j] = line[j].Replace('´', ' ');
+                            line[j] = line[j].Replace('§', ' ');
+                            line[j] = line[j].Replace(".", "");
+                            line[j] = line[j].Replace('Í', 'I');
+                            line[j] = line[j].Replace('í', 'i');
+                            line[j] = line[j].Replace('Ç', 'C');
+                            line[j] = line[j].Replace('ç', 'c');
+                            line[j] = line[j].Replace('Ó', 'O');
+                            line[j] = line[j].Replace('ó', 'o');
+                            line[j] = line[j].Replace('Ô', 'O');
+                            line[j] = line[j].Replace('ô', 'o');
+                            line[j] = line[j].Replace('Ã', 'A');
+                            line[j] = line[j].Replace('ã', 'a');
+                            line[j] = line[j].Replace('Á', 'A');
+                            line[j] = line[j].Replace('á', 'a');
+                            line[j] = line[j].Replace('É', 'E');
+                            line[j] = line[j].Replace('é', 'e');
+                            line[j] = line[j].Replace('Ê', 'E');
+                            line[j] = line[j].Replace('ê', 'e');
+                            
+                        }
+
                         dr[j] = line[j].Trim();
                     }
                     dt.Rows.Add(dr);
