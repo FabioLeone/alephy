@@ -412,7 +412,7 @@ namespace SIAO
                     , "Relatory/rptGrafic.rdlc", "Relatory/rptGrafic2.rdlc", "Relatory/rptGrafic4.rdlc");
 
                 cursor();
-                clsFuncs.Redirect(strPath, "_blank", "");
+                Response.Redirect(strPath);
             }
             else
             {
