@@ -83,7 +83,7 @@
                     </asp:LinkButton>
                 </li>
                 <li>
-                    <asp:LinkButton ID="lbtnGroup" runat="server" OnClick="lbtnGroup_Click" OnClientClick="ToggleCursor(1);">
+                    <asp:LinkButton ID="lbtnGroup" runat="server" OnClick="lbtnGroup_Click" OnClientClick="ToggleCursor(1);" Visible="false">
                         <div id="Div4" runat="server" class="imgRel">
                             <p>
                                 Consolidado</p>
