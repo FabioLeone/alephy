@@ -1,0 +1,10 @@
+D:\Projects\trunk\Reports\nLibrary\bin\Debug\nLibrary.dll
+D:\Projects\trunk\Reports\nLibrary\bin\Debug\nLibrary.pdb
+D:\Projects\trunk\Reports\nLibrary\bin\Debug\Mono.Security.dll
+D:\Projects\trunk\Reports\nLibrary\bin\Debug\Npgsql.dll
+D:\Projects\trunk\Reports\nLibrary\obj\Debug\nLibrary.csprojResolveAssemblyReference.cache
+D:\Projects\trunk\Reports\nLibrary\obj\Debug\nLibrary.dll
+D:\Projects\trunk\Reports\nLibrary\obj\Debug\nLibrary.pdb
+D:\Projects\trunk\Reports\nLibrary\bin\Debug\suLibrary.dll
+D:\Projects\trunk\Reports\nLibrary\bin\Debug\suLibrary.pdb
+D:\Projects\trunk\Reports\nLibrary\bin\Debug\Ionic.Zip.xml
