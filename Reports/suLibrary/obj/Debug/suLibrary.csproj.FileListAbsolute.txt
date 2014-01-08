@@ -1,0 +1,6 @@
+D:\Projects\trunk\Reports\suLibrary\bin\Debug\suLibrary.dll
+D:\Projects\trunk\Reports\suLibrary\bin\Debug\suLibrary.pdb
+D:\Projects\trunk\Reports\suLibrary\obj\Debug\suLibrary.dll
+D:\Projects\trunk\Reports\suLibrary\obj\Debug\suLibrary.pdb
+D:\Projects\trunk\Reports\suLibrary\obj\Debug\suLibrary.csprojResolveAssemblyReference.cache
+D:\Projects\trunk\Reports\suLibrary\bin\Debug\suLibrary.dll.config
