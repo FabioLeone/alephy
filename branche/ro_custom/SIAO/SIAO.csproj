@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="configurations.aspx" />
     <Content Include="Content\css\Animations.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\css\style1.css" />
     <Content Include="Content\delete.png" />
     <Content Include="Content\edit.png" />
@@ -377,8 +378,8 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>5720</DevelopmentServerPort>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>5721</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
