@@ -206,20 +206,23 @@ namespace SIAO
         protected void lbtnGra2_Click(object sender, EventArgs e)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
+            int rId = 0;
 
             if (rbtPeriodo.Checked)
             {
+                int.TryParse(ddlRedesRelatorios.SelectedValue, out rId);
+
                 if (this.RedeId > 0)
                     clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text, false);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, rId, ddlLojaRelatorios.SelectedValue, false);
             }
             else if (rbtMes.Checked)
             {
                 if (this.RedeId > 0)
                     clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty, false);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, rId, ddlLojaRelatorios.SelectedValue, false);
             }
 
             if (clsGrafic.Count > 0)
