@@ -1329,7 +1329,7 @@ namespace SIAO.SRV
                 }
                 else
                 {
-                    sb.Append(d.ToString().Replace(",", "."));
+                    sb.Append(d.ToString().Replace(".", "").Replace(",", "."));
                 }
                 sb.Append("|");
             }
