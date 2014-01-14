@@ -258,11 +258,15 @@ namespace SIAO.SRV.DAL
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
 
                 strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy')) AND
-                (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))
-                AND farmacias.idRede = @idRede");
+                (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
+                
+                if(idRede > 0)
+                    strSQL.Append(" AND farmacias.idRede = @idRede");
 
                 if (!String.IsNullOrEmpty(strCnpj))
                     strSQL.Append(" AND xTemp.CNPJ = @CNPJ");
+                else if(clsUser.FarmaciaId > 0)
+                    strSQL.Append(" AND farmacias.id = @id");
 
                 strSQL.Append(" ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
 
@@ -271,6 +275,7 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", idRede));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@id", clsUser.FarmaciaId));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strCnpj));

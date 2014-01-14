@@ -244,7 +244,9 @@ namespace SIAO.SRV.BLL
 
         public static UsersTO GetByNameAndPassword(string strName, string strPassword, string strConnectionString)
         {
-            return UsersDAL.GetByNameAndPassword(strName, strPassword, strConnectionString);
+            UsersTO u = UsersDAL.GetByNameAndPassword(strName, strPassword, strConnectionString);
+            u.RedeId = clsControl.GetRedeByUserId(u.UserId).RedeId;
+            return u;
         }
 
         public static object GetByName(string strNome, string strConnection)
