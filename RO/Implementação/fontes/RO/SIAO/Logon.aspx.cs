@@ -26,7 +26,7 @@ namespace SIAO
 
             if (clsUser.UserId > 0)
             {
-                if (!clsUser.Inactive && clsUser.ExpirationDate > DateTime.Today)
+                if (!clsUser.Inactive && clsUser.ExpirationDate >= DateTime.Today)
                 {
                     UsersBLL.SetUserSession(clsUser);
                     
