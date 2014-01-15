@@ -57,9 +57,20 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="accesscontrol.aspx" />
+    <Content Include="resources\animate.css" />
+    <Content Include="resources\reset.css" />
+    <Content Include="resources\style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="accesscontrol.aspx.cs">
+      <DependentUpon>accesscontrol.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="accesscontrol.aspx.designer.cs">
+      <DependentUpon>accesscontrol.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
