@@ -16,14 +16,13 @@
 <body>
     <form id="form1" runat="server" class="corpo">
         <div id="container">
-            <label for="name">Username:</label>
-            <input type="name" id="txtName" runat="server" />
+            <label for="txtName">Username:</label>
+            <input type="text" id="txtName" runat="server" required/>
             <label for="username">Password:</label>
-            <p><a href="#">Forgot your password?</a></p>
-            <input type="password" id="txtPassword" runat="server" />
+            <input type="password" id="txtPassword" runat="server" required/>
             <div id="lower">
-                <input type="checkbox" /><label class="check" for="checkbox">Keep me logged in</label>
-                <input type="submit" value="Login" id="" />
+                <input type="checkbox" id="cboxKeep" runat="server"/><label class="check" for="checkbox">Mantenha-me conectado</label>
+                <input type="submit" value="Login" id="smtLogin" runat="server" onserverclick="smtLogin_ServerClick"/>
             </div>
         </div>
     </form>
