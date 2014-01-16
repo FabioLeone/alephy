@@ -140,6 +140,7 @@ namespace consolidate.resources
         {
             StringBuilder msg = new StringBuilder();
             List<string> lst = new List<string>();
+            String s = String.Empty;
 
             if (validaExt(strP))
             {
@@ -158,7 +159,10 @@ namespace consolidate.resources
                         if (lst.Count > 0)
                             msg.Append(string.Format("{0}O arquivo contém os seguintes caracteres especiais: {1}", Environment.NewLine, lst.Aggregate((i, j) => i + Environment.NewLine + j)));
                         else
+                        {
                             msg.Append(string.Format("{0}{1}", Environment.NewLine, dal.insertXml(dt)));
+                            s = dt.Rows[0]["cnpj"].ToString();
+                        }
                     }
                     catch (Exception e)
                     {
@@ -179,18 +183,21 @@ namespace consolidate.resources
                     else {
                         dt = (DataTable)o;
                         lst = charValidation(dt);
-                        
+
                         if (lst.Count > 0)
                             msg.Append(string.Format("O arquivo contém os seguintes caracteres especiais: {0}", lst.Aggregate((i, j) => i + " " + j)));
                         else
+                        {
                             msg.Append(dal.inserTxt(dt));
+                            s = dt.Rows[0]["cnpj"].ToString();
+                        }
                     }
                 }
             }
 
             if (string.IsNullOrEmpty(msg.ToString().Replace("\r\n", "")))
             {
-                fileMove(strP);
+                fileMove(strP,s);
                 consolidation c = new consolidation();
             }
             else
@@ -218,7 +225,7 @@ namespace consolidate.resources
             }
         }
 
-        private void fileMove(string strP)
+        private void fileMove(string strP, string sNew)
         {
             string s = string.Empty;
 
@@ -228,7 +235,7 @@ namespace consolidate.resources
                 if (!Directory.Exists(s))
                     Directory.CreateDirectory(s);
 
-                s = s + "\\" + System.IO.Path.GetFileName(strP);
+                s = s + "\\" + sNew + "_" + DateTime.Now.ToString("yyyy.MM.dd") + System.IO.Path.GetExtension(strP);
 
                 File.Copy(strP, s, true);
 
