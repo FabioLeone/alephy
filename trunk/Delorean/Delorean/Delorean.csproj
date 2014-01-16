@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="accesscontrol.aspx" />
+    <Content Include="controls\default.aspx" />
     <Content Include="resources\animate.css" />
     <Content Include="resources\reset.css" />
     <Content Include="resources\style.css" />
@@ -71,9 +72,23 @@
     <Compile Include="accesscontrol.aspx.designer.cs">
       <DependentUpon>accesscontrol.aspx</DependentUpon>
     </Compile>
+    <Compile Include="controls\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="site.Master.cs">
+      <DependentUpon>site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="site.Master.designer.cs">
+      <DependentUpon>site.Master</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="site.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -81,6 +96,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Assemblies\Assemblies.csproj">
+      <Project>{d706c7e6-fe38-498f-baf9-8b038cbbe5b8}</Project>
+      <Name>Assemblies</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
