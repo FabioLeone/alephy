@@ -58,10 +58,54 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="accesscontrol.aspx" />
-    <Content Include="controls\default.aspx" />
-    <Content Include="resources\animate.css" />
-    <Content Include="resources\reset.css" />
-    <Content Include="resources\style.css" />
+    <Content Include="controls\wucListing.ascx" />
+    <Content Include="default.aspx" />
+    <Content Include="resources\css\animate.css" />
+    <Content Include="resources\css\fonts\fontawesome\css\font-awesome-ie7.min.css" />
+    <Content Include="resources\css\fonts\fontawesome\css\font-awesome.css" />
+    <Content Include="resources\css\fonts\fontawesome\css\font-awesome.min.css" />
+    <Content Include="resources\css\fonts\fontawesome\font\fontawesome-webfont.svg" />
+    <Content Include="resources\css\img\breadcrumbs-bg.gif" />
+    <Content Include="resources\css\img\bx_loader.gif" />
+    <Content Include="resources\css\img\controls.png" />
+    <Content Include="resources\css\img\fancybox\blank.gif" />
+    <Content Include="resources\css\img\fancybox\fancybox-x.png" />
+    <Content Include="resources\css\img\fancybox\fancybox-y.png" />
+    <Content Include="resources\css\img\fancybox\fancybox.png" />
+    <Content Include="resources\css\img\fancybox\fancy_close.png" />
+    <Content Include="resources\css\img\fancybox\fancy_loading.png" />
+    <Content Include="resources\css\img\fancybox\fancy_nav_left.png" />
+    <Content Include="resources\css\img\fancybox\fancy_nav_right.png" />
+    <Content Include="resources\css\img\fancybox\fancy_shadow_e.png" />
+    <Content Include="resources\css\img\fancybox\fancy_shadow_n.png" />
+    <Content Include="resources\css\img\fancybox\fancy_shadow_ne.png" />
+    <Content Include="resources\css\img\fancybox\fancy_shadow_nw.png" />
+    <Content Include="resources\css\img\fancybox\fancy_shadow_s.png" />
+    <Content Include="resources\css\img\fancybox\fancy_shadow_se.png" />
+    <Content Include="resources\css\img\fancybox\fancy_shadow_sw.png" />
+    <Content Include="resources\css\img\fancybox\fancy_shadow_w.png" />
+    <Content Include="resources\css\img\fancybox\fancy_title_left.png" />
+    <Content Include="resources\css\img\fancybox\fancy_title_main.png" />
+    <Content Include="resources\css\img\fancybox\fancy_title_over.png" />
+    <Content Include="resources\css\img\fancybox\fancy_title_right.png" />
+    <Content Include="resources\css\img\fancybox\jquery.easing-1.3.pack.js" />
+    <Content Include="resources\css\img\fancybox\jquery.fancybox-1.3.4.js" />
+    <Content Include="resources\css\img\fancybox\jquery.fancybox-1.3.4.pack.js" />
+    <Content Include="resources\css\img\fancybox\jquery.mousewheel-3.0.4.pack.js" />
+    <Content Include="resources\css\img\gray_jean.png" />
+    <Content Include="resources\css\img\icon-arrow-right.png" />
+    <Content Include="resources\css\jquery.fancybox-1.3.4.css" />
+    <Content Include="resources\css\kickstart-buttons.css" />
+    <Content Include="resources\css\kickstart-forms.css" />
+    <Content Include="resources\css\kickstart-grid.css" />
+    <Content Include="resources\css\kickstart-menus.css" />
+    <Content Include="resources\css\kickstart-slideshow.css" />
+    <Content Include="resources\css\kickstart.css" />
+    <Content Include="resources\css\prettify.css" />
+    <Content Include="resources\css\reset.css" />
+    <Content Include="resources\css\style.css" />
+    <Content Include="resources\css\tiptip.css" />
+    <Content Include="resources\scripts\kickstart.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -72,16 +116,24 @@
     <Compile Include="accesscontrol.aspx.designer.cs">
       <DependentUpon>accesscontrol.aspx</DependentUpon>
     </Compile>
-    <Compile Include="controls\default.aspx.cs">
+    <Compile Include="controls\wucListing.ascx.cs">
+      <DependentUpon>wucListing.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\wucListing.ascx.designer.cs">
+      <DependentUpon>wucListing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="controls\default.aspx.designer.cs">
+    <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="site.Master.cs">
       <DependentUpon>site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="site.Master.designer.cs">
       <DependentUpon>site.Master</DependentUpon>
@@ -89,6 +141,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="site.Master" />
+    <Content Include="resources\css\fonts\desktop.ini" />
+    <Content Include="resources\css\fonts\fontawesome\css\desktop.ini" />
+    <Content Include="resources\css\fonts\fontawesome\desktop.ini" />
+    <Content Include="resources\css\fonts\fontawesome\font\desktop.ini" />
+    <Content Include="resources\css\fonts\fontawesome\font\fontawesome-webfont.eot" />
+    <Content Include="resources\css\fonts\fontawesome\font\fontawesome-webfont.ttf" />
+    <Content Include="resources\css\fonts\fontawesome\font\fontawesome-webfont.woff" />
+    <Content Include="resources\css\fonts\fontawesome\font\FontAwesome.otf" />
+    <Content Include="resources\css\img\desktop.ini" />
+    <Content Include="resources\css\img\fancybox\desktop.ini" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -57,6 +57,12 @@
     <Compile Include="utilities\cdModel.cs" />
     <Compile Include="utilities\helpers.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="buy_base\" />
+    <Folder Include="competitors_base\" />
+    <Folder Include="sales_factor\" />
+    <Folder Include="special_base\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
