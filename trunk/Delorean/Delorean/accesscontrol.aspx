@@ -9,20 +9,27 @@
 
     <title>Delorian - Controle de acesso.</title>
 
-    <link href="resources/reset.css" rel="stylesheet" />
-    <link href="resources/animate.css" rel="stylesheet" />
-    <link href="resources/style.css" rel="stylesheet" />
+    <link href="resources/css/reset.css" rel="stylesheet" />
+    <link href="resources/css/animate.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- KICKSTART -->
+    <script src="resources/scripts/kickstart.js"></script>
+    <link rel="stylesheet" href="resources/css/kickstart.css" media="all" />
+    <link href="resources/css/style.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server" class="corpo">
         <div id="container">
-            <label for="txtName">Username:</label>
-            <input type="text" id="txtName" runat="server" required/>
-            <label for="username">Password:</label>
-            <input type="password" id="txtPassword" runat="server" required/>
-            <div id="lower">
-                <input type="checkbox" id="cboxKeep" runat="server"/><label class="check" for="checkbox">Mantenha-me conectado</label>
-                <input type="submit" value="Login" id="smtLogin" runat="server" onserverclick="smtLogin_ServerClick"/>
+            <div id="form">
+                <label for="txtName">Username:</label>
+                <input type="text" id="txtName" runat="server" required />
+                <label for="username">Password:</label>
+                <input type="password" id="txtPassword" runat="server" required />
+                <div id="lower">
+                    <input type="checkbox" id="cboxKeep" runat="server" /><label class="check" for="checkbox">Mantenha-me conectado</label>
+                    <input type="submit" value="Login" id="smtLogin" runat="server" onserverclick="smtLogin_ServerClick" />
+                </div>
             </div>
         </div>
     </form>

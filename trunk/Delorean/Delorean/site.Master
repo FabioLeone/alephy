@@ -5,16 +5,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Delorean - project</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- KICKSTART -->
+    <script src="resources/scripts/kickstart.js"></script>
+    <link rel="stylesheet" href="resources/css/kickstart.css" media="all" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
-    </div>
+        <!-- Menu Horizontal -->
+        <ul class="menu">
+            <li class="current"><a href="default.aspx">Home</a></li>
+            <li><a href="">Mostra Concorrentes</a></li>
+            <li><input type="search"></li>
+
+        </ul>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
     </form>
 </body>
 </html>

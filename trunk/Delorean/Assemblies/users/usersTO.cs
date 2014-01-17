@@ -6,7 +6,7 @@ using System.Text;
 namespace Assemblies.users
 {
     [Serializable]
-    class usersTO
+    public class usersTO
     {
         public int UserId { get; set; }
         public string UserName { get; set; }

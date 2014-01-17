@@ -14,19 +14,29 @@ namespace Delorean
         #region .:Events:.
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if(!IsPostBack)
+                txtName.Focus();
         }
 
-        protected void smtLogin_ServerClick()
+        protected void smtLogin_ServerClick(object sender, EventArgs e)
         {
-            if (usersBLL.Authentication(Request.Form[txtName.UniqueID], Request.Form[txtPassword.UniqueID]))
-            {
-                FormsAuthentication.RedirectFromLoginPage(Request.Form[txtName.UniqueID], cboxKeep.Checked);
-                //Response.Redirect("~/Default.aspx");
-            }
-            else
-            {
-            }
+            string s = usersBLL.Authentication(Request.Form[txtName.UniqueID], Request.Form[txtPassword.UniqueID], cboxKeep.Checked);
+            if (string.IsNullOrEmpty(s))
+                alert(s);
+        }
+        #endregion
+
+        #region
+        private void alert(string msg)
+        {
+            System.Web.UI.HtmlControls.HtmlGenericControl div = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
+
+            div.ID = "msgError";
+            div.Attributes.Add("class", "notice error");
+            div.InnerHtml = string.Format(@"<i class='icon-remove-sign icon-large'></i>{0}
+            <a href='#close' class='icon-remove'></a>", msg);
+
+            form1.Controls.Add(div);
         }
         #endregion
     }

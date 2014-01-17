@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assemblies.users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,19 @@ namespace Assemblies.utilities
             String jssObject = new JavaScriptSerializer().Serialize(objUser);
 
             HttpContext.Current.Session[cdModel.cript(objUser.UserName)] = cdModel.cript(jssObject);
+        }
+
+        internal static usersTO GetSession()
+        {
+            usersTO objUser = new usersTO();
+            JavaScriptSerializer jssObject = new JavaScriptSerializer();
+            Type t = objUser.GetType();
+            String strName = HttpContext.Current.User.Identity.Name;
+
+            if (HttpContext.Current.Session[cdModel.cript(strName)] != null)
+                return (usersTO)jssObject.Deserialize(cdModel.desc(HttpContext.Current.Session[cdModel.cript(strName)].ToString()), t);
+            else
+                return objUser;
         }
     }
 }

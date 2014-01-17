@@ -54,6 +54,44 @@ namespace Assemblies.users
             return objUser;
         }
 
+        internal static usersTO GetById(int id)
+        {
+            usersTO objUser = new usersTO();
+
+            NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, m.Password,
+                m.Email, m.Inactive, m.CreateDate, m.ExpirationDate,
+                m.Access, m.Name, uv.FarmaciaId,u.TipoId,u.nivel
+                FROM users u 
+                LEFT JOIN memberships m ON u.UserId = m.UserId
+                LEFT JOIN usuarios_vinculos uv ON u.UserId = uv.usuarioid");
+                strSQL.Append(" WHERE m.UserId=@id");
+
+                NpgsqlCommand cmdUsers = nc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+                cmdUsers.Parameters.Add("@id", NpgsqlDbType.Integer).Value = id;
+
+                nc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
+                {
+                    if (drdUsers.Read())
+                    {
+                        objUser = Load(drdUsers);
+                    }
+                }
+            }
+            finally
+            {
+                nc.Close();
+            }
+
+            return objUser;
+        }
         #endregion
 
         #region .:Load:.
@@ -103,5 +141,6 @@ namespace Assemblies.users
             return clsUsers;
         }
         #endregion
+
     }
 }
