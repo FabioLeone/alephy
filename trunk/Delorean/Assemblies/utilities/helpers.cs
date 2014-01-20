@@ -1,4 +1,4 @@
-﻿using Assemblies.users;
+﻿using Assemblies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 
-namespace Assemblies.utilities
+namespace Assemblies
 {
     class helpers
     {
-        internal static void SetSession(users.usersTO objUser)
+        internal static void SetSession(usersTO objUser)
         {
             String jssObject = new JavaScriptSerializer().Serialize(objUser);
 
@@ -29,6 +29,12 @@ namespace Assemblies.utilities
                 return (usersTO)jssObject.Deserialize(cdModel.desc(HttpContext.Current.Session[cdModel.cript(strName)].ToString()), t);
             else
                 return objUser;
+        }
+
+        internal static void ClearSession()
+        {
+            String strName = HttpContext.Current.User.Identity.Name;
+            HttpContext.Current.Session[cdModel.cript(strName)] = null;
         }
     }
 }

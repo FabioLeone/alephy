@@ -1,4 +1,4 @@
-﻿using Assemblies.utilities;
+﻿using Assemblies;
 using Npgsql;
 using NpgsqlTypes;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assemblies.users
+namespace Assemblies
 {
     public class usersDAL
     {
@@ -20,22 +20,21 @@ namespace Assemblies.users
 
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
 
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, m.Password,
+            StringBuilder strSQL = new StringBuilder();
+            strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, m.Password,
                 m.Email, m.Inactive, m.CreateDate, m.ExpirationDate,
                 m.Access, m.Name, uv.FarmaciaId,u.TipoId,u.nivel
                 FROM users u 
                 LEFT JOIN memberships m ON u.UserId = m.UserId
-                LEFT JOIN usuarios_vinculos uv ON u.UserId = uv.usuarioid");
-                strSQL.Append(" WHERE m.Name=@Name AND m.Password=@Password");
+                LEFT JOIN usuarios_vinculos uv ON u.UserId = uv.usuarioid WHERE m.Name=@Name AND m.Password=@Password");
 
-                NpgsqlCommand cmdUsers = nc.CreateCommand();
-                cmdUsers.CommandText = strSQL.ToString();
-                cmdUsers.Parameters.Add("@Name", NpgsqlDbType.Varchar).Value = cdModel.cript(sName.ToUpper());
-                cmdUsers.Parameters.Add("@Password", NpgsqlDbType.Varchar).Value = cdModel.cript(sPassword);
+            NpgsqlCommand cmdUsers = nc.CreateCommand();
+            cmdUsers.CommandText = strSQL.ToString();
+            cmdUsers.Parameters.Add("@Name", NpgsqlDbType.Varchar).Value = cdModel.cript(sName.ToUpper());
+            cmdUsers.Parameters.Add("@Password", NpgsqlDbType.Varchar).Value = cdModel.cript(sPassword);
 
+            try
+            {
                 nc.Open();
 
                 using (IDataReader drdUsers = cmdUsers.ExecuteReader())
