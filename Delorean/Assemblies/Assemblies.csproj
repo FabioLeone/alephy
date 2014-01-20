@@ -51,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="special_base\special_baseBLL.cs" />
+    <Compile Include="special_base\special_baseDAL.cs" />
+    <Compile Include="special_base\special_baseTO.cs" />
     <Compile Include="users\usersBLL.cs" />
     <Compile Include="users\usersDAL.cs" />
     <Compile Include="users\usersTO.cs" />
@@ -61,7 +64,6 @@
     <Folder Include="buy_base\" />
     <Folder Include="competitors_base\" />
     <Folder Include="sales_factor\" />
-    <Folder Include="special_base\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

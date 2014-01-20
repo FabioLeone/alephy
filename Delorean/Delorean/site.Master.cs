@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assemblies.users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,16 @@ namespace Delorean
 {
     public partial class site : System.Web.UI.MasterPage
     {
+        #region .:Events:.
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
+
+        protected void lbLogout_ServerClick(object sender, EventArgs e)
+        {
+            usersBLL.Signout();
+        }
+        #endregion
     }
 }

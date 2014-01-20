@@ -5,9 +5,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Delorean - project</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <!-- KICKSTART -->
-    <script src="resources/scripts/kickstart.js"></script>
     <link rel="stylesheet" href="resources/css/kickstart.css" media="all" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -15,16 +12,30 @@
 <body>
     <form id="form1" runat="server">
         <!-- Menu Horizontal -->
-        <ul class="menu">
-            <li class="current"><a href="default.aspx">Home</a></li>
-            <li><a href="">Mostra Concorrentes</a></li>
-            <li><input type="search"></li>
+        <div class="col_12">
+            <ul class="menu">
+                <li class="current first divider"><a href="default.aspx"><i class="icon-home"></i>Home</a></li>
+                <li class="divider"><a href=""><i class="icon-upload-alt"></i>Enviar arquivo preço de custo</a></li>
+                <li class="divider"><a href="">&nbsp; <i class="icon-filter"></i>Filtros</a>
+                    <ul>
+                        <li><a href="">Todos</a></li>
+                        <li><a href="">Já Preenchidos</a></li>
+                        <li><a href="">Não Preenchidos</a></li>
+                    </ul>
+                </li>
 
-        </ul>
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+                <li class="has-menu divider">
+                    <input type="search" name="s" placeholder="Procurar Produto"></li>
+                <li class="last right"><a id="lbLogout" runat="server" onserverclick="lbLogout_ServerClick"><i class=" icon-signout"></i>Logout</a></li>
+            </ul>
+            <div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
         </div>
     </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- KICKSTART -->
+    <script src="resources/scripts/kickstart.js"></script>
 </body>
 </html>

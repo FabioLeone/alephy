@@ -1,4 +1,4 @@
-﻿using Assemblies.utilities;
+﻿using Assemblies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
 
-namespace Assemblies.users
+namespace Assemblies
 {
     public class usersBLL
     {
@@ -72,6 +72,15 @@ namespace Assemblies.users
                 else
                     ctx.Response.Redirect("~/accesscontrol.aspx");
             }
+        }
+
+        public static void Signout()
+        {
+            HttpContext ctx = HttpContext.Current;
+            helpers.ClearSession();
+            FormsAuthentication.SignOut();
+            
+            ctx.Response.Redirect("~/accesscontrol.aspx");
         }
 
         #endregion
