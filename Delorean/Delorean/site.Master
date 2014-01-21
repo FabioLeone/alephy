@@ -1,10 +1,13 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="site.master.cs" Inherits="Delorean.site" %>
 
+<%@ Register src="controls/wucSending_file.ascx" tagname="wucSending_file" tagprefix="uc1" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Delorean - project</title>
+    <link href="resources/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="resources/css/kickstart.css" media="all" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -15,7 +18,7 @@
         <div class="col_12">
             <ul class="menu">
                 <li class="current first divider"><a href="default.aspx"><i class="icon-home"></i>Home</a></li>
-                <li class="divider"><a href=""><i class="icon-upload-alt"></i>Enviar arquivo preço de custo</a></li>
+                <li class="divider"><a href="#sfopen"><i class="icon-upload-alt"></i>Enviar arquivo preço de custo</a></li>
                 <li class="divider"><a href="">&nbsp; <i class="icon-filter"></i>Filtros</a>
                     <ul>
                         <li><a href="">Todos</a></li>
@@ -31,6 +34,12 @@
             <div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <div id="sfopen" class="mdialog">
+            <div>
+                <a href="#close" title="Close" class="close">X</a>
+                <uc1:wucSending_file ID="wucSending_file1" runat="server" />
             </div>
         </div>
     </form>
