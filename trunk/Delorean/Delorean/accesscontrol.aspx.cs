@@ -1,4 +1,4 @@
-﻿using Assemblies.users;
+﻿using Assemblies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace Delorean
         protected void smtLogin_ServerClick(object sender, EventArgs e)
         {
             string s = usersBLL.Authentication(Request.Form[txtName.UniqueID], Request.Form[txtPassword.UniqueID], cboxKeep.Checked);
-            if (string.IsNullOrEmpty(s))
+            if (!string.IsNullOrEmpty(s))
                 alert(s);
         }
         #endregion

@@ -14,12 +14,13 @@ namespace Delorean.controls
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-                loadData();
+                floadData();
         }
 
-        private void loadData()
+        private void floadData()
         {
             lvwProducts.DataSource = special_baseBLL.getProducts();
+            lvwProducts.DataBind();
         }
         #endregion
     }

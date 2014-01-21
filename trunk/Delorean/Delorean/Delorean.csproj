@@ -59,6 +59,7 @@
   <ItemGroup>
     <Content Include="accesscontrol.aspx" />
     <Content Include="controls\wucListing.ascx" />
+    <Content Include="controls\wucSending_file.ascx" />
     <Content Include="default.aspx" />
     <Content Include="resources\css\animate.css" />
     <Content Include="resources\css\fonts\fontawesome\css\font-awesome-ie7.min.css" />
@@ -124,6 +125,13 @@
     </Compile>
     <Compile Include="controls\wucListing.ascx.designer.cs">
       <DependentUpon>wucListing.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\wucSending_file.ascx.cs">
+      <DependentUpon>wucSending_file.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\wucSending_file.ascx.designer.cs">
+      <DependentUpon>wucSending_file.ascx</DependentUpon>
     </Compile>
     <Compile Include="default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>

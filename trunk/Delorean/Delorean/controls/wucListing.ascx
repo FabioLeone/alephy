@@ -17,17 +17,27 @@
                 <tr runat="server" id="itemPlaceholder" />
             </tbody>
         </table>
+        <asp:DataPager ID="dpgProducts" runat="server" PagedControlID="lvwProducts">
+        <Fields>
+            <asp:NextPreviousPagerField ShowNextPageButton="False" />
+            <asp:NumericPagerField ButtonCount="15" ButtonType="Link" />
+            <asp:NextPreviousPagerField ShowPreviousPageButton="False" />
+        </Fields>
+    </asp:DataPager>
     </LayoutTemplate>
     <ItemTemplate>
         <tr runat="server">
-            <td>789555454</td>
-            <td>Produto X</td>
-            <td contenteditable>5,30</td>
-            <td>2,3</td>
-            <td>2,1</td>
-            <td>23%</td>
+            <td><%# Eval("barras") %></td>
+            <td><%# Eval("nomeprod") %></td>
+            <td contenteditable><%# Eval("valor_custo") %></td>
+            <td><%# Eval("one_unit") %></td>
+            <td><%# Eval("upx") %></td>
+            <td><%# Eval("actual_margin") %></td>
         </tr>
     </ItemTemplate>
+    <EmptyDataTemplate>
+        Não há itens para serem exibidos
+    </EmptyDataTemplate>
 </asp:ListView>
 
     <div class="col_12 column">
