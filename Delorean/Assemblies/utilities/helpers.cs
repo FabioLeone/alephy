@@ -36,5 +36,10 @@ namespace Assemblies
             String strName = HttpContext.Current.User.Identity.Name;
             HttpContext.Current.Session[cdModel.cript(strName)] = null;
         }
+
+        internal static bool checkExt(string p)
+        {
+            if (System.IO.Path.GetExtension(p).ToUpper() == ".XML" || System.IO.Path.GetExtension(p).ToUpper() == ".TXT") { return true; } else { return false; }
+        }
     }
 }

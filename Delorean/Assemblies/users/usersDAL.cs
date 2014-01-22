@@ -91,6 +91,55 @@ namespace Assemblies
 
             return objUser;
         }
+
+        internal static int Verify_registration(string p)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
+
+            NpgsqlCommand cmm = new NpgsqlCommand();
+
+            cmm.Connection = cnn;
+            StringBuilder strSQL = new StringBuilder();
+            strSQL.Append(@"SELECT farmacias.Id FROM farmacias WHERE (farmacias.Cnpj = @Cnpj)");
+
+            string scnpj = p.Replace(".", "");
+            scnpj = scnpj.Replace("/", "");
+            scnpj = scnpj.Replace("-", "");
+
+            cmm.CommandText = strSQL.ToString();
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = scnpj;
+
+            try
+            {
+                cnn.Open();
+                NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmm);
+
+                da.Fill(ds);
+            }
+            finally
+            {
+                cnn.Close();
+            }
+
+            if (ds.Tables.Count > 0)
+            {
+                if (ds.Tables["Loja"].Rows[0]["Id"] != DBNull.Value)
+                {
+                    int id = 0;
+
+                    if (int.TryParse(ds.Tables["Loja"].Rows[0]["Id"].ToString(), out id))
+                        return id;
+                    else
+                        return 0;
+                }
+                else
+                    return 0;
+            }
+            else
+                return 0;
+        }
         #endregion
 
         #region .:Load:.
