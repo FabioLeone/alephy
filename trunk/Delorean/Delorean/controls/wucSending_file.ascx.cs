@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assemblies;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,11 +19,10 @@ namespace Delorean.controls
 
         protected void btnSend_ServerClick(object sender, EventArgs e)
         {
-            HttpPostedFile hpf = upfile.PostedFile;
-            if (hpf != null && hpf.ContentLength > 0) {
-                string fn = Path.GetFileName(hpf.FileName);
-                hpf.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", fn)));
-            }
+            string msg = buy_baseBLL.upFile(upfile.PostedFile);
+
+            /*if (String.IsNullOrEmpty(msg)) divSces();
+            else divErro(msg);*/
         }
         #endregion
     }

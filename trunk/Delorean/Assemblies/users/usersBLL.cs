@@ -83,6 +83,11 @@ namespace Assemblies
             ctx.Response.Redirect("~/accesscontrol.aspx");
         }
 
+        internal static int Verify_registration(string p)
+        {
+            return usersDAL.Verify_registration(p);
+        }
+
         #endregion
 
         #region .:Search:.

@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="buy_base\buy_baseBLL.cs" />
+    <Compile Include="buy_base\buy_baseDAL.cs" />
+    <Compile Include="buy_base\buy_baseTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="special_base\special_baseBLL.cs" />
     <Compile Include="special_base\special_baseDAL.cs" />
@@ -61,7 +64,6 @@
     <Compile Include="utilities\helpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="buy_base\" />
     <Folder Include="competitors_base\" />
     <Folder Include="sales_factor\" />
   </ItemGroup>
