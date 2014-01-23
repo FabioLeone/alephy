@@ -247,6 +247,38 @@ input[type=submit] {
     box-shadow: 1px 1px 3px #000;
 }
 
-    .close:hover {
-        background: #cc1033;
-    }
+.close:hover {
+    background: #cc1033;
+}
+
+.previewPg {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    -webkit-background-clip: border;
+    -webkit-font-smoothing: antialiased;
+    background-clip: content-box;
+    position: relative;
+    top: 0;
+    left: 0;
+    zoom: 1;
+    margin: 0 -1px 0 0;
+    padding: 0;
+    font-size: 0px;
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    border: 1px solid #ccc;
+    background: -webkit-linear-gradient(top, rgba(252,252,252,1) 0%,rgba(224,224,224,1) 100%);
+    color: inherit;
+    display: inline-block;
+    width: 1.25em;
+    text-align: center;
+    height: auto;
+    line-height: normal;
+    vertical-align: baseline;
+    background-position: 0 0;
+    background-repeat: repeat;
+    margin-top: 0;
+    content: "\f0d9";
+    text-decoration: inherit;
+}

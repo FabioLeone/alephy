@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="wucListing.ascx.cs" Inherits="Delorean.controls.wucListing" %>
+<%@ Register Assembly="Ctrls" Namespace="Ctrls" TagPrefix="ale" %>
 <asp:ListView ID="lvwProducts" runat="server">
     <LayoutTemplate>
         <table class="sortable striped" cellspacing="0" cellpadding="0">
@@ -17,13 +18,6 @@
                 <tr runat="server" id="itemPlaceholder" />
             </tbody>
         </table>
-        <asp:DataPager ID="dpgProducts" runat="server" PagedControlID="lvwProducts">
-        <Fields>
-            <asp:NextPreviousPagerField ShowNextPageButton="False" />
-            <asp:NumericPagerField ButtonCount="15" ButtonType="Link" />
-            <asp:NextPreviousPagerField ShowPreviousPageButton="False" />
-        </Fields>
-    </asp:DataPager>
     </LayoutTemplate>
     <ItemTemplate>
         <tr runat="server">
@@ -40,19 +34,26 @@
     </EmptyDataTemplate>
 </asp:ListView>
 
-    <div class="col_12 column">
-        <ul class="button-bar">
-            <li class="first"><a href="#"><i class="icon-caret-left"></i></a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">6</a></li>
-            <li><a href="#">7</a></li>
-            <li><a href="#">8</a></li>
-            <li><a href="#">9</a></li>
-            <li><a href="#">10</a></li>
-            <li class="last"><a href="#"><i class="icon-caret-right"></i></i></li>
-        </ul>
-    </div>
+<ale:ulDataPager ID="dpgProducts" runat="server" PagedControlID="lvwProducts" PageSize="15">
+    <Fields>
+        <asp:NextPreviousPagerField ShowNextPageButton="false" PreviousPageText="" />
+        <asp:NumericPagerField />
+        <asp:NextPreviousPagerField ShowPreviousPageButton="false" NextPageText="" />
+    </Fields>
+</ale:ulDataPager>
+<!--
+<ul class="button-bar">
+    <li class="first"><a href="#"><i class="icon-caret-left"></i></a></li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">6</a></li>
+    <li><a href="#">7</a></li>
+    <li><a href="#">8</a></li>
+    <li><a href="#">9</a></li>
+    <li><a href="#">10</a></li>
+    <li class="last"><a href="#"><i class="icon-caret-right"></i></i></li>
+</ul>
+-->

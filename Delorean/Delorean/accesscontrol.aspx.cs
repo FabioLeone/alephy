@@ -26,7 +26,7 @@ namespace Delorean
         }
         #endregion
 
-        #region
+        #region .:Methods:.
         private void alert(string msg)
         {
             System.Web.UI.HtmlControls.HtmlGenericControl div = new System.Web.UI.HtmlControls.HtmlGenericControl("div");
