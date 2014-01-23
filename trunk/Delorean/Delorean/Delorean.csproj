@@ -173,6 +173,10 @@
       <Project>{d706c7e6-fe38-498f-baf9-8b038cbbe5b8}</Project>
       <Name>Assemblies</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ctrls\Ctrls.csproj">
+      <Project>{c022d38f-5730-4a33-9cd4-f6f3e7fc3e52}</Project>
+      <Name>Ctrls</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

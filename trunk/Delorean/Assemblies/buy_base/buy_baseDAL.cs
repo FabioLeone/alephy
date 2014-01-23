@@ -32,7 +32,7 @@ namespace Assemblies
                     copy.Start();
                     foreach (DataRow row in dt.Rows)
                     {
-                        var data = SerializeData(row.ItemArray);
+                        var data = SerializeXmlData(row.ItemArray);
                         var raw = Encoding.UTF8.GetBytes(string.Concat(data, "\n"));
                         copy.CopyStream.Write(raw, 0, raw.Length);
                     }
@@ -102,6 +102,38 @@ namespace Assemblies
 
             return msg;
         }
+
+        internal static void removeDuplicate(DataTable dt)
+        {
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
+            StringBuilder strSQL = new StringBuilder();
+            DataTable auxDt = new DataTable();
+
+            auxDt = dt.DefaultView.ToTable(true, "cnpj");
+
+            NpgsqlCommand cmd = msc.CreateCommand();
+                
+            if (auxDt.Rows.Count > 0)
+            {
+                strSQL = new StringBuilder();
+                strSQL.Append(string.Format(@"DELETE FROM base_compra WHERE farmaciaid = @farmaciaid 
+                and to_char(data, 'MM yyyy') = '{0}'", DateTime.Now.ToString("MM yyyy")));
+
+                cmd.CommandText = strSQL.ToString();
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add("@farmaciaid", NpgsqlTypes.NpgsqlDbType.Integer).Value = auxDt.Rows[0][0];
+            }
+
+            try
+            {
+                msc.Open();
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                msc.Close();
+            }
+        }
         #endregion
 
         #region .:Methods:.
@@ -125,6 +157,32 @@ namespace Assemblies
                 else
                 {
                     sb.Append(d.ToString().Replace(".", "").Replace(",", "."));
+                }
+                sb.Append("|");
+            }
+            return sb.Remove(sb.Length - 1, 1).ToString();
+        }
+
+        private static object SerializeXmlData(object[] data)
+        {
+            var sb = new StringBuilder();
+            foreach (var d in data)
+            {
+                if (d == null)
+                {
+                    sb.Append("\\N");
+                }
+                else if (d is DateTime)
+                {
+                    sb.Append(((DateTime)d).ToString("yyyy-MM-dd HH:mm:ss"));
+                }
+                else if (d is Enum)
+                {
+                    sb.Append(((Enum)d).ToString("d"));
+                }
+                else
+                {
+                    sb.Append(d.ToString());
                 }
                 sb.Append("|");
             }

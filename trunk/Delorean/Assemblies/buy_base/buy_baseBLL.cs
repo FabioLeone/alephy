@@ -32,7 +32,11 @@ namespace Assemblies
                             if (!DataValidation(dt))
                                 msg = "CNPJ não cadastrado";
                             else
-                                msg = buy_baseDAL.addXml(addColumn(dt));
+                            {
+                                dt = addColumn(dt);
+                                buy_baseDAL.removeDuplicate(dt);
+                                msg = buy_baseDAL.addXml(dt);
+                            }
                         }
                         catch
                         {
@@ -75,11 +79,11 @@ namespace Assemblies
                     s = dt.Rows[i]["cnpj"].ToString();
                     id = usersBLL.Verify_registration(s);
                     dt.Rows[i]["cnpj"] = id;
-                    dt.Rows[i]["data"] = DateTime.Now.ToString("MM yyyy");
+                    dt.Rows[i]["data"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 }
                 else {
                     dt.Rows[i]["cnpj"] = id;
-                    dt.Rows[i]["data"] = DateTime.Now.ToString("MM yyyy");
+                    dt.Rows[i]["data"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 }
             }
 
@@ -90,14 +94,17 @@ namespace Assemblies
         {
             DataTable dt = new DataTable();
             StreamReader sr = new StreamReader(stream, Encoding.GetEncoding("Windows-1252"), true);
+            
             string[] line;
             int i = 0;
-            int intMes = 0;
             string strCnpj = string.Empty;
 
             while (!sr.EndOfStream)
             {
                 line = sr.ReadLine().Split(';');
+
+                if (!line.Length.Equals(3))
+                    break;
 
                 if (i == 0)
                 {
@@ -113,14 +120,7 @@ namespace Assemblies
 
                     for (int j = 0; j < dt.Columns.Count; j++)
                     {
-                        if (j.Equals(2))
-                        {
-                            if (!intMes.Equals(Convert.ToInt32(line[j])))
-                            {
-                                intMes = Convert.ToInt32(line[j]);
-                            }
-                        }
-                        if (j.Equals(1))
+                        if (j.Equals(0))
                         {
                             line[j] = RemoveMaskCnpj(line[j]);
 

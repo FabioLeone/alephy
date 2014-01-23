@@ -125,12 +125,17 @@ namespace Assemblies
 
             if (ds.Tables.Count > 0)
             {
-                if (ds.Tables["Loja"].Rows[0]["Id"] != DBNull.Value)
+                if (ds.Tables[0].Rows.Count > 0)
                 {
-                    int id = 0;
+                    if (ds.Tables[0].Rows[0]["Id"] != DBNull.Value)
+                    {
+                        int id = 0;
 
-                    if (int.TryParse(ds.Tables["Loja"].Rows[0]["Id"].ToString(), out id))
-                        return id;
+                        if (int.TryParse(ds.Tables[0].Rows[0]["Id"].ToString(), out id))
+                            return id;
+                        else
+                            return 0;
+                    }
                     else
                         return 0;
                 }

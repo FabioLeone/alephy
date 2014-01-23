@@ -15,6 +15,8 @@ namespace Delorean.controls
         {
             if (!IsPostBack)
                 floadData();
+
+            dpgProducts.Attributes.Add("class", "button-bar");
         }
 
         private void floadData()
