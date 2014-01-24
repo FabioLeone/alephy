@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="wucListing.ascx.cs" Inherits="Delorean.controls.wucListing" %>
 <%@ Register Assembly="Ctrls" Namespace="Ctrls" TagPrefix="ale" %>
-<asp:ListView ID="lvwProducts" runat="server">
+<asp:ListView ID="lvwProducts" runat="server" DataKeyNames="bcid">
     <LayoutTemplate>
         <table class="sortable striped" cellspacing="0" cellpadding="0">
             <thead>
@@ -23,7 +23,10 @@
         <tr runat="server">
             <td><%# Eval("barras") %></td>
             <td><%# Eval("nomeprod") %></td>
-            <td contenteditable><%# Eval("valor_custo") %></td>
+            <td style="padding:0;width:120px;">
+                <asp:TextBox ID="txtvcost" runat="server" OnTextChanged="txtvcost_TextChanged" AutoPostBack="true"
+                    Text='<%# Eval("valor_custo") %>' style="margin: 0;box-shadow: none;width: 100%;height: inherit;border:0;background:inherit;"></asp:TextBox>
+            </td>
             <td><%# Eval("one_unit") %></td>
             <td><%# Eval("upx") %></td>
             <td><%# Eval("actual_margin") %></td>
@@ -41,19 +44,3 @@
         <asp:NextPreviousPagerField ShowPreviousPageButton="false" NextPageText="" />
     </Fields>
 </ale:ulDataPager>
-<!--
-<ul class="button-bar">
-    <li class="first"><a href="#"><i class="icon-caret-left"></i></a></li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">6</a></li>
-    <li><a href="#">7</a></li>
-    <li><a href="#">8</a></li>
-    <li><a href="#">9</a></li>
-    <li><a href="#">10</a></li>
-    <li class="last"><a href="#"><i class="icon-caret-right"></i></i></li>
-</ul>
--->

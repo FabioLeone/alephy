@@ -218,6 +218,15 @@ namespace Assemblies
             return dt;
         }
 
+        public static bool upCost(int id, string vcost)
+        {
+            decimal dCost = 0;
+            if (!decimal.TryParse(vcost, out dCost))
+                return false;
+
+            return buy_baseDAL.upCost(id, dCost);
+        }
+
         #endregion
     }
 }
