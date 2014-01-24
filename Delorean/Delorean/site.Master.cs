@@ -20,6 +20,11 @@ namespace Delorean
         {
             usersBLL.Signout();
         }
+
+        protected void edFactor_ServerClick(object sender, EventArgs e)
+        {
+            Response.Redirect("");
+        }
         #endregion
     }
 }

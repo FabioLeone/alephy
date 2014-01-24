@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="accesscontrol.aspx" />
+    <Content Include="controls\factors_set.aspx" />
     <Content Include="controls\wucListing.ascx" />
     <Content Include="controls\wucSending_file.ascx" />
     <Content Include="default.aspx" />
@@ -118,6 +119,13 @@
     </Compile>
     <Compile Include="accesscontrol.aspx.designer.cs">
       <DependentUpon>accesscontrol.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\factors_set.aspx.cs">
+      <DependentUpon>factors_set.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\factors_set.aspx.designer.cs">
+      <DependentUpon>factors_set.aspx</DependentUpon>
     </Compile>
     <Compile Include="controls\wucListing.ascx.cs">
       <DependentUpon>wucListing.ascx</DependentUpon>

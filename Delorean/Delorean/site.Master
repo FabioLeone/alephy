@@ -26,9 +26,11 @@
                         <li><a href="">Não Preenchidos</a></li>
                     </ul>
                 </li>
-
                 <li class="has-menu divider">
                     <input type="search" name="s" placeholder="Procurar Produto"></li>
+                <li class="divider">
+                    <a id="edFactor" runat="server" onserverclick="edFactor_ServerClick"><i class="icon-edit"></i>Fator de venda</a>
+                </li>
                 <li class="last right"><a id="lbLogout" runat="server" onserverclick="lbLogout_ServerClick"><i class=" icon-signout"></i>Logout</a></li>
             </ul>
             <div>
