@@ -103,6 +103,41 @@ namespace Assemblies
             return msg;
         }
 
+        internal static bool upCost(int id, decimal dCost)
+        {
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
+            bool bOk = false;
+
+            StringBuilder strSQL = new StringBuilder();
+            strSQL.Append(@"UPDATE base_compra SET valor_custo=@valor_custo WHERE id=@id;");
+
+            NpgsqlCommand cmd = msc.CreateCommand();
+            cmd.CommandText = strSQL.ToString();
+
+            cmd.Parameters.Clear();
+            cmd.Parameters.Add("@id", NpgsqlTypes.NpgsqlDbType.Integer).Value = id;
+            cmd.Parameters.Add("@valor_custo", NpgsqlTypes.NpgsqlDbType.Money).Value = dCost;
+
+            try
+            {
+                msc.Open();
+
+                cmd.ExecuteNonQuery();
+
+                bOk = true;
+            }
+            catch
+            {
+                bOk = false;
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return bOk;
+        }
+
         internal static void removeDuplicate(DataTable dt)
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
@@ -189,6 +224,5 @@ namespace Assemblies
             return sb.Remove(sb.Length - 1, 1).ToString();
         }
         #endregion
-
     }
 }
