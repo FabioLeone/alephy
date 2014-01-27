@@ -13,8 +13,27 @@ namespace Delorean.controls
         #region .:Events:.
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            usersBLL.IsValid(Request.QueryString["k"]);
+
+            if (!IsPostBack){
                 floadData();
+                Control ul = Master.FindControl("ulmenu");
+
+                foreach (Control item in ul.Controls)
+                {
+                    string s = string.Empty;
+                    if (item != null && item.GetType().Name == "HtmlGenericControl")
+                    {
+                        s = ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes["class"].Replace("current ", "");
+                        ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+
+                        if (((System.Web.UI.HtmlControls.HtmlControl)item).ID.Equals("l2"))
+                            ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", "current " + s);
+                        else
+                            ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", s);
+                    }
+                }
+            }
 
             dpgFactors.Attributes.Add("class", "button-bar");
         }
@@ -23,13 +42,15 @@ namespace Delorean.controls
         {
             TextBox tb = (TextBox)sender;
             int id = 0;
+            string s = string.Empty;
+
             foreach (ListViewItem item in lvwFactors.Items)
             {
                 if (item.FindControl("txtcond").UniqueID == tb.UniqueID)
                 {
-                    id = (int)lvwFactors.DataKeys[item.DataItemIndex].Value;
-                    if (buy_baseBLL.upCost(id, tb.Text))
-                        floadData();
+                    id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
+                    s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
+                    loadData(sales_factorBLL.setCond(id, tb.Text, s));
                     break;
                 }
             }
@@ -39,13 +60,15 @@ namespace Delorean.controls
         {
             TextBox tb = (TextBox)sender;
             int id = 0;
+            string s = string.Empty;
+
             foreach (ListViewItem item in lvwFactors.Items)
             {
                 if (item.FindControl("txtmarg").UniqueID == tb.UniqueID)
                 {
-                    id = (int)lvwFactors.DataKeys[item.DataItemIndex].Value;
-                    if (buy_baseBLL.upCost(id, tb.Text))
-                        floadData();
+                    id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
+                    s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
+                    loadData(sales_factorBLL.setMargin(id, tb.Text, s));
                     break;
                 }
             }
@@ -55,16 +78,24 @@ namespace Delorean.controls
         {
             TextBox tb = (TextBox)sender;
             int id = 0;
+            string s = string.Empty;
+
             foreach (ListViewItem item in lvwFactors.Items)
             {
                 if (item.FindControl("txtdesc").UniqueID == tb.UniqueID)
                 {
-                    id = (int)lvwFactors.DataKeys[item.DataItemIndex].Value;
-                    if (buy_baseBLL.upCost(id, tb.Text))
-                        floadData();
+                    id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
+                    s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
+                    loadData(sales_factorBLL.setDesc(id, tb.Text, s));
                     break;
                 }
             }
+        }
+
+        protected void lvwFactors_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+        {
+            dpgFactors.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+            floadData();
         }
         #endregion
 
@@ -72,6 +103,12 @@ namespace Delorean.controls
         private void floadData()
         {
             lvwFactors.DataSource = sales_factorBLL.getAll();
+            lvwFactors.DataBind();
+        }
+
+        private void loadData(List<sales_factorTO> lst)
+        {
+            lvwFactors.DataSource = lst;
             lvwFactors.DataBind();
         }
 

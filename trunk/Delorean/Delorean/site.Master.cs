@@ -23,7 +23,7 @@ namespace Delorean
 
         protected void edFactor_ServerClick(object sender, EventArgs e)
         {
-            Response.Redirect("");
+            Response.Redirect("~/controls/factors_set.aspx");
         }
         #endregion
     }

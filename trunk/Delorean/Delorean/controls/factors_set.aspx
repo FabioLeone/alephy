@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ListView ID="lvwFactors" runat="server">
+    <asp:ListView ID="lvwFactors" runat="server" DataKeyNames="id" OnPagePropertiesChanging="lvwFactors_PagePropertiesChanging">
         <LayoutTemplate>
             <table class="sortable striped" cellspacing="0" cellpadding="0">
                 <thead>
@@ -25,21 +25,24 @@
         </LayoutTemplate>
         <ItemTemplate>
             <tr id="Tr1" runat="server">
-                <td><%# Eval("barras") %></td>
-                <td><%# Eval("nomeprod") %></td>
+                <td id="barcod" runat="server"><%# Eval("barras") %></td>
+                <td><%# Eval("prod_name") %></td>
                 <td style="padding: 0; width: 120px;">
                     <asp:TextBox ID="txtcond" runat="server" OnTextChanged="txtcond_TextChanged" AutoPostBack="true"
-                        Text='<%# Eval("cond_cxs") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
+                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
+                        Text='<%# Eval("cont_bxs") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
                 </td>
                 <td style="padding: 0; width: 120px;">
                     <asp:TextBox ID="txtmarg" runat="server" OnTextChanged="txtmarg_TextChanged" AutoPostBack="true"
-                        Text='<%# Eval("marg_esperada") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
+                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
+                        Text='<%# Eval("expected_margin") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
                 </td>
                 <td style="padding: 0; width: 120px;">
                     <asp:TextBox ID="txtdesc" runat="server" OnTextChanged="txtdesc_TextChanged" AutoPostBack="true"
-                        Text='<%# Eval("desconto") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
+                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
+                        Text='<%# Eval("discount") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
                 </td>
-                <td><%# Eval("demais_cxs") %></td>
+                <td><%# Eval("other_bxs") %></td>
             </tr>
         </ItemTemplate>
         <EmptyDataTemplate>

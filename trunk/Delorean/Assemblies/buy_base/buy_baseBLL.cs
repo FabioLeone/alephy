@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -218,13 +219,22 @@ namespace Assemblies
             return dt;
         }
 
-        public static bool upCost(int id, string vcost)
+        public static List<base_viewer> upCost(int id, string vcost)
         {
-            decimal dCost = 0;
-            if (!decimal.TryParse(vcost, out dCost))
-                return false;
+            List<base_viewer> lst = new List<base_viewer>();
+            base_viewer o;
 
-            return buy_baseDAL.upCost(id, dCost);
+            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
+
+            decimal dCost = 0;
+            if (decimal.TryParse(vcost, out dCost))
+            {
+                o = buy_baseDAL.upCost(id, dCost);
+                if(lst.Count > 0)
+                    lst[lst.FindIndex(i=>i.bcid == o.bcid)] = o;
+            }
+
+            return lst;
         }
 
         #endregion

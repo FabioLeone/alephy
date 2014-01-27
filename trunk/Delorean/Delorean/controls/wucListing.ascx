@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="wucListing.ascx.cs" Inherits="Delorean.controls.wucListing" %>
 <%@ Register Assembly="Ctrls" Namespace="Ctrls" TagPrefix="ale" %>
-<asp:ListView ID="lvwProducts" runat="server" DataKeyNames="bcid">
+<asp:ListView ID="lvwProducts" runat="server" DataKeyNames="bcid" OnPagePropertiesChanging="lvwProducts_PagePropertiesChanging">
     <LayoutTemplate>
         <table class="sortable striped" cellspacing="0" cellpadding="0">
             <thead>
@@ -25,7 +25,8 @@
             <td><%# Eval("nomeprod") %></td>
             <td style="padding:0;width:120px;">
                 <asp:TextBox ID="txtvcost" runat="server" OnTextChanged="txtvcost_TextChanged" AutoPostBack="true"
-                    Text='<%# Eval("valor_custo") %>' style="margin: 0;box-shadow: none;width: 100%;height: inherit;border:0;background:inherit;"></asp:TextBox>
+                    Text='<%# Eval("valor_custo") %>' TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
+                    style="margin: 0;box-shadow: none;width: 100%;height: inherit;border:0;background:inherit;"></asp:TextBox>
             </td>
             <td><%# Eval("one_unit") %></td>
             <td><%# Eval("upx") %></td>
