@@ -235,7 +235,7 @@ namespace consolidate.resources
                 if (!Directory.Exists(s))
                     Directory.CreateDirectory(s);
 
-                s = s + "\\" + sNew + "_" + DateTime.Now.ToString("yyyy.MM.dd") + System.IO.Path.GetExtension(strP);
+                s = s + "\\" + System.IO.Path.GetFileNameWithoutExtension(strP) + "_" + sNew + "_" + DateTime.Now.ToString("yyyy.MM.dd") + System.IO.Path.GetExtension(strP);
 
                 File.Copy(strP, s, true);
 
