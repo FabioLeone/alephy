@@ -14,9 +14,18 @@ namespace Assemblies
     public class special_baseBLL
     {
         #region .:Searches:.
-        public static object getProducts()
+        public static List<base_viewer> getProducts()
         {
-            return special_baseDAL.getByFarmaciaId(helpers.GetSession().FarmaciaId);
+            List<base_viewer> lst;
+            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
+            
+            if (lst == null)
+            {
+                lst = special_baseDAL.getByFarmaciaId(helpers.GetSession().FarmaciaId);
+                helpers.SetCache("products" + helpers.GetSession().UserId, lst);
+            }
+
+            return lst;
         }
         #endregion
     }

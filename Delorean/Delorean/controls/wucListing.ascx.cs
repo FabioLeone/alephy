@@ -27,12 +27,18 @@ namespace Delorean.controls
             {
                 if (item.FindControl("txtvcost").UniqueID == tb.UniqueID)
                 {
-                    id = (int)lvwProducts.DataKeys[item.DataItemIndex].Value;
-                    if(buy_baseBLL.upCost(id, tb.Text))
-                        floadData();
+                    id = (int)lvwProducts.DataKeys[tb.TabIndex].Value;
+                    loadData(buy_baseBLL.upCost(id, tb.Text));
+                    
                     break;
                 }
             }
+        }
+
+        protected void lvwProducts_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+        {
+            dpgProducts.SetPageProperties(e.StartRowIndex, e.MaximumRows,false);
+            floadData();
         }
         #endregion
 
@@ -43,6 +49,12 @@ namespace Delorean.controls
             lvwProducts.DataBind();
         }
 
+        private void loadData(List<base_viewer> lst)
+        {
+            lvwProducts.DataSource = lst;
+            lvwProducts.DataBind();
+        }
         #endregion
+
     }
 }

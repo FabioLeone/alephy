@@ -41,5 +41,22 @@ namespace Assemblies
         {
             if (System.IO.Path.GetExtension(p).ToUpper() == ".XML" || System.IO.Path.GetExtension(p).ToUpper() == ".TXT") { return true; } else { return false; }
         }
+
+        internal static void SetCache(string k, object o)
+        {
+            String jssObject = new JavaScriptSerializer().Serialize(o);
+
+            HttpContext.Current.Cache[cdModel.cript(k)] = cdModel.cript(jssObject);
+        }
+
+        internal static dynamic GetFromCache<T>(string k)
+        {
+            JavaScriptSerializer jssObject = new JavaScriptSerializer();
+
+            if (HttpContext.Current.Cache[cdModel.cript(k)] != null)
+                return (T)jssObject.Deserialize(cdModel.desc(HttpContext.Current.Cache[cdModel.cript(k)].ToString()), typeof(T));
+            else
+                return null;
+        }
     }
 }
