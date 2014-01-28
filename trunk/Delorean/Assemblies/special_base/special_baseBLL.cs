@@ -27,6 +27,20 @@ namespace Assemblies
 
             return lst;
         }
+
+        public static List<base_viewer> getByFilter(string p)
+        {
+            List<base_viewer> lst;
+            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
+
+            if (lst == null)
+            {
+                lst = special_baseDAL.getByFilter(helpers.GetSession().FarmaciaId,p);
+                helpers.SetCache("products" + helpers.GetSession().UserId, lst);
+            }
+
+            return lst;
+        }
         #endregion
     }
 }

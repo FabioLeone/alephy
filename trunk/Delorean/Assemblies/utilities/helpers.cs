@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace Assemblies
 {
-    class helpers
+    public class helpers
     {
         internal static void SetSession(usersTO objUser)
         {
@@ -18,7 +18,7 @@ namespace Assemblies
             HttpContext.Current.Session[cdModel.cript(objUser.UserName)] = cdModel.cript(jssObject);
         }
 
-        internal static usersTO GetSession()
+        public static usersTO GetSession()
         {
             usersTO objUser = new usersTO();
             JavaScriptSerializer jssObject = new JavaScriptSerializer();
@@ -57,6 +57,12 @@ namespace Assemblies
                 return (T)jssObject.Deserialize(cdModel.desc(HttpContext.Current.Cache[cdModel.cript(k)].ToString()), typeof(T));
             else
                 return null;
+        }
+
+        public static void ClearCache<T>(string k)
+        {
+            if (HttpContext.Current.Cache[cdModel.cript(k)] != null)
+                HttpContext.Current.Cache.Remove(cdModel.cript(k));
         }
     }
 }

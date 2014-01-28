@@ -49,6 +49,42 @@ namespace Delorean {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl l1;
         
         /// <summary>
+        /// filtro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl filtro;
+        
+        /// <summary>
+        /// fall control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor fall;
+        
+        /// <summary>
+        /// ffulfilled control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ffulfilled;
+        
+        /// <summary>
+        /// funfilled control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor funfilled;
+        
+        /// <summary>
         /// l2 control.
         /// </summary>
         /// <remarks>

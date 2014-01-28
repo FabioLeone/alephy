@@ -110,9 +110,9 @@ namespace Assemblies
 
             StringBuilder strSQL = new StringBuilder();
             strSQL.Append(@"UPDATE base_compra SET valor_custo=@valor_custo WHERE id=@id;");
-            strSQL.Append(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada)) as ""1 Unidade"",
-	            ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) as ""Acima de X"", 
-	            ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))) as ""Margem Real""
+            strSQL.Append(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada))::numeric(12,2) as ""1 Unidade"",
+	            ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))::numeric(12,2) as ""Acima de X"", 
+	            ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)))::numeric(12,2) as ""Margem Real""
             from base_especial b
 	            left join base_compra bc on b.barras = bc.barras
 	            left join produtos_base p on b.barras = p.codbarra

@@ -17,16 +17,58 @@ namespace Assemblies
         {
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
             List<base_viewer> lst = new List<base_viewer>();
-            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada)) as ""1 Unidade"",
-	            ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) as ""Acima de X"", 
-	            ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))) as ""Margem Real""
+            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada))::numeric(12,2) as ""1 Unidade"",
+	            ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))::numeric(12,2) as ""Acima de X"", 
+	            ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)))::numeric(12,2) as ""Margem Real""
             from base_especial b
-	            left join base_compra bc on b.barras = bc.barras
+	            left join base_compra bc on b.barras = bc.barras and bc.farmaciaid = @farmaciaid
+	            left join produtos_base p on b.barras = p.codbarra
+	            left join fator_venda f on b.barras = f.barras");
+            
+            NpgsqlCommand ncmm = nc.CreateCommand();
+            ncmm.CommandText = sb.ToString();
+            ncmm.Parameters.Add("@farmaciaid", NpgsqlDbType.Integer).Value = iFarmaciaId;
+
+            try
+            {
+                nc.Open();
+
+                using (IDataReader drd = ncmm.ExecuteReader())
+                {
+                    while (drd.Read())
+                    {
+                        lst.Add(Load(drd));
+                    }
+                }
+            }
+            finally
+            {
+                nc.Close();
+            }
+
+            return lst;
+        }
+
+        internal static List<base_viewer> getByFilter(int iFarmaciaId, string p2)
+        {
+            NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
+            List<base_viewer> lst = new List<base_viewer>();
+            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada))::numeric(12,2) as ""1 Unidade"",
+	            ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))::numeric(12,2) as ""Acima de X"", 
+	            ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)))::numeric(12,2) as ""Margem Real""
+            from base_especial b");
+
+            if (p2.Equals("f"))
+                sb.Append(@" left join base_compra bc on b.barras = bc.barras
 	            left join produtos_base p on b.barras = p.codbarra
 	            left join fator_venda f on b.barras = f.barras
-            where bc.farmaciaid = @farmaciaid and to_char(bc.data, 'MM yyyy') = to_char((
-	            select data from base_compra where farmaciaid = bc.farmaciaid order by data desc limit 1), 'MM yyyy')");
-            
+                where bc.farmaciaid = @farmaciaid");
+            else
+                sb.Append(@" left join base_compra bc on b.barras = bc.barras and bc.farmaciaid = @farmaciaid
+	            left join produtos_base p on b.barras = p.codbarra
+	            left join fator_venda f on b.barras = f.barras
+                where bc.valor_custo = 0 or bc.valor_custo is null");
+
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
             ncmm.Parameters.Add("@farmaciaid", NpgsqlDbType.Integer).Value = iFarmaciaId;

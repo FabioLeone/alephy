@@ -16,7 +16,7 @@ namespace Delorean.controls
             usersBLL.IsValid(Request.QueryString["k"]);
 
             if (!IsPostBack){
-                floadData();
+                checkFilter();
                 Control ul = Master.FindControl("ulmenu");
 
                 foreach (Control item in ul.Controls)
@@ -24,13 +24,21 @@ namespace Delorean.controls
                     string s = string.Empty;
                     if (item != null && item.GetType().Name == "HtmlGenericControl")
                     {
-                        s = ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes["class"].Replace("current ", "");
-                        ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+                        if (((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Count > 0)
+                        {
+                            s = ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes["class"].Replace("current ", "");
 
-                        if (((System.Web.UI.HtmlControls.HtmlControl)item).ID.Equals("l2"))
-                            ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", "current " + s);
-                        else
-                            ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", s);
+                            if (((System.Web.UI.HtmlControls.HtmlControl)item).ID.Equals("l1"))
+                            {
+                                ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+                                ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", s);
+                            }
+                            else if (((System.Web.UI.HtmlControls.HtmlControl)item).ID.Equals("l2"))
+                            {
+                                ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+                                ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", "current " + s);
+                            }
+                        }   
                     }
                 }
             }
@@ -112,6 +120,30 @@ namespace Delorean.controls
             lvwFactors.DataBind();
         }
 
+        private void checkFilter()
+        {
+            if (Request.QueryString["f"] == null)
+                floadData();
+            else
+            {
+                helpers.ClearCache<List<base_viewer>>("factors" + helpers.GetSession().UserId);
+                switch (Request.QueryString["f"])
+                {
+                    case "a":
+                        floadData();
+                        break;
+                    case "f":
+                        loadData(sales_factorBLL.getByFilter("f"));
+                        break;
+                    case "u":
+                        loadData(sales_factorBLL.getByFilter("u"));
+                        break;
+                    default:
+                        floadData();
+                        break;
+                }
+            }
+        }
         #endregion
     }
 }

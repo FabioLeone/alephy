@@ -22,6 +22,20 @@ namespace Assemblies
 
             return lst;
         }
+
+        public static List<sales_factorTO> getByFilter(string p)
+        {
+            List<sales_factorTO> lst;
+            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+
+            if (lst == null)
+            {
+                lst = sales_factorDAL.getByFilter(p);
+                helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+            }
+
+            return lst;
+        }
         #endregion
 
         #region .:Persistences:.

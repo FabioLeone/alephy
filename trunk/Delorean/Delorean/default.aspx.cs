@@ -23,13 +23,22 @@ namespace Delorean.controls
                     string s = string.Empty;
                     if (item != null && item.GetType().Name == "HtmlGenericControl")
                     {
-                        s = ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes["class"].Replace("current ", "");
-                        ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+                        if (((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Count > 0)
+                        {
 
-                        if (((System.Web.UI.HtmlControls.HtmlControl)item).ID.Equals("l1"))
-                            ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", "current " + s);
-                        else
-                            ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", s);
+                            s = ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes["class"].Replace("current ", "");
+
+                            if (((System.Web.UI.HtmlControls.HtmlControl)item).ID.Equals("l2"))
+                            {
+                                ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+                                ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", s);
+                            }
+                            else if (((System.Web.UI.HtmlControls.HtmlControl)item).ID.Equals("l1"))
+                            {
+                                ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
+                                ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", "current " + s);
+                            } 
+                        }
                     }
                 }
             }
