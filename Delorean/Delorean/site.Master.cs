@@ -25,6 +25,25 @@ namespace Delorean
         {
             Response.Redirect("~/controls/factors_set.aspx");
         }
+
+        protected void foption_ServerClick(object sender, EventArgs e)
+        {
+            string s = HttpContext.Current.Request.Url.AbsolutePath;
+            switch (((System.Web.UI.HtmlControls.HtmlAnchor)sender).ID)
+            {
+                case "fall":
+                    Response.Redirect(s + "?f=a");
+                    break;
+                case "ffulfilled":
+                    Response.Redirect(s + "?f=f");
+                    break;
+                case "funfilled":
+                    Response.Redirect(s + "?f=u");
+                    break;
+                default:
+                    break;
+            }
+        }
         #endregion
     }
 }

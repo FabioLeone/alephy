@@ -14,7 +14,7 @@ namespace Delorean.controls
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-                floadData();
+                checkFilter();
 
             dpgProducts.Attributes.Add("class", "button-bar");
         }
@@ -53,6 +53,30 @@ namespace Delorean.controls
         {
             lvwProducts.DataSource = lst;
             lvwProducts.DataBind();
+        }
+
+        private void checkFilter()
+        {
+            if (Request.QueryString["f"] == null)
+                floadData();
+            else {
+                helpers.ClearCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
+                switch (Request.QueryString["f"])
+                {
+                    case "a":
+                        floadData();
+                        break;
+                    case "f":
+                        loadData(special_baseBLL.getByFilter("f"));
+                        break;
+                    case "u":
+                        loadData(special_baseBLL.getByFilter("u"));
+                        break;
+                    default:
+                        floadData();
+                        break;
+                }
+            }
         }
         #endregion
 

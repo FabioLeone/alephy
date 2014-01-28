@@ -20,10 +20,10 @@
                 <li id="l1" runat="server" class="current first divider"><a href="../default.aspx"><i class="icon-home"></i>Home</a></li>
                 <li class="divider"><a href="#sfopen"><i class="icon-upload-alt"></i>Enviar arquivo preço de custo</a></li>
                 <li class="divider"><a href="">&nbsp; <i class="icon-filter"></i>Filtros</a>
-                    <ul>
-                        <li><a href="">Todos</a></li>
-                        <li><a href="">Já Preenchidos</a></li>
-                        <li><a href="">Não Preenchidos</a></li>
+                    <ul id="filtro" runat="server">
+                        <li><a id="fall" runat="server" onserverclick="foption_ServerClick">Todos</a></li>
+                        <li><a id="ffulfilled" runat="server" onserverclick="foption_ServerClick">Já Preenchidos</a></li>
+                        <li><a id="funfilled" runat="server" onserverclick="foption_ServerClick">Não Preenchidos</a></li>
                     </ul>
                 </li>
                 <li class="has-menu divider">
