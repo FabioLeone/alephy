@@ -85,6 +85,24 @@ namespace Delorean {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor funfilled;
         
         /// <summary>
+        /// psearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl psearch;
+        
+        /// <summary>
+        /// schbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button schbtn;
+        
+        /// <summary>
         /// l2 control.
         /// </summary>
         /// <remarks>

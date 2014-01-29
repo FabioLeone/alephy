@@ -5,7 +5,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ListView ID="lvwFactors" runat="server" DataKeyNames="id" OnPagePropertiesChanging="lvwFactors_PagePropertiesChanging">
+    <asp:ListView ID="lvwFactors" runat="server" DataKeyNames="id" OnItemDataBound="lvwFactors_ItemDataBound"
+        OnPagePropertiesChanging="lvwFactors_PagePropertiesChanging">
         <LayoutTemplate>
             <table class="sortable striped" cellspacing="0" cellpadding="0">
                 <thead>

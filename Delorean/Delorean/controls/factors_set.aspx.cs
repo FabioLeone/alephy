@@ -10,12 +10,42 @@ namespace Delorean.controls
 {
     public partial class factors_set : System.Web.UI.Page
     {
+        #region .:Properties:.
+        private int _oldidx = 0;
+        private string _nxtfld = string.Empty;
+
+        public int oldidx
+        {
+            get {
+                if (ViewState["oldidx"] == null) return this._oldidx;
+                else return (int)ViewState["oldidx"];
+            }
+
+            set {
+                ViewState["oldidx"] = value;
+                this._oldidx = value;
+            }
+        }
+
+        public string nxtfld {
+            get {
+                if (ViewState["oldfld"] == null) return this._nxtfld;
+                else return ViewState["oldfld"].ToString();
+            }
+            set {
+                ViewState["oldfld"] = value;
+                this._nxtfld = value;
+            }
+        }
+        #endregion
+
         #region .:Events:.
         protected void Page_Load(object sender, EventArgs e)
         {
             usersBLL.IsValid(Request.QueryString["k"]);
 
-            if (!IsPostBack){
+            if (!IsPostBack)
+            {
                 checkFilter();
                 Control ul = Master.FindControl("ulmenu");
 
@@ -38,7 +68,7 @@ namespace Delorean.controls
                                 ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Remove("class");
                                 ((System.Web.UI.HtmlControls.HtmlControl)item).Attributes.Add("class", "current " + s);
                             }
-                        }   
+                        }
                     }
                 }
             }
@@ -56,6 +86,8 @@ namespace Delorean.controls
             {
                 if (item.FindControl("txtcond").UniqueID == tb.UniqueID)
                 {
+                    this.nxtfld = "txtmarg";
+                    this.oldidx = tb.TabIndex;
                     id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
                     s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
                     loadData(sales_factorBLL.setCond(id, tb.Text, s));
@@ -74,6 +106,8 @@ namespace Delorean.controls
             {
                 if (item.FindControl("txtmarg").UniqueID == tb.UniqueID)
                 {
+                    this.nxtfld = "txtdesc";
+                    this.oldidx = tb.TabIndex;
                     id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
                     s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
                     loadData(sales_factorBLL.setMargin(id, tb.Text, s));
@@ -92,6 +126,8 @@ namespace Delorean.controls
             {
                 if (item.FindControl("txtdesc").UniqueID == tb.UniqueID)
                 {
+                    this.nxtfld = string.Empty;
+                    this.oldidx = -1;
                     id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
                     s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
                     loadData(sales_factorBLL.setDesc(id, tb.Text, s));
@@ -105,6 +141,15 @@ namespace Delorean.controls
             dpgFactors.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
             floadData();
         }
+
+        protected void lvwFactors_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            if(this.oldidx >= 0)
+                if (((ListViewDataItem)e.Item).DataItemIndex == this.oldidx) {
+                    if (lvwFactors.Items.Count > 0)
+                        ((TextBox)lvwFactors.Items[this.oldidx].FindControl(this.nxtfld)).Focus();
+                }
+        }
         #endregion
 
         #region .:Methods:.
@@ -112,36 +157,33 @@ namespace Delorean.controls
         {
             lvwFactors.DataSource = sales_factorBLL.getAll();
             lvwFactors.DataBind();
+
+            if (lvwFactors.Items.Count > 0)
+                dpgFactors.Visible = true;
+            else
+                dpgFactors.Visible = false;
         }
 
         private void loadData(List<sales_factorTO> lst)
         {
             lvwFactors.DataSource = lst;
             lvwFactors.DataBind();
+
+            if (lvwFactors.Items.Count > 0)
+                dpgFactors.Visible = true;
+            else
+                dpgFactors.Visible = false;
         }
 
         private void checkFilter()
         {
-            if (Request.QueryString["f"] == null)
+            if (Request.QueryString["f"] == null && Request.QueryString["s"] == null)
                 floadData();
             else
             {
                 helpers.ClearCache<List<base_viewer>>("factors" + helpers.GetSession().UserId);
-                switch (Request.QueryString["f"])
-                {
-                    case "a":
-                        floadData();
-                        break;
-                    case "f":
-                        loadData(sales_factorBLL.getByFilter("f"));
-                        break;
-                    case "u":
-                        loadData(sales_factorBLL.getByFilter("u"));
-                        break;
-                    default:
-                        floadData();
-                        break;
-                }
+
+                loadData(sales_factorBLL.getByFilter(Request.QueryString["f"], Request.QueryString["s"]));
             }
         }
         #endregion

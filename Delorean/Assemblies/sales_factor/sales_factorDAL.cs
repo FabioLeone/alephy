@@ -19,7 +19,7 @@ namespace Assemblies
             List<sales_factorTO> lst = new List<sales_factorTO>();
             StringBuilder sb = new StringBuilder(@"select f.id,case when f.barras is null then b.barras else f.barras end,p.nomeprod,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
             right join base_especial b on f.barras = b.barras
-            inner join produtos_base p on b.barras = p.codbarra");
+            inner join produtos_base p on b.barras = p.codbarra order by p.nomeprod");
 
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
@@ -44,7 +44,7 @@ namespace Assemblies
             return lst;
         }
 
-        internal static List<sales_factorTO> getByFilter(string p)
+        internal static List<sales_factorTO> getByFilter(string p1, string p2)
         {
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
             List<sales_factorTO> lst = new List<sales_factorTO>();
@@ -52,14 +52,30 @@ namespace Assemblies
             right join base_especial b on f.barras = b.barras
             inner join produtos_base p on b.barras = p.codbarra");
 
-            if (p.Equals("f"))
+            if (string.IsNullOrEmpty(p1)) p1 = string.Empty;
+
+            if (p1.Equals("f"))
+            {
                 sb.Append(" where (cond_cxs > 0 or margem_esperada > 0 or desconto > 0)");
-            else
-                sb.Append(" where (cond_cxs = 0 or cond_cxs is null) or (margem_esperada = 0 or margem_esperada is null) or (desconto = 0 or desconto is null)");
+
+                if(!string.IsNullOrEmpty(p2))
+                    sb.Append(" and lower(p.nomeprod) like @nomeprod");
+            }
+            else if (p1.Equals("u"))
+            {
+                sb.Append(" where ((cond_cxs = 0 or cond_cxs is null) or (margem_esperada = 0 or margem_esperada is null) or (desconto = 0 or desconto is null))");
+                
+                if (!string.IsNullOrEmpty(p2))
+                    sb.Append(" and lower(p.nomeprod) like @nomeprod");
+            }
+            else if (!string.IsNullOrEmpty(p2))
+                sb.Append(" where lower(p.nomeprod) like @nomeprod");
+
+            sb.Append(" order by p.nomeprod");
 
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
-
+            ncmm.Parameters.Add("@nomeprod", NpgsqlDbType.Varchar).Value = string.Format("%{0}%", p2).ToLower();
             try
             {
                 nc.Open();

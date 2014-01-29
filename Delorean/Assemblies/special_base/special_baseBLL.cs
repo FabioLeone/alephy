@@ -19,7 +19,7 @@ namespace Assemblies
             List<base_viewer> lst;
             lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
             
-            if (lst == null)
+            if (lst == null || lst.Count == 0)
             {
                 lst = special_baseDAL.getByFarmaciaId(helpers.GetSession().FarmaciaId);
                 helpers.SetCache("products" + helpers.GetSession().UserId, lst);
@@ -28,14 +28,14 @@ namespace Assemblies
             return lst;
         }
 
-        public static List<base_viewer> getByFilter(string p)
+        public static List<base_viewer> getByFilter(string p1, string p2)
         {
             List<base_viewer> lst;
             lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
 
             if (lst == null)
             {
-                lst = special_baseDAL.getByFilter(helpers.GetSession().FarmaciaId,p);
+                lst = special_baseDAL.getByFilter(helpers.GetSession().FarmaciaId, p1, p2);
                 helpers.SetCache("products" + helpers.GetSession().UserId, lst);
             }
 
