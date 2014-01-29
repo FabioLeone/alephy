@@ -23,6 +23,8 @@ namespace Delorean.controls
         {
             TextBox tb = (TextBox)sender;
             int id = 0;
+            string s = string.Empty;
+
             foreach (ListViewItem item in lvwProducts.Items)
             {
                 if (item.FindControl("txtvcost").UniqueID == tb.UniqueID)
@@ -47,35 +49,32 @@ namespace Delorean.controls
         {
             lvwProducts.DataSource = special_baseBLL.getProducts();
             lvwProducts.DataBind();
+
+            if (lvwProducts.Items.Count > 0)
+                dpgProducts.Visible = true;
+            else
+                dpgProducts.Visible = false;
         }
 
         private void loadData(List<base_viewer> lst)
         {
             lvwProducts.DataSource = lst;
             lvwProducts.DataBind();
+
+            if (lvwProducts.Items.Count > 0)
+                dpgProducts.Visible = true;
+            else
+                dpgProducts.Visible = false;
         }
 
         private void checkFilter()
         {
-            if (Request.QueryString["f"] == null)
+            if (Request.QueryString["f"] == null && Request.QueryString["s"] == null)
                 floadData();
             else {
                 helpers.ClearCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
-                switch (Request.QueryString["f"])
-                {
-                    case "a":
-                        floadData();
-                        break;
-                    case "f":
-                        loadData(special_baseBLL.getByFilter("f"));
-                        break;
-                    case "u":
-                        loadData(special_baseBLL.getByFilter("u"));
-                        break;
-                    default:
-                        floadData();
-                        break;
-                }
+
+                loadData(special_baseBLL.getByFilter(Request.QueryString["f"], Request.QueryString["s"]));
             }
         }
         #endregion

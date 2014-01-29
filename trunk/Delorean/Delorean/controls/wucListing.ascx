@@ -23,10 +23,10 @@
         <tr runat="server">
             <td><%# Eval("barras") %></td>
             <td><%# Eval("nomeprod") %></td>
-            <td style="padding:0;width:120px;">
+            <td style="padding: 0; width: 120px;">
                 <asp:TextBox ID="txtvcost" runat="server" OnTextChanged="txtvcost_TextChanged" AutoPostBack="true"
                     Text='<%# Eval("valor_custo") %>' TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
-                    style="margin: 0;box-shadow: none;width: 100%;height: inherit;border:0;background:inherit;"></asp:TextBox>
+                    Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
             </td>
             <td><%# Eval("one_unit") %></td>
             <td><%# Eval("upx") %></td>
@@ -34,7 +34,12 @@
         </tr>
     </ItemTemplate>
     <EmptyDataTemplate>
-        Não há itens para serem exibidos
+        <table class="sortable striped" cellspacing="0" cellpadding="0">
+            <tr runat="server">
+                <td>Não há itens para serem exibidos
+                </td>
+            </tr>
+        </table>
     </EmptyDataTemplate>
 </asp:ListView>
 

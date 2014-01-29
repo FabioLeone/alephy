@@ -27,7 +27,9 @@
                     </ul>
                 </li>
                 <li class="has-menu divider">
-                    <input type="search" name="s" placeholder="Procurar Produto"></li>
+                    <input type="search" id="psearch" runat="server" name="s" placeholder="Procurar Produto" />
+                    <asp:Button ID="schbtn" runat="server" Text="sch" OnClick="schbtn_Click" style="visibility:hidden;padding:0;height:0;" />
+                </li>
                 <li id="l2" runat="server" class="divider">
                     <a id="edFactor" runat="server" onserverclick="edFactor_ServerClick"><i class="icon-edit"></i>Fator de venda</a>
                 </li>

@@ -9,7 +9,7 @@ namespace Assemblies
     public class sales_factorBLL
     {
         #region .:Searches:.
-        public static List<sales_factorTO> getAll()
+		public static List<sales_factorTO> getAll()
         {
             List<sales_factorTO> lst;
             lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
@@ -23,14 +23,14 @@ namespace Assemblies
             return lst;
         }
 
-        public static List<sales_factorTO> getByFilter(string p)
+        public static List<sales_factorTO> getByFilter(string p1, string p2)
         {
             List<sales_factorTO> lst;
             lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
 
             if (lst == null)
             {
-                lst = sales_factorDAL.getByFilter(p);
+                lst = sales_factorDAL.getByFilter(p1, p2);
                 helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
             }
 

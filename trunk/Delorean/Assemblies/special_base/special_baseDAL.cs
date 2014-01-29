@@ -17,13 +17,14 @@ namespace Assemblies
         {
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
             List<base_viewer> lst = new List<base_viewer>();
-            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada))::numeric(12,2) as ""1 Unidade"",
-	            ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))::numeric(12,2) as ""Acima de X"", 
-	            ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)))::numeric(12,2) as ""Margem Real""
+            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - (f.margem_esperada/100)))::numeric(12,2) as ""1 Unidade"",
+	            ((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100)))::numeric(12,2) as ""Acima de X"", 
+	            (((((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100))) - bc.valor_custo) / ((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100))))*100)::numeric(12,2) as ""Margem Real""
             from base_especial b
 	            left join base_compra bc on b.barras = bc.barras and bc.farmaciaid = @farmaciaid
 	            left join produtos_base p on b.barras = p.codbarra
-	            left join fator_venda f on b.barras = f.barras");
+	            left join fator_venda f on b.barras = f.barras
+            order by p.nomeprod");
             
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
@@ -49,29 +50,53 @@ namespace Assemblies
             return lst;
         }
 
-        internal static List<base_viewer> getByFilter(int iFarmaciaId, string p2)
+        internal static List<base_viewer> getByFilter(int iFarmaciaId, string p1, string p2)
         {
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
             List<base_viewer> lst = new List<base_viewer>();
-            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada))::numeric(12,2) as ""1 Unidade"",
-	            ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))::numeric(12,2) as ""Acima de X"", 
-	            ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)))::numeric(12,2) as ""Margem Real""
+            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - (f.margem_esperada/100)))::numeric(12,2) as ""1 Unidade"",
+	            ((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100)))::numeric(12,2) as ""Acima de X"", 
+	            (((((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100))) - bc.valor_custo) / ((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100))))*100)::numeric(12,2) as ""Margem Real""
             from base_especial b");
 
-            if (p2.Equals("f"))
+            if (string.IsNullOrEmpty(p1)) p1 = string.Empty;
+
+            if (p1.Equals("f"))
+            {
                 sb.Append(@" left join base_compra bc on b.barras = bc.barras
 	            left join produtos_base p on b.barras = p.codbarra
 	            left join fator_venda f on b.barras = f.barras
                 where bc.farmaciaid = @farmaciaid");
-            else
+
+                if (!string.IsNullOrEmpty(p2))
+                    sb.Append(" and lower(p.nomeprod) like @nomeprod");
+            }
+            else if (p1.Equals("u"))
+            {
                 sb.Append(@" left join base_compra bc on b.barras = bc.barras and bc.farmaciaid = @farmaciaid
 	            left join produtos_base p on b.barras = p.codbarra
 	            left join fator_venda f on b.barras = f.barras
-                where bc.valor_custo = 0 or bc.valor_custo is null");
+                where (bc.valor_custo = 0 or bc.valor_custo is null)");
+
+                if (!string.IsNullOrEmpty(p2))
+                    sb.Append(" and lower(p.nomeprod) like @nomeprod");
+            }
+            else
+            {
+                sb.Append(@" left join base_compra bc on b.barras = bc.barras and bc.farmaciaid = @farmaciaid
+	            left join produtos_base p on b.barras = p.codbarra
+	            left join fator_venda f on b.barras = f.barras");
+
+                if (!string.IsNullOrEmpty(p2))
+                    sb.Append(" where lower(p.nomeprod) like @nomeprod");
+            }
+
+            sb.Append(" order by p.nomeprod");
 
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
             ncmm.Parameters.Add("@farmaciaid", NpgsqlDbType.Integer).Value = iFarmaciaId;
+            ncmm.Parameters.Add("@nomeprod", NpgsqlDbType.Varchar).Value = string.Format("%{0}%",p2).ToLower();
 
             try
             {
