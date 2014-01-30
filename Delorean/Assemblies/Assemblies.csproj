@@ -54,6 +54,9 @@
     <Compile Include="buy_base\buy_baseBLL.cs" />
     <Compile Include="buy_base\buy_baseDAL.cs" />
     <Compile Include="buy_base\buy_baseTO.cs" />
+    <Compile Include="competitors_base\competitors_baseBLL.cs" />
+    <Compile Include="competitors_base\competitors_baseDAL.cs" />
+    <Compile Include="competitors_base\competitors_baseTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sales_factor\sales_factorBLL.cs" />
     <Compile Include="sales_factor\sales_factorDAL.cs" />
@@ -67,9 +70,7 @@
     <Compile Include="utilities\cdModel.cs" />
     <Compile Include="utilities\helpers.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="competitors_base\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
