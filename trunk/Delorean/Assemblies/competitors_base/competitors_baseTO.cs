@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assemblies
 {
+    [Serializable]
     public class competitors_baseTO
     {
         public int id { get; set; }
