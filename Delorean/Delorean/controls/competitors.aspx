@@ -5,15 +5,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ListView ID="lvwCompetitors" runat="server" DataKeyNames="id" OnDataBound="lvwCompetitors_DataBound"
+    <asp:ListView ID="lvwCompetitors" runat="server" DataKeyNames="id"
         OnPagePropertiesChanging="lvwCompetitors_PagePropertiesChanging" OnItemDataBound="lvwCompetitors_ItemDataBound">
         <LayoutTemplate>
             <table class="sortable striped" cellspacing="0" cellpadding="0">
                 <thead>
-                    <tr class="alt first last">
+                    <tr id="Th1" runat="server" class="alt first last">
                         <th rel="0" value="Ean">Ean</th>
                         <th rel="1" value="Produto">Produto</th>
-                        <asp:PlaceHolder ID="hdr" runat="server"></asp:PlaceHolder>
+                    </tr>
+                    <tr id="Th2" runat="server"></tr>
                 </thead>
                 <tbody>
                     <tr id="itemPlaceholder" runat="server" />

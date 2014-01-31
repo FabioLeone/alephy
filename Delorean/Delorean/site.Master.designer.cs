@@ -121,6 +121,15 @@ namespace Delorean {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor edFactor;
         
         /// <summary>
+        /// L3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl L3;
+        
+        /// <summary>
         /// lbLogout control.
         /// </summary>
         /// <remarks>
