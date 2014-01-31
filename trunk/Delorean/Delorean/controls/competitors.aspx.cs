@@ -13,6 +13,7 @@ namespace Delorean.controls
     {
         #region .:Variables:.
         private string oldbar = string.Empty;
+        private List<ListItem> thd;
         #endregion
 
         #region .:Events:.
@@ -20,6 +21,8 @@ namespace Delorean.controls
         {
             if (!IsPostBack)
                 floadData();
+
+            dpgCompetitors.Attributes.Add("class", "button-bar");
         }
 
         protected void lvwCompetitors_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
@@ -28,44 +31,10 @@ namespace Delorean.controls
             floadData();
         }
 
-        protected void lvwCompetitors_DataBound(object sender, EventArgs e)
-        {
-            PlaceHolder hdr = (PlaceHolder)lvwCompetitors.FindControl("hdr");
-            if (hdr != null)
-            {
-                Literal ltrl = new Literal();
-                List<competitors_baseTO> lst = (List<competitors_baseTO>)ViewState["cachedTable"];
-
-                if (lst.Count > 0)
-                {
-                    string s = string.Empty;
-
-                    lst.ForEach(delegate(competitors_baseTO item)
-                    {
-                        if (!ltrl.Text.Contains(item.rede))
-                        {
-                            ltrl.Text += "<th colspan='2'>" + item.rede + "</th>";
-                            s += "<th>valor</th><th>desconto</th>";
-                        }
-                    });
-                    ltrl.Text += "</tr><tr><th colspan='2'>&nbsp;</th>" + s + "</tr>";
-                }
-
-                if (hdr.Controls.Count > 0)
-                {
-                    if (!((Literal)hdr.Controls[0]).Text.Equals(ltrl.Text))
-                    {
-                        hdr.Controls.Remove(hdr.Controls[0]);
-                        hdr.Controls.Add(ltrl);
-                    }
-                }
-                else
-                    hdr.Controls.Add(ltrl);
-            }
-        }
-
         protected void lvwCompetitors_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
+            HtmlTableRow Th1 = (HtmlTableRow)lvwCompetitors.FindControl("Th1");
+            HtmlTableRow Th2 = (HtmlTableRow)lvwCompetitors.FindControl("Th2");
             HtmlTableRow Tr1 = (HtmlTableRow)e.Item.FindControl("Tr1");
             HtmlTableCell barcod = (HtmlTableCell)e.Item.FindControl("barcod");
 
@@ -80,8 +49,37 @@ namespace Delorean.controls
 
                     if (lst.Count > 0)
                     {
+                        int j = 0;
+
+                        if (Th2.Cells.Count < 1)
+                        {
+                            tc = new HtmlTableCell();
+                            tc.InnerText = "";
+                            tc.ColSpan = 2;
+                            Th2.Cells.Add(tc);
+                        }
+
                         lst.ForEach(delegate(competitors_baseTO item)
                         {
+                            if (!(thd.FindAll(i => i.Value == item.rede).Count > 0))
+                            {
+                                thd.Add(new ListItem(item.barras, item.rede));
+
+                                tc = new HtmlTableCell("th");
+                                tc.ID = item.rede;
+                                tc.InnerText = item.rede;
+                                tc.ColSpan = 2;
+                                Th1.Cells.Add(tc);
+
+                                tc = new HtmlTableCell("th");
+                                tc.InnerText = "valor";
+                                Th2.Cells.Add(tc);
+
+                                tc = new HtmlTableCell("th");
+                                tc.InnerText = "desconto";
+                                Th2.Cells.Add(tc);
+                            }
+
                             if (barcod.InnerText.Equals(item.barras))
                             {
                                 if (Tr1.Cells.Count < 2)
@@ -91,13 +89,17 @@ namespace Delorean.controls
                                     Tr1.Cells.Add(tc);
                                 }
 
-                                tc = new HtmlTableCell();
-                                tc.InnerText = item.valor_preco.ToString();
-                                Tr1.Cells.Add(tc);
+                                if (thd[j].Value == item.rede)
+                                {
+                                    tc = new HtmlTableCell();
+                                    tc.InnerText = item.valor_preco.ToString();
+                                    Tr1.Cells.Add(tc);
 
-                                tc = new HtmlTableCell();
-                                tc.InnerText = item.valor_desconto.ToString();
-                                Tr1.Cells.Add(tc);
+                                    tc = new HtmlTableCell();
+                                    tc.InnerText = item.valor_desconto.ToString();
+                                    Tr1.Cells.Add(tc);
+                                    j++;
+                                }
                             }
                         });
                     }
@@ -112,6 +114,7 @@ namespace Delorean.controls
         private void floadData()
         {
             oldbar = string.Empty;
+            thd = new List<ListItem>();
             ViewState["cachedTable"] = competitors_baseBLL.getAll();
             lvwCompetitors.DataSource = (List<competitors_baseTO>)ViewState["cachedTable"];
             lvwCompetitors.DataBind();
