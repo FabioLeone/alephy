@@ -5,8 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ListView ID="lvwCompetitors" runat="server" DataKeyNames="id"
-        OnPagePropertiesChanging="lvwCompetitors_PagePropertiesChanging" OnItemDataBound="lvwCompetitors_ItemDataBound">
+    <asp:ListView ID="lvwCompetitors" runat="server" DataKeyNames="barras" OnItemDataBound="lvwCompetitors_ItemDataBound">
         <LayoutTemplate>
             <table class="sortable striped" cellspacing="0" cellpadding="0">
                 <thead>
@@ -31,14 +30,6 @@
         </EmptyDataTemplate>
     </asp:ListView>
 
-    <ale:ulDataPager ID="dpgCompetitors" runat="server" PagedControlID="lvwCompetitors" PageSize="15">
-        <Fields>
-            <asp:NextPreviousPagerField ShowNextPageButton="false" PreviousPageText="" />
-            <asp:NumericPagerField />
-            <asp:NextPreviousPagerField ShowPreviousPageButton="false" NextPageText="" />
-        </Fields>
-    </ale:ulDataPager>
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="../resources/scripts/kickstart.js"></script>
 </asp:Content>

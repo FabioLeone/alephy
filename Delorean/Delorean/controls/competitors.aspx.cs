@@ -21,14 +21,6 @@ namespace Delorean.controls
         {
             if (!IsPostBack)
                 floadData();
-
-            dpgCompetitors.Attributes.Add("class", "button-bar");
-        }
-
-        protected void lvwCompetitors_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
-        {
-            dpgCompetitors.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
-            floadData();
         }
 
         protected void lvwCompetitors_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -100,8 +92,54 @@ namespace Delorean.controls
                                     Tr1.Cells.Add(tc);
                                     j++;
                                 }
+                                else
+                                {
+                                    competitors_baseTO cb = new competitors_baseTO();
+
+                                    cb = lst.Find(p => p.barras == item.barras && p.rede == thd[j].Value);
+
+                                    tc = new HtmlTableCell();
+                                    if (cb == null)
+                                        tc.InnerText = string.Empty;
+                                    else
+                                        tc.InnerText = cb.valor_preco.ToString();
+                                    Tr1.Cells.Add(tc);
+
+                                    tc = new HtmlTableCell();
+                                    if (cb == null)
+                                        tc.InnerText = string.Empty;
+                                    else
+                                        tc.InnerText = cb.valor_desconto.ToString();
+                                    Tr1.Cells.Add(tc);
+                                    j++;
+                                }
                             }
                         });
+
+                        if (Tr1.Cells.Count < (Th2.Cells.Count + 1))
+                        {
+                            int i = ((Th2.Cells.Count + 1) - Tr1.Cells.Count) / 2;
+                            for (int k = 1; k <= i; k++)
+                            {
+                                competitors_baseTO cb = new competitors_baseTO();
+
+                                cb = lst.Find(p => p.barras == Tr1.Cells[0].InnerText && p.rede == thd[((Th1.Cells.Count - 3) - i) + k].Value);
+
+                                tc = new HtmlTableCell();
+                                if (cb == null)
+                                    tc.InnerText = string.Empty;
+                                else
+                                    tc.InnerText = cb.valor_preco.ToString();
+                                Tr1.Cells.Add(tc);
+
+                                tc = new HtmlTableCell();
+                                if (cb == null)
+                                    tc.InnerText = string.Empty;
+                                else
+                                    tc.InnerText = cb.valor_desconto.ToString();
+                                Tr1.Cells.Add(tc);
+                            }
+                        }
                     }
                 }
                 else
@@ -118,11 +156,6 @@ namespace Delorean.controls
             ViewState["cachedTable"] = competitors_baseBLL.getAll();
             lvwCompetitors.DataSource = (List<competitors_baseTO>)ViewState["cachedTable"];
             lvwCompetitors.DataBind();
-
-            if (lvwCompetitors.Items.Count > 0)
-                dpgCompetitors.Visible = true;
-            else
-                dpgCompetitors.Visible = false;
         }
         #endregion
     }
