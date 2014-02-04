@@ -3,3 +3,14 @@ D:\Projects\trunk\Delorean\Delorean\bin\Delorean.pdb
 D:\Projects\trunk\Delorean\Delorean\obj\Debug\Delorean.csprojResolveAssemblyReference.cache
 D:\Projects\trunk\Delorean\Delorean\obj\Debug\Delorean.dll
 D:\Projects\trunk\Delorean\Delorean\obj\Debug\Delorean.pdb
+D:\Projects\branche\Delorean\Delorean\bin\Delorean.dll
+D:\Projects\branche\Delorean\Delorean\bin\Delorean.pdb
+D:\Projects\branche\Delorean\Delorean\bin\Assemblies.dll
+D:\Projects\branche\Delorean\Delorean\bin\Ctrls.dll
+D:\Projects\branche\Delorean\Delorean\bin\Npgsql.dll
+D:\Projects\branche\Delorean\Delorean\bin\Mono.Security.dll
+D:\Projects\branche\Delorean\Delorean\bin\Assemblies.pdb
+D:\Projects\branche\Delorean\Delorean\bin\Ctrls.pdb
+D:\Projects\branche\Delorean\Delorean\obj\Debug\Delorean.csprojResolveAssemblyReference.cache
+D:\Projects\branche\Delorean\Delorean\obj\Debug\Delorean.dll
+D:\Projects\branche\Delorean\Delorean\obj\Debug\Delorean.pdb
