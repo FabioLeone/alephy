@@ -79,7 +79,7 @@ namespace Assemblies
             HttpContext ctx = HttpContext.Current;
             helpers.ClearSession();
             FormsAuthentication.SignOut();
-            
+
             ctx.Response.Redirect("~/accesscontrol.aspx");
         }
 
@@ -102,5 +102,27 @@ namespace Assemblies
         }
         #endregion
 
+
+        public static void ChkMenu(System.Web.UI.HtmlControls.HtmlGenericControl l2)
+        {
+            switch (helpers.GetSession().TipoId)
+            {
+                case 1:
+                    switch (helpers.GetSession().Nivel)
+                    {
+                        case 1:
+                        case 2:
+                            l2.Visible = false;
+                            break;
+                        default:
+                            l2.Visible = true;
+                            break;
+                    }
+                    break;
+                default:
+                    l2.Visible = false;
+                    break;
+            }
+        }
     }
 }
