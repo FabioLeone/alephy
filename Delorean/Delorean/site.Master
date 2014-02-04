@@ -34,7 +34,7 @@
                     <a id="edFactor" runat="server" onserverclick="edFactor_ServerClick"><i class="icon-edit"></i>Fator de venda</a>
                 </li>
                 <li id="L3" runat="server" class="divider">
-                    <a runat="server" href="~/controls/competitors.aspx"><i class="icon-list"></i>Fator de venda</a>
+                    <a runat="server" href="~/controls/competitors.aspx"><i class="icon-list"></i>Concorrentes</a>
                 </li>
                 <li class="last right"><a id="lbLogout" runat="server" onserverclick="lbLogout_ServerClick"><i class=" icon-signout"></i>Logout</a></li>
             </ul>

@@ -13,7 +13,7 @@ namespace Delorean
         #region .:Events:.
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            usersBLL.ChkMenu(l2);
         }
 
         protected void lbLogout_ServerClick(object sender, EventArgs e)
