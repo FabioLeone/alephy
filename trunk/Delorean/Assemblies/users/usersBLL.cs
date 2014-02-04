@@ -19,12 +19,16 @@ namespace Assemblies
 
             if (objUser.UserId > 0)
             {
-                helpers.SetSession(objUser);
-                FormsAuthentication.RedirectFromLoginPage(objUser.UserName, persistentCookie);
+                if (objUser.ExpirationDate.Date >= DateTime.Now.Date)
+                {
+                    helpers.SetSession(objUser);
+                    FormsAuthentication.RedirectFromLoginPage(objUser.UserName, persistentCookie);
 
-                ctx.Response.Redirect("~/default.aspx");
+                    ctx.Response.Redirect("~/default.aspx");
 
-                return string.Empty;
+                    return string.Empty;
+                }else
+                    return "Prazo da senha expirou.";
             }
             else return "usuário e/ou senha inválido(s).";
         }
@@ -88,21 +92,6 @@ namespace Assemblies
             return usersDAL.Verify_registration(p);
         }
 
-        #endregion
-
-        #region .:Search:.
-        private static usersTO GetByNameAndPassword(string sName, string sPassword)
-        {
-            return usersDAL.GetByNameAndPassword(sName, sPassword);
-        }
-
-        private static usersTO GetById(int id)
-        {
-            return usersDAL.GetById(id);
-        }
-        #endregion
-
-
         public static void ChkMenu(System.Web.UI.HtmlControls.HtmlGenericControl l2)
         {
             switch (helpers.GetSession().TipoId)
@@ -124,5 +113,19 @@ namespace Assemblies
                     break;
             }
         }
+
+        #endregion
+
+        #region .:Search:.
+        private static usersTO GetByNameAndPassword(string sName, string sPassword)
+        {
+            return usersDAL.GetByNameAndPassword(sName, sPassword);
+        }
+
+        private static usersTO GetById(int id)
+        {
+            return usersDAL.GetById(id);
+        }
+        #endregion
     }
 }

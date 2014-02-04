@@ -1,6 +1,7 @@
 ﻿using Assemblies;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -21,12 +22,13 @@ namespace Delorean.controls
         {
             if (!IsPostBack)
                 floadData();
+
+            dpgCompetitors.Attributes.Add("class", "button-bar");
         }
 
         protected void lvwCompetitors_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             HtmlTableRow Th1 = (HtmlTableRow)lvwCompetitors.FindControl("Th1");
-            HtmlTableRow Th2 = (HtmlTableRow)lvwCompetitors.FindControl("Th2");
             HtmlTableRow Tr1 = (HtmlTableRow)e.Item.FindControl("Tr1");
             HtmlTableCell barcod = (HtmlTableCell)e.Item.FindControl("barcod");
 
@@ -34,109 +36,29 @@ namespace Delorean.controls
             {
                 if (!Tr1.Cells[0].InnerText.Equals(oldbar))
                 {
-                    List<competitors_baseTO> lst = (List<competitors_baseTO>)ViewState["cachedTable"];
+                    DataTable dt = (DataTable)ViewState["cachedTable"];
                     HtmlTableCell tc;
 
                     oldbar = barcod.InnerText;
 
-                    if (lst.Count > 0)
+                    if (dt.Rows.Count > 0)
                     {
-                        int j = 0;
-
-                        if (Th2.Cells.Count < 1)
+                        for (int i = 0; i < dt.Columns.Count; i++)
                         {
-                            tc = new HtmlTableCell();
-                            tc.InnerText = "";
-                            tc.ColSpan = 2;
-                            Th2.Cells.Add(tc);
-                        }
-
-                        lst.ForEach(delegate(competitors_baseTO item)
-                        {
-                            if (!(thd.FindAll(i => i.Value == item.rede).Count > 0))
+                            if (!(thd.FindAll(k => k.Value == dt.Columns[i].ColumnName).Count > 0))
                             {
-                                thd.Add(new ListItem(item.barras, item.rede));
+                                thd.Add(new ListItem(oldbar, dt.Columns[i].ColumnName));
 
                                 tc = new HtmlTableCell("th");
-                                tc.ID = item.rede;
-                                tc.InnerText = item.rede;
-                                tc.ColSpan = 2;
+                                tc.ID = dt.Columns[i].ColumnName;
+                                tc.InnerText = dt.Columns[i].ColumnName;
                                 Th1.Cells.Add(tc);
-
-                                tc = new HtmlTableCell("th");
-                                tc.InnerText = "valor";
-                                Th2.Cells.Add(tc);
-
-                                tc = new HtmlTableCell("th");
-                                tc.InnerText = "desconto";
-                                Th2.Cells.Add(tc);
                             }
 
-                            if (barcod.InnerText.Equals(item.barras))
+                            if (thd[i].Value == dt.Columns[i].ColumnName && i > 0)
                             {
-                                if (Tr1.Cells.Count < 2)
-                                {
-                                    tc = new HtmlTableCell();
-                                    tc.InnerText = item.nomeprod;
-                                    Tr1.Cells.Add(tc);
-                                }
-
-                                if (thd[j].Value == item.rede)
-                                {
-                                    tc = new HtmlTableCell();
-                                    tc.InnerText = item.valor_preco.ToString();
-                                    Tr1.Cells.Add(tc);
-
-                                    tc = new HtmlTableCell();
-                                    tc.InnerText = item.valor_desconto.ToString();
-                                    Tr1.Cells.Add(tc);
-                                    j++;
-                                }
-                                else
-                                {
-                                    competitors_baseTO cb = new competitors_baseTO();
-
-                                    cb = lst.Find(p => p.barras == item.barras && p.rede == thd[j].Value);
-
-                                    tc = new HtmlTableCell();
-                                    if (cb == null)
-                                        tc.InnerText = string.Empty;
-                                    else
-                                        tc.InnerText = cb.valor_preco.ToString();
-                                    Tr1.Cells.Add(tc);
-
-                                    tc = new HtmlTableCell();
-                                    if (cb == null)
-                                        tc.InnerText = string.Empty;
-                                    else
-                                        tc.InnerText = cb.valor_desconto.ToString();
-                                    Tr1.Cells.Add(tc);
-                                    j++;
-                                }
-                            }
-                        });
-
-                        if (Tr1.Cells.Count < (Th2.Cells.Count + 1))
-                        {
-                            int i = ((Th2.Cells.Count + 1) - Tr1.Cells.Count) / 2;
-                            for (int k = 1; k <= i; k++)
-                            {
-                                competitors_baseTO cb = new competitors_baseTO();
-
-                                cb = lst.Find(p => p.barras == Tr1.Cells[0].InnerText && p.rede == thd[((Th1.Cells.Count - 3) - i) + k].Value);
-
                                 tc = new HtmlTableCell();
-                                if (cb == null)
-                                    tc.InnerText = string.Empty;
-                                else
-                                    tc.InnerText = cb.valor_preco.ToString();
-                                Tr1.Cells.Add(tc);
-
-                                tc = new HtmlTableCell();
-                                if (cb == null)
-                                    tc.InnerText = string.Empty;
-                                else
-                                    tc.InnerText = cb.valor_desconto.ToString();
+                                tc.InnerText = dt.Select("Ean = " + barcod.InnerText)[0][i].ToString();
                                 Tr1.Cells.Add(tc);
                             }
                         }
@@ -146,6 +68,12 @@ namespace Delorean.controls
                     e.Item.Controls.Remove(Tr1);
             }
         }
+
+        protected void lvwCompetitors_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+        {
+            dpgCompetitors.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+            floadData();
+        }
         #endregion
 
         #region .:Methods:.
@@ -154,8 +82,13 @@ namespace Delorean.controls
             oldbar = string.Empty;
             thd = new List<ListItem>();
             ViewState["cachedTable"] = competitors_baseBLL.getAll();
-            lvwCompetitors.DataSource = (List<competitors_baseTO>)ViewState["cachedTable"];
+            lvwCompetitors.DataSource = (DataTable)ViewState["cachedTable"];
             lvwCompetitors.DataBind();
+
+            if (lvwCompetitors.Items.Count > 0)
+                dpgCompetitors.Visible = true;
+            else
+                dpgCompetitors.Visible = false;
         }
         #endregion
     }
