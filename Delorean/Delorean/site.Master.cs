@@ -77,7 +77,8 @@ namespace Delorean
             else
                 s += "?";
 
-            Response.Redirect(s + "s=" + Request.Form[psearch.UniqueID]);
+
+            Response.Redirect(s + "s=" + Request.Form[ulmenu.FindControl("psearch").UniqueID]);
         }
         #endregion
     }
