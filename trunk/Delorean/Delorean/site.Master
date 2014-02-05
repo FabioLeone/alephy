@@ -1,6 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="site.master.cs" Inherits="Delorean.site" %>
 
-<%@ Register src="controls/wucSending_file.ascx" tagname="wucSending_file" tagprefix="uc1" %>
+<%@ Register Src="controls/wucSending_file.ascx" TagName="wucSending_file" TagPrefix="uc1" %>
 
 <!DOCTYPE html>
 
@@ -27,8 +27,8 @@
                     </ul>
                 </li>
                 <li class="has-menu divider">
-                    <input type="search" id="psearch" runat="server" name="s" placeholder="Procurar Produto" />
-                    <asp:Button ID="schbtn" runat="server" Text="sch" OnClick="schbtn_Click" style="visibility:hidden;padding:0;height:0;" />
+                    <input type="text" id="psearch" runat="server" name="s" placeholder="Procurar Produto" style="-webkit-appearance: searchfield; -webkit-rtl-ordering: logical; width: 178px; height: 31px; margin: 0; border-radius: 5px; box-shadow: inset 0 1px 6px #ccc; padding-left: 1px; -webkit-user-select: text; cursor: auto;" />
+                    <asp:Button ID="schbtn" runat="server" Text="sch" OnClick="schbtn_Click" Style="visibility: hidden; padding: 0; height: 0;" />
                 </li>
                 <li id="l2" runat="server" class="divider">
                     <a id="edFactor" runat="server" onserverclick="edFactor_ServerClick"><i class="icon-edit"></i>Fator de venda</a>

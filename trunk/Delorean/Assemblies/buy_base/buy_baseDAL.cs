@@ -20,7 +20,7 @@ namespace Assemblies
 
             if (dt.Rows.Count > 0)
             {
-                var sql = "copy base_compra (farmaciaid, barras, valor_custo, data) from stdin with delimiter '|'";
+                var sql = "copy base_compra (farmaciaid, barras, valor_custo, fabricante, data) from stdin with delimiter '|'";
 
                 cmm = new NpgsqlCommand(sql, cnn);
 
@@ -67,7 +67,7 @@ namespace Assemblies
 
             if (dt.Rows.Count > 0)
             {
-                var sql = "copy base_compra (farmaciaid, barras, valor_custo, data) from stdin with delimiter '|'";
+                var sql = "copy base_compra (farmaciaid, barras, valor_custo, fabricante, data) from stdin with delimiter '|'";
 
                 cmm = new NpgsqlCommand(sql, cnn);
 
@@ -159,12 +159,11 @@ namespace Assemblies
             if (auxDt.Rows.Count > 0)
             {
                 strSQL = new StringBuilder();
-                strSQL.Append(string.Format(@"DELETE FROM base_compra WHERE farmaciaid = @farmaciaid 
-                and to_char(data, 'MM yyyy') = '{0}'", DateTime.Now.ToString("MM yyyy")));
+                strSQL.Append(@"DELETE FROM base_compra WHERE farmaciaid = (select id from farmacias where cnpj = @cnpj);");
 
                 cmd.CommandText = strSQL.ToString();
                 cmd.Parameters.Clear();
-                cmd.Parameters.Add("@farmaciaid", NpgsqlTypes.NpgsqlDbType.Integer).Value = auxDt.Rows[0][0];
+                cmd.Parameters.Add("@cnpj", NpgsqlTypes.NpgsqlDbType.Varchar).Value = auxDt.Rows[0][0];
             }
 
             try

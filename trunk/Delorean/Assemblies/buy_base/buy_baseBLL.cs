@@ -50,7 +50,13 @@ namespace Assemblies
                         DataTable dt = new DataTable();
                         dt = txtDtConvert(hPF.InputStream);
 
-                        msg = buy_baseDAL.addTxt(addColumn(dt));
+                        if (!DataValidation(dt))
+                            msg = "CNPJ não cadastrado";
+                        else
+                        {
+                            buy_baseDAL.removeDuplicate(dt);
+                            msg = buy_baseDAL.addTxt(addColumn(dt));
+                        }
                     }
                 }
                 else
@@ -104,7 +110,7 @@ namespace Assemblies
             {
                 line = sr.ReadLine().Split(';');
 
-                if (!line.Length.Equals(3))
+                if (!line.Length.Equals(4))
                     break;
 
                 if (i == 0)
