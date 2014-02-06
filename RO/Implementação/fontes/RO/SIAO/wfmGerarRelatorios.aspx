@@ -90,6 +90,14 @@
                         </div>
                     </asp:LinkButton>
                 </li>
+                <li>
+                    <asp:LinkButton ID="lbtnParticipation" runat="server" 
+                        OnClientClick="ToggleCursor(1);" onclick="lbtnParticipation_Click">
+                        <div id="Div5" runat="server" class="imgRel">
+                            <p>Porcentagem de Participação</p>
+                        </div>
+                    </asp:LinkButton>
+                </li>
             </ul>
         </div>
         <div id="divGrafic" class="dvList" style="margin-left: 0.5%; margin-right: 0.5%;">

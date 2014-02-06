@@ -535,7 +535,77 @@ namespace SIAO.SRV
 
             return lr;
         }
+
+        internal static List<PercReport> GetPercent(UsersTO clsUser, string strIni, string strFim, int intRedeId, string strCnpj)
+        {
+            List<PercReport> lst = new List<PercReport>();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            DataSet ds = new DataSet();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+
+            cmm.Connection = cnn;
+            StringBuilder SQL = new StringBuilder();
+            SQL.Append(@"SELECT
+            consolidado.mes,
+            consolidado.ano,
+            consolidado.cnpj,
+            consolidado.sub_consultoria,
+            ((SUM(valor_liquido) / vl) * 100)::numeric(12,2) AS ""participação""
+            FROM
+            consolidado
+            INNER JOIN ""v.totalliquido"" ON consolidado.cnpj = ""v.totalliquido"".cnpj
+            AND ""v.totalliquido"".mes = consolidado.mes
+            AND ""v.totalliquido"".ano = consolidado.ano
+            WHERE
+            consolidado.cnpj = @cnpj
+            AND (to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') >= to_date( @DataIni, 'MM yyyy')
+            AND to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') <= to_date( @DataFim, 'MM yyyy'))
+            GROUP BY
+            consolidado.mes,
+            consolidado.ano,
+            consolidado.cnpj,
+            consolidado.sub_consultoria,
+            vl
+            ORDER BY ano,mes");
+
+            cmm.CommandText = SQL.ToString();
+            cmm.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = strCnpj;
+            cmm.Parameters.Add("@DataIni", NpgsqlDbType.Varchar).Value = strIni;
+            cmm.Parameters.Add("@DataFim", NpgsqlDbType.Varchar).Value = strFim;
+
+            try{
+                cnn.Open();
+
+                using (IDataReader drd = cmm.ExecuteReader())
+                {
+                    while (drd.Read())
+                    {
+                        lst.Add(Load(drd));
+                    }
+                }
+            }
+            finally
+            {
+                cnn.Close();
+            }
+
+            return lst;
+        }
         #endregion
 
+        #region .:Loads:.
+        private static PercReport Load(IDataReader drd)
+        {
+            PercReport obj = new PercReport();
+
+            if (!drd.IsDBNull(drd.GetOrdinal("mes"))) obj.Mes = drd.GetInt32(drd.GetOrdinal("mes")); else obj.Mes = 0;
+            if (!drd.IsDBNull(drd.GetOrdinal("ano"))) obj.Ano = drd.GetInt32(drd.GetOrdinal("ano")); else obj.Ano = 0;
+            if (!drd.IsDBNull(drd.GetOrdinal("cnpj"))) obj.Cnpj = drd.GetString(drd.GetOrdinal("cnpj")); else obj.Cnpj = string.Empty;
+            if (!drd.IsDBNull(drd.GetOrdinal("sub_consultoria"))) obj.SubConsultoria = drd.GetString(drd.GetOrdinal("sub_consultoria")); else obj.SubConsultoria = string.Empty;
+            if (!drd.IsDBNull(drd.GetOrdinal("participação"))) obj.Participacao = drd.GetDecimal(drd.GetOrdinal("participação")); else obj.Participacao = 0;
+
+            return obj;
+        }
+        #endregion
     }
 }
