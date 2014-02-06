@@ -140,6 +140,29 @@ namespace SIAO.SRV
             return sbName.ToString();
         }
 
+
+        public static string SetFileName(string strName, List<PercReport> lst)
+        {
+            StringBuilder sbName = new StringBuilder();
+            string a = "", b = "";
+            Regex r = new Regex("(?:[^a-z0-9 ]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+            sbName.Append(strName);
+
+            if (lst.Count > 0)
+            {
+                a = lst[0].Cnpj;
+                a = r.Replace(a, String.Empty);
+                sbName.Append("_" + a);
+
+                b = lst[0].Periodo.Replace(" ", "");
+                b = r.Replace(b, String.Empty);
+                sbName.Append("_" + b);
+            }
+
+            return sbName.ToString();
+        }
+
         public static string SetFileName(string strGrafico, List<GraficTO> clsGrafic)
         {
             StringBuilder sbName = new StringBuilder();
@@ -423,6 +446,5 @@ namespace SIAO.SRV
         public List<int> Meses() { return lstMeses; }
         public List<string> Cnpj() { return lstCnpj; }
         #endregion
-
     }
 }

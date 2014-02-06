@@ -119,5 +119,24 @@ namespace SIAO.SRV
                 return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, 0);
         }
 
+        public static List<PercReport> GetPercent(UsersTO clsUser, string strIni, string strFim, int intRedeId, string strCnpj)
+        {
+            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
+            {
+                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
+                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
+            }
+            else
+            {
+                strIni = strIni.Replace("/", " ");
+                strFim = strFim.Replace("/", " ");
+            }
+
+            List<PercReport> lst = RelatoriosDAL.GetPercent(clsUser, strIni, strFim, intRedeId, strCnpj);
+            if(lst.Count > 0)
+                lst.ForEach(i=>i.Periodo = String.Format("{0} à {1}", strIni, strFim));
+
+            return lst;
+        }
     }
 }

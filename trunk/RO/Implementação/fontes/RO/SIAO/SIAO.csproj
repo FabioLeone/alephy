@@ -363,6 +363,7 @@
     <EmbeddedResource Include="Relatory\rptGraficoLab.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Relatory\rptPartPerc.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\fonts\BebasNeue-webfont.eot" />

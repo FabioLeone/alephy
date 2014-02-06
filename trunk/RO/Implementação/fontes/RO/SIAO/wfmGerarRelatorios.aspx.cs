@@ -411,6 +411,29 @@ namespace SIAO
             }
         }
 
+        protected void lbtnParticipation_Click(object sender, EventArgs e)
+        {
+            List<PercReport> lst = new List<PercReport>();
+
+            if (rbtPeriodo.Checked)
+            {
+                if (this.User.RedeId > 0)
+                    lst = RelatoriosBLL.GetPercent(clsUser, txtInicio.Text, txtFim.Text, this.User.RedeId, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
+                else
+                    lst = RelatoriosBLL.GetPercent(clsUser, txtInicio.Text, txtFim.Text, (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)), (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
+            }
+            else if (rbtMes.Checked)
+            {
+                if (this.User.RedeId > 0)
+                    lst = RelatoriosBLL.GetPercent(clsUser, string.Empty, string.Empty, this.User.RedeId, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
+                else
+                    lst = RelatoriosBLL.GetPercent(clsUser, string.Empty, string.Empty, (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)), (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
+            }
+
+            cursor();
+            clsFuncs.Redirect(setPdf(lst, "Participacao", "Relatory/rptPartPerc.rdlc"), "_blank", "");
+        }
+
         #endregion
 
         #region .: Methods :.
@@ -514,10 +537,12 @@ namespace SIAO
             ReportDataSource rds = new ReportDataSource("DataSet1", lr1);
             String filename = String.Empty;
 
-            if(lr1.GetType() == typeof(List<clsRelat1>))
+            if (lr1.GetType() == typeof(List<clsRelat1>))
                 filename = clsFuncs.SetFileName(strName, (lr1 as List<clsRelat1>));
-            else if(lr1.GetType() == typeof(List<GraficTO>))
+            else if (lr1.GetType() == typeof(List<GraficTO>))
                 filename = clsFuncs.SetFileName(strName, (lr1 as List<GraficTO>));
+            else if (lr1.GetType() == typeof(List<PercReport>))
+                filename = clsFuncs.SetFileName(strName, (lr1 as List<PercReport>));
             else
                 filename = clsFuncs.SetFileName(strName, (lr1 as List<Grafic2TO>));
 

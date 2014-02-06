@@ -22,4 +22,9 @@ namespace SIAO.SRV
         public string Importado { get; set; }
         public string Periodo { get; set; }
     }
+
+    [Serializable]
+    public class PercReport : clsRelat1 {
+        public decimal Participacao { get; set; }
+    }
 }

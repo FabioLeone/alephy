@@ -191,8 +191,6 @@ namespace SIAO.SRV.DAL
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
 
-                Console.WriteLine(CDM.Cript(strName.ToUpper()));
-                Console.WriteLine(CDM.Cript(strName.ToUpper()));
                 cmdUsers.Parameters.Clear();
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", CDM.Cript(strName.ToUpper())));
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Password", CDM.Cript(strPassword)));

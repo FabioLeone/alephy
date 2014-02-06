@@ -1141,9 +1141,11 @@ namespace SIAO.SRV.DAL
                 if (intRedeId > 0)
                     strSQL.Append(@" AND f.idRede = @idRede ORDER BY ano DESC, mes DESC LIMIT 1
                 ), 'MM yyyy')) AND farmacias.idRede = @idRede");
-                
 
-                if (!String.IsNullOrEmpty(strLoja))
+
+                if (!String.IsNullOrEmpty(strLoja) && intRedeId > 0)
+                    strSQL.Append(" AND farmacias.Cnpj = '" + strLoja + "'");
+                else if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND f.Cnpj = '" + strLoja + "' ORDER BY ano DESC, mes DESC LIMIT 1), 'MM yyyy')) AND farmacias.Cnpj = '" + strLoja + "'");
                 else if (!clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0))
                     strSQL.Append(" AND uv.usuarioid = @UsuarioId ORDER BY ano DESC, mes DESC LIMIT 1), 'MM yyyy')) AND usuarios_vinculos.UsuarioId = @UsuarioId");
