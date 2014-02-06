@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Delorean - project</title>
+    <title>Consulta Preço - project</title>
     <link href="resources/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="resources/css/kickstart.css" media="all" />
     <asp:ContentPlaceHolder ID="head" runat="server">
