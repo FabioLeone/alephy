@@ -110,6 +110,37 @@ namespace SIAO.SRV.BLL
             }
         }
 
+        public static bool ValidaAcesso(UsersTO users, System.Web.UI.HtmlControls.HtmlGenericControl dvRedes, System.Web.UI.HtmlControls.HtmlGenericControl dvLoja, System.Web.UI.HtmlControls.HtmlGenericControl dvFiltro, System.Web.UI.HtmlControls.HtmlGenericControl li3)
+        {
+            switch (users.TipoId)
+            {
+                case 1:
+                    switch (users.Nivel)
+                    {
+                        case 1:
+                        case 2:
+                            dvFiltro.Visible = true;
+                            dvLoja.Visible = true;
+                            dvRedes.Visible = false;
+                            li3.Visible = false;
+                            return true;
+                        default:
+                            dvFiltro.Visible = true;
+                            dvLoja.Visible = true;
+                            dvRedes.Visible = true;
+                            li3.Visible = true;
+                            break;
+                    }
+                    return false;
+                default:
+                    dvFiltro.Visible = true;
+                    dvLoja.Visible = true;
+                    dvRedes.Visible = false;
+                    li3.Visible = false;
+                    return true;
+            }
+        }
+
         public static void GetNiveis(ref DropDownList ddlNivel, ref System.Web.UI.HtmlControls.HtmlTableCell tdNA)
         {
             if (GetUserSession().Nivel.Equals((int)Nivel.a))
@@ -335,6 +366,5 @@ namespace SIAO.SRV.BLL
             i = 4
         }
         #endregion
-
     }
 }
