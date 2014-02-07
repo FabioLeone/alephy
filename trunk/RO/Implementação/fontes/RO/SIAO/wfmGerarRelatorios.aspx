@@ -90,7 +90,7 @@
                         </div>
                     </asp:LinkButton>
                 </li>
-                <li>
+                <li id="li3" runat="server">
                     <asp:LinkButton ID="lbtnParticipation" runat="server" 
                         OnClientClick="ToggleCursor(1);" onclick="lbtnParticipation_Click">
                         <div id="Div5" runat="server" class="imgRel">

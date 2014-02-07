@@ -456,7 +456,7 @@ namespace SIAO
 
         private void ValidaAcesso()
         {
-            if(UsersBLL.ValidaAcesso(UsersBLL.GetUserSession(), dvRedes, dvLoja, dvFiltro))
+            if(UsersBLL.ValidaAcesso(UsersBLL.GetUserSession(), dvRedes, dvLoja, dvFiltro,li3))
                 LojasBLL.getLojasApp(this.User,ddlLojaRelatorios,dvFiltro, dvLoja);
         }
 
