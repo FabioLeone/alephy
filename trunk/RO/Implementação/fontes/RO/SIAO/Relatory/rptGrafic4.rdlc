@@ -587,7 +587,7 @@
         <Top>12cm</Top>
         <Left>0.00001cm</Left>
         <Height>2cm</Height>
-        <Width>6.32157cm</Width>
+        <Width>6.32158cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -818,7 +818,7 @@
         </SortExpressions>
         <Top>26cm</Top>
         <Height>2cm</Height>
-        <Width>6.30135cm</Width>
+        <Width>6.30136cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1648,7 +1648,7 @@
         </SortExpressions>
         <Top>40cm</Top>
         <Height>2cm</Height>
-        <Width>6.30135cm</Width>
+        <Width>6.30136cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -2180,7 +2180,7 @@
         </SortExpressions>
         <Top>54cm</Top>
         <Height>2cm</Height>
-        <Width>6.30135cm</Width>
+        <Width>6.30136cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -2573,7 +2573,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -2713,7 +2712,7 @@
         </SortExpressions>
         <Top>68cm</Top>
         <Height>2cm</Height>
-        <Width>6.30135cm</Width>
+        <Width>6.30136cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -2753,7 +2752,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="Quantidade Vendida - Loja - " + Fields!Razao_Social.Value + "Periodo - " + Fields!Periodo.Value</Value>
+                  <Value>="Desconto Vendida - Loja - " + Fields!Razao_Social.Value + vbCrLf +"Periodo - " + Fields!Periodo.Value</Value>
                   <Style>
                     <FontFamily>Arial Rounded MT Bold</FontFamily>
                     <FontSize>14pt</FontSize>
