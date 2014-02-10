@@ -195,7 +195,7 @@ namespace SIAO.SRV
                     clsLoja.Razao = ds.Tables["Loja"].Rows[0]["RazaoSocial"].ToString();
                     clsLoja.Cnpj = ds.Tables["Loja"].Rows[0]["Cnpj"].ToString();
                     clsLoja.Endereco = ds.Tables["Loja"].Rows[0]["Endereco"].ToString();
-                    clsLoja.EndNumero = Convert.ToInt32(ds.Tables["Loja"].Rows[0]["Numero"].ToString());
+                    clsLoja.EndNumero = ds.Tables["Loja"].Rows[0]["Numero"].ToString();
                     clsLoja.Bairro = ds.Tables["Loja"].Rows[0]["Bairro"].ToString();
                     clsLoja.Complemento = ds.Tables["Loja"].Rows[0]["Complemento"].ToString();
                     clsLoja.Cidade = ds.Tables["Loja"].Rows[0]["Cidade"].ToString();
@@ -369,7 +369,7 @@ namespace SIAO.SRV
                 clsLoja.Razao = ds.Tables["LojaEd"].Rows[0]["RazaoSocial"].ToString();
                 clsLoja.Cnpj = ds.Tables["LojaEd"].Rows[0]["Cnpj"].ToString();
                 clsLoja.Endereco = ds.Tables["LojaEd"].Rows[0]["Endereco"].ToString();
-                clsLoja.EndNumero = Convert.ToInt32(ds.Tables["LojaEd"].Rows[0]["Numero"].ToString());
+                clsLoja.EndNumero = ds.Tables["LojaEd"].Rows[0]["Numero"].ToString();
                 clsLoja.Bairro = ds.Tables["LojaEd"].Rows[0]["Bairro"].ToString();
                 clsLoja.Complemento = ds.Tables["LojaEd"].Rows[0]["Complemento"].ToString();
                 clsLoja.Cidade = ds.Tables["LojaEd"].Rows[0]["Cidade"].ToString();
