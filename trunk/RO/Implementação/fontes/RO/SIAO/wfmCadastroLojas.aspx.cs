@@ -150,7 +150,7 @@ namespace SIAO
                     clsLoja.Email = txtEmail.Text;
                     clsLoja.Email2 = txtEmail2.Text;
                     clsLoja.Endereco = txtEndereco.Text;
-                    clsLoja.EndNumero = Convert.ToInt32(txtNum.Text);
+                    clsLoja.EndNumero = txtNum.Text;
                     clsLoja.Fone = txtFone.Text;
                     clsLoja.Fone2 = txtFone2.Text;
                     clsLoja.Gerente = txtGerente.Text;
@@ -184,7 +184,7 @@ namespace SIAO
                         Email = txtEmail.Text,
                         Email2 = txtEmail2.Text,
                         Endereco = txtEndereco.Text,
-                        EndNumero = txtNum.Text == "" ? 0 : Convert.ToInt32(txtNum.Text),
+                        EndNumero = txtNum.Text == "" ? "0" : txtNum.Text,
                         Fone = txtFone.Text,
                         Fone2 = txtFone2.Text,
                         Gerente = txtGerente.Text,
