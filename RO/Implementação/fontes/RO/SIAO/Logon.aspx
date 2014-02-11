@@ -6,8 +6,6 @@
     <meta charset="utf-8">
     <title>R.O.</title>
     <link href="Content/ssSIAO.css" rel="Stylesheet" type="text/css" />
-    <!-- Animação fundo -->
-    <link rel="stylesheet" type="text/css" href="Content/css/style1.css" />
     <script type="text/javascript" src="Content/js/modernizr.custom.86080.js"></script>
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -15,26 +13,6 @@
 <body id="home">
     <form id="frmLogon" runat="server">
     <div id="fundo">
-        <ul class="cb-slideshow">
-            <li><span>Image 01</span><div>
-            </div>
-            </li>
-            <li><span>Image 02</span><div>
-            </div>
-            </li>
-            <li><span>Image 03</span><div>
-            </div>
-            </li>
-            <li><span>Image 04</span><div>
-            </div>
-            </li>
-            <li><span>Image 05</span><div>
-            </div>
-            </li>
-            <li><span>Image 06</span><div>
-            </div>
-            </li>
-        </ul>
     </div>
     <div>
         <section>

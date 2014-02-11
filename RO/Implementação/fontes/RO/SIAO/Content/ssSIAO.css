@@ -3,11 +3,13 @@
     padding: 0;
     margin: 0;
     font-family: Arial, "Helvetica Neue" , Helvetica, sans-serif;
+    background: url(images/banners/bg.jpg) center;
+    
 }
 
 #page
 {
-    background: url(images/app/logo_Cas_blue_512_80p_transparente.png) no-repeat center;
+    
     width: 900px;
     display: block;
     margin: 0 auto;
@@ -226,6 +228,7 @@ li
 {
     list-style: none;
     z-index: -100 !important;
+    
 }
 
 #fundo > ul
@@ -235,7 +238,7 @@ li
 
 #login
 {
-    background: rgba(0,0,0,0.6) url(images/app/logo_Cas_blue_128_transparente.png) no-repeat right top;
+    background: rgba(0,0,0,0.8);
     border-radius: 25px;
     width: 400px;
     height: 300px;
@@ -243,7 +246,7 @@ li
     right: 50px;
     bottom: 50px;
     padding: 10px;
-    color: #CCC;
+    color: #eee;
 }
 
 #login > p
@@ -253,7 +256,7 @@ li
 
 #login > input[type="submit"]
 {
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.8);
     background-clip: padding-box;
     padding: 0 15px 0 15px;
     line-height: 35px;
