@@ -894,9 +894,8 @@ namespace SIAO.SRV
                     consolidado.Sub_Consultoria,consolidado.Grupo,SUM(consolidado.Quantidade) AS ""Soma De Quantidade"",
                     SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"", SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
-                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
-            
-            SQL.Append(@" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                    LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
                     AND farmacias.idRede = @idRede
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
