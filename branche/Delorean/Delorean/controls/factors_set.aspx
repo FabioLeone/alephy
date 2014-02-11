@@ -29,8 +29,8 @@
                 <td id="barcod" runat="server"><%# Eval("barras") %></td>
                 <td><%# Eval("prod_name") %></td>
                 <td style="padding: 0; width: 120px;">
-                    <asp:TextBox ID="txtcond" runat="server" OnTextChanged="txtcond_TextChanged" AutoPostBack="true"
-                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
+                    <asp:TextBox ID="txtcond" runat="server" AutoPostBack="false" CssClass="cond"
+                        TabIndex='<%# Convert.ToInt16(Eval("id")) %>'
                         Text='<%# Eval("cont_bxs") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
                 </td>
                 <td style="padding: 0; width: 120px;">
@@ -60,4 +60,5 @@
     </ale:ulDataPager>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="../resources/scripts/kickstart.js"></script>
+    <script type="text/javascript" src="../resources/scripts/handlejs.js"></script>
 </asp:Content>

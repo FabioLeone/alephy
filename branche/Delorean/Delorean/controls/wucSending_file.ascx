@@ -2,5 +2,5 @@
 
 <div>
     <input type="file" id="upfile" runat="server" class="file" />
-    <input type="submit" id="btnSend" runat="server" value="Enviar" onserverclick="btnSend_ServerClick" />
+    <input type="button" id="btnSend" runat="server" value="Enviar" onserverclick="btnSend_ServerClick" />
 </div>

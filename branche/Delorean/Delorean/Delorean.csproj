@@ -108,6 +108,7 @@
     <Content Include="resources\css\reset.css" />
     <Content Include="resources\css\style.css" />
     <Content Include="resources\css\tiptip.css" />
+    <Content Include="resources\scripts\handlejs.js" />
     <Content Include="resources\scripts\kickstart.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

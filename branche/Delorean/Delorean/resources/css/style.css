@@ -219,14 +219,22 @@ input[type=submit] {
         background: -o-linear-gradient(#fff, #999);
     }
 
-.mdialog > div > div > input[type=file] {
-    background: inherit;
-}
+        .mdialog > div > div > input[type=file] {
+            background: inherit;
+        }
 
-.mdialog > div > div > input[type=submit] {
-    padding: 7px 15px;
-    margin: 5px;
-}
+        .mdialog > div > div > input[type=submit] {
+            padding: 7px 15px;
+            margin: 5px;
+        }
+
+        .mdialog > div > div > input[type=button] {
+            padding: 7px 15px;
+            margin: 5px;
+            float: right;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .5);
+            text-indent: 0px;
+        }
 
 .close {
     background: #606061;
@@ -247,9 +255,9 @@ input[type=submit] {
     box-shadow: 1px 1px 3px #000;
 }
 
-.close:hover {
-    background: #cc1033;
-}
+    .close:hover {
+        background: #cc1033;
+    }
 
 .previewPg {
     border-top-left-radius: 5px;

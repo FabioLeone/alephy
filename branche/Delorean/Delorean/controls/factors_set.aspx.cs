@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -16,23 +17,28 @@ namespace Delorean.controls
 
         public int oldidx
         {
-            get {
+            get
+            {
                 if (ViewState["oldidx"] == null) return this._oldidx;
                 else return (int)ViewState["oldidx"];
             }
 
-            set {
+            set
+            {
                 ViewState["oldidx"] = value;
                 this._oldidx = value;
             }
         }
 
-        public string nxtfld {
-            get {
+        public string nxtfld
+        {
+            get
+            {
                 if (ViewState["oldfld"] == null) return this._nxtfld;
                 else return ViewState["oldfld"].ToString();
             }
-            set {
+            set
+            {
                 ViewState["oldfld"] = value;
                 this._nxtfld = value;
             }
@@ -144,11 +150,27 @@ namespace Delorean.controls
 
         protected void lvwFactors_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
-            if(this.oldidx >= 0)
-                if (((ListViewDataItem)e.Item).DataItemIndex == this.oldidx) {
+            if (this.oldidx >= 0)
+                if (((ListViewDataItem)e.Item).DataItemIndex == this.oldidx)
+                {
                     if (lvwFactors.Items.Count > 0)
                         ((TextBox)lvwFactors.Items[this.oldidx].FindControl(this.nxtfld)).Focus();
                 }
+        }
+
+        [WebMethod]
+        public static string upcond(string cnd, string di, string uid)
+        {
+            string msg = string.Empty;
+            int id = 0;
+            int.TryParse(di, out id);
+
+            if (sales_factorBLL.setCond(id, cnd, uid).Count > 0)
+                msg = "true";
+            else
+                msg = "false";
+
+            return msg;
         }
         #endregion
 

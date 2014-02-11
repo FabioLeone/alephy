@@ -53,5 +53,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- KICKSTART -->
     <script src="resources/scripts/kickstart.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#schbtn').attr('disabled', 'true');
+
+            $('#psearch').keydown(function (e) {
+                if (e.which == 13) {
+                    if ($('#psearch').val().length > 0) {
+                        $('#schbtn').removeAttr('disabled');
+                    } else {
+                        $('#schbtn').attr('disabled', 'true');
+                    }
+                }
+            })
+        });
+    </script>
 </body>
 </html>
