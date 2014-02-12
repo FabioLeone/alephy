@@ -21,7 +21,7 @@
     </LayoutTemplate>
     <ItemTemplate>
         <tr runat="server">
-            <td><%# Eval("barras") %></td>
+            <td id="barcod" runat="server"><%# Eval("barras") %></td>
             <td><%# Eval("nomeprod") %></td>
             <td style="padding: 0; width: 120px;">
                 <asp:TextBox ID="txtvcost" runat="server" OnTextChanged="txtvcost_TextChanged" AutoPostBack="true"

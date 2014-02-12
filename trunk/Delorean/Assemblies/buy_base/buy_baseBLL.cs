@@ -243,6 +243,32 @@ namespace Assemblies
             return lst;
         }
 
+        public static List<base_viewer> setCost(int id, string vcost, string s)
+        {
+            List<base_viewer> lst = new List<base_viewer>();
+
+            if (id > 0)
+                lst = upCost(id, vcost);
+            else {
+                base_viewer o;
+                usersTO u = helpers.GetSession();
+
+                lst = helpers.GetFromCache<List<base_viewer>>("products" + u.UserId);
+
+                decimal dCost = 0;
+                if (decimal.TryParse(vcost, out dCost))
+                {
+                    o = lst.Find(i => i.barras == s);
+                    o.valor_custo = dCost;
+                    o = buy_baseDAL.insert(o, u.FarmaciaId);
+                    if (lst.Count > 0)
+                        lst[lst.FindIndex(i => i.bcid == o.bcid)] = o;
+                }
+            }
+
+            return lst;
+        }
+
         #endregion
     }
 }

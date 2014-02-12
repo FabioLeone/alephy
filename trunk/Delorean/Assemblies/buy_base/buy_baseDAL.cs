@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -101,6 +102,67 @@ namespace Assemblies
             else { msg = "Erro ao converter o txt."; }
 
             return msg;
+        }
+
+        internal static base_viewer insert(base_viewer o, int id)
+        {
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"INSERT INTO base_compra(farmaciaid, barras, valor_custo, data)
+                VALUES (@farmaciaid, @barras, @valor_custo, @data) RETURNING id;");
+
+                NpgsqlCommand cmd = msc.CreateCommand();
+                cmd.CommandText = strSQL.ToString();
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add("@farmaciaid", NpgsqlDbType.Integer).Value = id;
+                cmd.Parameters.Add("@barras", NpgsqlDbType.Varchar).Value = o.barras;
+                cmd.Parameters.Add("@valor_custo", NpgsqlDbType.Money).Value = o.valor_custo;
+                cmd.Parameters.Add("@data", NpgsqlDbType.Date).Value = DateTime.Now.Date;
+
+                msc.Open();
+
+                using (IDataReader drd = cmd.ExecuteReader())
+                {
+                    if (drd.Read())
+                    {
+                        if (!drd.IsDBNull(drd.GetOrdinal("id"))) { o.bcid = drd.GetInt32(drd.GetOrdinal("id")); } else { o.bcid = 0; }
+                    }
+                }
+
+                strSQL.Clear();
+                strSQL.Append(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada))::numeric(12,2) as ""1 Unidade"",
+	                ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))::numeric(12,2) as ""Acima de X"", 
+	                ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)))::numeric(12,2) as ""Margem Real""
+                from base_especial b
+	                left join base_compra bc on b.barras = bc.barras
+	                left join produtos_base p on b.barras = p.codbarra
+	                left join fator_venda f on b.barras = f.barras
+                where bc.id = @id;");
+
+                cmd.CommandText = strSQL.ToString();
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add("@id", NpgsqlTypes.NpgsqlDbType.Integer).Value = o.bcid;
+
+                using (IDataReader drd = cmd.ExecuteReader())
+                {
+                    if (drd.Read())
+                    {
+                        o = Load(drd);
+                    }
+                }
+
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return o;
         }
 
         internal static base_viewer upCost(int id, decimal dCost)
