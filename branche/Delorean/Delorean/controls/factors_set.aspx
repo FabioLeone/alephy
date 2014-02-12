@@ -29,13 +29,11 @@
                 <td id="barcod" runat="server"><%# Eval("barras") %></td>
                 <td><%# Eval("prod_name") %></td>
                 <td style="padding: 0; width: 120px;">
-                    <asp:TextBox ID="txtcond" runat="server" AutoPostBack="false" CssClass="cond"
-                        TabIndex='<%# Convert.ToInt16(Eval("id")) %>'
+                    <asp:TextBox ID="txtcond" runat="server" AutoPostBack="false" CssClass="cond" TabIndex='<%# Convert.ToInt16(Eval("id")) %>'
                         Text='<%# Eval("cont_bxs") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
                 </td>
                 <td style="padding: 0; width: 120px;">
-                    <asp:TextBox ID="txtmarg" runat="server" OnTextChanged="txtmarg_TextChanged" AutoPostBack="true"
-                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
+                    <asp:TextBox ID="txtmarg" runat="server" AutoPostBack="false" CssClass="marg" TabIndex='<%# Convert.ToInt16(Eval("id")) %>'
                         Text='<%# Eval("expected_margin") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
                 </td>
                 <td style="padding: 0; width: 120px;">

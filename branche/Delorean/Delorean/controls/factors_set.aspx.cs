@@ -82,46 +82,6 @@ namespace Delorean.controls
             dpgFactors.Attributes.Add("class", "button-bar");
         }
 
-        protected void txtcond_TextChanged(object sender, EventArgs e)
-        {
-            TextBox tb = (TextBox)sender;
-            int id = 0;
-            string s = string.Empty;
-
-            foreach (ListViewItem item in lvwFactors.Items)
-            {
-                if (item.FindControl("txtcond").UniqueID == tb.UniqueID)
-                {
-                    this.nxtfld = "txtmarg";
-                    this.oldidx = tb.TabIndex;
-                    id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
-                    s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
-                    loadData(sales_factorBLL.setCond(id, tb.Text, s));
-                    break;
-                }
-            }
-        }
-
-        protected void txtmarg_TextChanged(object sender, EventArgs e)
-        {
-            TextBox tb = (TextBox)sender;
-            int id = 0;
-            string s = string.Empty;
-
-            foreach (ListViewItem item in lvwFactors.Items)
-            {
-                if (item.FindControl("txtmarg").UniqueID == tb.UniqueID)
-                {
-                    this.nxtfld = "txtdesc";
-                    this.oldidx = tb.TabIndex;
-                    id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
-                    s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
-                    loadData(sales_factorBLL.setMargin(id, tb.Text, s));
-                    break;
-                }
-            }
-        }
-
         protected void txtdesc_TextChanged(object sender, EventArgs e)
         {
             TextBox tb = (TextBox)sender;
@@ -156,21 +116,6 @@ namespace Delorean.controls
                     if (lvwFactors.Items.Count > 0)
                         ((TextBox)lvwFactors.Items[this.oldidx].FindControl(this.nxtfld)).Focus();
                 }
-        }
-
-        [WebMethod]
-        public static string upcond(string cnd, string di, string uid)
-        {
-            string msg = string.Empty;
-            int id = 0;
-            int.TryParse(di, out id);
-
-            if (sales_factorBLL.setCond(id, cnd, uid).Count > 0)
-                msg = "true";
-            else
-                msg = "false";
-
-            return msg;
         }
         #endregion
 
@@ -207,6 +152,36 @@ namespace Delorean.controls
 
                 loadData(sales_factorBLL.getByFilter(Request.QueryString["f"], Request.QueryString["s"]));
             }
+        }
+
+        [WebMethod]
+        public static string upcond(string cnd, string di, string uid)
+        {
+            string msg = string.Empty;
+            int id = 0;
+            int.TryParse(di, out id);
+
+            if (sales_factorBLL.setCond(id, cnd, uid).Count > 0)
+                msg = "true";
+            else
+                msg = "false";
+
+            return msg;
+        }
+
+        [WebMethod]
+        public static string upmarg(string mrg, string di, string uid)
+        {
+            string msg = string.Empty;
+            int id = 0;
+            int.TryParse(di, out id);
+
+            if (sales_factorBLL.setMargin(id, mrg, uid).Count > 0)
+                msg = "true";
+            else
+                msg = "false";
+
+            return msg;
         }
         #endregion
     }
