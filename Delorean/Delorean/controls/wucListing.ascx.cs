@@ -30,7 +30,8 @@ namespace Delorean.controls
                 if (item.FindControl("txtvcost").UniqueID == tb.UniqueID)
                 {
                     id = (int)lvwProducts.DataKeys[tb.TabIndex].Value;
-                    loadData(buy_baseBLL.upCost(id, tb.Text));
+                    s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwProducts.Items[tb.TabIndex].FindControl("barcod")).InnerText;
+                    loadData(buy_baseBLL.setCost(id, tb.Text, s));
                     
                     break;
                 }
