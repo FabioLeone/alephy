@@ -74,6 +74,7 @@
             <ChartMember>
               <Group Name="Chart2_CategoryGroup3">
                 <GroupExpressions>
+                  <GroupExpression>=Fields!Ano.Value</GroupExpression>
                   <GroupExpression>=Fields!Mes.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
