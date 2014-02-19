@@ -35,7 +35,7 @@ namespace goku
 
             if (File.Exists(s))
             {
-                monitor.fileConfig(iniFile.ReadValue(s, "security", "mail"));
+                monitor.fileConfig(iniFile.ReadValue(s, "security", "mail"), iniFile.ReadValue(s, "security", "mail2"));
             }
             else {
                 Confg c = new Confg();

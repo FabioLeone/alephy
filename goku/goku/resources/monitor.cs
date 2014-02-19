@@ -67,9 +67,12 @@ namespace consolidate.resources
         private void sendErrorEmail(string r, string p)
         {
             MailMessage message = new MailMessage();
-            message.From = new MailAddress("fabio@casbrasil.com.br");
-            message.To.Add("fabio@casbrasil.com.br");
+            message.From = new MailAddress("pdev.envio@casbrasil.com.br");
+            message.To.Add("pdev.envio@casbrasil.com.br");
             message.To.Add(ConfigurationManager.AppSettings["EMAIL_SEND"]);
+
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["EMAIL_SEND_SEC"]))
+                message.To.Add(ConfigurationManager.AppSettings["EMAIL_SEND_SEC"]);
 
             message.Subject = "Erro na carga arquivo.";
 
@@ -84,7 +87,7 @@ namespace consolidate.resources
 
             client.Host = "smtp.casbrasil.com.br";
             client.Port = 587;
-            client.Credentials = new System.Net.NetworkCredential("fabio@casbrasil.com.br", "ale0112358");
+            client.Credentials = new System.Net.NetworkCredential("pdev.envio@casbrasil.com.br", "ale0112358");
 
             try
             {
@@ -104,8 +107,11 @@ namespace consolidate.resources
         private void sendEmail(string r, string p)
         {
             MailMessage message = new MailMessage();
-            message.From = new MailAddress("fabio@casbrasil.com.br");
+            message.From = new MailAddress("pdev.envio@casbrasil.com.br");
             message.To.Add(ConfigurationManager.AppSettings["EMAIL_SEND"]);
+
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["EMAIL_SEND_SEC"]))
+                message.To.Add(ConfigurationManager.AppSettings["EMAIL_SEND_SEC"]);
 
             message.Subject = "Arquivo enviado com sucesso.";
 
@@ -119,7 +125,7 @@ namespace consolidate.resources
 
             client.Host = "smtp.casbrasil.com.br";
             client.Port = 587;
-            client.Credentials = new System.Net.NetworkCredential("fabio@casbrasil.com.br", "ale0112358");
+            client.Credentials = new System.Net.NetworkCredential("pdev.envio@casbrasil.com.br", "ale0112358");
 
             try
             {
@@ -438,10 +444,11 @@ namespace consolidate.resources
                 return string.Empty;
         }
 
-        internal static void fileConfig(string p)
+        internal static void fileConfig(string p, string s)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             config.AppSettings.Settings["EMAIL_SEND"].Value = p;
+            config.AppSettings.Settings["EMAIL_SEND_SEC"].Value = s;
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }

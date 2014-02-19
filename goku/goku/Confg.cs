@@ -23,6 +23,7 @@ namespace goku
         {
             InitializeComponent();
             txtEmail.Text = ConfigurationManager.AppSettings["EMAIL_SEND"];
+            txtEmail2.Text = ConfigurationManager.AppSettings["EMAIL_SEND_SEC"];
             first = true;
         }
 
@@ -35,7 +36,10 @@ namespace goku
                     string s = AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "iniRO.ini";
                     iniFile.WriteValue(s, "security", "mail", txtEmail.Text);
 
-                    monitor.fileConfig(txtEmail.Text);
+                    if(isEmail(txtEmail2.Text))
+                        iniFile.WriteValue(s, "security", "mail2", txtEmail2.Text);
+
+                    monitor.fileConfig(txtEmail.Text, txtEmail2.Text);
 
                     btnSave.Text = "Fechar";
                     first = false;
