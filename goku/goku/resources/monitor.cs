@@ -97,6 +97,8 @@ namespace consolidate.resources
             {
                 Console.WriteLine("Exception caught in sendEmail(): {0}",
                       ex.ToString());
+                logHelper.log(logHelper.logType.error, string.Format("Exception caught in sendEmail(): {0}",
+                      ex.ToString()));
             }
             finally
             {
@@ -135,6 +137,8 @@ namespace consolidate.resources
             {
                 Console.WriteLine("Exception caught in sendEmail(): {0}",
                       ex.ToString());
+                logHelper.log(logHelper.logType.error, string.Format("Exception caught in sendEmail(): {0}",
+                      ex.ToString()));
             }
             finally
             {
@@ -163,7 +167,10 @@ namespace consolidate.resources
                         msg.Append(cnpjValidation(dt));
                         lst = charValidation(dt);
                         if (lst.Count > 0)
+                        {
                             msg.Append(string.Format("{0}O arquivo contém os seguintes caracteres especiais: {1}", Environment.NewLine, lst.Aggregate((i, j) => i + Environment.NewLine + j)));
+                            logHelper.log(logHelper.logType.error, string.Format("{0}O arquivo contém os seguintes caracteres especiais: {1}", Environment.NewLine, lst.Aggregate((i, j) => i + Environment.NewLine + j)));
+                        }
                         else
                         {
                             msg.Append(string.Format("{0}{1}", Environment.NewLine, dal.insertXml(dt)));
@@ -173,6 +180,7 @@ namespace consolidate.resources
                     catch (Exception e)
                     {
                         msg.Append(e.Message);
+                        logHelper.log(logHelper.logType.error, e.Message);
                         MessageBox.Show(e.Message);
                     }
 
@@ -185,13 +193,20 @@ namespace consolidate.resources
                     o = txtDtConvert(strP);
 
                     if (o.GetType() == typeof(List<string>))
+                    {
                         msg.Append(string.Format("O arquivo deve conter as seguintes colunas: {0}{1}", Environment.NewLine, ((List<string>)o).Aggregate((i, j) => i + Environment.NewLine + j)));
-                    else {
+                        logHelper.log(logHelper.logType.error, string.Format("O arquivo deve conter as seguintes colunas: {0}{1}", Environment.NewLine, ((List<string>)o).Aggregate((i, j) => i + Environment.NewLine + j)));
+                    }
+                    else
+                    {
                         dt = (DataTable)o;
                         lst = charValidation(dt);
 
                         if (lst.Count > 0)
+                        {
                             msg.Append(string.Format("O arquivo contém os seguintes caracteres especiais: {0}", lst.Aggregate((i, j) => i + " " + j)));
+                            logHelper.log(logHelper.logType.error, string.Format("O arquivo contém os seguintes caracteres especiais: {0}", lst.Aggregate((i, j) => i + " " + j)));
+                        }
                         else
                         {
                             msg.Append(dal.inserTxt(dt));
@@ -199,6 +214,11 @@ namespace consolidate.resources
                         }
                     }
                 }
+            }
+            else
+            {
+                logHelper.log(logHelper.logType.error, "arquivo com extensão inválida.");
+                msg.Append("Arquivo com extensão inválida.");
             }
 
             if (string.IsNullOrEmpty(msg.ToString().Replace("\r\n", "")))

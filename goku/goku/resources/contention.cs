@@ -29,7 +29,11 @@ namespace goku.resources
                         fi = new FileInfo(item);
 
                         if (fi.LastWriteTime.Month.Equals(DateTime.Now.AddMonths(-1).Month))
+                        {
                             File.Delete(item);
+
+                            logHelper.log(logHelper.logType.info, string.Format("deletado item: {0} - obsoleto.",fi.Name));
+                        }
                     }
                 }
             }
@@ -45,7 +49,11 @@ namespace goku.resources
                         fi = new FileInfo(item);
 
                         if (fi.LastWriteTime.Month.Equals(DateTime.Now.AddMonths(-1).Month))
+                        {
                             File.Delete(item);
+
+                            logHelper.log(logHelper.logType.info, string.Format("deletado item: {0} - obsoleto.", fi.Name));
+                        }
                     }
                 }
             }
