@@ -1,14 +1,7 @@
 ﻿using consolidate.resources;
 using goku.resources;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace goku
@@ -20,7 +13,7 @@ namespace goku
         public Form1()
         {
             InitializeComponent();
-
+            
             getIni();
 
             contention.cleanFiles();
@@ -41,6 +34,8 @@ namespace goku
                 Confg c = new Confg();
                 c.Show();
             }
+
+            logHelper.log(logHelper.logType.info, "aplicação iniciada.");
         }
 
         private void tSMenuItem1_Click(object sender, EventArgs e)
@@ -51,6 +46,8 @@ namespace goku
 
         private void tSMenuItem3_Click(object sender, EventArgs e)
         {
+            logHelper.log(logHelper.logType.info, "aplicação encerrada.");
+
             m.t.Abort();
             this.Close();
         }

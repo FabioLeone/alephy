@@ -87,6 +87,7 @@ namespace goku.resources
                 {
                     copy.Cancel("Undo copy");
                     msg = ex.Message;
+                    logHelper.log(logHelper.logType.error, ex.Message);
                 }
                 finally
                 {
@@ -101,7 +102,10 @@ namespace goku.resources
                     insertXmlData(dt);
 
             }
-            else { msg = "Erro ao converter o xml."; }
+            else { 
+                msg = "Erro ao converter o xml.";
+                logHelper.log(logHelper.logType.error, "Erro ao converter o xml.");
+            }
 
             return msg;
         }
@@ -202,6 +206,7 @@ namespace goku.resources
                 {
                     copy.Cancel("Undo copy");
                     msg = ex.Message;
+                    logHelper.log(logHelper.logType.error, ex.Message);
                 }
                 finally
                 {
@@ -216,6 +221,7 @@ namespace goku.resources
                     catch (Exception ex1)
                     {
                         msg = ex1.Message;
+                        logHelper.log(logHelper.logType.error, ex1.Message);
                     }
                 }
 
@@ -223,7 +229,10 @@ namespace goku.resources
                     AddTxtData(dt);
 
             }
-            else { msg = "Erro ao converter o txt."; }
+            else { 
+                msg = "Erro ao converter o txt.";
+                logHelper.log(logHelper.logType.error, "Erro ao converter o txt.");
+            }
 
             return msg;
         }
