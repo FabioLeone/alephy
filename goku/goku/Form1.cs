@@ -35,6 +35,7 @@ namespace goku
                 c.Show();
             }
 
+            logHelper.checklog();
             logHelper.log(logHelper.logType.info, "aplicação iniciada.");
         }
 
