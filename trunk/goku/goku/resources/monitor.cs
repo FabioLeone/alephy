@@ -200,6 +200,7 @@ namespace consolidate.resources
                     else
                     {
                         dt = (DataTable)o;
+                        msg.Append(cnpjValidation(dt));
                         lst = charValidation(dt);
 
                         if (lst.Count > 0)
@@ -459,7 +460,7 @@ namespace consolidate.resources
             }
 
             if (lst.FindAll(s => s.isValid == false).Count > 0)
-                return string.Format("CNPJ(s) não cadastrado(s): {0}{1}", Environment.NewLine, lst.FindAll(s => s.isValid == false).Select(v => v.cnpj).Aggregate((t, u) => t + ";" + Environment.NewLine + u));
+                return string.Format("CNPJ(s) não cadastrado(s) ou inativos: {0}{1}", Environment.NewLine, lst.FindAll(s => s.isValid == false).Select(v => v.cnpj).Aggregate((t, u) => t + ";" + Environment.NewLine + u));
             else
                 return string.Empty;
         }
