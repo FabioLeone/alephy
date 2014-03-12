@@ -23,7 +23,7 @@ namespace goku.resources
 
             cmm.Connection = cnn;
             StringBuilder strSQL = new StringBuilder();
-            strSQL.Append(@"SELECT farmacias.Id FROM farmacias WHERE (farmacias.Cnpj = @Cnpj)");
+            strSQL.Append(@"SELECT farmacias.Id FROM farmacias WHERE (farmacias.Cnpj = @Cnpj) and (ativo = 1)");
 
             string scnpj = strCNPJ.Replace(".", "");
             scnpj = scnpj.Replace("/", "");
