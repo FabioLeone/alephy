@@ -81,7 +81,7 @@ namespace SIAO.SRV.BLL
             }
         }
 
-        public static void ValidaAcesso(UsersTO oUser, System.Web.UI.HtmlControls.HtmlGenericControl dvRede, System.Web.UI.HtmlControls.HtmlGenericControl dvLoja, DropDownList ddlRede, DropDownList ddlEdRedes, DropDownList ddlLoja)
+        public static void ValidaAcesso(UsersTO oUser, System.Web.UI.HtmlControls.HtmlGenericControl dvRede, System.Web.UI.HtmlControls.HtmlGenericControl dvLoja, DropDownList ddlRede, DropDownList ddlEdRedes, DropDownList ddlLoja, CheckBox cbxAtivo)
         {
             switch (oUser.TipoId)
             {
@@ -94,11 +94,13 @@ namespace SIAO.SRV.BLL
                             dvRede.Visible = false;
                             LojasBLL.LoadLojas(oUser, ddlLoja);
                             ddlRede.Enabled = false;
+                            cbxAtivo.Visible = false;
                             break;
                         default:
                             dvLoja.Visible = true;
                             dvRede.Visible = true;
                             RedesBLL.LoadRedes(ddlEdRedes);
+                            cbxAtivo.Visible = true;
                             break;
                     }
                     break;
@@ -106,6 +108,7 @@ namespace SIAO.SRV.BLL
                     dvLoja.Visible = true;
                     dvRede.Visible = false;
                     LojasBLL.LoadLojas(oUser, ddlLoja);
+                    cbxAtivo.Visible = false;
                     break;
             }
         }

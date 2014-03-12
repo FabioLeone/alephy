@@ -26,7 +26,7 @@ namespace SIAO
 
             if (!IsPostBack)
             {
-                UsersBLL.ValidaAcesso(oUser, dvRede, dvLoja, ddlRede, ddlEdRedes,ddlLoja);
+                UsersBLL.ValidaAcesso(oUser, dvRede, dvLoja, ddlRede, ddlEdRedes,ddlLoja,cbxAtivo);
                 LoadRedes();
                 LoadUf();
                 txtNomeFantasia.Focus();
