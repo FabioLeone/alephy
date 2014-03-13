@@ -1,3 +1,38 @@
-﻿<LogInfo><Time>19/02/2014 13:11:53</Time><Info>iniciada a aplicação</Info></LogInfo>
-<LogInfo><Time>19/02/2014 13:58:00</Time><Info>aplicação iniciada.</Info></LogInfo>
-<LogError><Time>19/02/2014 13:58:27</Time><Error>ERROR: 42703: column "total_custo" of relation "base_cliente_espera" does not exist</Error></LogError>
+<xmldata>
+  <LogInfo>
+    <Time>13/03/2014 16:31:36</Time>
+    <Info>aplicação iniciada.</Info>
+  </LogInfo>
+  <LogInfo>
+    <Time>13/03/2014 16:32:36</Time>
+    <Info>aplicação iniciada.</Info>
+  </LogInfo>
+  <LogError>
+    <Time>13/03/2014 16:32:42</Time>
+    <Error>Caractere inválido na codificação fornecida. Linha 1, posição 115179.</Error>
+  </LogError>
+  <LogInfo>
+    <Time>13/03/2014 16:34:44</Time>
+    <Info>aplicação iniciada.</Info>
+  </LogInfo>
+  <LogError>
+    <Time>13/03/2014 16:35:04</Time>
+    <Error>Caractere inválido na codificação fornecida. Linha 1, posição 115179.</Error>
+  </LogError>
+  <LogInfo>
+    <Time>13/03/2014 16:35:33</Time>
+    <Info>aplicação iniciada.</Info>
+  </LogInfo>
+  <LogInfo>
+    <Time>13/03/2014 16:37:29</Time>
+    <Info>aplicação iniciada.</Info>
+  </LogInfo>
+  <LogInfo>
+    <Time>13/03/2014 16:37:37</Time>
+    <Info>aplicação iniciada.</Info>
+  </LogInfo>
+  <LogError>
+    <Time>13/03/2014 16:37:37</Time>
+    <Error>Caractere inválido na codificação fornecida. Linha 1, posição 115179.</Error>
+  </LogError>
+</xmldata>

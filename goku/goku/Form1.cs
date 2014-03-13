@@ -32,7 +32,7 @@ namespace goku
             }
             else {
                 Confg c = new Confg();
-                c.Show();
+                c.ShowDialog();
             }
 
             logHelper.checklog();

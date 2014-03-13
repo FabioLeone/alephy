@@ -181,7 +181,6 @@ namespace consolidate.resources
                     {
                         msg.Append(e.Message);
                         logHelper.log(logHelper.logType.error, e.Message);
-                        MessageBox.Show(e.Message);
                     }
 
                 }
