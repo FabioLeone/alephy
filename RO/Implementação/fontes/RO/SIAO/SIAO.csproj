@@ -346,6 +346,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Relatory\rptGfcCross24.rdlc" />
     <EmbeddedResource Include="Relatory\rptGrafic2.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

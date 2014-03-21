@@ -301,6 +301,35 @@ namespace SIAO
             clsFuncs.Redirect(setPdf(clsGrafic, "Grafico_4", "Relatory/rptGrafic4.rdlc"), "_blank", "");
         }
 
+        protected void lbtnCross24_Click(object sender, EventArgs e) {
+            List<GraficTO> clsGrafic = new List<GraficTO>();
+
+            if (rbtPeriodo.Checked)
+            {
+                if (this.User.RedeId > 0)
+                    clsGrafic = GraficBLL.Grafic4(txtInicio.Text, clsUser, txtFim.Text, this.User.RedeId, ddlLojaRelatorios.SelectedValue);
+                else
+                    clsGrafic = GraficBLL.Grafic4(txtInicio.Text, clsUser, txtFim.Text, 0, ddlLojaRelatorios.SelectedValue);
+            }
+            else if (rbtMes.Checked)
+            {
+                if (this.User.RedeId > 0)
+                    clsGrafic = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, this.User.RedeId, ddlLojaRelatorios.SelectedValue);
+                else
+                    clsGrafic = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, 0, ddlLojaRelatorios.SelectedValue);
+            }
+
+            if (clsGrafic.Count > 0)
+                RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
+                {
+                    Relatorio = "Grafico4",
+                    UserId = this.User.UserId
+                }, scn);
+
+            cursor();
+            clsFuncs.Redirect(setPdf(clsGrafic, "Grafico_Comparativo", "Relatory/rptGfcCross24.rdlc"), "_blank", "");
+        }
+
         protected void rbtPeriodo_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtPeriodo.Checked)

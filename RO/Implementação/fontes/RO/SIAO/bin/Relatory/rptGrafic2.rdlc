@@ -520,7 +520,6 @@
                           <PaddingBottom>1pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                 </TablixMember>
@@ -603,7 +602,7 @@
         <Top>12cm</Top>
         <Left>0.00001cm</Left>
         <Height>2cm</Height>
-        <Width>5.9cm</Width>
+        <Width>5.89999cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -844,7 +843,7 @@
         </SortExpressions>
         <Top>26cm</Top>
         <Height>2cm</Height>
-        <Width>5.9cm</Width>
+        <Width>5.89999cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1696,7 +1695,7 @@
         </SortExpressions>
         <Top>40cm</Top>
         <Height>2cm</Height>
-        <Width>5.9cm</Width>
+        <Width>5.89999cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -2242,7 +2241,7 @@
         </SortExpressions>
         <Top>54cm</Top>
         <Height>2cm</Height>
-        <Width>5.9cm</Width>
+        <Width>5.89999cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -2788,7 +2787,7 @@
         </SortExpressions>
         <Top>68.00001cm</Top>
         <Height>2cm</Height>
-        <Width>5.9cm</Width>
+        <Width>5.89999cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -2797,7 +2796,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>70.60001cm</Height>
+    <Height>70.00001cm</Height>
     <Style />
   </Body>
   <Width>29.70001cm</Width>
