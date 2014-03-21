@@ -144,6 +144,13 @@
                         </div>
                     </asp:LinkButton>
                 </li>
+                <li>
+                    <asp:LinkButton ID="lbtnCross24" runat="server" OnClick="lbtnCross24_Click" OnClientClick="ToggleCursor(1);">
+                        <div id="Div6" runat="server" class="imgGra">
+                            <p>Gráfico comparativo</p>
+                        </div>
+                    </asp:LinkButton>
+                </li>
             </ul>
         </div>
         <div id="div1" class="dvList">
