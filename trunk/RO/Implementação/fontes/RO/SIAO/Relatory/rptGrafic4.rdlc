@@ -2825,7 +2825,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="Desconto - Loja - " + Fields!Razao_Social.Value + vbCrLf +"Periodo - " + Fields!Periodo.Value</Value>
+                  <Value>="Gráfico 4 - Descontos" + System.Environment.NewLine + "Loja - " + Fields!Nome_Fantasia.Value + vbCrLf +"Periodo - " + Fields!Periodo.Value</Value>
                   <Style>
                     <FontFamily>Arial Rounded MT Bold</FontFamily>
                     <FontSize>14pt</FontSize>
