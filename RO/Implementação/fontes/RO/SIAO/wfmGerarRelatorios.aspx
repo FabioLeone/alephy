@@ -22,6 +22,14 @@
                 txt.value = "selecione uma rede";
             }
         }
+
+        function rsiz(e) {
+            var ddl = document.getElementById("<%=ddlLojaRelatorios.ClientID %>");
+            var btn = document.getElementById("btnSelect");
+            var wth = (ddl.offsetWidth - 18);
+            e.style.width = wth + "px";
+            btn.style.marginLeft = (wth + 3) + "px";
+        }
     </script>
     <div class="hdFilter">
         <h2>
@@ -34,7 +42,7 @@
             </div>
             <div id="dvLoja" runat="server">
                 Loja:
-                <input type="text" id="txtCnpj" class="txt_search" />
+                <input type="text" id="txtCnpj" class="txt_search" onfocus="rsiz(this)" />
                 <input type="button" id="btnSelect" class="btnsearch" onclick="return btnSelect_onclick()" />
                 <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="min-width: 243px;">
                 </asp:DropDownList>
