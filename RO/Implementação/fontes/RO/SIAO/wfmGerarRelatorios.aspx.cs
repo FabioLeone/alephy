@@ -322,7 +322,7 @@ namespace SIAO
             if (clsGrafic.Count > 0)
                 RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
                 {
-                    Relatorio = "Grafico4",
+                    Relatorio = "Grafico_Comparativo",
                     UserId = this.User.UserId
                 }, scn);
 
