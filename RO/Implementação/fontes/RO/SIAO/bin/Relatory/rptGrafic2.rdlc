@@ -2541,7 +2541,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>56cm</Top>
+        <Top>56.00001cm</Top>
         <Height>12cm</Height>
         <Width>29.7cm</Width>
         <ZIndex>8</ZIndex>
@@ -2802,24 +2802,10 @@
   <Width>29.70001cm</Width>
   <Page>
     <PageHeader>
-      <Height>2.35479cm</Height>
+      <Height>1.13094cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Image Name="Logo">
-          <Source>Embedded</Source>
-          <Value>logo_Cas_blue_140px</Value>
-          <Sizing>FitProportional</Sizing>
-          <Top>0.3175cm</Top>
-          <Left>0.41488cm</Left>
-          <Height>1.5cm</Height>
-          <Width>1.5cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </Image>
         <Textbox Name="Textbox1">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
@@ -2827,7 +2813,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="Gráfico 2 - Quantidade Vendida" + System.Environment.NewLine + "Loja - " + Fields!Nome_Fantasia.Value + System.Environment.NewLine + "Periodo - " + Fields!Periodo.Value</Value>
+                  <Value>="Gráfico 2 - Quantidade Vendida - Loja - " + Fields!Nome_Fantasia.Value + " - Periodo - " + Fields!Periodo.Value</Value>
                   <Style>
                     <FontFamily>Arial Rounded MT Bold</FontFamily>
                     <FontSize>12pt</FontSize>
@@ -2835,16 +2821,15 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Center</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.49424cm</Top>
-          <Left>3.93384cm</Left>
-          <Height>1.32326cm</Height>
+          <Top>0.18454cm</Top>
+          <Left>0.3175cm</Left>
+          <Height>0.76187cm</Height>
           <Width>21.92042cm</Width>
-          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2862,6 +2847,64 @@
         </Border>
       </Style>
     </PageHeader>
+    <PageFooter>
+      <Height>0.84376cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox2">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>CasBrasil / UVF -  Av. Governador Pedro de Toledo, 1760, sala 16, Bonfim, Campinas - SP, 13070-715</Value>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>0.18538cm</Top>
+          <Left>8.21574cm</Left>
+          <Height>0.473cm</Height>
+          <Width>13.26854cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Image Name="Logo">
+          <Source>Embedded</Source>
+          <Value>logo_Cas_blue_140px</Value>
+          <Sizing>FitProportional</Sizing>
+          <Top>0.12188cm</Top>
+          <Left>7.59118cm</Left>
+          <Height>0.6cm</Height>
+          <Width>0.6cm</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
     <InteractiveHeight>21cm</InteractiveHeight>
