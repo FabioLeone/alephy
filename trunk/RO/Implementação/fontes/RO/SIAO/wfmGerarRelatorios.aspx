@@ -49,7 +49,7 @@
             </div>
         </div>
         <div>
-            <div>
+            <div style="width: 33% !important;">
                 <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server"
                     AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
                 de:
@@ -63,9 +63,17 @@
                     Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
                 </asp:MaskedEditExtender>
             </div>
-            <div>
+            <div style="width: 22% !important;">
+                <asp:RadioButton ID="rbtUAno" GroupName="filtro" AutoPostBack="true" Text="ultimo ano"
+                    runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
+            </div>
+            <div style="width: 22% !important;">
                 <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" Text="ultimos 6 meses"
                     runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
+            </div>
+            <div style="width: 22% !important;">
+                <asp:RadioButton ID="rbtUMes" GroupName="filtro" AutoPostBack="true" Text="ultimo mês"
+                    runat="server" OnCheckedChanged="rbtMes_CheckedChanged"/>
             </div>
         </div>
     </div>

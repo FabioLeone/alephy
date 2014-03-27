@@ -103,6 +103,15 @@ namespace SIAO {
         protected global::AjaxControlToolkit.MaskedEditExtender txtFim_MaskedEditExtender1;
         
         /// <summary>
+        /// rbtUAno control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbtUAno;
+        
+        /// <summary>
         /// rbtMes control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton rbtMes;
+        
+        /// <summary>
+        /// rbtUMes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rbtUMes;
         
         /// <summary>
         /// lbtnRel1 control.
