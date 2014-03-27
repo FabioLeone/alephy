@@ -115,6 +115,8 @@ namespace SIAO
                 else
                     lr1 = RelatoriosBLL.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)));
             }
+            else
+                lr1 = RelatoriosBLL.GetCross(ResultData());
 
             if (lr1.Count > 0)
             {
@@ -137,10 +139,7 @@ namespace SIAO
         protected void btnRelat2_Click(object sender, EventArgs e)
         {
             List<SRV.clsRelat1> lr1 = new List<SRV.clsRelat1>();
-            if (this.User.RedeId > 0)
-                lr1 = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, this.User.RedeId, rbtPeriodo, rbtMes, ddlLojaRelatorios);
-            else
-                lr1 = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, ddlRedesRelatorios, ddlLojaRelatorios, rbtPeriodo, rbtMes);
+            lr1 = RelatoriosBLL.GetMod2(ResultData());
 
             if (lr1.Count > 0)
             {
@@ -178,6 +177,8 @@ namespace SIAO
                 else
                     clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty, false);
             }
+            else
+                clsGrafic = GraficBLL.GraficList(ResultData());
 
             if (clsGrafic.Count > 0)
                 RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
@@ -211,6 +212,8 @@ namespace SIAO
                 else
                     clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, rId, ddlLojaRelatorios.SelectedValue, false);
             }
+            else
+                clsGrafic = GraficBLL.GraficList(ResultData());
 
             if (clsGrafic.Count > 0)
                 RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
@@ -259,6 +262,11 @@ namespace SIAO
                     clsGrafic3 = GraficBLL.Grafic33ByPeriodo(string.Empty, string.Empty, clsUser, ddlLojaRelatorios.SelectedValue);
                 }
             }
+            else {
+                clsGrafic = GraficBLL.Grafic31ByFilter(ResultData());
+                clsGrafic2 = GraficBLL.Grafic32ByFilter(ResultData());
+                clsGrafic3 = GraficBLL.Grafic33ByFilter(ResultData());
+            }
 
             if (clsGrafic.Count > 0)
                 RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
@@ -289,6 +297,8 @@ namespace SIAO
                 else
                     clsGrafic = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, 0, ddlLojaRelatorios.SelectedValue);
             }
+            else
+                clsGrafic = GraficBLL.Grafic4(ResultData());
 
             if (clsGrafic.Count > 0)
                 RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
@@ -318,6 +328,8 @@ namespace SIAO
                 else
                     clsGrafic = GraficBLL.Grafic4(string.Empty, clsUser, string.Empty, 0, ddlLojaRelatorios.SelectedValue);
             }
+            else
+                clsGrafic = GraficBLL.Grafic4(ResultData());
 
             if (clsGrafic.Count > 0)
                 RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()
@@ -395,10 +407,7 @@ namespace SIAO
             
             String strPath = String.Empty;
 
-            if (this.User.RedeId > 0)
-                lst = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, this.User.RedeId, rbtPeriodo, rbtMes, ddlLojaRelatorios);
-            else
-                lst = RelatoriosBLL.GetMod2(clsUser, txtInicio, txtFim, ddlRedesRelatorios, ddlLojaRelatorios, rbtPeriodo, rbtMes);
+            lst = RelatoriosBLL.GetMod2(ResultData());
 
             lst2 = GraficBLL.GraficList(rbtPeriodo, rbtMes, txtInicio.Text, clsUser, txtFim.Text, this.User.RedeId, ddlLojaRelatorios.SelectedValue, true);
             lst3 = GraficBLL.GraficList(rbtPeriodo, rbtMes, txtInicio.Text, clsUser, txtFim.Text, this.User.RedeId, ddlLojaRelatorios.SelectedValue, false);
@@ -458,6 +467,8 @@ namespace SIAO
                 else
                     lst = RelatoriosBLL.GetPercent(clsUser, string.Empty, string.Empty, (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)), (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
             }
+            else
+                lst = RelatoriosBLL.GetPercent(ResultData());
 
             cursor();
             clsFuncs.Redirect(setPdf(lst, "Participacao", "Relatory/rptPartPerc.rdlc"), "_blank", "");
@@ -548,6 +559,16 @@ namespace SIAO
             {
                 lic.Add(new System.Web.UI.WebControls.ListItem("de", String.Empty));
                 lic.Add(new System.Web.UI.WebControls.ListItem("ate", String.Empty));
+            }
+            else if (rbtUAno.Checked)
+            {
+                lic.Add(new System.Web.UI.WebControls.ListItem("de", DateTime.Now.AddMonths(-13).ToString("MM/yyyy")));
+                lic.Add(new System.Web.UI.WebControls.ListItem("ate", DateTime.Now.AddMonths(-1).ToString("MM/yyyy")));
+            }
+            else if (rbtUMes.Checked)
+            {
+                lic.Add(new System.Web.UI.WebControls.ListItem("de", DateTime.Now.AddMonths(-1).ToString("MM/yyyy")));
+                lic.Add(new System.Web.UI.WebControls.ListItem("ate", DateTime.Now.AddMonths(-1).ToString("MM/yyyy")));
             }
             else
             {

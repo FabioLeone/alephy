@@ -938,7 +938,7 @@ namespace SIAO.SRV
                             or.Periodo = String.Format("{0} à {1}", strInicio, strFim);
                             or.Razao = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
                             or.NomeFantasia = ds.Tables["CrossR1"].Rows[i]["Razao_Social"].ToString();
-                            or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["Cnpj"].ToString());
+                            or.Cnpj = clsFuncs.MaskCnpj(ds.Tables["CrossR1"].Rows[i]["CNPJ"].ToString());
                             or.SubConsultoria = ds.Tables["CrossR1"].Rows[i]["Sub_Consultoria"].ToString();
                             or.Mes = (int)ds.Tables["CrossR1"].Rows[i]["Mes"];
                             or.Grupo = ds.Tables["CrossR1"].Rows[i]["Grupo"].ToString();
