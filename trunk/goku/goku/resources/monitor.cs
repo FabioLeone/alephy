@@ -160,11 +160,14 @@ namespace consolidate.resources
 
                     try
                     {
-                        xd.Load(strP);
+                        xd.Load(XmlFix(strP));
 
                         DataTable dt = ConvertXML(xd);
 
                         msg.Append(cnpjValidation(dt));
+
+                        charRemotion(dt);
+
                         lst = charValidation(dt);
                         if (lst.Count > 0)
                         {
@@ -200,6 +203,9 @@ namespace consolidate.resources
                     {
                         dt = (DataTable)o;
                         msg.Append(cnpjValidation(dt));
+                        
+                        charRemotion(dt);
+                        
                         lst = charValidation(dt);
 
                         if (lst.Count > 0)
@@ -230,6 +236,20 @@ namespace consolidate.resources
                 fileErrorMove(strP);
 
             return msg.ToString();
+        }
+
+        private XmlReader XmlFix(string strP)
+        {
+            StreamReader sr = new StreamReader(strP, Encoding.GetEncoding("Windows-1252"), true);
+            String s = String.Empty;
+
+            s = sr.ReadToEnd();
+            s = s.Replace("<3", "");
+
+            var set = new XmlReaderSettings { ConformanceLevel = ConformanceLevel.Document, IgnoreWhitespace = true, IgnoreComments = true };
+            var xr = XmlReader.Create(new StringReader(s), set);
+            xr.Read();
+            return xr;
         }
 
         private void fileErrorMove(string strP)
@@ -350,7 +370,6 @@ namespace consolidate.resources
                             line[j] = line[j].Replace('é', 'e');
                             line[j] = line[j].Replace('Ê', 'E');
                             line[j] = line[j].Replace('ê', 'e');
-                            
                         }
 
                         dr[j] = line[j].Trim();
@@ -360,6 +379,7 @@ namespace consolidate.resources
             }
 
             sr.Dispose();
+            
             return dt;
         }
 
@@ -411,6 +431,24 @@ namespace consolidate.resources
             }
 
             return lstr;
+        }
+
+        private void charRemotion(DataTable dt)
+        {
+            Regex r = new Regex(@"(?:[^a-z0-9 _\-\.\,\()\/\%\+\*\$\:\=\&\""\?\`\[\]\@\\]|(?<=['""])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+            List<string> lstr = new List<string>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                int k = 0;
+                foreach (var d in row.ItemArray)
+                {
+                    if (r.IsMatch(d.ToString()))
+                        dt.Rows[dt.Rows.IndexOf(row)][k] = d.ToString().Replace(r.Match(d.ToString()).ToString(), "");
+                    k++;
+                }
+            }
         }
 
         public bool validaExt(string strP)
