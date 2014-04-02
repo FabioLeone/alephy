@@ -514,7 +514,7 @@ namespace SIAO.SRV
         }
 
         // Utilizado pelo modelo1 b
-        public List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId)
+        internal List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId, Boolean blnSum)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -522,11 +522,14 @@ namespace SIAO.SRV
 
             cmm.Connection = cnn;
             StringBuilder SQL = new StringBuilder();
-            SQL.Append(@"SELECT 
-                    farmacias.RazaoSocial AS Razao_Social,
-                    farmacias.nomefantasia,
-                    consolidado.CNPJ,
-                    consolidado.ano,
+            SQL.Append(@"SELECT");
+ 
+            if(String.IsNullOrEmpty(strCnpj) && blnSum)
+                SQL.Append(" r.descricao AS Razao_Social, r.descricao AS nomefantasia, r.cnpj,");
+            else
+                SQL.Append(" farmacias.RazaoSocial AS Razao_Social, farmacias.nomefantasia, consolidado.CNPJ,");
+
+            SQL.Append(@" consolidado.ano,
                     consolidado.Mes,
                     ""upper""(
                     CASE 
@@ -536,12 +539,20 @@ namespace SIAO.SRV
 		                    ELSE consolidado.sub_consultoria
                     END
                     ) as ""Sub Consultoria"",
-                    consolidado.Grupo,
-                    consolidado.Quantidade AS ""Soma De Quantidade"",
+                    consolidado.Grupo,");
+
+            if (String.IsNullOrEmpty(strCnpj) && blnSum)
+                SQL.Append(@" SUM(consolidado.Quantidade) AS ""Soma De Quantidade"",
+	                SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"",
+	                SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
+	                SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto""");
+            else
+                SQL.Append(@" consolidado.Quantidade AS ""Soma De Quantidade"",
                     consolidado.Valor_Bruto AS ""Soma De Valor bruto"",
                     consolidado.Valor_Liquido AS ""Soma De Valor liquido"",
-                    consolidado.Valor_Desconto AS ""Soma De Valor desconto""
-                    FROM
+                    consolidado.Valor_Desconto AS ""Soma De Valor desconto""");
+
+            SQL.Append(@" FROM
                     consolidado
                     INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
@@ -571,6 +582,9 @@ namespace SIAO.SRV
                 }
             }
 
+            if (String.IsNullOrEmpty(strCnpj) && blnSum)
+                SQL.Append(" LEFT JOIN redesfarmaceuticas r ON farmacias.idrede = r.id");
+
             SQL.Append(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
                     (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') <= to_date(@DataFim,'MM yyyy'))");
@@ -591,6 +605,9 @@ namespace SIAO.SRV
                     SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
+                if (String.IsNullOrEmpty(strCnpj) && blnSum)
+                    SQL.Append(" GROUP BY r.cnpj, r.descricao, consolidado.ano, consolidado.Mes,consolidado.sub_consultoria, consolidado.Grupo");
+
                 SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
             else
@@ -604,8 +621,12 @@ namespace SIAO.SRV
                     SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
-                SQL.Append(@" AND usuarios_vinculos.UsuarioId = @UsuarioId
-                    ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+                SQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+
+                if (String.IsNullOrEmpty(strCnpj) && blnSum)
+                    SQL.Append(" GROUP BY r.cnpj, r.descricao, consolidado.ano, consolidado.Mes,consolidado.sub_consultoria, consolidado.Grupo");
+
+                SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
 
             cmm.CommandText = SQL.ToString();
@@ -662,7 +683,7 @@ namespace SIAO.SRV
         }
 
         // Utilizado pelo modelo1 d
-        public List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId)
+        internal List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId, System.Web.UI.WebControls.CheckBox cbxSum)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -676,13 +697,23 @@ namespace SIAO.SRV
             string strAI = DateTime.Now.AddMonths(-6).Year.ToString();
 
             StringBuilder SQL = new StringBuilder();
-            SQL.Append(@"SELECT farmacias.RazaoSocial AS Razao_Social,farmacias.nomefantasia, consolidado.CNPJ,
-                        consolidado.Mes, consolidado.Ano, consolidado.Sub_Consultoria, consolidado.Grupo,
-                        consolidado.Quantidade AS ""Soma De Quantidade"",
+            SQL.Append(@"SELECT");
+
+            if (String.IsNullOrEmpty(strCnpj) && cbxSum.Checked) SQL.Append(" r.descricao AS Razao_Social, r.descricao AS nomefantasia, r.cnpj,");
+            else SQL.Append(" farmacias.RazaoSocial AS Razao_Social,farmacias.nomefantasia, consolidado.CNPJ,");
+
+            SQL.Append(" consolidado.Mes, consolidado.Ano, consolidado.Sub_Consultoria, consolidado.Grupo,");
+
+            if (String.IsNullOrEmpty(strCnpj) && cbxSum.Checked) SQL.Append(@" SUM(consolidado.Quantidade) AS ""Soma De Quantidade"",
+	            SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"",
+	            SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
+	            SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"""); 
+            else SQL.Append(@" consolidado.Quantidade AS ""Soma De Quantidade"",
                         consolidado.Valor_Bruto AS ""Soma De Valor bruto"",
                         consolidado.Valor_Liquido AS ""Soma De Valor liquido"",
-                        consolidado.Valor_Desconto AS ""Soma De Valor desconto"" FROM consolidado
-                        INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
+                        consolidado.Valor_Desconto AS ""Soma De Valor desconto""");
+            
+            SQL.Append(" FROM consolidado INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
 
             if ((clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0)) || !clsUser.TipoId.Equals(1))
             {
@@ -710,6 +741,8 @@ namespace SIAO.SRV
                 }
             }
 
+            if (String.IsNullOrEmpty(strCnpj) && cbxSum.Checked) SQL.Append(" LEFT JOIN redesfarmaceuticas r ON farmacias.idrede = r.id");
+
             SQL.Append(String.Format(@" WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
                         AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND
                         (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') <= to_date('{2} {3}','MM-yyyy'))", strMI, strAI, strMF, strAF));
@@ -725,6 +758,8 @@ namespace SIAO.SRV
                     SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
+                if (String.IsNullOrEmpty(strCnpj) && cbxSum.Checked) SQL.Append(" GROUP BY r.cnpj, r.descricao, consolidado.ano, consolidado.Mes, consolidado.sub_consultoria, consolidado.Grupo");
+
                 SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
             else
@@ -738,8 +773,11 @@ namespace SIAO.SRV
                     SQL.Append(" AND farmacias.idRede = @idRede");
                 }
 
-                SQL.Append(@" AND usuarios_vinculos.UsuarioId = @UsuarioId
-                    ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+                SQL.Append(@" AND usuarios_vinculos.UsuarioId = @UsuarioId");
+
+                if (String.IsNullOrEmpty(strCnpj) && cbxSum.Checked) SQL.Append(" GROUP BY r.cnpj, r.descricao, consolidado.ano, consolidado.Mes, consolidado.sub_consultoria, consolidado.Grupo");
+
+                SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
             }
 
             cmm.CommandText = SQL.ToString();
@@ -806,9 +844,8 @@ namespace SIAO.SRV
                     consolidado.Sub_Consultoria,consolidado.Grupo,SUM(consolidado.Quantidade) AS ""Soma De Quantidade"",
                     SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"", SUM(consolidado.Valor_Liquido) AS ""Soma De Valor liquido"",
                     SUM(consolidado.Valor_Desconto) AS ""Soma De Valor desconto"" FROM consolidado
-                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ");
-
-            SQL.Append(@" LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
+                    INNER JOIN farmacias ON farmacias.Cnpj = consolidado.CNPJ
+                    LEFT JOIN redesfarmaceuticas ON farmacias.idRede = redesfarmaceuticas.id
                     WHERE upper(consolidado.Grupo) IN ('GENÉRICOS' , 'ALTERNATIVOS' , 'PROPAGADOS') 
                     AND farmacias.idRede = @idRede
                     AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM yyyy') >= to_date(@DataIni,'MM yyyy')) AND
@@ -1712,6 +1749,5 @@ namespace SIAO.SRV
             ulConf.InnerHtml = sb.ToString();
         }
         #endregion
-
     }
 }

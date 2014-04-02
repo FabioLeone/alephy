@@ -106,14 +106,14 @@ namespace SIAO
                 if (this.User.RedeId > 0)
                     lr1 = RelatoriosBLL.GetCross(clsUser, txtInicio.Text, txtFim.Text, this.User.RedeId, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
                 else
-                    lr1 = RelatoriosBLL.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)));
+                    lr1 = RelatoriosBLL.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)), cbxSum);
             }
             else if (rbtMes.Checked)
             {
                 if (this.User.RedeId > 0)
                     lr1 = RelatoriosBLL.GetCross(clsUser, this.User.RedeId, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
                 else
-                    lr1 = RelatoriosBLL.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)));
+                    lr1 = RelatoriosBLL.GetCross(clsUser, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)), cbxSum);
             }
             else
                 lr1 = RelatoriosBLL.GetCross(ResultData());
@@ -578,6 +578,8 @@ namespace SIAO
 
             if (lic.FindByText("st") == null)
                 lic.Add(new System.Web.UI.WebControls.ListItem("st", "true"));
+
+            lic.Add(new System.Web.UI.WebControls.ListItem("sum", cbxSum.Checked.ToString()));
 
             return lic;
         }

@@ -46,6 +46,7 @@
                 <input type="button" id="btnSelect" class="btnsearch" onclick="return btnSelect_onclick()" />
                 <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="min-width: 243px;">
                 </asp:DropDownList>
+                <asp:CheckBox ID="cbxSum" runat="server" Text="Soma" />
             </div>
         </div>
         <div>

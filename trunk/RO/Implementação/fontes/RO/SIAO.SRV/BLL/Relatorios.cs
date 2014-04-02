@@ -27,10 +27,10 @@ namespace SIAO.SRV
             return lstReport;
         }
 
-        public static List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId)
+        public static List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId, CheckBox cbxSum)
         {
             SRV.clsControl oc = new SRV.clsControl();
-            List<clsRelat1> lstReport = oc.GetCross(clsUser, strInicio, strFim, strCnpj, intRedeId);
+            List<clsRelat1> lstReport = oc.GetCross(clsUser, strInicio, strFim, strCnpj, intRedeId, cbxSum.Checked);
 
             lstReport.ForEach(delegate(clsRelat1 report)
             {
@@ -57,10 +57,10 @@ namespace SIAO.SRV
             return lstReport;
         }
 
-        public static List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId)
+        public static List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId, CheckBox cbxSum)
         {
             SRV.clsControl oc = new SRV.clsControl();
-            List<clsRelat1> lstReport = oc.GetCross(clsUser, strCnpj, intRedeId);
+            List<clsRelat1> lstReport = oc.GetCross(clsUser, strCnpj, intRedeId, cbxSum);
 
             lstReport.ForEach(delegate(clsRelat1 report)
             {
@@ -86,7 +86,7 @@ namespace SIAO.SRV
             else{
                 int id = 0;
                 int.TryParse(licFilters.FindByText("rede").Value, out id);
-                lstReport = oc.GetCross(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, licFilters.FindByText("loja").Value, id);
+                lstReport = oc.GetCross(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, licFilters.FindByText("loja").Value, id, Convert.ToBoolean(licFilters.FindByText("sum").Value));
             }
 
             lstReport.ForEach(delegate(clsRelat1 report)
@@ -110,23 +110,23 @@ namespace SIAO.SRV
             if (String.IsNullOrEmpty(licFilters.FindByText("de").Value) && String.IsNullOrEmpty(licFilters.FindByText("ate").Value))
             {
                 if (u.RedeId > 0)
-                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("loja").Value, u.RedeId);
+                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("loja").Value, u.RedeId, Convert.ToBoolean(licFilters.FindByText("sum").Value));
                 else
                 {
                     int i = 0;
                     int.TryParse(licFilters.FindByText("rede").Value, out i);
-                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("loja").Value, i);
+                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("loja").Value, i, Convert.ToBoolean(licFilters.FindByText("sum").Value));
                 }
             }
             else
             {
                 if (u.RedeId > 0)
-                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u.RedeId, licFilters.FindByText("loja").Value);
+                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u.RedeId, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value));
                 else
                 {
                     int i = 0;
                     int.TryParse(licFilters.FindByText("rede").Value, out i);
-                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, i, licFilters.FindByText("loja").Value);
+                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, i, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value));
                 }
             
             }
