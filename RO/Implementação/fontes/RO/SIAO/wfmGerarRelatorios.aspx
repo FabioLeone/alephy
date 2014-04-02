@@ -46,7 +46,7 @@
                 <input type="button" id="btnSelect" class="btnsearch" onclick="return btnSelect_onclick()" />
                 <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="min-width: 243px;">
                 </asp:DropDownList>
-                <asp:CheckBox ID="cbxSum" runat="server" Text="Soma" />
+                <asp:CheckBox ID="cbxSum" runat="server" Text="Soma" ToolTip="Consolida os valores dos relarórios caso a opção selecionada for 'Todas'" />
             </div>
         </div>
         <div>
