@@ -249,7 +249,7 @@ namespace SIAO.SRV.BLL
                     lstUsers = GetAllMinion(objUser);
                     break;
                 default:
-                    lstUsers = GetAll();
+                    lstUsers = GetLst();
                     break;
             }
 
@@ -265,6 +265,11 @@ namespace SIAO.SRV.BLL
         private static List<UsersTO> GetAll()
         {
             return UsersDAL.GetAll();
+        }
+
+        private static List<UsersTO> GetLst()
+        {
+            return UsersDAL.GetLst();
         }
 
         public static UsersTO GetById(int intUserId)

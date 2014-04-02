@@ -28,7 +28,15 @@ namespace SIAO.SRV.DAL
             if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("ExpirationDate"))) { clsUsers.ExpirationDate = drdUsers.GetDateTime(drdUsers.GetOrdinal("ExpirationDate")); } else { clsUsers.ExpirationDate = DateTime.Now; }
             if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Access"))) { clsUsers.Access = CDM.Desc(drdUsers.GetString(drdUsers.GetOrdinal("Access"))); } else { clsUsers.Access = ""; }
             if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("Name"))) { clsUsers.Name = CDM.Desc(drdUsers.GetString(drdUsers.GetOrdinal("Name"))); } else { clsUsers.Name = ""; }
-            if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("FarmaciaId"))) { clsUsers.FarmaciaId = drdUsers.GetInt32(drdUsers.GetOrdinal("FarmaciaId")); } else { clsUsers.FarmaciaId = 0; }
+
+            try
+            {
+                if (!drdUsers.IsDBNull(drdUsers.GetOrdinal("FarmaciaId"))) { clsUsers.FarmaciaId = drdUsers.GetInt32(drdUsers.GetOrdinal("FarmaciaId")); } else { clsUsers.FarmaciaId = 0; }
+            }
+            catch
+            { 
+                clsUsers.FarmaciaId = 0;
+            }
 
             try
             {
@@ -523,6 +531,43 @@ namespace SIAO.SRV.DAL
             return clsUsers;
         }
 
+        internal static List<UsersTO> GetLst()
+        {
+            List<UsersTO> clsUsers = new List<UsersTO>();
+
+            DbConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+
+            try
+            {
+                StringBuilder strSQL = new StringBuilder();
+                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.Name,users.TipoId,usuarios_tipos.Tipo
+                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN
+                usuarios_tipos ON users.TipoId = usuarios_tipos.id
+                ORDER BY users.UserName");
+
+                DbCommand cmdUsers = msc.CreateCommand();
+                cmdUsers.CommandText = strSQL.ToString();
+
+                msc.Open();
+
+                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
+                {
+                    while (drdUsers.Read())
+                    {
+                        clsUsers.Add(Load(drdUsers));
+                    }
+                }
+            }
+            finally
+            {
+                msc.Close();
+            }
+
+            return clsUsers;
+        }
+
         #endregion
 
         #region .: Persistence :.
@@ -679,6 +724,5 @@ namespace SIAO.SRV.DAL
             }
         }
         #endregion
-
     }
 }

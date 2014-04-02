@@ -545,6 +545,9 @@
                 <GroupExpressions>
                   <GroupExpression>=Fields!Razao.Value</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
               </Group>
               <SortExpressions>
                 <SortExpression>
@@ -590,6 +593,9 @@
                     <GroupExpressions>
                       <GroupExpression>=Fields!Cnpj.Value</GroupExpression>
                     </GroupExpressions>
+                    <PageBreak>
+                      <BreakLocation>Between</BreakLocation>
+                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
@@ -1275,6 +1281,9 @@
                 <GroupExpressions>
                   <GroupExpression>=Fields!Razao.Value</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
               </Group>
               <SortExpressions>
                 <SortExpression>
@@ -1320,6 +1329,9 @@
                     <GroupExpressions>
                       <GroupExpression>=Fields!Cnpj.Value</GroupExpression>
                     </GroupExpressions>
+                    <PageBreak>
+                      <BreakLocation>Between</BreakLocation>
+                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
@@ -2005,6 +2017,9 @@
                 <GroupExpressions>
                   <GroupExpression>=Fields!Razao.Value</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
               </Group>
               <SortExpressions>
                 <SortExpression>
@@ -2050,6 +2065,9 @@
                     <GroupExpressions>
                       <GroupExpression>=Fields!Cnpj.Value</GroupExpression>
                     </GroupExpressions>
+                    <PageBreak>
+                      <BreakLocation>Between</BreakLocation>
+                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
@@ -2735,6 +2753,9 @@
                 <GroupExpressions>
                   <GroupExpression>=Fields!Razao.Value</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
               </Group>
               <SortExpressions>
                 <SortExpression>
@@ -2780,6 +2801,9 @@
                     <GroupExpressions>
                       <GroupExpression>=Fields!Cnpj.Value</GroupExpression>
                     </GroupExpressions>
+                    <PageBreak>
+                      <BreakLocation>Between</BreakLocation>
+                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
@@ -3460,6 +3484,9 @@
                 <GroupExpressions>
                   <GroupExpression>=Fields!Razao.Value</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
               </Group>
               <SortExpressions>
                 <SortExpression>
@@ -3505,6 +3532,9 @@
                     <GroupExpressions>
                       <GroupExpression>=Fields!Cnpj.Value</GroupExpression>
                     </GroupExpressions>
+                    <PageBreak>
+                      <BreakLocation>Between</BreakLocation>
+                    </PageBreak>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
