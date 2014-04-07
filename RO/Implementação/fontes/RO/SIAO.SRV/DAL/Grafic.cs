@@ -19,8 +19,6 @@ namespace SIAO.SRV.DAL
             GraficTO clsGrafic = new GraficTO();
 
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("razaosocial"))) { clsGrafic.Razao_Social = drdGrafic.GetString(drdGrafic.GetOrdinal("razaosocial")); } else { clsGrafic.Razao_Social = string.Empty; }
-            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Mes"))) { clsGrafic.Mes = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Mes")); } else { clsGrafic.Mes = 0; }
-            if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Ano"))) { clsGrafic.Ano = drdGrafic.GetInt32(drdGrafic.GetOrdinal("Ano")); } else { clsGrafic.Ano = 0; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Grupo"))) { clsGrafic.Grupo = drdGrafic.GetString(drdGrafic.GetOrdinal("Grupo")); } else { clsGrafic.Grupo = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Sub_Consultoria"))) { clsGrafic.Sub_Consultoria = drdGrafic.GetString(drdGrafic.GetOrdinal("Sub_Consultoria")); } else { clsGrafic.Sub_Consultoria = string.Empty; }
             if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("Liquido"))) { clsGrafic.Liquido = drdGrafic.GetDecimal(drdGrafic.GetOrdinal("Liquido")); } else { clsGrafic.Liquido = 0; }
@@ -223,10 +221,13 @@ namespace SIAO.SRV.DAL
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
             List<string> lstCnpj = new List<string>();
 
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT farmacias.razaosocial,farmacias.nomefantasia, xTemp.* FROM (
+            StringBuilder strSQL = new StringBuilder();
+            strSQL.Append(@"SELECT");
+            
+            if(String.IsNullOrEmpty(strCnpj)) strSQL.Append(" r.descricao as razaosocial,r.descricao as nomefantasia, r.cnpj,");
+            else strSQL.Append(" farmacias.razaosocial,farmacias.nomefantasia, xTemp.cnpj,");
+
+            strSQL.Append(@" xTemp.grupo, xTemp.sub_consultoria, SUM(xTemp.""Liquido"") as ""Liquido"", AVG(xTemp.""Desconto"") as ""Desconto"", SUM(xTemp.""Quantidade"")::BIGINT as ""Quantidade"" FROM (
                 select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
                     sum(quantidade) as ""Quantidade""
 	                from consolidado
@@ -257,29 +258,35 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
 
-                strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy')) AND
+            if(String.IsNullOrEmpty(strCnpj)) strSQL.Append(" LEFT JOIN redesfarmaceuticas r ON farmacias.idrede = r.id");
+
+            strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy')) AND
                 (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
-                
-                if(idRede > 0)
-                    strSQL.Append(" AND farmacias.idRede = @idRede");
 
-                if (!String.IsNullOrEmpty(strCnpj))
-                    strSQL.Append(" AND xTemp.CNPJ = @CNPJ");
-                else if(clsUser.FarmaciaId > 0)
-                    strSQL.Append(" AND farmacias.id = @id");
 
-                strSQL.Append(" ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
+            if (idRede > 0)
+                strSQL.Append(" AND farmacias.idRede = @idRede");
 
-                DbCommand cmdGrafic = msc.CreateCommand();
+            if (!String.IsNullOrEmpty(strCnpj))
+                strSQL.Append(" AND xTemp.CNPJ = @CNPJ");
+            else if (clsUser.FarmaciaId > 0)
+                strSQL.Append(" AND farmacias.id = @id");
 
-                cmdGrafic.CommandText = strSQL.ToString();
-                cmdGrafic.Parameters.Clear();
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", idRede));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@id", clsUser.FarmaciaId));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
-                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strCnpj));
+            if (String.IsNullOrEmpty(strCnpj)) strSQL.Append(" GROUP BY r.descricao, r.cnpj, xTemp.grupo, xTemp.sub_consultoria");
+            else strSQL.Append(" GROUP BY farmacias.razaosocial,farmacias.nomefantasia, xTemp.cnpj, xTemp.grupo, xTemp.sub_consultoria");
 
+            DbCommand cmdGrafic = msc.CreateCommand();
+
+            cmdGrafic.CommandText = strSQL.ToString();
+            cmdGrafic.Parameters.Clear();
+            cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@idRede", idRede));
+            cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@id", clsUser.FarmaciaId));
+            cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
+            cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
+            cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strCnpj));
+
+            try
+            {
                 cmdGrafic.CommandTimeout = 9999;
 
                 msc.Open();
