@@ -562,7 +562,7 @@ namespace SIAO
             }
             else if (rbtUAno.Checked)
             {
-                lic.Add(new System.Web.UI.WebControls.ListItem("de", DateTime.Now.AddMonths(-13).ToString("MM/yyyy")));
+                lic.Add(new System.Web.UI.WebControls.ListItem("de", DateTime.Now.AddMonths(-12).ToString("MM/yyyy")));
                 lic.Add(new System.Web.UI.WebControls.ListItem("ate", DateTime.Now.AddMonths(-1).ToString("MM/yyyy")));
             }
             else if (rbtUMes.Checked)

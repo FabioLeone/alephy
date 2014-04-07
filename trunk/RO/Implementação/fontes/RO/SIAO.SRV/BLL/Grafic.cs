@@ -291,7 +291,11 @@ namespace SIAO.SRV.BLL
             if (u.RedeId > 0)
                 clsGrafic = GraficDAL.GetGraficMes(strAIni, u, strAFim, u.RedeId, licFilters.FindByText("loja").Value);
             else
-                clsGrafic = GraficDAL.GetGraficMes(strAIni, u, licFilters.FindByText("loja").Value, strAFim);
+            {
+                int id = 0;
+                int.TryParse(licFilters.FindByText("rede").Value, out id);
+                clsGrafic = GraficDAL.GetGraficMes(strAIni, u, strAFim, id, licFilters.FindByText("loja").Value);
+            }
             
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
