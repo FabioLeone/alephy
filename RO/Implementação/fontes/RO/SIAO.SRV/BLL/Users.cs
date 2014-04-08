@@ -262,11 +262,6 @@ namespace SIAO.SRV.BLL
 
         #region .: Search :.
 
-        private static List<UsersTO> GetAll()
-        {
-            return UsersDAL.GetAll();
-        }
-
         private static List<UsersTO> GetLst()
         {
             return UsersDAL.GetLst();
@@ -286,16 +281,6 @@ namespace SIAO.SRV.BLL
             UsersTO u = UsersDAL.GetByNameAndPassword(strName, strPassword, strConnectionString);
             u.RedeId = clsControl.GetRedeByUserId(u.UserId).RedeId;
             return u;
-        }
-
-        public static object GetByName(string strNome, string strConnection)
-        {
-            return UsersDAL.GetByName(strNome, strConnection);
-        }
-
-        public static List<UsersTO> GetByAccessType(string strAccess, string strConnection)
-        {
-            return UsersDAL.GetByAccessType(strAccess, strConnection);
         }
 
         public static object GetIndicesByFiltro(string strNome)
@@ -348,14 +333,10 @@ namespace SIAO.SRV.BLL
 
         #region .: Persistence :.
 
-        public static UsersTO Insert(UsersTO clsUsers, string strConnection)
+        public static void UpdateActivity(UsersTO clsUser)
         {
-            return UsersDAL.Insert(clsUsers, strConnection);
-        }
-
-        public static Boolean Update(UsersTO clsUsers, string strConnection)
-        {
-            return UsersDAL.Update(clsUsers, strConnection);
+            clsUser.LastActivityDate = Convert.ToDateTime(DateTime.Today.Year + "-" + DateTime.Today.Month + "-" + DateTime.Today.Day + " 00:00:00");
+            UsersDAL.UpdateActivity(clsUser);
         }
 
         public static Boolean Delete(UsersTO clsUsers, string strConnection)
@@ -374,5 +355,6 @@ namespace SIAO.SRV.BLL
             i = 4
         }
         #endregion
+
     }
 }

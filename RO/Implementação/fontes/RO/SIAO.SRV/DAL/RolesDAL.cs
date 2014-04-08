@@ -30,43 +30,6 @@ namespace SIAO.SRV.DAL
         }
         #endregion
 
-        #region .: Search :.
-        internal static RolesTO GetByUserId(int intUserId, string strConnection)
-        {
-            RolesTO clsRoles = new RolesTO();
-
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
-
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT roles.RoleId,roles.UserId,roles.Envio,roles.RelatoriosTodos FROM roles WHERE roles.UserId=@UserId");
-
-                DbCommand cmdUsers = msc.CreateCommand();
-
-                cmdUsers.CommandText = strSQL.ToString();
-                cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", intUserId));
-
-                msc.Open();
-
-                using (IDataReader drdRoles = cmdUsers.ExecuteReader())
-                {
-                    if(drdRoles.Read())
-                    {
-                        clsRoles = Load(drdRoles);
-                    }
-                }
-            }
-            finally
-            {
-                msc.Close();
-            }
-
-            return clsRoles;
-        }
-        #endregion
-
         #region .: Serach Custom :.
         internal static List<RolesTO> GetByRedeId(int intRedeId, string strConnection)
         {
@@ -211,32 +174,6 @@ namespace SIAO.SRV.DAL
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsRole.UserId));
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Boolean, "@Envio", clsRole.Envio));
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Boolean, "@RelatoriosTodos", clsRole.RelatoriosTodos));
-
-                msc.Open();
-                cmdUsers.ExecuteNonQuery();
-            }
-            finally
-            {
-                msc.Close();
-            }
-        }
-
-
-        internal static void Update(RelatoriosTO clsRelatorio, string strConnection)
-        {
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
-
-            try
-            {
-                String strSQL = "UPDATE relatorios SET RelatorioTipoId=@RelatorioTipoId,UsuarioId=@UsuarioId WHERE RelatorioId=@RelatorioId";
-
-                DbCommand cmdUsers = msc.CreateCommand();
-
-                cmdUsers.CommandText = strSQL;
-                cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@RelatorioId", clsRelatorio.RelatorioId));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@RelatorioTipoId", clsRelatorio.RelatorioTipoId));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UsuarioId", clsRelatorio.UsuarioId));
 
                 msc.Open();
                 cmdUsers.ExecuteNonQuery();

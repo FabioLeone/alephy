@@ -40,11 +40,6 @@ namespace SIAO.SRV
             }
         }
 
-        public NpgsqlConnection getConnection()
-        {
-            return new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
-        }
-
         // Traz o retorno do banco
         public object Query(object retorno, ref NpgsqlCommand cmm)
         {

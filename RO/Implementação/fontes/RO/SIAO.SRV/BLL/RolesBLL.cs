@@ -9,15 +9,6 @@ namespace SIAO.SRV.BLL
 {
     public class RolesBLL
     {
-        #region .: Enum :.
-        public enum Relatorio { 
-            Modelo1 = 1,
-            Modelo2 = 2,
-            Grafico1 = 3,
-            Grafico2 = 4
-        }
-        #endregion
-
         #region .: Search :.
         public static List<TO.RolesTO> GetByRedeId(int intRedeId, string strConnection)
         {
@@ -26,10 +17,6 @@ namespace SIAO.SRV.BLL
         public static List<RelatoriosTO> GetRelatoriosByUserId(int UserId, string strConnection)
         {
             return RolesDAL.GetRelatoriosByUserId(UserId, strConnection);
-        }
-        public static RolesTO GetByUserId(int intUserId, string strConnection)
-        {
-            return RolesDAL.GetByUserId(intUserId, strConnection);
         }
         #endregion
 
@@ -101,12 +88,6 @@ namespace SIAO.SRV.BLL
             else
                 RolesDAL.Delete(clsRelatorios, strConnection);
         }
-
-        private static void Update(RelatoriosTO clsRelatorio, string strConnection)
-        {
-            RolesDAL.Update(clsRelatorio, strConnection);
-        }
-
         #endregion
 
     }

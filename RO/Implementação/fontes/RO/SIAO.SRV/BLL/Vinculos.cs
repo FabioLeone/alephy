@@ -29,11 +29,6 @@ namespace SIAO.SRV.BLL
             return lstVinculos;
         }
 
-        public static List<VinculoTO> GetByUsuarioId(int intUsuarioId)
-        {
-            return VinculoDAL.GetByUsuarioId(intUsuarioId);
-        }
-
         public static VinculoTO GetByCNPJ(string strCNPJ, int intTipoId)
         {
             return VinculoDAL.GetByCNPJ(strCNPJ, intTipoId);

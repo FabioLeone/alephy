@@ -140,7 +140,6 @@ namespace SIAO.SRV
             return sbName.ToString();
         }
 
-
         public static string SetFileName(string strName, List<PercReport> lst)
         {
             StringBuilder sbName = new StringBuilder();
@@ -442,9 +441,6 @@ namespace SIAO.SRV
 
             return dt;
         }
-
-        public List<int> Meses() { return lstMeses; }
-        public List<string> Cnpj() { return lstCnpj; }
         #endregion
     }
 }
