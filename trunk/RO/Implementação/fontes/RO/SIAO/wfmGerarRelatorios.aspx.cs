@@ -162,20 +162,22 @@ namespace SIAO
         protected void lbtnGra1_Click(object sender, EventArgs e)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
+            int id = 0;
+            int.TryParse(ddlRedesRelatorios.SelectedValue, out id);
 
             if (rbtPeriodo.Checked)
             {
                 if (this.User.RedeId > 0)
                     clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.User.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, ddlLojaRelatorios.SelectedValue, txtFim.Text, false);
+                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, id, ddlLojaRelatorios.SelectedValue, false);
             }
             else if (rbtMes.Checked)
             {
                 if (this.User.RedeId > 0)
                     clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.User.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, ddlLojaRelatorios.SelectedValue, string.Empty, false);
+                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, id, ddlLojaRelatorios.SelectedValue, false);
             }
             else
                 clsGrafic = GraficBLL.GraficList(ResultData());
@@ -201,19 +203,19 @@ namespace SIAO
                 int.TryParse(ddlRedesRelatorios.SelectedValue, out rId);
 
                 if (this.User.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, this.User.RedeId, ddlLojaRelatorios.SelectedValue, false);
+                    clsGrafic = GraficBLL.Grafic2List(txtInicio.Text, clsUser, txtFim.Text, this.User.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(txtInicio.Text, clsUser, txtFim.Text, rId, ddlLojaRelatorios.SelectedValue, false);
+                    clsGrafic = GraficBLL.Grafic2List(txtInicio.Text, clsUser, txtFim.Text, rId, ddlLojaRelatorios.SelectedValue, false);
             }
             else if (rbtMes.Checked)
             {
                 if (this.User.RedeId > 0)
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, this.User.RedeId, ddlLojaRelatorios.SelectedValue, false);
+                    clsGrafic = GraficBLL.Grafic2List(string.Empty, clsUser, string.Empty, this.User.RedeId, ddlLojaRelatorios.SelectedValue, false);
                 else
-                    clsGrafic = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, rId, ddlLojaRelatorios.SelectedValue, false);
+                    clsGrafic = GraficBLL.Grafic2List(string.Empty, clsUser, string.Empty, rId, ddlLojaRelatorios.SelectedValue, false);
             }
             else
-                clsGrafic = GraficBLL.GraficList(ResultData());
+                clsGrafic = GraficBLL.Grafic2List(ResultData());
 
             if (clsGrafic.Count > 0)
                 RelatoriosVisualizadosBLL.Insert(new RelatoriosVisualizadosTO()

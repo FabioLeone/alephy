@@ -167,50 +167,6 @@ namespace SIAO.SRV.DAL
             return clsVinculos;
         }
 
-        internal static List<VinculoTO> GetByUsuarioId(int intUsuarioId)
-        {
-            List<VinculoTO> clsVinculos = new List<VinculoTO>();
-
-            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
-
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT usuarios_vinculos.id,users.UserId,usuarios_vinculos.redeid,usuarios_vinculos.farmaciaid,usuarios_vinculos.industriaid,
-                users.UserName, CASE WHEN users.TipoId = 2 THEN farmacias.CNPJ ELSE
-                (CASE WHEN users.TipoId = 3 THEN redesfarmaceuticas.CNPJ ELSE (CASE WHEN users.TipoId = 4 THEN 'Industria' ELSE '' END) END) END AS CNPJ, 
-                CASE WHEN users.TipoId = 2 THEN farmacias.NomeFantasia ELSE
-                (CASE WHEN users.TipoId = 3 THEN redesfarmaceuticas.Descricao ELSE (CASE WHEN users.TipoId = 4 THEN 'Industria' ELSE '' END) END) END AS Empresa,
-                users.TipoId, users.nivel
-                FROM users LEFT JOIN
-                usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId LEFT JOIN
-                redesfarmaceuticas ON usuarios_vinculos.redeid = redesfarmaceuticas.Id LEFT JOIN
-                farmacias ON usuarios_vinculos.farmaciaid = farmacias.Id
-                WHERE users.UserId = @UserId 
-                ORDER BY users.UserName");
-
-                DbCommand cmdVinculos = msc.CreateCommand();
-                cmdVinculos.CommandText = strSQL.ToString();
-                cmdVinculos.Parameters.Add(DbHelper.GetParameter(cmdVinculos, DbType.Int32, "@UserId", intUsuarioId));
-
-                msc.Open();
-
-                using (IDataReader drdVinculos = cmdVinculos.ExecuteReader())
-                {
-                    while (drdVinculos.Read())
-                    {
-                        clsVinculos.Add(Load(drdVinculos));
-                    }
-                }
-            }
-            finally
-            {
-                msc.Close();
-            }
-
-            return clsVinculos;
-        }
-
         internal static VinculoTO GetByCNPJ(string strCNPJ, int intTipoId)
         {
             VinculoTO clsVinculo = new VinculoTO();

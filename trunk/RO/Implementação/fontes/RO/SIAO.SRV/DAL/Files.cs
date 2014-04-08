@@ -50,39 +50,7 @@ namespace SIAO.SRV.DAL
         #endregion
 
         #region .: Search :.
-        public static List<FilesTO> GetByYear(int intAno, string strConnection)
-        {
-            List<FilesTO> clsFiles = new List<FilesTO>();
 
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
-
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                //TODO - busca por ano
-                strSQL.Append(String.Format("SELECT id,`data`,UserId,cnpj,tipo,mes,ano FROM arquivosenviados WHERE YEAR(`data`) = '{0}';", intAno));
-
-                DbCommand cmdFile = msc.CreateCommand();
-                cmdFile.CommandText = strSQL.ToString();
-
-                msc.Open();
-
-                using (IDataReader drdFiles = cmdFile.ExecuteReader())
-                {
-                    while (drdFiles.Read())
-                    {
-                        clsFiles.Add(Load(drdFiles));
-                    }
-                }
-            }
-            finally
-            {
-                msc.Close();
-            }
-
-            return clsFiles;
-        }
-        
         internal static List<FilesTO> GetByYearAndRedeId(int intAno, int intRedeId, string scn)
         {
             List<FilesTO> clsFiles = new List<FilesTO>();
@@ -153,43 +121,6 @@ namespace SIAO.SRV.DAL
             }
 
             return clsFiles;
-        }
-        #endregion
-
-        #region .: Persistence :.
-        internal static string Insert(string strPath)
-        {
-            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
-            NpgsqlCommand cmm = new NpgsqlCommand();
-
-            cmm.Connection = cnn;
-
-            string msg = string.Empty;
-
-            if (File.Exists(strPath))
-            {
-                var sql = String.Format("COPY base_cliente_espera ( razao_social, cnpj, mes, ano, barras, descricao, fabricante, grupo, total_custo, quantidade, valor_bruto, valor_liquido, valor_desconto ) FROM '{0}' WITH DELIMITER ';' CSV HEADER", strPath);
-
-                cmm = new NpgsqlCommand(sql, cnn);
-                
-                cnn.Open();
-
-                try
-                {
-                    cmm.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    msg = ex.Message;
-                }
-                finally
-                {
-                    cnn.Close();
-                }
-            }
-            else { msg = "Erro ao converter o txt."; }
-
-            return msg;
         }
         #endregion
     }

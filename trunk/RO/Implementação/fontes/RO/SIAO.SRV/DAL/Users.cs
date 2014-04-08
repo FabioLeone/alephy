@@ -99,44 +99,6 @@ namespace SIAO.SRV.DAL
 
         #region .: Search :.
 
-        public static List<UsersTO> GetAll()
-        {
-            List<UsersTO> clsUsers = new List<UsersTO>();
-
-            DbConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
-
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
-                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.Name, uv.FarmaciaId,users.TipoId,usuarios_tipos.Tipo
-                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId LEFT JOIN 
-                usuarios_vinculos uv ON users.UserId = uv.UsuarioId LEFT JOIN
-                usuarios_tipos ON users.TipoId = usuarios_tipos.id
-                ORDER BY users.UserName");
-
-                DbCommand cmdUsers = msc.CreateCommand();
-                cmdUsers.CommandText = strSQL.ToString();
-
-                msc.Open();
-
-                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
-                {
-                    while (drdUsers.Read())
-                    {
-                        clsUsers.Add(Load(drdUsers));
-                    }
-                }
-            }
-            finally
-            {
-                msc.Close();
-            }
-
-            return clsUsers;
-        }
-
         public static UsersTO GetById(int intUserId)
         {
             UsersTO clsUsers = new UsersTO();
@@ -210,100 +172,6 @@ namespace SIAO.SRV.DAL
                     if (drdUsers.Read())
                     {
                         clsUsers = Load(drdUsers);
-                    }
-                }
-            }
-            finally
-            {
-                msc.Close();
-            }
-
-            return clsUsers;
-        }
-
-        public static object GetByName(string strNome, string strConnection)
-        {
-            List<UsersTO> clsUsers = new List<UsersTO>();
-
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
-
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
-                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.Name, usuarios_vinculos.FarmaciaId
-                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId 
-                LEFT JOIN usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId
-                WHERE users.UserName LIKE @UserName
-                ORDER BY users.UserName");
-
-                DbCommand cmdUsers = msc.CreateCommand();
-                cmdUsers.CommandText = strSQL.ToString();
-
-                cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@UserName", string.Format("%{0}%", strNome)));
-
-                msc.Open();
-
-                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
-                {
-                    while (drdUsers.Read())
-                    {
-                        clsUsers.Add(Load(drdUsers));
-                    }
-                }
-            }
-            finally
-            {
-                msc.Close();
-            }
-
-            return clsUsers;
-        }
-
-        internal static List<UsersTO> GetByAccessType(string strAccess, string strConnection)
-        {
-            List<UsersTO> clsUsers = new List<UsersTO>();
-
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
-
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
-                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.Name, usuarios_vinculos.FarmaciaId
-                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId 
-                LEFT JOIN usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId");
-                strSQL.Append(" WHERE memberships.Access=@Access");
-                strSQL.Append(" ORDER BY users.UserName");
-
-                DbCommand cmdUsers = msc.CreateCommand();
-                cmdUsers.CommandText = strSQL.ToString();
-
-                cmdUsers.Parameters.Clear();
-
-                switch (strAccess)
-                {
-                    case "gerente":
-                        cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript("nvg")));
-                        break;
-                    case "proprietario":
-                        cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript("nvp")));
-                        break;
-                    case "administrador":
-                        cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript("adm")));
-                        break;
-                }
-                
-                msc.Open();
-
-                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
-                {
-                    while (drdUsers.Read())
-                    {
-                        clsUsers.Add(Load(drdUsers));
                     }
                 }
             }
@@ -572,105 +440,27 @@ namespace SIAO.SRV.DAL
 
         #region .: Persistence :.
 
-        public static UsersTO Insert(UsersTO clsUsers, string strConnection)
+        internal static bool UpdateActivity(UsersTO clsUser)
         {
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SET NOCOUNT=ON;");
-                strSQL.Append("INSERT INTO users (UserName, LastActivityDate) VALUES (@UserName, @LastActivityDate);");
-                strSQL.Append(@"SELECT users.UserId, users.UserName, users.LastActivityDate, memberships.Password,
-                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.Name, usuarios_vinculos.FarmaciaId
-                FROM users LEFT JOIN memberships ON users.UserId = memberships.UserId 
-                LEFT JOIN usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId
-                WHERE users.UserId=@@IDENTITY");
-
-                DbCommand cmdUsers = msc.CreateCommand();
-                cmdUsers.CommandText = strSQL.ToString();
-
-                cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@UserName", clsUsers.UserName));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@LastActivityDate", clsUsers.LastActivityDate));
-
-                msc.Open();
-
-                using (IDataReader drdUsers = cmdUsers.ExecuteReader())
-                {
-                    if (drdUsers.Read())
-                    {
-                        clsUsers.UserId = Load(drdUsers).UserId;
-                    }
-                }
-
-                strSQL.Clear();
-                strSQL.Append("INSERT INTO memberships (UserId, Password, Email, Inactive, CreateDate, ");
-                strSQL.Append(" ExpirationDate, Access, Name) VALUES ( @UserId, @Password, @Email, @Inactive,");
-                strSQL.Append(" @CreateDate, @ExpirationDate, @Access, @Name)");
-
-                cmdUsers.CommandText = strSQL.ToString();
-
-                cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Password", CDM.Cript(clsUsers.Password)));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Email", clsUsers.Email));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@Inactive", (clsUsers.Inactive == false ? 0 : 1)));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@CreateDate", clsUsers.CreateDate));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@ExpirationDate", clsUsers.ExpirationDate));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript(clsUsers.Access)));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", CDM.Cript(clsUsers.Name)));
-                cmdUsers.ExecuteNonQuery();
-            }
-            finally
-            {
-                msc.Close();
-            }
-
-            return clsUsers;
-        }
-
-        public static Boolean Update(UsersTO clsUsers, string strConnection)
-        {
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
-
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SET NOCOUNT=ON;");
-                strSQL.Append("UPDATE users SET UserName = @UserName, LastActivityDate = @LastActivityDate");
+                strSQL.Append("UPDATE users SET LastActivityDate = @LastActivityDate");
                 strSQL.Append(" WHERE users.UserId=@UserId");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
 
                 cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@UserName", clsUsers.UserName));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@LastActivityDate", clsUsers.LastActivityDate));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUser.UserId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@LastActivityDate", clsUser.LastActivityDate));
 
                 msc.Open();
 
                 cmdUsers.ExecuteNonQuery();
 
-                strSQL.Clear();
-                strSQL.Append("UPDATE memberships SET Password = @Password, Email = @Email, ");
-                strSQL.Append(" Inactive = @Inactive, CreateDate = @CreateDate, ExpirationDate = @ExpirationDate,");
-                strSQL.Append(" Access = @Access, Name = @Name WHERE UserId = @UserId");
-
-                cmdUsers.CommandText = strSQL.ToString();
-                cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UserId", clsUsers.UserId));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Password", CDM.Cript(clsUsers.Password)));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Email", clsUsers.Email));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@Inactive", (clsUsers.Inactive == false ? 0 : 1)));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@CreateDate", clsUsers.CreateDate));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.DateTime, "@ExpirationDate", clsUsers.ExpirationDate));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Access", CDM.Cript(clsUsers.Access)));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.String, "@Name", CDM.Cript(clsUsers.Name)));
-                cmdUsers.ExecuteNonQuery();
-                
                 return true;
             }
             catch
@@ -724,5 +514,6 @@ namespace SIAO.SRV.DAL
             }
         }
         #endregion
+
     }
 }

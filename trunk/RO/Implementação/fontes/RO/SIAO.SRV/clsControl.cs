@@ -22,29 +22,6 @@ namespace SIAO.SRV
 
         #region .:Search:.
 
-        public System.Data.DataSet GetUser(string scn, string p)
-        {
-            string s = o.encr(p);
-            DataSet ds = new DataSet();
-
-            cmm.CommandText = "SELECT users.UserName, memberships.UserId"
-                + " FROM  users INNER JOIN"
-                + " memberships ON users.UserId = memberships.UserId"
-                + " WHERE (memberships.Inactive = 0) AND (memberships.Access = '" + s + "')"
-                + " AND (memberships.ExpirationDate > SYSDATE())";
-
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            cmm.Connection = cnn;
-
-            if (clsDB.openConnection(cmm))
-            {
-                ds = clsDB.QueryDS(ref cmm, ref ds, "Gerentes");
-            }
-            clsDB.closeConnection(cmm);
-
-            return ds;
-        }
-
         public static DataSet GetRedes()
         {
             DataSet ds = new DataSet();
@@ -269,23 +246,6 @@ namespace SIAO.SRV
             }
 
             return r;
-        }
-
-        public DataSet GetFarmacias(string scn)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-
-            cmm.Connection = cnn;
-            cmm.CommandText = "SELECT Id, NomeFantasia FROM farmacias";
-
-            if (clsDB.openConnection(cmm))
-            {
-                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
-            }
-            clsDB.closeConnection(cmm);
-
-            return ds;
         }
 
         public object GetFarmaciasByRedeId(string scn, string redeId)
@@ -1001,64 +961,6 @@ namespace SIAO.SRV
 
             return lr;
         }
-
-        public DataSet GetUsers(string scn)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-
-            cmm.Connection = cnn;
-            cmm.CommandText = "SELECT users.UserId, users.UserName"
-                + " FROM  users INNER JOIN"
-                + " memberships ON users.UserId = memberships.UserId"
-                + " WHERE memberships.Inactive = 0";
-
-            if (clsDB.openConnection(cmm))
-            {
-                ds = clsDB.QueryDS(ref cmm, ref ds, "Users");
-            }
-            clsDB.closeConnection(cmm);
-
-            return ds;
-        }
-
-        public UsersTO GetUserEdit(string scn, string p)
-        {
-            DataSet ds = new DataSet();
-            NpgsqlConnection cnn = new NpgsqlConnection(scn);
-            UsersTO clsUser = new UsersTO();
-
-            cmm.Connection = cnn;
-            cmm.CommandText = @"SELECT users.UserId, users.UserName, memberships.Email,
-                memberships.Inactive, memberships.ExpirationDate, memberships.Access, 
-                memberships.Name, usuarios_vinculos.FarmaciaId, memberships.Password
-                FROM  users INNER JOIN
-                memberships ON users.UserId = memberships.UserId LEFT OUTER JOIN
-                usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId"
-                + " WHERE (memberships.Inactive = 0) AND (users.UserId = " + p + ")";
-
-            if (clsDB.openConnection(cmm))
-            {
-                ds = clsDB.QueryDS(ref cmm, ref ds, "UserEd");
-            }
-            clsDB.closeConnection(cmm);
-
-            if (ds.Tables.Count > 0)
-            {
-                clsUser.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["UserId"].ToString());
-                clsUser.Inactive = (bool)(ds.Tables[0].Rows[0]["Inactive"].ToString() == "0" ? false : true);
-                clsUser.FarmaciaId = Convert.ToInt16(ds.Tables[0].Rows[0]["FarmaciaId"].ToString() == "" ? 0 : ds.Tables[0].Rows[0]["FarmaciaId"]);
-                clsUser.Name = o.denc(ds.Tables[0].Rows[0]["Name"].ToString());
-                clsUser.Email = ds.Tables[0].Rows[0]["Email"].ToString();
-                clsUser.UserName = ds.Tables[0].Rows[0]["UserName"].ToString();
-                clsUser.ExpirationDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["ExpirationDate"].ToString());
-                clsUser.Access = o.denc(ds.Tables[0].Rows[0]["Access"].ToString());
-                clsUser.Password = o.denc(ds.Tables[0].Rows[0]["Password"].ToString());
-            }
-
-            return clsUser;
-        }
-
         #endregion
 
         #region .:Persistence:.
@@ -1241,55 +1143,6 @@ namespace SIAO.SRV
                 msg = ex.Message;
             }
             clsDB.closeConnection(cmm);
-
-            return msg;
-        }
-
-        public string AddXml(DataTable dt, UsersTO clsUser)
-        {
-            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
-            cmm.Connection = cnn;
-
-            string msg = "";
-
-            if (dt.Rows.Count > 0)
-            {
-                try
-                {
-                    cmm.CommandText = @"INSERT INTO base_cliente_espera (Razao_Social, Cnpj, Mes, Ano, Barras, Descricao,
-                              Fabricante, Quantidade, Valor_Bruto, Valor_Liquido, Valor_Desconto)
-                              VALUES (@Razao_Social, @Cnpj, @Mes, @Ano, @Barras, @Descricao,
-                              @Fabricante, @Quantidade, @Valor_Bruto, @Valor_Liquido, @Valor_Desconto)";
-
-                    cmm.Parameters.Add("@Razao_Social", NpgsqlDbType.Varchar, 255, "razao");
-                    cmm.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar, 255, "cnpj");
-                    cmm.Parameters.Add("@Mes", NpgsqlDbType.Integer, 255, "mes");
-                    cmm.Parameters.Add("@Ano", NpgsqlDbType.Integer, 255, "ano");
-                    cmm.Parameters.Add("@Barras", NpgsqlDbType.Varchar, 255, "ean");
-                    cmm.Parameters.Add("@Descricao", NpgsqlDbType.Varchar, 255, "nprod");
-                    cmm.Parameters.Add("@Fabricante", NpgsqlDbType.Varchar, 255, "fab");
-                    cmm.Parameters.Add("@Quantidade", NpgsqlDbType.Integer, 255, "quant");
-                    cmm.Parameters.Add("@Valor_Bruto", NpgsqlDbType.Numeric, 255, "vbruto");
-                    cmm.Parameters.Add("@Valor_Liquido", NpgsqlDbType.Numeric, 255, "vliquido");
-                    cmm.Parameters.Add("@Valor_Desconto", NpgsqlDbType.Numeric, 255, "desconto");
-
-                    cnn.Open();
-                    NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmm);
-                    adapter.InsertCommand = cmm;
-                    adapter.Update(dt);
-                }
-                catch (Exception ex)
-                {
-                    msg = ex.Message;
-                    clsDB.closeConnection(cmm);
-
-                }
-
-                if (String.IsNullOrEmpty(msg))
-                    AddXmlData(dt, clsUser);
-
-            }
-            else { msg = "Erro ao converter o xml."; }
 
             return msg;
         }

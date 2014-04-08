@@ -32,6 +32,8 @@ namespace SIAO
                     
                     FormsAuthentication.SetAuthCookie(clsUser.UserName, false);
 
+                    UsersBLL.UpdateActivity(clsUser);
+
                     Response.Redirect("Default.aspx");
                 }
                 else
