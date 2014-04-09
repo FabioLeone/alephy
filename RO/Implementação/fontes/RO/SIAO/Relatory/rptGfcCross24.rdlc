@@ -1333,7 +1333,7 @@
         </SortExpressions>
         <Top>61.39951cm</Top>
         <Height>2.99999cm</Height>
-        <Width>7.12999cm</Width>
+        <Width>7.12998cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -2028,7 +2028,7 @@
         </SortExpressions>
         <Top>82.82904cm</Top>
         <Height>2.99999cm</Height>
-        <Width>7.12999cm</Width>
+        <Width>7.12998cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -2723,7 +2723,7 @@
         </SortExpressions>
         <Top>104.2585cm</Top>
         <Height>2.99999cm</Height>
-        <Width>7.12999cm</Width>
+        <Width>7.12998cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -3691,7 +3691,7 @@
         </SortExpressions>
         <Top>18.521cm</Top>
         <Height>2.99999cm</Height>
-        <Width>7.12999cm</Width>
+        <Width>7.12998cm</Width>
         <ZIndex>10</ZIndex>
         <Style>
           <Border>
@@ -4095,7 +4095,7 @@
         </SortExpressions>
         <Top>39.95225cm</Top>
         <Height>2.99999cm</Height>
-        <Width>7.12999cm</Width>
+        <Width>7.12998cm</Width>
         <ZIndex>11</ZIndex>
         <Style>
           <Border>
@@ -5014,7 +5014,7 @@
           <Value>logo_Cas_blue_140px</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.1219cm</Top>
-          <Left>7.60162cm</Left>
+          <Left>7.91912cm</Left>
           <Height>0.6cm</Height>
           <Width>0.6cm</Width>
           <Style>
@@ -5030,7 +5030,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>CasBrasil / UVF -  Av. Governador Pedro de Toledo, 1760, sala 16, Bonfim, Campinas - SP, 13070-715</Value>
+                  <Value>UVF / CasBrasil: (19) 3368-4446 |  Antonio Silva: (19) 99222-0436 treinamento@casbrasil.com.br</Value>
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>
@@ -5041,9 +5041,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
           <Top>0.1854cm</Top>
-          <Left>8.21573cm</Left>
+          <Left>8.57292cm</Left>
           <Height>0.473cm</Height>
-          <Width>13.26854cm</Width>
+          <Width>12.55416cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>

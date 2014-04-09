@@ -2859,7 +2859,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>CasBrasil / UVF -  Av. Governador Pedro de Toledo, 1760, sala 16, Bonfim, Campinas - SP, 13070-715</Value>
+                  <Value>UVF / CasBrasil: (19) 3368-4446 |  Antonio Silva: (19) 99222-0436 treinamento@casbrasil.com.br</Value>
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>
@@ -2870,9 +2870,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
           <Top>0.18538cm</Top>
-          <Left>8.21574cm</Left>
+          <Left>8.57292cm</Left>
           <Height>0.473cm</Height>
-          <Width>13.26854cm</Width>
+          <Width>12.55416cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2888,7 +2888,7 @@
           <Value>logo_Cas_blue_140px</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.12188cm</Top>
-          <Left>7.59118cm</Left>
+          <Left>7.90868cm</Left>
           <Height>0.6cm</Height>
           <Width>0.6cm</Width>
           <ZIndex>1</ZIndex>
