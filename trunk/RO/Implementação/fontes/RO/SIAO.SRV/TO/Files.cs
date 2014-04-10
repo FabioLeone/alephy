@@ -26,28 +26,20 @@ namespace SIAO.SRV.TO
         public override void OnEndPage(PdfWriter writer, Document document)
         {
             ImageHeader.SetAbsolutePosition(30, 755);
-            ImageHeader.ScalePercent(50);
-            document.Add(ImageHeader);
+            ImageHeader.ScalePercent(12);
 
-            //float cellHeight = document.TopMargin;
-            //Rectangle page = document.PageSize;
+            base.OnEndPage(writer, document);
+            PdfPTable tabFot = new PdfPTable(new float[] { 1F });
+            PdfPCell cell;
+            Font f = new Font(Font.HELVETICA, 9F);
+            tabFot.TotalWidth = 416F;
+            Phrase p = new Phrase(new Chunk(ImageHeader, 0, -4));
+            p.Add(new Chunk("UVF / CasBrasil: (19) 3368-4446 |  Antonio Silva: (19) 99222-0436 treinamento@casbrasil.com.br", f));
+            cell = new PdfPCell(p);
+            cell.Border = 0;
+            tabFot.AddCell(cell);
+            tabFot.WriteSelectedRows(0, -1, 100, document.Bottom, writer.DirectContent);
 
-            //PdfPTable head = new PdfPTable(2);
-            //head.TotalWidth = page.Width;
-            
-            //PdfPCell c = new PdfPCell(ImageHeader, true);
-            //c.HorizontalAlignment = Element.ALIGN_RIGHT;
-            //c.FixedHeight = cellHeight;
-            //c.Border = PdfPCell.NO_BORDER;
-            //head.AddCell(c);
-
-            //c = new PdfPCell(new Phrase("Analise de vendas"));
-            //c.Border = PdfPCell.NO_BORDER;
-            //c.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //c.FixedHeight = cellHeight;
-            //head.AddCell(c);
-
-            //head.WriteSelectedRows(0, -1, 0, page.Height - cellHeight + head.TotalHeight, writer.DirectContent);
         }
     }
 }
