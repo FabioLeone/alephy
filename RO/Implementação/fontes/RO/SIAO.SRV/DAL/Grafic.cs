@@ -507,7 +507,13 @@ namespace SIAO.SRV.DAL
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append(@"SELECT farmacias.razaosocial,farmacias.nomefantasia, xTemp.* FROM (
+                strSQL.Append(@"SELECT");
+
+                if (String.IsNullOrEmpty(strCnpj)) strSQL.Append(@" r.descricao as razaosocial, r.descricao as nomefantasia, r.cnpj,
+                xTemp.mes,xTemp.ano,xTemp.grupo,xTemp.sub_consultoria,SUM(xTemp.""Liquido"") as ""Liquido"", AVG(xTemp.""Desconto"") as ""Desconto"", SUM(xTemp.""Quantidade"")::BIGINT as ""Quantidade""");
+                else strSQL.Append(@" farmacias.razaosocial,farmacias.nomefantasia, xTemp.*");
+                
+                strSQL.Append(@" FROM (
                 select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
                     sum(quantidade) as ""Quantidade""
 	                from consolidado
@@ -538,6 +544,8 @@ namespace SIAO.SRV.DAL
                 ) AS xTemp 
                 INNER JOIN farmacias ON farmacias.Cnpj = xTemp.CNPJ");
 
+                if (String.IsNullOrEmpty(strCnpj)) strSQL.Append(" LEFT JOIN redesfarmaceuticas r on farmacias.idrede = r.id");
+
                 strSQL.Append(@" WHERE (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') >= to_date(@ini, 'MM yyyy')) AND
                 (to_date(to_char(xTemp.mes,'99') || to_char(xTemp.ano,'9999'), 'MM yyyy') <= to_date(@fim, 'MM yyyy'))");
 
@@ -548,6 +556,9 @@ namespace SIAO.SRV.DAL
                     strSQL.Append(" AND xTemp.CNPJ = @CNPJ");
                 else if (clsUser.FarmaciaId > 0)
                     strSQL.Append(" AND farmacias.id = @id");
+
+                if (String.IsNullOrEmpty(strCnpj)) strSQL.Append(@" GROUP BY r.descricao, r.descricao, r.cnpj,
+                xTemp.mes,xTemp.ano,xTemp.grupo,xTemp.sub_consultoria");
 
                 strSQL.Append(" ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
 
