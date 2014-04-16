@@ -17,14 +17,13 @@ namespace Assemblies
         {
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
             List<base_viewer> lst = new List<base_viewer>();
-            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - (f.margem_esperada/100)))::numeric(12,2) as ""1 Unidade"",
+            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, b.produto, bc.valor_custo, (bc.valor_custo / (1 - (f.margem_esperada/100)))::numeric(12,2) as ""1 Unidade"",
 	            ((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100)))::numeric(12,2) as ""Acima de X"", 
 	            (((((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100))) - bc.valor_custo) / ((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100))))*100)::numeric(12,2) as ""Margem Real""
             from base_especial b
 	            left join base_compra bc on b.barras = bc.barras and bc.farmaciaid = @farmaciaid
-	            left join produtos_base p on b.barras = p.codbarra
 	            left join fator_venda f on b.barras = f.barras
-            order by p.nomeprod");
+            order by b.produto");
             
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
@@ -54,7 +53,7 @@ namespace Assemblies
         {
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
             List<base_viewer> lst = new List<base_viewer>();
-            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, p.nomeprod, bc.valor_custo, (bc.valor_custo / (1 - (f.margem_esperada/100)))::numeric(12,2) as ""1 Unidade"",
+            StringBuilder sb = new StringBuilder(@"select bc.id, b.barras, b.produto, bc.valor_custo, (bc.valor_custo / (1 - (f.margem_esperada/100)))::numeric(12,2) as ""1 Unidade"",
 	            ((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100)))::numeric(12,2) as ""Acima de X"", 
 	            (((((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100))) - bc.valor_custo) / ((bc.valor_custo / (1 - (f.margem_esperada/100))) * (1 - (f.desconto/100))))*100)::numeric(12,2) as ""Margem Real""
             from base_especial b");
@@ -64,34 +63,31 @@ namespace Assemblies
             if (p1.Equals("f"))
             {
                 sb.Append(@" left join base_compra bc on b.barras = bc.barras
-	            left join produtos_base p on b.barras = p.codbarra
 	            left join fator_venda f on b.barras = f.barras
                 where bc.farmaciaid = @farmaciaid");
 
                 if (!string.IsNullOrEmpty(p2))
-                    sb.Append(" and lower(p.nomeprod) like @nomeprod");
+                    sb.Append(" and lower(b.produto) like @nomeprod");
             }
             else if (p1.Equals("u"))
             {
                 sb.Append(@" left join base_compra bc on b.barras = bc.barras and bc.farmaciaid = @farmaciaid
-	            left join produtos_base p on b.barras = p.codbarra
 	            left join fator_venda f on b.barras = f.barras
                 where (bc.valor_custo = 0 or bc.valor_custo is null)");
 
                 if (!string.IsNullOrEmpty(p2))
-                    sb.Append(" and lower(p.nomeprod) like @nomeprod");
+                    sb.Append(" and lower(b.produto) like @nomeprod");
             }
             else
             {
                 sb.Append(@" left join base_compra bc on b.barras = bc.barras and bc.farmaciaid = @farmaciaid
-	            left join produtos_base p on b.barras = p.codbarra
 	            left join fator_venda f on b.barras = f.barras");
 
                 if (!string.IsNullOrEmpty(p2))
-                    sb.Append(" where lower(p.nomeprod) like @nomeprod");
+                    sb.Append(" where lower(b.produto) like @nomeprod");
             }
 
-            sb.Append(" order by p.nomeprod");
+            sb.Append(" order by b.produto");
 
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
@@ -127,7 +123,7 @@ namespace Assemblies
 
             if (!drd.IsDBNull(drd.GetOrdinal("id"))) o.bcid = drd.GetInt32(drd.GetOrdinal("id")); else o.bcid = 0;
             if (!drd.IsDBNull(drd.GetOrdinal("barras"))) o.barras = drd.GetString(drd.GetOrdinal("barras")); else o.barras = string.Empty;
-            if (!drd.IsDBNull(drd.GetOrdinal("nomeprod"))) o.nomeprod = drd.GetString(drd.GetOrdinal("nomeprod")); else o.nomeprod = string.Empty;
+            if (!drd.IsDBNull(drd.GetOrdinal("produto"))) o.nomeprod = drd.GetString(drd.GetOrdinal("produto")); else o.nomeprod = string.Empty;
             if (!drd.IsDBNull(drd.GetOrdinal("valor_custo"))) o.valor_custo = drd.GetDecimal(drd.GetOrdinal("valor_custo")); else o.valor_custo = 0;
             if (!drd.IsDBNull(drd.GetOrdinal("1 Unidade"))) o.one_unit = drd.GetDecimal(drd.GetOrdinal("1 Unidade")); else o.one_unit = 0;
             if (!drd.IsDBNull(drd.GetOrdinal("Acima de X"))) o.upx = drd.GetDecimal(drd.GetOrdinal("Acima de X")); else o.upx = 0;
