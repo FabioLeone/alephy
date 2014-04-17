@@ -255,14 +255,20 @@ namespace Assemblies
 
                 lst = helpers.GetFromCache<List<base_viewer>>("products" + u.UserId, false);
 
-                decimal dCost = 0;
-                if (decimal.TryParse(vcost, out dCost))
+                if (lst.FindAll(f => f.bcid == id && f.barras == s).Count > 0)
                 {
-                    o = lst.Find(i => i.barras == s);
-                    o.valor_custo = dCost;
-                    o = buy_baseDAL.insert(o, u.FarmaciaId);
-                    if (lst.Count > 0)
-                        lst[lst.FindIndex(i => i.bcid == o.bcid)] = o;
+                    decimal dCost = 0;
+                    if (decimal.TryParse(vcost, out dCost))
+                    {
+                        o = lst.Find(i => i.barras == s);
+                        o.valor_custo = dCost;
+                        o = buy_baseDAL.insert(o, u.FarmaciaId);
+                        if (lst.Count > 0)
+                        {
+                            lst[lst.FindIndex(i => i.barras == o.barras)] = o;
+                            helpers.SetCache("products" + u.UserId, lst, false);
+                        }
+                    }
                 }
             }
 
