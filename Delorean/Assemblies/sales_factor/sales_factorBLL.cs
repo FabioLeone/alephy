@@ -113,12 +113,15 @@ namespace Assemblies
 
                 lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
-                if (int.TryParse(p, out iCond))
+                if (lst.FindAll(t => t.id == id && t.barras == s).Count > 0)
                 {
-                    o = lst.Find(i => i.barras == s);
-                    o.cont_bxs = iCond;
-                    sales_factorDAL.insert(o);
-                    lst[lst.FindIndex(i => i.barras == s)] = o;
+                    if (int.TryParse(p, out iCond))
+                    {
+                        o = lst.Find(i => i.barras == s);
+                        o.cont_bxs = iCond;
+                        sales_factorDAL.insert(o);
+                        lst[lst.FindIndex(i => i.barras == s)] = o;
+                    }
                 }
 
                 helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
@@ -141,13 +144,16 @@ namespace Assemblies
 
                 lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
-                int iMarg = 0;
-                if (int.TryParse(p, out iMarg))
+                if (lst.FindAll(t => t.id == id && t.barras == s).Count > 0)
                 {
-                    o = lst.Find(i => i.barras == s);
-                    o.cont_bxs = iMarg;
-                    sales_factorDAL.insert(o);
-                    lst[lst.FindIndex(i => i.barras == s)] = o;
+                    int iMarg = 0;
+                    if (int.TryParse(p, out iMarg))
+                    {
+                        o = lst.Find(i => i.barras == s);
+                        o.cont_bxs = iMarg;
+                        sales_factorDAL.insert(o);
+                        lst[lst.FindIndex(i => i.barras == s)] = o;
+                    }
                 }
 
                 helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
@@ -170,13 +176,16 @@ namespace Assemblies
 
                 lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
-                int iDesc = 0;
-                if (int.TryParse(p, out iDesc))
+                if (lst.FindAll(t => t.id == id && t.barras == s).Count > 0)
                 {
-                    o = lst.Find(i => i.barras == s);
-                    o.cont_bxs = iDesc;
-                    sales_factorDAL.insert(o);
-                    lst[lst.FindIndex(i => i.barras == s)] = o;
+                    int iDesc = 0;
+                    if (int.TryParse(p, out iDesc))
+                    {
+                        o = lst.Find(i => i.barras == s);
+                        o.cont_bxs = iDesc;
+                        sales_factorDAL.insert(o);
+                        lst[lst.FindIndex(i => i.barras == s)] = o;
+                    }
                 }
 
                 helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
