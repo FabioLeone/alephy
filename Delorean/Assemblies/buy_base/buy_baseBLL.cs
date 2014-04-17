@@ -230,7 +230,7 @@ namespace Assemblies
             List<base_viewer> lst = new List<base_viewer>();
             base_viewer o;
 
-            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
+            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId, false);
 
             decimal dCost = 0;
             if (decimal.TryParse(vcost, out dCost))
@@ -253,7 +253,7 @@ namespace Assemblies
                 base_viewer o;
                 usersTO u = helpers.GetSession();
 
-                lst = helpers.GetFromCache<List<base_viewer>>("products" + u.UserId);
+                lst = helpers.GetFromCache<List<base_viewer>>("products" + u.UserId, false);
 
                 decimal dCost = 0;
                 if (decimal.TryParse(vcost, out dCost))

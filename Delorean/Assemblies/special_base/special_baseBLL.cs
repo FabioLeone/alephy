@@ -17,12 +17,12 @@ namespace Assemblies
         public static List<base_viewer> getProducts()
         {
             List<base_viewer> lst;
-            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
+            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId, false);
             
             if (lst == null || lst.Count == 0)
             {
                 lst = special_baseDAL.getByFarmaciaId(helpers.GetSession().FarmaciaId);
-                helpers.SetCache("products" + helpers.GetSession().UserId, lst);
+                helpers.SetCache("products" + helpers.GetSession().UserId, lst, false);
             }
 
             return lst;
@@ -31,12 +31,12 @@ namespace Assemblies
         public static List<base_viewer> getByFilter(string p1, string p2)
         {
             List<base_viewer> lst;
-            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId);
+            lst = helpers.GetFromCache<List<base_viewer>>("products" + helpers.GetSession().UserId, false);
 
             if (lst == null)
             {
                 lst = special_baseDAL.getByFilter(helpers.GetSession().FarmaciaId, p1, p2);
-                helpers.SetCache("products" + helpers.GetSession().UserId, lst);
+                helpers.SetCache("products" + helpers.GetSession().UserId, lst, false);
             }
 
             return lst;
