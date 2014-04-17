@@ -42,19 +42,26 @@ namespace Assemblies
             if (System.IO.Path.GetExtension(p).ToUpper() == ".XML" || System.IO.Path.GetExtension(p).ToUpper() == ".TXT") { return true; } else { return false; }
         }
 
-        internal static void SetCache(string k, object o)
+        internal static void SetCache(string k, object o, bool safe)
         {
             String jssObject = new JavaScriptSerializer().Serialize(o);
-
-            HttpContext.Current.Cache[cdModel.cript(k)] = cdModel.cript(jssObject);
+            if(safe)
+                HttpContext.Current.Cache[cdModel.cript(k)] = cdModel.cript(jssObject);
+            else
+                HttpContext.Current.Cache[cdModel.cript(k)] = jssObject;
         }
 
-        internal static dynamic GetFromCache<T>(string k)
+        internal static dynamic GetFromCache<T>(string k, bool safe)
         {
             JavaScriptSerializer jssObject = new JavaScriptSerializer();
 
             if (HttpContext.Current.Cache[cdModel.cript(k)] != null)
+            {
+                if(safe)
                 return (T)jssObject.Deserialize(cdModel.desc(HttpContext.Current.Cache[cdModel.cript(k)].ToString()), typeof(T));
+                else
+                    return (T)jssObject.Deserialize(HttpContext.Current.Cache[cdModel.cript(k)].ToString(), typeof(T));
+            }
             else
                 return null;
         }

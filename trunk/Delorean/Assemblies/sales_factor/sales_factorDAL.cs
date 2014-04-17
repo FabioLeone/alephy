@@ -17,9 +17,8 @@ namespace Assemblies
         {
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
             List<sales_factorTO> lst = new List<sales_factorTO>();
-            StringBuilder sb = new StringBuilder(@"select f.id,case when f.barras is null then b.barras else f.barras end,p.nomeprod,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
-            right join base_especial b on f.barras = b.barras
-            inner join produtos_base p on b.barras = p.codbarra order by p.nomeprod");
+            StringBuilder sb = new StringBuilder(@"select f.id,case when f.barras is null then b.barras else f.barras end,b.produto,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
+            right join base_especial b on f.barras = b.barras order by b.produto");
 
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
@@ -48,9 +47,8 @@ namespace Assemblies
         {
             NpgsqlConnection nc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONNECTION_STRING"].ConnectionString);
             List<sales_factorTO> lst = new List<sales_factorTO>();
-            StringBuilder sb = new StringBuilder(@"select f.id,case when f.barras is null then b.barras else f.barras end,p.nomeprod,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
-            right join base_especial b on f.barras = b.barras
-            inner join produtos_base p on b.barras = p.codbarra");
+            StringBuilder sb = new StringBuilder(@"select f.id,case when f.barras is null then b.barras else f.barras end,b.produto,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
+            right join base_especial b on f.barras = b.barras");
 
             if (string.IsNullOrEmpty(p1)) p1 = string.Empty;
 
@@ -59,19 +57,19 @@ namespace Assemblies
                 sb.Append(" where (cond_cxs > 0 or margem_esperada > 0 or desconto > 0)");
 
                 if(!string.IsNullOrEmpty(p2))
-                    sb.Append(" and lower(p.nomeprod) like @nomeprod");
+                    sb.Append(" and lower(b.produto) like @nomeprod");
             }
             else if (p1.Equals("u"))
             {
                 sb.Append(" where ((cond_cxs = 0 or cond_cxs is null) or (margem_esperada = 0 or margem_esperada is null) or (desconto = 0 or desconto is null))");
                 
                 if (!string.IsNullOrEmpty(p2))
-                    sb.Append(" and lower(p.nomeprod) like @nomeprod");
+                    sb.Append(" and lower(b.produto) like @nomeprod");
             }
             else if (!string.IsNullOrEmpty(p2))
-                sb.Append(" where lower(p.nomeprod) like @nomeprod");
+                sb.Append(" where lower(b.produto) like @nomeprod");
 
-            sb.Append(" order by p.nomeprod");
+            sb.Append(" order by b.produto");
 
             NpgsqlCommand ncmm = nc.CreateCommand();
             ncmm.CommandText = sb.ToString();
@@ -105,7 +103,7 @@ namespace Assemblies
 
             if (!drd.IsDBNull(drd.GetOrdinal("id"))) o.id = drd.GetInt32(drd.GetOrdinal("id")); else o.id = 0;
             if (!drd.IsDBNull(drd.GetOrdinal("barras"))) o.barras = drd.GetString(drd.GetOrdinal("barras")); else o.barras = string.Empty;
-            if (!drd.IsDBNull(drd.GetOrdinal("nomeprod"))) o.prod_name = drd.GetString(drd.GetOrdinal("nomeprod")); else o.prod_name = string.Empty;
+            if (!drd.IsDBNull(drd.GetOrdinal("produto"))) o.prod_name = drd.GetString(drd.GetOrdinal("produto")); else o.prod_name = string.Empty;
             if (!drd.IsDBNull(drd.GetOrdinal("cond_cxs"))) o.cont_bxs = drd.GetInt32(drd.GetOrdinal("cond_cxs")); else o.cont_bxs = 0;
             if (!drd.IsDBNull(drd.GetOrdinal("margem_esperada"))) o.expected_margin = drd.GetDecimal(drd.GetOrdinal("margem_esperada")); else o.expected_margin = 0;
             if (!drd.IsDBNull(drd.GetOrdinal("desconto"))) o.discount = drd.GetDecimal(drd.GetOrdinal("desconto")); else o.discount = 0;
@@ -166,9 +164,8 @@ namespace Assemblies
 
             StringBuilder strSQL = new StringBuilder();
             strSQL.Append(@"UPDATE fator_venda SET cond_cxs=@cond_cxs WHERE id=@id;");
-            strSQL.Append(@"select f.id,case when f.barras is null then b.barras else f.barras end,p.nomeprod,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
-            right join base_especial b on f.barras = b.barras
-            inner join produtos_base p on b.barras = p.codbarra WHERE f.id=@id;");
+            strSQL.Append(@"select f.id,case when f.barras is null then b.barras else f.barras end,b.produto,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
+            right join base_especial b on f.barras = b.barras WHERE f.id=@id;");
 
             NpgsqlCommand cmd = msc.CreateCommand();
             cmd.CommandText = strSQL.ToString();
@@ -204,9 +201,8 @@ namespace Assemblies
 
             StringBuilder strSQL = new StringBuilder();
             strSQL.Append(@"UPDATE fator_venda SET margem_esperada=@margem_esperada WHERE id=@id;");
-            strSQL.Append(@"select f.id,case when f.barras is null then b.barras else f.barras end,p.nomeprod,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
-            right join base_especial b on f.barras = b.barras
-            inner join produtos_base p on b.barras = p.codbarra WHERE f.id=@id;");
+            strSQL.Append(@"select f.id,case when f.barras is null then b.barras else f.barras end,b.produto,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
+            right join base_especial b on f.barras = b.barras WHERE f.id=@id;");
 
             NpgsqlCommand cmd = msc.CreateCommand();
             cmd.CommandText = strSQL.ToString();
@@ -242,9 +238,8 @@ namespace Assemblies
 
             StringBuilder strSQL = new StringBuilder();
             strSQL.Append(@"UPDATE fator_venda SET desconto=@desconto WHERE id=@id;");
-            strSQL.Append(@"select f.id,case when f.barras is null then b.barras else f.barras end,p.nomeprod,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
-            right join base_especial b on f.barras = b.barras
-            inner join produtos_base p on b.barras = p.codbarra WHERE f.id=@id;");
+            strSQL.Append(@"select f.id,case when f.barras is null then b.barras else f.barras end,b.produto,f.cond_cxs,f.margem_esperada,f.desconto,(f.desconto / f.cond_cxs)::numeric(12,2) as ""Demais cxs"" from fator_venda f
+            right join base_especial b on f.barras = b.barras WHERE f.id=@id;");
 
             NpgsqlCommand cmd = msc.CreateCommand();
             cmd.CommandText = strSQL.ToString();

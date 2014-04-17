@@ -12,12 +12,12 @@ namespace Assemblies
 		public static List<sales_factorTO> getAll()
         {
             List<sales_factorTO> lst;
-            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId,false);
             
             if (lst == null)
             {
                 lst = sales_factorDAL.getAll();
-                helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+                helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
             }
 
             return lst;
@@ -26,12 +26,12 @@ namespace Assemblies
         public static List<sales_factorTO> getByFilter(string p1, string p2)
         {
             List<sales_factorTO> lst;
-            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
             if (lst == null)
             {
                 lst = sales_factorDAL.getByFilter(p1, p2);
-                helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+                helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
             }
 
             return lst;
@@ -44,7 +44,7 @@ namespace Assemblies
             List<sales_factorTO> lst = new List<sales_factorTO>();
             sales_factorTO o;
 
-            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
             int iCond = 0;
             if (int.TryParse(p, out iCond))
@@ -53,7 +53,7 @@ namespace Assemblies
                 lst[lst.FindIndex(i => i.id == o.id)] = o;
             }
 
-            helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+            helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
 
             return lst;
         }
@@ -63,7 +63,7 @@ namespace Assemblies
             List<sales_factorTO> lst = new List<sales_factorTO>();
             sales_factorTO o;
 
-            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
             decimal dMargin = 0;
             if (decimal.TryParse(p, out dMargin))
@@ -72,7 +72,7 @@ namespace Assemblies
                 lst[lst.FindIndex(i => i.id == o.id)] = o;
             }
 
-            helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+            helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
 
             return lst;
         }
@@ -82,7 +82,7 @@ namespace Assemblies
             List<sales_factorTO> lst = new List<sales_factorTO>();
             sales_factorTO o;
 
-            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+            lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
             decimal dDesc = 0;
             if (decimal.TryParse(p, out dDesc))
@@ -91,7 +91,7 @@ namespace Assemblies
                 lst[lst.FindIndex(i => i.id == o.id)] = o;
             }
 
-            helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+            helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
 
             return lst;
         }
@@ -111,7 +111,7 @@ namespace Assemblies
                 sales_factorTO o;
                 int iCond = 0;
 
-                lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+                lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
                 if (int.TryParse(p, out iCond))
                 {
@@ -121,7 +121,7 @@ namespace Assemblies
                     lst[lst.FindIndex(i => i.barras == s)] = o;
                 }
 
-                helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+                helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
             }
 
             return lst;
@@ -139,7 +139,7 @@ namespace Assemblies
             {
                 sales_factorTO o;
 
-                lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+                lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
                 int iMarg = 0;
                 if (int.TryParse(p, out iMarg))
@@ -150,7 +150,7 @@ namespace Assemblies
                     lst[lst.FindIndex(i => i.barras == s)] = o;
                 }
 
-                helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+                helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
             }
 
             return lst;
@@ -168,7 +168,7 @@ namespace Assemblies
             {
                 sales_factorTO o;
 
-                lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId);
+                lst = helpers.GetFromCache<List<sales_factorTO>>("factors" + helpers.GetSession().UserId, false);
 
                 int iDesc = 0;
                 if (int.TryParse(p, out iDesc))
@@ -179,7 +179,7 @@ namespace Assemblies
                     lst[lst.FindIndex(i => i.barras == s)] = o;
                 }
 
-                helpers.SetCache("factors" + helpers.GetSession().UserId, lst);
+                helpers.SetCache("factors" + helpers.GetSession().UserId, lst, false);
             }
 
             return lst;
