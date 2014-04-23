@@ -359,7 +359,7 @@ namespace SIAO.SRV.DAL
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append(@"SELECT u.UserId, u.UserName, u.LastActivityDate, memberships.Password,
                 memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
-                memberships.Access, memberships.Name, uv.FarmaciaId,u.TipoId,usuarios_tipos.Tipo
+                memberships.Access, memberships.Name,u.TipoId,usuarios_tipos.Tipo
                 FROM users u LEFT JOIN memberships ON u.UserId = memberships.UserId LEFT JOIN 
                 usuarios_tipos ON u.TipoId = usuarios_tipos.id
                 LEFT JOIN usuarios_vinculos uv ON u.userid = uv.usuarioid
@@ -375,7 +375,9 @@ namespace SIAO.SRV.DAL
 					OR f.id = (SELECT farmaciaid FROM usuarios_vinculos WHERE usuarioid = @usuarioid)
                     OR u.owner = @usuarioid)");
 
-                strSQL.Append(" ORDER BY u.UserName");
+                strSQL.Append(@" GROUP BY u.UserId, u.UserName, u.LastActivityDate, memberships.Password,
+                memberships.Email, memberships.Inactive, memberships.CreateDate, memberships.ExpirationDate,
+                memberships.Access, memberships.Name,u.TipoId,usuarios_tipos.Tipo ORDER BY u.UserName");
 
                 DbCommand cmdUsers = msc.CreateCommand();
                 cmdUsers.CommandText = strSQL.ToString();
