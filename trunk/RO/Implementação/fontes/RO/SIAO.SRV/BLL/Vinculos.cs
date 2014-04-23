@@ -29,9 +29,9 @@ namespace SIAO.SRV.BLL
             return lstVinculos;
         }
 
-        public static VinculoTO GetByCNPJ(string strCNPJ, int intTipoId)
+        public static VinculoTO GetByCNPJ(string strCNPJ, int intUserId)
         {
-            return VinculoDAL.GetByCNPJ(strCNPJ, intTipoId);
+            return VinculoDAL.GetByCNPJ(strCNPJ, intUserId);
         }
         #endregion
 
@@ -138,9 +138,9 @@ namespace SIAO.SRV.BLL
             return String.Empty;
         }
 
-        public static bool ValidaVinculo(System.Web.UI.WebControls.TextBox txtCNPJ, System.Web.UI.WebControls.HiddenField hfUsuarioTipoId)
+        public static bool ValidaVinculo(System.Web.UI.WebControls.TextBox txtCNPJ, System.Web.UI.WebControls.Literal litID)
         {
-            if (VinculoBLL.GetByCNPJ(txtCNPJ.Text, Convert.ToInt32(hfUsuarioTipoId.Value)).id > 0)
+            if (VinculoBLL.GetByCNPJ(txtCNPJ.Text, Convert.ToInt32(litID.Text)).id > 0)
             {
                 txtCNPJ.Focus();
                 return false;

@@ -167,7 +167,7 @@ namespace SIAO.SRV.DAL
             return clsVinculos;
         }
 
-        internal static VinculoTO GetByCNPJ(string strCNPJ, int intTipoId)
+        internal static VinculoTO GetByCNPJ(string strCNPJ, int intUserId)
         {
             VinculoTO clsVinculo = new VinculoTO();
 
@@ -190,12 +190,12 @@ namespace SIAO.SRV.DAL
                 usuarios_vinculos ON users.UserId = usuarios_vinculos.UsuarioId LEFT JOIN
                 redesfarmaceuticas ON usuarios_vinculos.redeid = redesfarmaceuticas.Id LEFT JOIN
                 farmacias ON usuarios_vinculos.farmaciaid = farmacias.Id
-                WHERE (redesfarmaceuticas.CNPJ = @CNPJ OR farmacias.CNPJ = @CNPJ) AND users.tipoid = @tipoid ORDER BY users.UserName");
+                WHERE (redesfarmaceuticas.CNPJ = @CNPJ OR farmacias.CNPJ = @CNPJ) AND users.userid = @userid ORDER BY users.UserName");
 
                 DbCommand cmdVinculos = msc.CreateCommand();
                 cmdVinculos.CommandText = strSQL.ToString();
                 cmdVinculos.Parameters.Add(DbHelper.GetParameter(cmdVinculos, DbType.String, "@CNPJ", scnpj));
-                cmdVinculos.Parameters.Add(DbHelper.GetParameter(cmdVinculos, DbType.Int32, "@tipoid", intTipoId));
+                cmdVinculos.Parameters.Add(DbHelper.GetParameter(cmdVinculos, DbType.Int32, "@userid", intUserId));
 
                 msc.Open();
 

@@ -112,6 +112,11 @@ namespace SIAO
                 divErro("CNPJ invalido.");
                 txtCnpj.Focus();
             }
+            else if (clsControl.GetLojaByCNPJ(txtCnpj.Text).Id > 0)
+            {
+                divErro("CNPJ já cadastrado.");
+                txtCnpj.Focus();
+            }
             else if (!of.isEmail(txtEmail.Text)) { divErro("Email inválido."); txtEmail.Focus(); }
             else if (txtFone.Text == "")
             {
