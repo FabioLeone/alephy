@@ -72,7 +72,7 @@ namespace SIAO.Controls
                         Literal litEmpresa = (Literal)item.FindControl("litEmpresa");
                         Literal litID = (Literal)item.FindControl("litID");
 
-                        if (VinculoBLL.ValidaVinculo(txtCNPJ, hfUsuarioTipoId))
+                        if (VinculoBLL.ValidaVinculo(txtCNPJ, litID))
                             msg = VinculoBLL.SetVinculo(this.Vinculos, hfLinkId, litID, txtCNPJ, hfUsuarioTipoId);
                         else
                             return;
