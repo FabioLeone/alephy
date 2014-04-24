@@ -1,0 +1,133 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Siao.master.cs" Inherits="SIAO.Siao" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Farma Manager</title>
+    <link href="Content/ssSIAO.css" rel="Stylesheet" type="text/css" />
+    <script type="text/javascript" src="Content/js/modernizr.custom.86080.js"></script>
+    <!-- Include jQuery -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <!-- Optional: Include the easing plugin -->
+    <script type="text/javascript" src="Content/js/jquery.easing.1.3.js"></script>
+    <!-- Include the lava lamp plugin -->
+    <script type="text/javascript" src="Content/js/jquery.lavalamp.min.js"></script>
+    <script type="text/javascript">
+        function ToggleCursor(value) {
+            if (value == 1) {
+                document.getElementById('home').style.cursor = "wait";
+            }
+            else {
+                document.getElementById('home').style.cursor = "default";
+            }
+        } 
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body id="home">
+    <form id="form1" runat="server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+    </asp:ToolkitScriptManager>
+    <header>
+    <a id="log" class="menub" href="#">
+        <div class="logo"></div>
+        <span>&raquo;</span>
+    </a>
+    <div class="center">
+        <nav>
+	        <ul id="navlist" runat="server">
+                <li id="l1" runat="server"><a href="Default.aspx">Home</a></li>
+                <%if (VerificaConfig())
+                    { %>
+                <li id="l2" runat="server"><a href="configurations.aspx">Configurações</a></li>
+                <%}
+                    if (VerificaRelatorio())
+                    {%>
+                <li id="l3" runat="server"><a href="wfmGerarRelatorios.aspx">Aplicativos</a></li>
+                <%}
+                    if (VerificaEnvio())
+                    { %>
+                <li id="l4" runat="server"><a href="wfmEnvio.aspx">Envio de Informações</a></li>
+                <%} %>
+            </ul>
+            <ul id="Ul1" style="float:right;">
+                <% if (!String.IsNullOrEmpty(SIAO.Global.LocalPage))
+                    { %>
+                <li><a href='<%= SIAO.Global.LocalPage %>'>Voltar</a></li>
+                <% } %>
+                <li>
+                    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="lbtnLogoff_Click1">Logoff</asp:LinkButton></li>
+            </ul>
+        </nav>
+    </div>
+    <a id="arq" href="#" class="menuc">Arquivos gerados</a>
+    <div id="inf">
+    <img src="Content/images/app/logo_Cas_blue_128.png" />
+    <hr />
+    <h3>CasBrasil</h3>
+    <p>
+    <b>Sede:</b> <br />
+    Avenida Itatiaia, 201<br />
+    Jardim Itatiaia <wr /> 
+    Campinas - SP <br />
+    CEP: 13101-310 <br /><br />
+
+    <b>Escritório:</b> <br />
+    Avenida<wr /> Governador Pedro de Toledo,<wr /> 1760, Sala 16 <br />
+    CEP: 13070-715 <br /><br />
+    </p>
+
+    <h3>Contatos</h3>
+    <p>Central: +55 19 3368-4446</p>
+    <br />
+    <p><b>Skypes:</b></p>
+    <p>
+    Antonio Silva: casbrasil1 <br />
+    Felipe: casbrasil02</p>
+
+    </div>
+    <div id="dvArq">
+        <div id="dvFiltro" runat="server">
+            <div id="dvRedes" runat="server">
+                Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true" Width="170px" OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
+                </asp:DropDownList>
+            </div>
+            <div id="dvLoja" runat="server">
+                Loja:
+                <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 162px;">
+                </asp:DropDownList>
+            </div>
+            <asp:Button ID="btnBusca" CssClass="button gray" runat="server" Text="Buscar" 
+                onclick="btnBusca_Click" />
+        </div>
+        <br />
+        <ul id="ulArq" runat="server" class="iconList"></ul>
+    </div>
+    </header>
+    <div id="fundo">
+    </div>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+            <div id="page">
+              <section>
+                <div id="main">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+              </section>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    <footer>
+        <p>Todos os Direitos Reservados. CasBrasil Informática</p>
+    </footer>
+    </form>
+</body>
+<script type="text/javascript">
+    $('#navlist').lavalamp({
+        easing: 'easeOutBack'
+    });
+</script>
+</html>
