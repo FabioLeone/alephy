@@ -9,8 +9,6 @@ using Microsoft.Reporting.WebForms;
 using SIAO.SRV;
 using SIAO.SRV.BLL;
 using SIAO.SRV.TO;
-using System.Linq;
-using System.Drawing.Printing;
 
 namespace SIAO
 {
@@ -156,6 +154,24 @@ namespace SIAO
             {
                 cursor();
                 divErro("Não há itens a serem listados.");
+            }
+        }
+
+        protected void btnMod2_Click(object sender, EventArgs e)
+        {
+            String strFile = String.Empty;
+
+            strFile = RelatoriosBLL.GetNMod2(ResultData());
+
+            if (String.IsNullOrEmpty(strFile))
+            {
+                cursor();
+                divErro("Não há itens a serem listados.");
+            }
+            else
+            {
+                cursor();
+                clsFuncs.Redirect("uploads/" + strFile + ".pdf", "_blank", "");
             }
         }
 

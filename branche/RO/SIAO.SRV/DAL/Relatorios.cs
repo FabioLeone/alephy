@@ -112,7 +112,7 @@ namespace SIAO.SRV
                 }
 
                 if (String.IsNullOrEmpty(strCnpj) && blnSum) SQL.Append(" GROUP BY r.cnpj, r.descricao, consolidado.ano, consolidado.Mes, consolidado.sub_consultoria, consolidado.Grupo, consolidado.importado");
-                SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+                SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Grupo,consolidado.Sub_Consultoria");
             }
             else
             {
@@ -129,7 +129,7 @@ namespace SIAO.SRV
 
                 if (String.IsNullOrEmpty(strCnpj) && blnSum) SQL.Append(" GROUP BY r.cnpj, r.descricao, consolidado.ano, consolidado.Mes, consolidado.sub_consultoria, consolidado.Grupo, consolidado.importado");
 
-                SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Sub_Consultoria,consolidado.Grupo");
+                SQL.Append(" ORDER BY consolidado.Ano,consolidado.Mes,consolidado.Grupo,consolidado.Sub_Consultoria");
             }
 
             cmm.CommandText = SQL.ToString();
