@@ -298,6 +298,7 @@ namespace SIAO
                 txtSite.Text = ol.Site;
                 txtSkype.Text = ol.Skype;
                 txtCep.Text = ol.CEP;
+                cbxAtivo.Checked = ol.Ativo;
 
                 Session["editL"] = ol.Id;
             }
