@@ -1512,11 +1512,10 @@ namespace SIAO.SRV
                     stbSQL.Append("UPDATE users SET UserName = '" + clsUser.UserName + "', LastActivityDate = '" + lDate + "'");
                     if (clsUser.TipoId > 0) stbSQL.Append(",TipoId = @TipoId");
 
-                    stbSQL.Append(",nivel = @nivel, owner = @owner WHERE UserId = " + clsUser.UserId);
+                    stbSQL.Append(",nivel = @nivel WHERE UserId = " + clsUser.UserId);
                     cmm.CommandText = stbSQL.ToString();
                     cmm.Parameters.Add("@TipoId", NpgsqlDbType.Integer).Value = clsUser.TipoId;
                     cmm.Parameters.Add("@nivel", NpgsqlDbType.Integer).Value = clsUser.Nivel;
-                    cmm.Parameters.Add("@owner", NpgsqlDbType.Integer).Value = clsUser.owner;
 
                     clsDB.Execute(ref cmm);
 
