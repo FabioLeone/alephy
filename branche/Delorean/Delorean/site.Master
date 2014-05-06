@@ -1,0 +1,57 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="site.master.cs" Inherits="Delorean.site" %>
+
+<%@ Register Src="controls/wucSending_file.ascx" TagName="wucSending_file" TagPrefix="uc1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Consulta Preço - project</title>
+    <link href="resources/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="resources/css/kickstart.css" media="all" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- Menu Horizontal -->
+        <div class="col_12">
+            <ul id="ulmenu" runat="server" class="menu">
+                <li id="l1" runat="server" class="current first divider"><a href="../default.aspx"><i class="icon-home"></i>Home</a></li>
+                <li class="divider"><a href="#sfopen"><i class="icon-upload-alt"></i>Enviar arquivo preço de custo</a></li>
+                <li class="divider"><a href="">&nbsp; <i class="icon-filter"></i>Filtros</a>
+                    <ul id="filtro" runat="server">
+                        <li><a id="fall" runat="server" onserverclick="foption_ServerClick">Todos</a></li>
+                        <li><a id="ffulfilled" runat="server" onserverclick="foption_ServerClick">Já Preenchidos</a></li>
+                        <li><a id="funfilled" runat="server" onserverclick="foption_ServerClick">Não Preenchidos</a></li>
+                    </ul>
+                </li>
+                <li class="has-menu divider">
+                    <input type="text" id="psearch" runat="server" name="s" placeholder="Procurar Produto" style="-webkit-appearance: searchfield; -webkit-rtl-ordering: logical; width: 178px; height: 31px; margin: 0; border-radius: 5px; box-shadow: inset 0 1px 6px #ccc; padding-left: 1px; -webkit-user-select: text; cursor: auto;" />
+                    <asp:Button ID="schbtn" runat="server" Text="sch" OnClick="schbtn_Click" Style="visibility: hidden; padding: 0; height: 0;" />
+                </li>
+                <li id="l2" runat="server" class="divider">
+                    <a id="edFactor" runat="server" onserverclick="edFactor_ServerClick"><i class="icon-edit"></i>Fator de venda</a>
+                </li>
+                <li id="L3" runat="server" class="divider">
+                    <a runat="server" href="~/controls/competitors.aspx"><i class="icon-list"></i>Concorrentes</a>
+                </li>
+                <li class="last right"><a id="lbLogout" runat="server" onserverclick="lbLogout_ServerClick"><i class=" icon-signout"></i>Logout</a></li>
+            </ul>
+            <div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <div id="sfopen" class="mdialog">
+            <div>
+                <a href="#close" title="Close" class="close">X</a>
+                <uc1:wucSending_file ID="wucSending_file1" runat="server" />
+            </div>
+        </div>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- KICKSTART -->
+    <script src="resources/scripts/kickstart.js"></script>
+</body>
+</html>
