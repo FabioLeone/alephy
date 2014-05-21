@@ -1,11 +1,11 @@
-D:\Projects\trunk\goku\goku\bin\Debug\goku.exe.config
-D:\Projects\trunk\goku\goku\bin\Debug\goku.exe
-D:\Projects\trunk\goku\goku\bin\Debug\goku.pdb
 D:\Projects\trunk\goku\goku\obj\Debug\goku.csprojResolveAssemblyReference.cache
 D:\Projects\trunk\goku\goku\obj\Debug\goku.Form1.resources
 D:\Projects\trunk\goku\goku\obj\Debug\goku.Properties.Resources.resources
 D:\Projects\trunk\goku\goku\obj\Debug\goku.csproj.GenerateResource.Cache
-D:\Projects\trunk\goku\goku\obj\Debug\goku.exe
-D:\Projects\trunk\goku\goku\obj\Debug\goku.pdb
 D:\Projects\trunk\goku\goku\bin\Debug\Mono.Security.dll
 D:\Projects\trunk\goku\goku\obj\Debug\goku.Confg.resources
+D:\Projects\trunk\goku\goku\bin\Debug\roSF.exe.config
+D:\Projects\trunk\goku\goku\bin\Debug\roSF.exe
+D:\Projects\trunk\goku\goku\bin\Debug\roSF.pdb
+D:\Projects\trunk\goku\goku\obj\Debug\roSF.exe
+D:\Projects\trunk\goku\goku\obj\Debug\roSF.pdb
