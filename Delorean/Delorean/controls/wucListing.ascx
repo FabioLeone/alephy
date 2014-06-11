@@ -30,7 +30,7 @@
             </td>
             <td><%# Eval("one_unit") %></td>
             <td><%# Eval("upx") %></td>
-            <td><%# Eval("actual_margin") %></td>
+            <td><%# Eval("actual_margin") + "%" %></td>
         </tr>
     </ItemTemplate>
     <EmptyDataTemplate>

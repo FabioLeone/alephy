@@ -17,7 +17,7 @@
         <!-- Menu Horizontal -->
         <div class="col_12">
             <ul id="ulmenu" runat="server" class="menu">
-                <li id="l1" runat="server" class="current first divider"><a href="../default.aspx"><i class="icon-home"></i>Home</a></li>
+                <li id="l1" runat="server" class="current first divider"><a id="lHome"><i class="icon-home"></i>Home</a></li>
                 <li class="divider"><a href="#sfopen"><i class="icon-upload-alt"></i>Enviar arquivo preço de custo</a></li>
                 <li class="divider"><a href="">&nbsp; <i class="icon-filter"></i>Filtros</a>
                     <ul id="filtro" runat="server">
@@ -53,5 +53,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- KICKSTART -->
     <script src="resources/scripts/kickstart.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (window.location.pathname.indexOf("default.aspx") > 0) {
+                $("#lHome").removeAttr("href");
+            } else {
+                $("#lHome").attr("href", "../default.aspx");
+            }
+        });
+    </script>
 </body>
 </html>
