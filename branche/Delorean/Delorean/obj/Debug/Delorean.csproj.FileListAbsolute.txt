@@ -1,5 +1,0 @@
-D:\Projects\trunk\Delorean\Delorean\bin\Delorean.dll
-D:\Projects\trunk\Delorean\Delorean\bin\Delorean.pdb
-D:\Projects\trunk\Delorean\Delorean\obj\Debug\Delorean.csprojResolveAssemblyReference.cache
-D:\Projects\trunk\Delorean\Delorean\obj\Debug\Delorean.dll
-D:\Projects\trunk\Delorean\Delorean\obj\Debug\Delorean.pdb
