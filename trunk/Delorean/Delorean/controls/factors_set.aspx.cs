@@ -110,7 +110,7 @@ namespace Delorean.controls
                     this.oldidx = tb.TabIndex;
                     id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
                     s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
-                    loadData(sales_factorBLL.setMargin(id, tb.Text, s));
+                    loadData(sales_factorBLL.setMargin(id, tb.Text.Replace("%",""), s));
                     break;
                 }
             }
@@ -130,7 +130,7 @@ namespace Delorean.controls
                     this.oldidx = -1;
                     id = (int)lvwFactors.DataKeys[tb.TabIndex].Value;
                     s = ((System.Web.UI.HtmlControls.HtmlTableCell)lvwFactors.Items[tb.TabIndex].FindControl("barcod")).InnerText;
-                    loadData(sales_factorBLL.setDesc(id, tb.Text, s));
+                    loadData(sales_factorBLL.setDesc(id, tb.Text.Replace("%", ""), s));
                     break;
                 }
             }

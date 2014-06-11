@@ -35,15 +35,15 @@
                 </td>
                 <td style="padding: 0; width: 120px;">
                     <asp:TextBox ID="txtmarg" runat="server" OnTextChanged="txtmarg_TextChanged" AutoPostBack="true"
-                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
-                        Text='<%# Eval("expected_margin") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
+                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>' CssClass="perc"
+                        Text='<%# Eval("expected_margin") + "%" %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
                 </td>
                 <td style="padding: 0; width: 120px;">
                     <asp:TextBox ID="txtdesc" runat="server" OnTextChanged="txtdesc_TextChanged" AutoPostBack="true"
-                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>'
-                        Text='<%# Eval("discount") %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
+                        TabIndex='<%# ((ListViewDataItem)Container).DisplayIndex %>' CssClass="perc"
+                        Text='<%# Eval("discount") + "%" %>' Style="margin: 0; box-shadow: none; width: 100%; height: inherit; border: 0; background: inherit;"></asp:TextBox>
                 </td>
-                <td><%# Eval("other_bxs") %></td>
+                <td><%# Eval("other_bxs") + "%" %></td>
             </tr>
         </ItemTemplate>
         <EmptyDataTemplate>
@@ -60,4 +60,14 @@
     </ale:ulDataPager>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="../resources/scripts/kickstart.js"></script>
+    <script>
+        $(".perc").blur(function () {
+            var id = this.id;
+            $("#" + id).val($("#" + id).val() + "%");
+        });
+        $(".perc").focus(function () {
+            var id = this.id;
+            $("#" + id).val($("#" + id).val().replace("%",""));
+        });
+    </script>
 </asp:Content>
