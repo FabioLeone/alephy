@@ -258,6 +258,95 @@ namespace SIAO.SRV.BLL
             gvwUsers.DataBind();
         }
 
+        public static void CheckRptVew(UsersTO u, System.Web.UI.HtmlControls.HtmlGenericControl lm1, System.Web.UI.HtmlControls.HtmlGenericControl lm2, System.Web.UI.HtmlControls.HtmlGenericControl lm3, System.Web.UI.HtmlControls.HtmlGenericControl li3, System.Web.UI.HtmlControls.HtmlGenericControl lg1, System.Web.UI.HtmlControls.HtmlGenericControl lg2, System.Web.UI.HtmlControls.HtmlGenericControl lg3, System.Web.UI.HtmlControls.HtmlGenericControl lg4, System.Web.UI.HtmlControls.HtmlGenericControl lg5, System.Web.UI.HtmlControls.HtmlGenericControl la1)
+        {
+            List<RelatoriosTO> lst;
+            int i = 0;
+
+            switch (u.TipoId)
+            {
+                case 1:
+                    switch (u.Nivel)
+                    {
+                        case 1:
+                            lst = RolesBLL.GetRelatoriosByRedeId(clsControl.GetRedeByUserId(u.UserId).RedeId);
+
+                            if(lst.Find(r=>r.All_rpt == true) != null) break;
+
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO1)) != null) lm1.Visible = true; else lm1.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO2)) != null) lm2.Visible = true; else lm2.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.PORCENTAGEM_PARTICIPACAO)) != null) lm3.Visible = true; else lm3.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO1)) != null) lg1.Visible = true; else lg1.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO2)) != null) lg2.Visible = true; else lg2.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO3)) != null) lg3.Visible = true; else lg3.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_DESCONTO)) != null) lg4.Visible = true; else lg4.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_COMPARATIVO)) != null) lg5.Visible = true; else lg5.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) la1.Visible = true; else la1.Visible = false;
+
+                            break;
+                        case 2:
+                            i = RedesBLL.GetByLojaId(u.FarmaciaId).RedeId;
+
+                            if (i > 0)
+                            {
+                                lst = RolesBLL.GetRelatoriosByRedeId(i);
+
+                                if (lst.Find(r => r.All_rpt == true) != null) break;
+
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO1)) != null) lm1.Visible = true; else lm1.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO2)) != null) lm2.Visible = true; else lm2.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.PORCENTAGEM_PARTICIPACAO)) != null) lm3.Visible = true; else lm3.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO1)) != null) lg1.Visible = true; else lg1.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO2)) != null) lg2.Visible = true; else lg2.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO3)) != null) lg3.Visible = true; else lg3.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_DESCONTO)) != null) lg4.Visible = true; else lg4.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_COMPARATIVO)) != null) lg5.Visible = true; else lg5.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) la1.Visible = true; else la1.Visible = false;
+                            }
+
+                            break;
+                    }
+                    break;
+                case 2:
+                    i = RedesBLL.GetByLojaId(u.FarmaciaId).RedeId;
+
+                    if (i > 0)
+                    {
+                        lst = RolesBLL.GetRelatoriosByRedeId(i);
+
+                        if (lst.Find(r => r.All_rpt == true) != null) break;
+
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO1)) != null) lm1.Visible = true; else lm1.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO2)) != null) lm2.Visible = true; else lm2.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.PORCENTAGEM_PARTICIPACAO)) != null) lm3.Visible = true; else lm3.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO1)) != null) lg1.Visible = true; else lg1.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO2)) != null) lg2.Visible = true; else lg2.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO3)) != null) lg3.Visible = true; else lg3.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_DESCONTO)) != null) lg4.Visible = true; else lg4.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_COMPARATIVO)) != null) lg5.Visible = true; else lg5.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) la1.Visible = true; else la1.Visible = false;
+                    }
+
+                    break;
+                case 3:
+                    lst = RolesBLL.GetRelatoriosByRedeId(clsControl.GetRedeByUserId(u.UserId).RedeId);
+
+                    if (lst.Find(r => r.All_rpt == true) != null) break;
+
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO1)) != null) lm1.Visible = true; else lm1.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO2)) != null) lm2.Visible = true; else lm2.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.PORCENTAGEM_PARTICIPACAO)) != null) lm3.Visible = true; else lm3.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO1)) != null) lg1.Visible = true; else lg1.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO2)) != null) lg2.Visible = true; else lg2.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO3)) != null) lg3.Visible = true; else lg3.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_DESCONTO)) != null) lg4.Visible = true; else lg4.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_COMPARATIVO)) != null) lg5.Visible = true; else lg5.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) la1.Visible = true; else la1.Visible = false;
+
+                    break;
+            }
+        }
+
         #endregion
 
         #region .: Search :.
@@ -328,6 +417,20 @@ namespace SIAO.SRV.BLL
         private static List<UsersTO> GetAllMinion(UsersTO owner)
         {
             return UsersDAL.GetAllMinion(owner);
+        }
+
+        public static bool CheckCssRede(UsersTO u)
+        {
+            Rede r = clsControl.GetRedeByUserId(u.UserId);
+
+            if (r.RedeId > 0)
+                return r.RedeName.ToUpper().Contains("MULTIDROGAS");
+            else{
+                r = RedesBLL.GetByLojaId(u.FarmaciaId);
+                if (r.RedeId > 0)
+                    return r.RedeName.ToUpper().Contains("MULTIDROGAS");
+                else return false;
+            }
         }
         #endregion
 

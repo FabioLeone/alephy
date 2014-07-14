@@ -961,6 +961,38 @@ namespace SIAO.SRV
 
             return lr;
         }
+
+        internal static Rede GetRedeByLojaId(int loja_id)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            Rede r = new Rede();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT redesfarmaceuticas.Id,redesfarmaceuticas.Descricao FROM  redesfarmaceuticas 
+            INNER JOIN farmacias f ON redesfarmaceuticas.Id = f.idrede
+            WHERE (f.id = @loja_id)";
+
+            cmm.Parameters.Add("@loja_id", NpgsqlDbType.Integer).Value = loja_id;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Rede");
+            }
+            clsDB.closeConnection(cmm);
+
+            if (ds.Tables.Count > 0)
+            {
+                if (ds.Tables[0].Rows[0]["Id"] != DBNull.Value)
+                {
+                    r.RedeId = Convert.ToInt16(ds.Tables[0].Rows[0]["Id"].ToString());
+                    r.RedeName = ds.Tables[0].Rows[0]["Descricao"].ToString();
+                }
+            }
+
+            return r;
+        }
         #endregion
 
         #region .:Persistence:.
@@ -1601,5 +1633,6 @@ namespace SIAO.SRV
             ulConf.InnerHtml = sb.ToString();
         }
         #endregion
+
     }
 }

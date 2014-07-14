@@ -139,6 +139,15 @@ namespace SIAO {
         protected global::System.Web.UI.WebControls.RadioButton rbtUMes;
         
         /// <summary>
+        /// lm1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lm1;
+        
+        /// <summary>
         /// lbtnRel1 control.
         /// </summary>
         /// <remarks>
@@ -157,6 +166,15 @@ namespace SIAO {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl M1;
         
         /// <summary>
+        /// lm2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lm2;
+        
+        /// <summary>
         /// lbtnRel2 control.
         /// </summary>
         /// <remarks>
@@ -173,6 +191,15 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl M2;
+        
+        /// <summary>
+        /// lm3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lm3;
         
         /// <summary>
         /// lbtnGroup control.
@@ -220,6 +247,15 @@ namespace SIAO {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div5;
         
         /// <summary>
+        /// lg1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lg1;
+        
+        /// <summary>
         /// lbtnGra1 control.
         /// </summary>
         /// <remarks>
@@ -236,6 +272,15 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl G1;
+        
+        /// <summary>
+        /// lg2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lg2;
         
         /// <summary>
         /// lbtnGra2 control.
@@ -256,6 +301,15 @@ namespace SIAO {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl G2;
         
         /// <summary>
+        /// lg3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lg3;
+        
+        /// <summary>
         /// lbtnGra3 control.
         /// </summary>
         /// <remarks>
@@ -272,6 +326,15 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl P1;
+        
+        /// <summary>
+        /// lg4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lg4;
         
         /// <summary>
         /// lbtnGra4 control.
@@ -292,6 +355,15 @@ namespace SIAO {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div3;
         
         /// <summary>
+        /// lg5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lg5;
+        
+        /// <summary>
         /// lbtnCross24 control.
         /// </summary>
         /// <remarks>
@@ -308,6 +380,15 @@ namespace SIAO {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div6;
+        
+        /// <summary>
+        /// la1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl la1;
         
         /// <summary>
         /// lbtnAna1 control.

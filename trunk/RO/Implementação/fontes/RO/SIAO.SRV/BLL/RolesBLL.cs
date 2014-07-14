@@ -14,9 +14,10 @@ namespace SIAO.SRV.BLL
         {
             return RolesDAL.GetByRedeId(intRedeId, strConnection);
         }
-        public static List<RelatoriosTO> GetRelatoriosByUserId(int UserId, string strConnection)
+
+        public static List<RelatoriosTO> GetRelatoriosByRedeId(int RedeId)
         {
-            return RolesDAL.GetRelatoriosByUserId(UserId, strConnection);
+            return RolesDAL.GetRelatoriosByRedeId(RedeId);
         }
         #endregion
 
@@ -74,8 +75,8 @@ namespace SIAO.SRV.BLL
 
         private static void Update(List<RelatoriosTO> lstRelatorios, string strConnection, int intUserId)
         {
-            Delete(lstRelatorios.Find(r=>r.UsuarioId == intUserId), strConnection);
-            lstRelatorios.FindAll(r=>r.UsuarioId == intUserId).ForEach(delegate(RelatoriosTO _relatorio)
+            Delete(lstRelatorios.Find(r=>r.Rede_Id == intUserId), strConnection);
+            lstRelatorios.FindAll(r=>r.Rede_Id == intUserId).ForEach(delegate(RelatoriosTO _relatorio)
             {
                 Insert(_relatorio, strConnection);
             });

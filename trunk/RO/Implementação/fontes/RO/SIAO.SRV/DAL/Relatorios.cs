@@ -40,7 +40,13 @@ namespace SIAO.SRV
 		        ELSE consolidado.sub_consultoria
             END
             ) as ""Sub Consultoria"",
-            consolidado.Grupo,
+            ""upper""(
+		    CASE 
+		        WHEN upper(consolidado.Grupo) IN ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS','PERFUMARIA')
+		        THEN consolidado.Grupo
+		        ELSE 'EXTRA MEDICAMENTOS'
+		    END
+		    ) as ""Grupo"",
             ""upper""(
             CASE 
 		        WHEN consolidado.importado IS NULL
@@ -91,8 +97,7 @@ namespace SIAO.SRV
 
             if (String.IsNullOrEmpty(strCnpj) && blnSum) SQL.Append(" LEFT JOIN redesfarmaceuticas r ON farmacias.idrede = r.id");
 
-            SQL.Append(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
-            AND (to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') >= to_date( @DataIni, 'MM yyyy')
+            SQL.Append(@" WHERE (to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') >= to_date( @DataIni, 'MM yyyy')
             AND to_date(to_char(consolidado.mes,'99') || to_char(consolidado.ano,'9999'), 'MM yyyy') <= to_date( @DataFim, 'MM yyyy'))");
 
             String ini, fim;
@@ -220,7 +225,13 @@ namespace SIAO.SRV
                 ELSE consolidado.sub_consultoria
                 END
             ) as ""Sub Consultoria"",
-            consolidado.Grupo,
+            ""upper""(
+		    CASE 
+		        WHEN upper(consolidado.Grupo) IN ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS','PERFUMARIA')
+		        THEN consolidado.Grupo
+		        ELSE 'EXTRA MEDICAMENTOS'
+		    END
+		    ) as ""Grupo"",
             ""upper""(
                 CASE 
                 WHEN consolidado.importado IS NULL
@@ -271,8 +282,7 @@ namespace SIAO.SRV
 
             if (String.IsNullOrEmpty(strCnpj) && blnSum) SQL.Append(" LEFT JOIN redesfarmaceuticas r ON farmacias.idrede = r.id");
 
-            SQL.Append(String.Format(@" WHERE upper(consolidado.Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
-            AND (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND
+            SQL.Append(String.Format(@" WHERE (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') >= to_date('{0} {1}','MM-yyyy')) AND
             (to_date(to_char(consolidado.Mes,'99') || to_char(consolidado.Ano,'9999'), 'MM-yyyy') <= to_date('{2} {3}','MM-yyyy'))", strMI, strAI, strMF, strAF));
 
             if (clsUser.TipoId.Equals(1) && clsUser.Nivel.Equals(0))

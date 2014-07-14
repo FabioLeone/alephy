@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIAO", "SIAO\SIAO.csproj", "{7ADD9446-AE02-4F77-A0B0-EBD720705243}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIAO.SRV", "SIAO.SRV\SIAO.SRV.csproj", "{DE95F4D1-C886-49E3-B346-F7B16C4A471B}"

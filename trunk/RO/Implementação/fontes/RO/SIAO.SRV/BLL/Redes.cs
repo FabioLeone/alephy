@@ -22,5 +22,10 @@ namespace SIAO.SRV
             ddlEdRedes.Items.Insert(1, new ListItem("Independentes", "0"));
             ddlEdRedes.SelectedIndex = 0;
         }
+
+        internal static Rede GetByLojaId(int loja_id)
+        {
+            return clsControl.GetRedeByLojaId(loja_id);
+        }
     }
 }

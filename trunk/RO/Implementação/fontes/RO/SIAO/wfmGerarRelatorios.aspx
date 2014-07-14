@@ -31,7 +31,11 @@
             btn.style.marginLeft = (wth + 3) + "px";
         }
     </script>
-    <div class="hdFilter">
+    <% if(CheckCss()){ %>
+        <div class="hdFilter" style="background: rgba(62, 137, 233, 0.25);">
+    <% }else{ %>
+        <div class="hdFilter">
+    <% } %>
         <h2>
             Filtro</h2>
         <div id="dvFiltro" runat="server">
@@ -79,11 +83,15 @@
         </div>
     </div>
     <div class="ctApp">
-        <div id="divForm" class="dvList">
+        <% if(CheckCss()){ %>
+            <div id="divForm" class="dvList" style="background: rgba(62, 137, 233, 0.25);">
+        <% }else{ %>
+            <div id="divForm" class="dvList">
+        <% } %>
             <h2>
                 Relatórios</h2>
             <ul class="iconList">
-                <li>
+                <li id="lm1" runat="server">
                     <asp:LinkButton ID="lbtnRel1" runat="server" OnClick="btnAdm_Click" OnClientClick="ToggleCursor(1);">
                         <div id="M1" runat="server" class="imgRel">
                             <p>
@@ -91,7 +99,7 @@
                         </div>
                     </asp:LinkButton>
                 </li>
-                <li>
+                <li id="lm2" runat="server">
                     <asp:LinkButton ID="lbtnRel2" runat="server" OnClick="btnRelat2_Click" OnClientClick="ToggleCursor(1);">
                         <div id="M2" runat="server" class="imgRel">
                             <p>
@@ -99,7 +107,7 @@
                         </div>
                     </asp:LinkButton>
                 </li>
-                <li>
+                <li id="lm3" runat="server">
                     <asp:LinkButton ID="lbtnGroup" runat="server" OnClick="lbtnGroup_Click" OnClientClick="ToggleCursor(1);" Visible="false">
                         <div id="Div4" runat="server" class="imgRel">
                             <p>
@@ -117,11 +125,15 @@
                 </li>
             </ul>
         </div>
-        <div id="divGrafic" class="dvList" style="margin-left: 0.5%; margin-right: 0.5%;">
+        <% if(CheckCss()){ %>
+            <div id="div7" class="dvList" style="margin-left: 0.5%; margin-right: 0.5%; background: rgba(62, 137, 233, 0.25);">
+        <% }else{ %>
+            <div id="divGrafic" class="dvList" style="margin-left: 0.5%; margin-right: 0.5%;">
+        <% } %>
             <h2>
                 Gráficos</h2>
             <ul class="iconList">
-                <li>
+                <li id="lg1" runat="server">
                     <asp:LinkButton ID="lbtnGra1" runat="server" OnClick="lbtnGra1_Click" OnClientClick="ToggleCursor(1);">
                         <div id="G1" runat="server" class="imgGra">
                             <p>
@@ -129,7 +141,7 @@
                         </div>
                     </asp:LinkButton>
                 </li>
-                <li>
+                <li id="lg2" runat="server">
                     <asp:LinkButton ID="lbtnGra2" runat="server" OnClick="lbtnGra2_Click" OnClientClick="ToggleCursor(1);">
                         <div id="G2" runat="server" class="imgGra">
                             <p>
@@ -137,7 +149,7 @@
                         </div>
                     </asp:LinkButton>
                 </li>
-                <li>
+                <li id="lg3" runat="server">
                     <asp:LinkButton ID="lbtnGra3" runat="server" OnClick="lbtnGra3_Click" OnClientClick="ToggleCursor(1);">
                         <div id="P1" runat="server" class="imgGra">
                             <p>
@@ -145,7 +157,7 @@
                         </div>
                     </asp:LinkButton>
                 </li>
-                <li>
+                <li id="lg4" runat="server">
                     <asp:LinkButton ID="lbtnGra4" runat="server" OnClick="lbtnGra4_Click" OnClientClick="ToggleCursor(1);">
                         <div id="Div3" runat="server" class="imgGra">
                             <p>
@@ -153,7 +165,7 @@
                         </div>
                     </asp:LinkButton>
                 </li>
-                <li>
+                <li id="lg5" runat="server">
                     <asp:LinkButton ID="lbtnCross24" runat="server" OnClick="lbtnCross24_Click" OnClientClick="ToggleCursor(1);">
                         <div id="Div6" runat="server" class="imgGra">
                             <p>Gráfico comparativo</p>
@@ -162,11 +174,15 @@
                 </li>
             </ul>
         </div>
-        <div id="div1" class="dvList">
+        <% if(CheckCss()){ %>
+            <div id="div8" class="dvList" style="background: rgba(62, 137, 233, 0.25);">
+        <% }else{ %>
+            <div id="div1" class="dvList">
+        <% } %>
             <h2>
                 Análise</h2>
             <ul class="iconList">
-                <li>
+                <li id="la1" runat="server">
                     <asp:LinkButton ID="lbtnAna1" runat="server" OnClick="lbtnAna1_Click" OnClientClick="ToggleCursor(1);"
                         ToolTip="Os dados exibidos neste relatório, são referentes apenas ao último mês do período selecionado.">
                         <div id="Div2" runat="server" class="imgAna">
