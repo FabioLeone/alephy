@@ -114,6 +114,11 @@ namespace SIAO
             }
         }
 
+        public bool CheckCss()
+        {
+            return UsersBLL.CheckCssRede(this.User);
+        }
+
         #endregion
 
     }

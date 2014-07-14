@@ -198,5 +198,20 @@ namespace SIAO.SRV
 
             return lst;
         }
+
+        #region .:Enum:.
+        internal enum Type
+        {
+            MODELO1 = 1,
+            MODELO2 = 2,
+            GRAFICO1 = 3,
+            GRAFICO2 = 4,
+            GRAFICO_COMPARATIVO = 5,
+            PORCENTAGEM_PARTICIPACAO = 6,
+            GRAFICO3 = 7,
+            GRAFICO_DESCONTO = 8,
+            ANALISE = 9
+        }
+        #endregion
     }
 }

@@ -133,7 +133,7 @@ namespace SIAO.Controls
                 }
                 else {
                     cblReportsGrafics.Style.Add("display", "block");
-                    PopulaCheckList(cblReportsGrafics, this.Roles.Find(r => r.RoleId == intRoleId).UserId);
+                    //PopulaCheckList(cblReportsGrafics, this.Roles.Find(r => r.RoleId == intRoleId).UserId);
                 }
             }
         }
@@ -268,7 +268,7 @@ namespace SIAO.Controls
                     RelatoriosTO clsRelatorio = new RelatoriosTO()
                     {
                         RelatorioTipoId = li.Selected ? Convert.ToInt32(li.Value) : 0,
-                        UsuarioId = Convert.ToInt32(ddlUsuarios.SelectedValue)
+                        Rede_Id = Convert.ToInt32(ddlUsuarios.SelectedValue)
                     };
 
                     this.Relatorios.Remove(clsRelatorio);
@@ -277,20 +277,20 @@ namespace SIAO.Controls
             }
         }
 
-        private void PopulaCheckList(CheckBoxList cblReportsGrafics, int UserId)
+        /*private void PopulaCheckList(CheckBoxList cblReportsGrafics, int UserId)
         {
             List<RelatoriosTO> clsRelatorios = new List<RelatoriosTO>();
-            if (this.Relatorios.FindAll(r=>r.UsuarioId == UserId).Count > 0)
+            if (this.Relatorios.FindAll(r=>r.Rede_Id == UserId).Count > 0)
                 clsRelatorios = this.Relatorios;
             else
                 clsRelatorios = this.Relatorios = RolesBLL.GetRelatoriosByUserId(UserId, scn);
 
             if (clsRelatorios.Count > 0)
                 clsRelatorios.ForEach(delegate(RelatoriosTO _relatorio) {
-                    if (_relatorio.UsuarioId.Equals(UserId) && _relatorio.RelatorioTipoId>0)
+                    if (_relatorio.Rede_Id.Equals(UserId) && _relatorio.RelatorioTipoId>0)
                         cblReportsGrafics.Items.FindByValue(_relatorio.RelatorioTipoId.ToString()).Selected = true;
                 });
-        }
+        }*/
         #endregion
 
     }

@@ -6,6 +6,7 @@ using SIAO.SRV.TO;
 using System.Data;
 using System.Data.Common;
 using Npgsql;
+using System.Configuration;
 
 namespace SIAO.SRV.DAL
 {
@@ -25,7 +26,16 @@ namespace SIAO.SRV.DAL
             RelatoriosTO clsRelatorio = new RelatoriosTO();
             if (!drdRelatorios.IsDBNull(drdRelatorios.GetOrdinal("RelatorioId"))) { clsRelatorio.RelatorioId = drdRelatorios.GetInt32(drdRelatorios.GetOrdinal("RelatorioId")); } else { clsRelatorio.RelatorioId = 0; }
             if (!drdRelatorios.IsDBNull(drdRelatorios.GetOrdinal("RelatorioTipoId"))) { clsRelatorio.RelatorioTipoId = drdRelatorios.GetInt32(drdRelatorios.GetOrdinal("RelatorioTipoId")); } else { clsRelatorio.RelatorioTipoId = 0; }
-            if (!drdRelatorios.IsDBNull(drdRelatorios.GetOrdinal("UsuarioId"))) { clsRelatorio.UsuarioId = drdRelatorios.GetInt32(drdRelatorios.GetOrdinal("UsuarioId")); } else { clsRelatorio.UsuarioId = 0; }
+            if (!drdRelatorios.IsDBNull(drdRelatorios.GetOrdinal("rede_Id"))) { clsRelatorio.Rede_Id = drdRelatorios.GetInt32(drdRelatorios.GetOrdinal("rede_Id")); } else { clsRelatorio.Rede_Id = 0; }
+            try
+            {
+                if (!drdRelatorios.IsDBNull(drdRelatorios.GetOrdinal("all_rpt"))) { clsRelatorio.All_rpt = drdRelatorios.GetBoolean(drdRelatorios.GetOrdinal("all_rpt")); } else { clsRelatorio.All_rpt = false; }
+            }
+            catch
+            {
+                clsRelatorio.All_rpt = false;
+            }
+
             return clsRelatorio;
         }
         #endregion
@@ -67,21 +77,21 @@ namespace SIAO.SRV.DAL
             return clsRoles;
         }
 
-        internal static List<RelatoriosTO> GetRelatoriosByUserId(int UserId, string strConnection)
+        internal static List<RelatoriosTO> GetRelatoriosByRedeId(int RedeId)
         {
             List<RelatoriosTO> clsRelatorios = new List<RelatoriosTO>();
-            NpgsqlConnection msc = new NpgsqlConnection(strConnection);
+            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
 
             try
             {
                 StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT relatorios.RelatorioId,relatorios.RelatorioTipoId,relatorios.UsuarioId FROM relatorios WHERE relatorios.UsuarioId = @UsuarioId");
+                strSQL.Append("SELECT relatorios.RelatorioId,relatorios.RelatorioTipoId,relatorios.rede_Id, all_rpt FROM relatorios WHERE relatorios.rede_Id = @rede_Id");
 
                 DbCommand cmdUsers = msc.CreateCommand();
 
                 cmdUsers.CommandText = strSQL.ToString();
                 cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UsuarioId", UserId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@rede_Id", RedeId));
 
                 msc.Open();
 
@@ -147,7 +157,7 @@ namespace SIAO.SRV.DAL
                 cmdUsers.CommandText = strSQL;
                 cmdUsers.Parameters.Clear();
                 cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@RelatorioTipoId", clsRelatorio.RelatorioTipoId));
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UsuarioId", clsRelatorio.UsuarioId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UsuarioId", clsRelatorio.Rede_Id));
 
                 msc.Open();
                 cmdUsers.ExecuteNonQuery();
@@ -196,7 +206,7 @@ namespace SIAO.SRV.DAL
 
                 cmdUsers.CommandText = strSQL;
                 cmdUsers.Parameters.Clear();
-                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UsuarioId", clsRelatorios.UsuarioId));
+                cmdUsers.Parameters.Add(DbHelper.GetParameter(cmdUsers, DbType.Int32, "@UsuarioId", clsRelatorios.Rede_Id));
 
                 msc.Open();
                 cmdUsers.ExecuteNonQuery();

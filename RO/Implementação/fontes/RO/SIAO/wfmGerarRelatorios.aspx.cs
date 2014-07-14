@@ -500,6 +500,8 @@ namespace SIAO
         {
             if(UsersBLL.ValidaAcesso(UsersBLL.GetUserSession(), dvRedes, dvLoja, dvFiltro,li3))
                 LojasBLL.getLojasApp(this.User,ddlLojaRelatorios,dvFiltro, dvLoja);
+
+            UsersBLL.CheckRptVew(UsersBLL.GetUserSession(),lm1,lm2,lm3,li3,lg1,lg2,lg3,lg4,lg5,la1);
         }
 
         private void divErro(string msg)
@@ -697,6 +699,12 @@ namespace SIAO
         private void cursor() {
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "key", "ToggleCursor(0);", true);
         }
+
+        public bool CheckCss()
+        {
+            return UsersBLL.CheckCssRede(this.User);
+        }
+
         #endregion
 
     }

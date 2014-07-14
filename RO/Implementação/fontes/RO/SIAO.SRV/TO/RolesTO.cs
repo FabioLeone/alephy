@@ -20,6 +20,7 @@ namespace SIAO.SRV.TO
     {
         public int RelatorioId { get; set; }
         public int RelatorioTipoId { get; set; }
-        public int UsuarioId { get; set; }
+        public int Rede_Id { get; set; }
+        public bool All_rpt { get; set; }
     }
 }

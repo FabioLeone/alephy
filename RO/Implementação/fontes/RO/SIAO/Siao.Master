@@ -22,6 +22,7 @@
                 document.getElementById('home').style.cursor = "default";
             }
         } 
+
     </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -30,8 +31,13 @@
     <form id="form1" runat="server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
-    <header>
-    <a id="log" class="menub" href="#">
+    <% if(CheckCss()){ %>
+        <header style="background-color: rgba(224, 0, 26, 0.86);">
+            <a id="A1" class="menub" href="#" style="background: rgba(0, 51, 153, 0.77);">
+    <%}else{ %>
+        <header>
+            <a id="log" class="menub" href="#">
+    <%} %>
         <div class="logo"></div>
         <span>&raquo;</span>
     </a>
@@ -120,7 +126,11 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
-    <footer>
+    <% if(CheckCss()){ %>
+            <footer style="background-color: rgba(224, 0, 26, 0.86);">
+    <% }else{ %>
+        <footer>
+    <% } %>
         <p>Todos os Direitos Reservados. CasBrasil Informática</p>
     </footer>
     </form>
