@@ -84,7 +84,7 @@
     </div>
     <div class="ctApp">
         <% if(CheckCss()){ %>
-            <div id="divForm" class="dvList" style="background: rgba(62, 137, 233, 0.25);">
+            <div id="divForm" class="dvList" style="background: rgba(62, 137, 233, 0.25);width: 49.75%;">
         <% }else{ %>
             <div id="divForm" class="dvList">
         <% } %>
@@ -126,7 +126,7 @@
             </ul>
         </div>
         <% if(CheckCss()){ %>
-            <div id="div7" class="dvList" style="margin-left: 0.5%; margin-right: 0.5%; background: rgba(62, 137, 233, 0.25);">
+            <div id="div7" class="dvList" style="margin-left: 0.5%; width: 49.75%;margin-right:0; background: rgba(62, 137, 233, 0.25);">
         <% }else{ %>
             <div id="divGrafic" class="dvList" style="margin-left: 0.5%; margin-right: 0.5%;">
         <% } %>
@@ -174,11 +174,7 @@
                 </li>
             </ul>
         </div>
-        <% if(CheckCss()){ %>
-            <div id="div8" class="dvList" style="background: rgba(62, 137, 233, 0.25);">
-        <% }else{ %>
-            <div id="div1" class="dvList">
-        <% } %>
+        <div id="dvAn" runat="server" class="dvList">
             <h2>
                 Análise</h2>
             <ul class="iconList">
