@@ -258,7 +258,7 @@ namespace SIAO.SRV.BLL
             gvwUsers.DataBind();
         }
 
-        public static void CheckRptVew(UsersTO u, System.Web.UI.HtmlControls.HtmlGenericControl lm1, System.Web.UI.HtmlControls.HtmlGenericControl lm2, System.Web.UI.HtmlControls.HtmlGenericControl lm3, System.Web.UI.HtmlControls.HtmlGenericControl li3, System.Web.UI.HtmlControls.HtmlGenericControl lg1, System.Web.UI.HtmlControls.HtmlGenericControl lg2, System.Web.UI.HtmlControls.HtmlGenericControl lg3, System.Web.UI.HtmlControls.HtmlGenericControl lg4, System.Web.UI.HtmlControls.HtmlGenericControl lg5, System.Web.UI.HtmlControls.HtmlGenericControl la1)
+        public static void CheckRptVew(UsersTO u, System.Web.UI.HtmlControls.HtmlGenericControl lm1, System.Web.UI.HtmlControls.HtmlGenericControl lm2, System.Web.UI.HtmlControls.HtmlGenericControl lm3, System.Web.UI.HtmlControls.HtmlGenericControl li3, System.Web.UI.HtmlControls.HtmlGenericControl lg1, System.Web.UI.HtmlControls.HtmlGenericControl lg2, System.Web.UI.HtmlControls.HtmlGenericControl lg3, System.Web.UI.HtmlControls.HtmlGenericControl lg4, System.Web.UI.HtmlControls.HtmlGenericControl lg5, System.Web.UI.HtmlControls.HtmlGenericControl la1, System.Web.UI.HtmlControls.HtmlGenericControl dvAn)
         {
             List<RelatoriosTO> lst;
             int i = 0;
@@ -282,6 +282,7 @@ namespace SIAO.SRV.BLL
                             if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_DESCONTO)) != null) lg4.Visible = true; else lg4.Visible = false;
                             if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_COMPARATIVO)) != null) lg5.Visible = true; else lg5.Visible = false;
                             if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) la1.Visible = true; else la1.Visible = false;
+                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) dvAn.Visible = true; else dvAn.Visible = false;
 
                             break;
                         case 2:
@@ -302,6 +303,7 @@ namespace SIAO.SRV.BLL
                                 if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_DESCONTO)) != null) lg4.Visible = true; else lg4.Visible = false;
                                 if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_COMPARATIVO)) != null) lg5.Visible = true; else lg5.Visible = false;
                                 if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) la1.Visible = true; else la1.Visible = false;
+                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) dvAn.Visible = true; else dvAn.Visible = false;
                             }
 
                             break;
@@ -325,6 +327,7 @@ namespace SIAO.SRV.BLL
                         if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_DESCONTO)) != null) lg4.Visible = true; else lg4.Visible = false;
                         if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_COMPARATIVO)) != null) lg5.Visible = true; else lg5.Visible = false;
                         if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) la1.Visible = true; else la1.Visible = false;
+                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) dvAn.Visible = true; else dvAn.Visible = false;
                     }
 
                     break;
@@ -342,6 +345,7 @@ namespace SIAO.SRV.BLL
                     if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_DESCONTO)) != null) lg4.Visible = true; else lg4.Visible = false;
                     if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO_COMPARATIVO)) != null) lg5.Visible = true; else lg5.Visible = false;
                     if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) la1.Visible = true; else la1.Visible = false;
+                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.ANALISE)) != null) dvAn.Visible = true; else dvAn.Visible = false;
 
                     break;
             }
