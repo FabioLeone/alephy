@@ -66,14 +66,19 @@ namespace goku.resources
             XmlDocument xd = new XmlDocument();
             
             xd.Load(strPath);
-            XmlNodeList nl = xd.GetElementsByTagName("LogInfo");
 
-            foreach (XmlNode item in nl)
-            {
-                if (Convert.ToDateTime(item.SelectNodes("Time").Item(0).InnerXml).Date < DateTime.Now.AddMonths(-3).Date)
+            if (xd.ChildNodes.Count > 0) {
+                XmlNodeList nl = xd.ChildNodes[0].ChildNodes;
+
+                for (int i = 0; i < nl.Count; i++)
                 {
-                    xd.SelectNodes("xmldata").Item(0).RemoveChild(item);
-                    xd.Save(strPath);
+                    if (Convert.ToDateTime(nl[i].SelectNodes("Time").Item(0).InnerXml).Date < DateTime.Now.AddMonths(-3).Date)
+                    {
+                        xd.SelectNodes("xmldata").Item(0).RemoveChild(nl[i]);
+                        xd.Save(strPath);
+
+                        if (i == nl.Count) break;
+                    }   
                 }
             }
         }

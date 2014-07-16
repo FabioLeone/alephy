@@ -39,7 +39,7 @@ namespace goku
                     if(isEmail(txtEmail2.Text))
                         iniFile.WriteValue(s, "security", "mail2", txtEmail2.Text);
 
-                    monitor.fileConfig(txtEmail.Text, txtEmail2.Text);
+                    monitor.fileConfig(txtEmail.Text, txtEmail2.Text, String.Empty);
 
                     btnSave.Text = "Fechar";
                     first = false;
