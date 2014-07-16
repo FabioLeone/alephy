@@ -23,6 +23,9 @@ namespace goku.resources
             StringBuilder strSQL = new StringBuilder();
             strSQL.Append(@"SELECT farmacias.Id FROM farmacias WHERE (farmacias.Cnpj = @Cnpj) and (ativo = 1)");
 
+            if (ConfigurationManager.AppSettings["ENV_S"].Equals("false"))
+                strSQL.Append(" and (rosf = '1')");
+
             string scnpj = strCNPJ.Replace(".", "");
             scnpj = scnpj.Replace("/", "");
             scnpj = scnpj.Replace("-", "");
@@ -271,68 +274,36 @@ namespace goku.resources
         #endregion
 
         #region .:consolidation:.
-        internal static void deleteDuplicate()
+        internal static void deleteDuplicate(DataTable dt)
         {
-            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
-            List<Files> lstFiles = new List<Files>();
-
-            try
+            foreach (DataRow dr in dt.Rows)
             {
-                StringBuilder strSQL = new StringBuilder();
-                Files clsFile = new Files();
+                deleteDuplicateBClientes(dr);
 
-                strSQL.Append("SELECT DISTINCT CNPJ, Mes, Ano FROM base_cliente_espera ORDER BY Mes");
-
-                DbCommand cmd = msc.CreateCommand();
-
-                cmd.CommandText = strSQL.ToString();
-
-                msc.Open();
-
-                using (IDataReader drd = cmd.ExecuteReader())
-                {
-                    while (drd.Read())
-                    {
-                        clsFile = new Files();
-
-                        if (!drd.IsDBNull(drd.GetOrdinal("CNPJ"))) clsFile.Cnpj = drd.GetString(drd.GetOrdinal("CNPJ")); else clsFile.Cnpj = String.Empty;
-                        if (!drd.IsDBNull(drd.GetOrdinal("Mes"))) clsFile.Mes = drd.GetInt32(drd.GetOrdinal("Mes")); else clsFile.Mes = 0;
-                        if (!drd.IsDBNull(drd.GetOrdinal("Ano"))) clsFile.Ano = drd.GetInt32(drd.GetOrdinal("Ano")); else clsFile.Ano = 0;
-
-                        lstFiles.Add(clsFile);
-                    }
-                }
+                deleteDuplicateFromConsolidation(dr);
             }
-            finally
-            {
-                msc.Close();
-            }
-
-            lstFiles.ForEach(delegate(Files _file)
-            {
-                deleteDuplicateBClientes(_file);
-
-                deleteDuplicateFromConsolidation(_file);
-            });
         }
 
-        private static void deleteDuplicateBClientes(Files _file)
+        private static void deleteDuplicateBClientes(DataRow dr)
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
-            StringBuilder strSQL = new StringBuilder();
+            String strSQL = String.Empty;
+
+            strSQL = "DELETE FROM base_clientes WHERE CNPJ = @cnpj AND Mes = @mes AND Ano = @ano";
+
+            NpgsqlCommand cmd = msc.CreateCommand();
+
             try
             {
-                msc.Open();
-
-                strSQL = new StringBuilder();
-                strSQL.Append("DELETE FROM base_clientes");
-                strSQL.Append(" WHERE CNPJ = '" + _file.Cnpj + "'");
-                strSQL.Append(" AND Mes = " + _file.Mes + " AND Ano = " + _file.Ano);
-
-                DbCommand cmd = msc.CreateCommand();
-
                 cmd = msc.CreateCommand();
-                cmd.CommandText = strSQL.ToString();
+                cmd.CommandText = strSQL;
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dr[0].ToString();
+                cmd.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = dr[1];
+                cmd.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = dr[2];
+
+                msc.Open();
 
                 cmd.ExecuteNonQuery();
             }
@@ -342,24 +313,27 @@ namespace goku.resources
             }
         }
 
-        private static void deleteDuplicateFromConsolidation(Files _file)
+        private static void deleteDuplicateFromConsolidation(DataRow dr)
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
-            StringBuilder strSQL = new StringBuilder();
+            String strSQL = String.Empty;
+
+            strSQL = "DELETE FROM consolidado WHERE CNPJ = @cnpj AND Mes = @mes AND Ano = @ano";
+
+            NpgsqlCommand cmd = msc.CreateCommand();
+
             try
             {
-                msc.Open();
-
-                strSQL = new StringBuilder();
-                strSQL.Append("DELETE FROM consolidado");
-                strSQL.Append(" WHERE CNPJ = '" + _file.Cnpj + "'");
-                strSQL.Append(" AND Mes = " + _file.Mes + " AND Ano = " + _file.Ano);
-
-                DbCommand cmd = msc.CreateCommand();
-
                 cmd.CommandText = String.Empty;
                 cmd.CommandText = strSQL.ToString();
 
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dr[0].ToString();
+                cmd.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = dr[1];
+                cmd.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = dr[2];
+
+                msc.Open();
+
                 cmd.ExecuteNonQuery();
             }
             finally
@@ -368,85 +342,51 @@ namespace goku.resources
             }
         }
 
-        internal static List<CNPJ> dataTransfer()
+        internal static Boolean dataTransfer(List<String> lst)
         {
-            List<CNPJ> lstCnpj = GetlistCnpj();
-
-            if (lstCnpj.Count > 0)
+            Boolean bln = false;
+            if (lst.Count > 0)
             {
                 NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
 
-                lstCnpj.ForEach(delegate(CNPJ cnpj)
-                {
+                StringBuilder strSQL = new StringBuilder();
+                    strSQL.Append(@"INSERT INTO base_clientes (Cnpj,Mes,Ano,Barras,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto,farmaciaid)
+                    SELECT distinct b.Cnpj,b.Mes,b.Ano,b.Barras,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,f.id
+                    FROM base_cliente_espera b
+                    INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
+                    WHERE b.Cnpj = @Cnpj");
 
+                    NpgsqlCommand cmdUsers = msc.CreateCommand();
+
+                    cmdUsers.CommandText = strSQL.ToString();
+                    cmdUsers.CommandTimeout = 9999;
+
+                foreach(String s in lst)
+                {
                     try
                     {
-                        StringBuilder strSQL = new StringBuilder();
-                        strSQL.Append(@"INSERT INTO base_clientes (Cnpj,Mes,Ano,Barras,Quantidade,Valor_Bruto,Valor_Liquido,Valor_Desconto,farmaciaid)
-                        SELECT distinct b.Cnpj,b.Mes,b.Ano,b.Barras,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,f.id
-                        FROM base_cliente_espera b
-                        INNER JOIN farmacias f ON b.Cnpj = f.Cnpj
-                        WHERE b.Cnpj = @Cnpj");
-
-                        NpgsqlCommand cmdUsers = msc.CreateCommand();
-
-                        cmdUsers.CommandText = strSQL.ToString();
-                        cmdUsers.CommandTimeout = 9999;
                         cmdUsers.Parameters.Clear();
-                        cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = cnpj.Cnpj;
+                        cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = s;
 
                         msc.Open();
                         cmdUsers.ExecuteNonQuery();
-                        cnpj.Return = true;
+                        bln = true;
                     }
                     catch
                     {
-                        cnpj.Return = false;
+                        return false;
                     }
                     finally
                     {
                         msc.Close();
                     }
-                });
-            }
-
-            return lstCnpj;
-        }
-
-        private static List<CNPJ> GetlistCnpj()
-        {
-            NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
-            List<CNPJ> lstCnpj = new List<CNPJ>();
-            CNPJ objCnpj;
-
-            try
-            {
-                StringBuilder strSQL = new StringBuilder();
-                strSQL.Append("SELECT distinct base_cliente_espera.Cnpj FROM base_cliente_espera");
-
-                DbCommand cmd = msc.CreateCommand();
-
-                cmd.CommandText = strSQL.ToString();
-
-                msc.Open();
-
-                using (IDataReader drd = cmd.ExecuteReader())
-                {
-                    while (drd.Read())
-                    {
-                        if (!drd.IsDBNull(drd.GetOrdinal("Cnpj"))) lstCnpj.Add(objCnpj = new CNPJ() { Cnpj = drd.GetString(drd.GetOrdinal("Cnpj")) });
-                    }
                 }
             }
-            finally
-            {
-                msc.Close();
-            }
 
-            return lstCnpj;
+            return bln;
         }
 
-        internal static bool dataConsolidation(CNPJ _cnpj)
+        internal static bool dataConsolidation(String _cnpj)
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
             bool blnOk = false;
@@ -473,7 +413,7 @@ namespace goku.resources
                 NpgsqlCommand cmdUsers = msc.CreateCommand();
 
                 cmdUsers.CommandText = strSQL.ToString();
-                cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+                cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj;
                 cmdUsers.CommandTimeout = 9999;
                 msc.Open();
                 cmdUsers.ExecuteNonQuery();
@@ -487,7 +427,7 @@ namespace goku.resources
             return blnOk;
         }
 
-        internal static bool updateClientProdut(CNPJ _cnpj)
+        internal static bool updateClientProdut(String _cnpj)
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
             Boolean blnOK = false;
@@ -514,7 +454,7 @@ namespace goku.resources
                     cmdUsers.CommandText = strSQL.ToString();
                     cmdUsers.CommandTimeout = 9999;
                     cmdUsers.Parameters.Clear();
-                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj;
 
                     msc.Open();
                     cmdUsers.ExecuteNonQuery();
@@ -562,7 +502,7 @@ namespace goku.resources
                     cmdUsers.CommandText = strSQL.ToString();
                     cmdUsers.CommandTimeout = 9999;
                     cmdUsers.Parameters.Clear();
-                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj;
                     cmdUsers.Parameters.Add("@barras", NpgsqlDbType.Varchar).Value = strBarras;
 
                     msc.Open();
@@ -595,7 +535,7 @@ namespace goku.resources
                     cmdUsers.CommandText = strSQL.ToString();
                     cmdUsers.CommandTimeout = 9999;
                     cmdUsers.Parameters.Clear();
-                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+                    cmdUsers.Parameters.Add("@Cnpj", NpgsqlDbType.Varchar).Value = _cnpj;
 
                     msc.Open();
                     cmdUsers.ExecuteNonQuery();
@@ -614,7 +554,7 @@ namespace goku.resources
             return blnOK;
         }
 
-        private static List<ListItem> GetListProd(CNPJ _cnpj)
+        private static List<ListItem> GetListProd(String _cnpj)
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
             List<ListItem> lst = new List<ListItem>();
@@ -628,7 +568,7 @@ namespace goku.resources
                 NpgsqlCommand cmd = msc.CreateCommand();
 
                 cmd.CommandText = strSQL.ToString();
-                cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+                cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = _cnpj;
 
                 msc.Open();
 
@@ -648,11 +588,11 @@ namespace goku.resources
             return lst;
         }
 
-        internal static void DeletData(List<CNPJ> lstCnpj)
+        internal static void DeletData(List<String> lst)
         {
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["CONECTIONSTRING"].ConnectionString);
 
-            lstCnpj.ForEach(delegate(CNPJ _cnpj)
+            foreach(String s in lst)
             {
                 StringBuilder strSQL = new StringBuilder();
                 strSQL.Append("DELETE FROM base_cliente_espera where Cnpj=@cnpj");
@@ -660,7 +600,7 @@ namespace goku.resources
                 NpgsqlCommand cmd = msc.CreateCommand();
 
                 cmd.CommandText = strSQL.ToString();
-                cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = _cnpj.Cnpj;
+                cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = s;
 
                 try
                 {
@@ -672,7 +612,7 @@ namespace goku.resources
                 {
                     msc.Close();
                 }
-            });
+            }
         }
         #endregion
 

@@ -151,6 +151,7 @@ namespace consolidate.resources
             StringBuilder msg = new StringBuilder();
             List<string> lst = new List<string>();
             String s = String.Empty;
+            DataTable dt = new DataTable();
 
             if (validaExt(strP))
             {
@@ -162,7 +163,7 @@ namespace consolidate.resources
                     {
                         xd.Load(XmlFix(strP));
 
-                        DataTable dt = ConvertXML(xd);
+                        dt = ConvertXML(xd);
 
                         msg.Append(cnpjValidation(dt));
 
@@ -189,7 +190,6 @@ namespace consolidate.resources
                 }
                 else
                 {
-                    DataTable dt = new DataTable();
                     Object o = new Object();
 
                     o = txtDtConvert(strP);
@@ -230,7 +230,7 @@ namespace consolidate.resources
             if (string.IsNullOrEmpty(msg.ToString().Replace("\r\n", "")))
             {
                 fileMove(strP,s);
-                consolidation c = new consolidation();
+                consolidation c = new consolidation(dt);
             }
             else
                 fileErrorMove(strP);
@@ -502,11 +502,14 @@ namespace consolidate.resources
                 return string.Empty;
         }
 
-        internal static void fileConfig(string p, string s)
+        internal static void fileConfig(string p, string s, string e)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             config.AppSettings.Settings["EMAIL_SEND"].Value = p;
             config.AppSettings.Settings["EMAIL_SEND_SEC"].Value = s;
+            if(!String.IsNullOrEmpty(e))
+                config.AppSettings.Settings["ENV_S"].Value = e;
+
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }
