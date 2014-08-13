@@ -1,63 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="SIAOSRVBLL">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>db6142b4-8615-4c1c-9ed2-0c6f540e16bc</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet1">
-      <Fields>
-        <Field Name="Razao_Social">
-          <DataField>Razao_Social</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Mes">
-          <DataField>Mes</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Grupo">
-          <DataField>Grupo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Sub_Consultoria">
-          <DataField>Sub_Consultoria</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Liquido">
-          <DataField>Liquido</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Desconto">
-          <DataField>Desconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Nome_Fantasia">
-          <DataField>Nome_Fantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Periodo">
-          <DataField>Periodo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>SIAOSRVBLL</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <rd:DataSetInfo>
-        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
-        <rd:TableName>GraficBLL</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>GraficList</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(System.String, SIAO.SRV.TO.UsersTO, System.String, System.String)</rd:ObjectDataSourceSelectMethodSignature>
-        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Chart Name="Chart2">
@@ -117,13 +59,13 @@
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Fields!Liquido.Value</Y>
+                    <Y>=Round(Fields!Liquido.Value / 10)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
-                    <Label>=Fields!Liquido.Value.ToString() &amp; " %"</Label>
+                    <Label>=IIf(Round(Fields!Liquido.Value / 10) &gt; 10 , (10 &amp; " (" &amp; (Round(Fields!Liquido.Value / 10) - 10) &amp; "+)") , Round(Fields!Liquido.Value / 10).ToString())</Label>
                     <Visible>true</Visible>
                     <Rotation>-90</Rotation>
                   </ChartDataLabel>
@@ -156,7 +98,7 @@
               <ChartDataPoints>
                 <ChartDataPoint>
                   <ChartDataPointValues>
-                    <Y>=Fields!Desconto.Value</Y>
+                    <Y>=Round(Fields!Desconto.Value / 10)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style>
@@ -165,7 +107,7 @@
                       </Border>
                       <FontSize>12pt</FontSize>
                     </Style>
-                    <Label>=Fields!Desconto.Value.ToString() &amp; " %"</Label>
+                    <Label>=IIf(Round(Fields!Desconto.Value / 10) &gt; 10 , (10 &amp; " (" &amp; (Round(Fields!Desconto.Value / 10) - 10) &amp; "+)") , Round(Fields!Desconto.Value / 10).ToString())</Label>
                     <Visible>true</Visible>
                     <Rotation>-90</Rotation>
                   </ChartDataLabel>
@@ -234,6 +176,9 @@
                 <Maximum>NaN</Maximum>
                 <MinFontSize>8pt</MinFontSize>
                 <MaxFontSize>16pt</MaxFontSize>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -268,6 +213,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -304,6 +252,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -337,6 +288,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <ChartThreeDProperties>
@@ -484,6 +438,65 @@
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="SIAOSRVBLL">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>db6142b4-8615-4c1c-9ed2-0c6f540e16bc</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>SIAOSRVBLL</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Razao_Social">
+          <DataField>Razao_Social</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Mes">
+          <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Grupo">
+          <DataField>Grupo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Sub_Consultoria">
+          <DataField>Sub_Consultoria</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Liquido">
+          <DataField>Liquido</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Desconto">
+          <DataField>Desconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
+        <rd:TableName>GraficBLL</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>GraficList</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(System.String, SIAO.SRV.TO.UsersTO, System.String, System.String)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="logo_Cas_blue_140px">
       <MIMEType>image/png</MIMEType>
@@ -509,6 +522,6 @@ LPkIuH40lNS12ehjHMr9hShqcIR5wzCorjZJ904YSd2r9fLmMK2g3a1ohFsgszyGypwkzHi9tvKs7WHC
     <CodeModule>Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
     <CodeModule>Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
   </CodeModules>
-  <rd:ReportID>56ae5009-3f7d-45f6-b18c-92e8315f43d9</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>56ae5009-3f7d-45f6-b18c-92e8315f43d9</rd:ReportID>
 </Report>

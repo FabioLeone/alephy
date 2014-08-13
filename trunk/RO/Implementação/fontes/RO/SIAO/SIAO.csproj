@@ -20,6 +20,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -369,6 +373,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Relatory\rptGrafic.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Relatory\rptGrafic3.rdlc" />
     <EmbeddedResource Include="Relatory\rptGrafic4.rdlc" />

@@ -520,9 +520,9 @@ namespace SIAO.SRV.DAL
 	                WHERE 
 	                ((UPPER(grupo) LIKE 'GENÉRICOS' and UPPER(sub_consultoria) like 'PDE 2%') 
 	                OR 
-	                (UPPER(grupo) LIKE 'ALTERNATIVOS' and UPPER(sub_consultoria) = 'PDE 2 (TRATA)')
+	                (UPPER(grupo) LIKE 'ALTERNATIVOS' and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)','PDE 1-2'))
 	                OR 
-	                (UPPER(grupo) LIKE 'PROPAGADOS' and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)')))
+	                ((UPPER(grupo) LIKE 'PROPAGADOS' OR UPPER(grupo) LIKE 'GENÉRICOS') and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)','PDE 1-2')))
 	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria 
                 union
 	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",
@@ -532,7 +532,7 @@ namespace SIAO.SRV.DAL
 	                WHERE 
 	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
 	                AND
-	                upper(sub_consultoria) in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
+	                upper(sub_consultoria) in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)','PDE 1 (ANTI - RH)','PDE 1-2')
 	                GROUP BY cnpj, mes, ano, sub_consultoria
                 union
 	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
@@ -608,9 +608,9 @@ namespace SIAO.SRV.DAL
 	                WHERE 
 	                ((UPPER(grupo) LIKE 'GENÉRICOS' and UPPER(sub_consultoria) like 'PDE 2%') 
 	                OR 
-	                (UPPER(grupo) LIKE 'ALTERNATIVOS' and UPPER(sub_consultoria) = 'PDE 2 (TRATA)')
+	                (UPPER(grupo) LIKE 'ALTERNATIVOS' and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)','PDE 1-2'))
 	                OR 
-	                (UPPER(grupo) LIKE 'PROPAGADOS' and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)')))
+	                ((UPPER(grupo) LIKE 'PROPAGADOS' OR UPPER(grupo) LIKE 'GENÉRICOS') and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)','PDE 1-2')))
 	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria 
                 union
 	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",
@@ -620,7 +620,7 @@ namespace SIAO.SRV.DAL
 	                WHERE 
 	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
 	                AND
-	                upper(sub_consultoria) in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)')
+	                upper(sub_consultoria) in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)','PDE 1 (ANTI - RH)','PDE 1-2')
 	                GROUP BY cnpj, mes, ano, sub_consultoria
                 union
 	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",
