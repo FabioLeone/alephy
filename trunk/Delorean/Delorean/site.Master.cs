@@ -14,6 +14,12 @@ namespace Delorean
         protected void Page_Load(object sender, EventArgs e)
         {
             usersBLL.ChkMenu(l2);
+
+            if (!String.IsNullOrEmpty(Request.QueryString["S"]))
+            {
+                psearch.Value = Request.QueryString["S"];
+                cfilter.Attributes.CssStyle.Add("display", "block !important");
+            }
         }
 
         protected void lbLogout_ServerClick(object sender, EventArgs e)
@@ -79,6 +85,18 @@ namespace Delorean
 
 
             Response.Redirect(s + "s=" + Request.Form[ulmenu.FindControl("psearch").UniqueID]);
+        }
+
+        protected void cfilter_ServerClick(object sender, EventArgs e)
+        {
+            string s = HttpContext.Current.Request.Url.AbsoluteUri;
+
+            if (s.Contains("?"))
+            {
+                s = s.Replace("s=" + Request.QueryString["s"], "");
+            }
+
+            Response.Redirect(s + "s=");
         }
         #endregion
     }
