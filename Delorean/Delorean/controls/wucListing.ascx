@@ -8,8 +8,8 @@
                     <th rel="0" value="Ean">Ean</th>
                     <th rel="1" value="Produto">Produto</th>
                     <th rel="2" value="CustoReal">Custo Real</th>
-                    <th rel="3" value="Unidade">Unidade</th>
-                    <th rel="4" value="UpX">Acima de X</th>
+                    <th rel="3" value="Unidade">Valor Unitário</th>
+                    <th rel="4" value="UpX">Desconto Quantidade</th>
                     <th rel="5" value="MargemReal">Margem Real</th>
                     <th rel="6" value="Drogasil" class="hide">Drogasil</th>
                 </tr>
