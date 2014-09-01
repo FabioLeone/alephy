@@ -134,9 +134,9 @@ namespace Assemblies
                 }
 
                 strSQL.Clear();
-                strSQL.Append(@"select bc.id, b.barras, b.produto, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada))::numeric(12,2) as ""1 Unidade"",
-	                ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))::numeric(12,2) as ""Acima de X"", 
-	                ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)))::numeric(12,2) as ""Margem Real""
+                strSQL.Append(@"select bc.id, b.barras, b.produto, bc.valor_custo, (bc.valor_custo / (1 - (f.margem_esperada / 100)))::numeric(12,2) as ""1 Unidade"",
+	                ((bc.valor_custo / (1 - (f.margem_esperada / 100))) * (1 - (f.desconto / 100)))::numeric(12,2) as ""Acima de X"", 
+	                (((((bc.valor_custo / (1 - (f.margem_esperada / 100))) * (1 - (f.desconto / 100))) - bc.valor_custo) / (((bc.valor_custo / (1 - (f.margem_esperada / 100))) * (1 - (f.desconto / 100))))) * 100)::numeric(12,2) as ""Margem Real""
                 from base_especial b
 	                left join base_compra bc on b.barras = bc.barras
 	                left join fator_venda f on b.barras = f.barras
@@ -171,9 +171,9 @@ namespace Assemblies
 
             StringBuilder strSQL = new StringBuilder();
             strSQL.Append(@"UPDATE base_compra SET valor_custo=@valor_custo WHERE id=@id;");
-            strSQL.Append(@"select bc.id, b.barras, b.produto, bc.valor_custo, (bc.valor_custo / (1 - f.margem_esperada))::numeric(12,2) as ""1 Unidade"",
-	            ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto))::numeric(12,2) as ""Acima de X"", 
-	            ((((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)) - bc.valor_custo) / ((bc.valor_custo / (1 - f.margem_esperada)) * (1 - f.desconto)))::numeric(12,2) as ""Margem Real""
+            strSQL.Append(@"select bc.id, b.barras, b.produto, bc.valor_custo, (bc.valor_custo / (1 - (f.margem_esperada / 100)))::numeric(12,2) as ""1 Unidade"",
+	            ((bc.valor_custo / (1 - (f.margem_esperada / 100))) * (1 - (f.desconto / 100)))::numeric(12,2) as ""Acima de X"", 
+	            (((((bc.valor_custo / (1 - (f.margem_esperada / 100))) * (1 - (f.desconto / 100))) - bc.valor_custo) / (((bc.valor_custo / (1 - (f.margem_esperada / 100))) * (1 - (f.desconto / 100))))) * 100) as ""Margem Real""
             from base_especial b
 	            left join base_compra bc on b.barras = bc.barras
 	            left join fator_venda f on b.barras = f.barras
