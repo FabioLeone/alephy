@@ -29,6 +29,7 @@
                 <li class="has-menu divider">
                     <input type="text" id="psearch" runat="server" name="s" placeholder="Procurar Produto" style="-webkit-appearance: searchfield; -webkit-rtl-ordering: logical; width: 178px; height: 31px; margin: 0; border-radius: 5px; box-shadow: inset 0 1px 6px #ccc; padding-left: 1px; -webkit-user-select: text; cursor: auto;" />
                     <asp:Button ID="schbtn" runat="server" Text="sch" OnClick="schbtn_Click" Style="visibility: hidden; padding: 0; height: 0;" />
+                    <a id="cfilter" runat="server" onserverclick="cfilter_ServerClick" class="btnclean"><i class="icon-remove"></i></a>
                 </li>
                 <li id="l2" runat="server" class="divider">
                     <a id="edFactor" runat="server" onserverclick="edFactor_ServerClick"><i class="icon-edit"></i>Fator de venda</a>

@@ -282,3 +282,12 @@ input[type=submit]:active {
     content: "\f0d9";
     text-decoration: inherit;
 }
+
+.btnclean {
+    position: absolute !important;
+    left: 159px !important;
+    top: 8px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    display: none !important;
+}
