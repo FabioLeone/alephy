@@ -1302,8 +1302,8 @@
           </SortExpression>
         </SortExpressions>
         <Top>61.39951cm</Top>
-        <Height>2.99999cm</Height>
-        <Width>7.12998cm</Width>
+        <Height>3cm</Height>
+        <Width>7.12999cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -2009,8 +2009,8 @@
           </SortExpression>
         </SortExpressions>
         <Top>82.82904cm</Top>
-        <Height>2.99999cm</Height>
-        <Width>7.12998cm</Width>
+        <Height>3cm</Height>
+        <Width>7.12999cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -2716,8 +2716,8 @@
           </SortExpression>
         </SortExpressions>
         <Top>104.2585cm</Top>
-        <Height>2.99999cm</Height>
-        <Width>7.12998cm</Width>
+        <Height>3cm</Height>
+        <Width>7.12999cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -2970,7 +2970,23 @@
         </ChartAreas>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -3264,7 +3280,23 @@
         </ChartAreas>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -3708,8 +3740,8 @@
           </SortExpression>
         </SortExpressions>
         <Top>18.521cm</Top>
-        <Height>2.99999cm</Height>
-        <Width>7.12998cm</Width>
+        <Height>3cm</Height>
+        <Width>7.12999cm</Width>
         <ZIndex>10</ZIndex>
         <Style>
           <Border>
@@ -4112,8 +4144,8 @@
           </SortExpression>
         </SortExpressions>
         <Top>39.95225cm</Top>
-        <Height>2.99999cm</Height>
-        <Width>7.12998cm</Width>
+        <Height>3cm</Height>
+        <Width>7.12999cm</Width>
         <ZIndex>11</ZIndex>
         <Style>
           <Border>
@@ -4366,7 +4398,23 @@
         </ChartAreas>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -4663,7 +4711,23 @@
         </ChartAreas>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -4957,7 +5021,23 @@
         </ChartAreas>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -5251,7 +5331,23 @@
         </ChartAreas>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>

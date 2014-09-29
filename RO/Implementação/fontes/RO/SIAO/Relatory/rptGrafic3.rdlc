@@ -1,214 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="SIAOSRVBLL">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>0c1d6416-9d31-4eed-863d-efeb152edba3</rd:DataSourceID>
-    </DataSource>
-    <DataSource Name="SIAOSRVBLL1">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>46589c31-882a-4e3a-bc42-c5695b311cba</rd:DataSourceID>
-    </DataSource>
-    <DataSource Name="SIAOSRVBLL2">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>1a097084-332b-4733-9d57-9f20b520c208</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet1">
-      <Fields>
-        <Field Name="CNPJ">
-          <DataField>CNPJ</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Razao_Social">
-          <DataField>Razao_Social</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Mes">
-          <DataField>Mes</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Grupo">
-          <DataField>Grupo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Sub_Consultoria">
-          <DataField>Sub_Consultoria</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Liquido">
-          <DataField>Liquido</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Desconto">
-          <DataField>Desconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Nome_Fantasia">
-          <DataField>Nome_Fantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Periodo">
-          <DataField>Periodo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="quantidade">
-          <DataField>quantidade</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>SIAOSRVBLL</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <rd:DataSetInfo>
-        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
-        <rd:TableName>GraficBLL</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>Grafic31ByPeriodoAndRedeId</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.Grafic2TO] Grafic31ByPeriodoAndRedeId(System.String, System.String, SIAO.SRV.TO.UsersTO, Int32)</rd:ObjectDataSourceSelectMethodSignature>
-        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-    <DataSet Name="DataSet2">
-      <Fields>
-        <Field Name="CNPJ">
-          <DataField>CNPJ</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Razao_Social">
-          <DataField>Razao_Social</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Mes">
-          <DataField>Mes</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Grupo">
-          <DataField>Grupo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Sub_Consultoria">
-          <DataField>Sub_Consultoria</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Liquido">
-          <DataField>Liquido</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Desconto">
-          <DataField>Desconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Nome_Fantasia">
-          <DataField>Nome_Fantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Periodo">
-          <DataField>Periodo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="quantidade">
-          <DataField>quantidade</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>SIAOSRVBLL1</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <rd:DataSetInfo>
-        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
-        <rd:TableName>GraficBLL</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>Grafic32ByPeriodoAndRedeId</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.Grafic2TO] Grafic32ByPeriodoAndRedeId(System.String, System.String, SIAO.SRV.TO.UsersTO, Int32)</rd:ObjectDataSourceSelectMethodSignature>
-        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-    <DataSet Name="DataSet3">
-      <Fields>
-        <Field Name="CNPJ">
-          <DataField>CNPJ</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Razao_Social">
-          <DataField>Razao_Social</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Mes">
-          <DataField>Mes</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Grupo">
-          <DataField>Grupo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Sub_Consultoria">
-          <DataField>Sub_Consultoria</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Liquido">
-          <DataField>Liquido</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Desconto">
-          <DataField>Desconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Nome_Fantasia">
-          <DataField>Nome_Fantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Periodo">
-          <DataField>Periodo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="quantidade">
-          <DataField>quantidade</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>SIAOSRVBLL2</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <rd:DataSetInfo>
-        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
-        <rd:TableName>GraficBLL</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>Grafic33ByPeriodoAndRedeId</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.Grafic2TO] Grafic33ByPeriodoAndRedeId(System.String, System.String, SIAO.SRV.TO.UsersTO, Int32)</rd:ObjectDataSourceSelectMethodSignature>
-        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Chart Name="Chart1">
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Label>Liquido</Label>
+              <Label />
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
@@ -300,6 +98,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -334,6 +135,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -368,6 +172,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -401,6 +208,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <Style>
@@ -473,7 +283,7 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Label>Liquido</Label>
+              <Label />
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
@@ -565,6 +375,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -599,6 +412,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -633,6 +449,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -666,6 +485,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <Style>
@@ -737,7 +559,7 @@
         <ChartCategoryHierarchy>
           <ChartMembers>
             <ChartMember>
-              <Label>Liquido</Label>
+              <Label />
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
@@ -749,7 +571,23 @@
                   <GroupExpression>=Fields!Sub_Consultoria.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <Label>=Fields!Sub_Consultoria.Value</Label>
+              <Label>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Label>
             </ChartMember>
           </ChartMembers>
         </ChartSeriesHierarchy>
@@ -829,6 +667,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -863,6 +704,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -897,6 +741,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -930,6 +777,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <Style>
@@ -1040,12 +890,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.22314in</Width>
+              <Width>3.10678cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.19685in</Height>
+              <Height>0.5cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1092,7 +942,7 @@
                 </GroupExpressions>
               </Group>
               <TablixHeader>
-                <Size>0.19685in</Size>
+                <Size>0.5cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox2">
                     <CanGrow>true</CanGrow>
@@ -1139,7 +989,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.52924in</Size>
+                <Size>3.88427cm</Size>
                 <CellContents>
                   <Textbox Name="Grupo">
                     <CanGrow>true</CanGrow>
@@ -1223,12 +1073,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.20739in</Width>
+              <Width>3.06677cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.19685in</Height>
+              <Height>0.5cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1275,7 +1125,7 @@
                 </GroupExpressions>
               </Group>
               <TablixHeader>
-                <Size>0.19685in</Size>
+                <Size>0.5cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox3">
                     <CanGrow>true</CanGrow>
@@ -1322,7 +1172,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.54499in</Size>
+                <Size>3.92427cm</Size>
                 <CellContents>
                   <Textbox Name="Grupo2">
                     <CanGrow>true</CanGrow>
@@ -1407,12 +1257,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.20739in</Width>
+              <Width>3.06677cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.19685in</Height>
+              <Height>0.5cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1459,7 +1309,7 @@
                 </GroupExpressions>
               </Group>
               <TablixHeader>
-                <Size>0.19685in</Size>
+                <Size>0.5cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox14">
                     <CanGrow>true</CanGrow>
@@ -1506,7 +1356,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.52924in</Size>
+                <Size>3.88427cm</Size>
                 <CellContents>
                   <Textbox Name="Sub_Consultoria">
                     <CanGrow>true</CanGrow>
@@ -1515,7 +1365,23 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!Sub_Consultoria.Value</Value>
+                            <Value>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Value>
                             <Style />
                           </TextRun>
                         </TextRuns>
@@ -1555,7 +1421,7 @@
     <Height>60.0115cm</Height>
     <Style />
   </Body>
-  <Width>29.7cm</Width>
+  <Width>29.70001cm</Width>
   <Page>
     <PageFooter>
       <Height>0.84376cm</Height>
@@ -1624,6 +1490,209 @@
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="SIAOSRVBLL">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>0c1d6416-9d31-4eed-863d-efeb152edba3</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="SIAOSRVBLL1">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>46589c31-882a-4e3a-bc42-c5695b311cba</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="SIAOSRVBLL2">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>1a097084-332b-4733-9d57-9f20b520c208</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>SIAOSRVBLL</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="CNPJ">
+          <DataField>CNPJ</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Razao_Social">
+          <DataField>Razao_Social</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Mes">
+          <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Grupo">
+          <DataField>Grupo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Sub_Consultoria">
+          <DataField>Sub_Consultoria</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Liquido">
+          <DataField>Liquido</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Desconto">
+          <DataField>Desconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantidade">
+          <DataField>quantidade</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
+        <rd:TableName>GraficBLL</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>Grafic31ByPeriodoAndRedeId</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.Grafic2TO] Grafic31ByPeriodoAndRedeId(System.String, System.String, SIAO.SRV.TO.UsersTO, Int32)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="DataSet2">
+      <Query>
+        <DataSourceName>SIAOSRVBLL1</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="CNPJ">
+          <DataField>CNPJ</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Razao_Social">
+          <DataField>Razao_Social</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Mes">
+          <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Grupo">
+          <DataField>Grupo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Sub_Consultoria">
+          <DataField>Sub_Consultoria</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Liquido">
+          <DataField>Liquido</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Desconto">
+          <DataField>Desconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantidade">
+          <DataField>quantidade</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
+        <rd:TableName>GraficBLL</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>Grafic32ByPeriodoAndRedeId</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.Grafic2TO] Grafic32ByPeriodoAndRedeId(System.String, System.String, SIAO.SRV.TO.UsersTO, Int32)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="DataSet3">
+      <Query>
+        <DataSourceName>SIAOSRVBLL2</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="CNPJ">
+          <DataField>CNPJ</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Razao_Social">
+          <DataField>Razao_Social</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Mes">
+          <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Grupo">
+          <DataField>Grupo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Sub_Consultoria">
+          <DataField>Sub_Consultoria</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Liquido">
+          <DataField>Liquido</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Desconto">
+          <DataField>Desconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantidade">
+          <DataField>quantidade</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
+        <rd:TableName>GraficBLL</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>Grafic33ByPeriodoAndRedeId</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.Grafic2TO] Grafic33ByPeriodoAndRedeId(System.String, System.String, SIAO.SRV.TO.UsersTO, Int32)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="logo_Cas_blue_140px">
       <MIMEType>image/png</MIMEType>
@@ -1644,6 +1713,6 @@ QOf2QmcRMwzJMEMqWw5j94gKdC4EdJbRxNIBVulOhNXOymkV6FwY6Cw7jViKQjAyYsm8CnRuK3RWf+On
 LPkIuH40lNS12ehjHMr9hShqcIR5wzCorjZJ904YSd2r9fLmMK2g3a1ohFsgszyGypwkzHi9tvKs7WHCuKzrcfBJPmHCzBgroNamdDasoQ6+gwv5Oc34DH8Yjt+P06lCiH1rkloroLN/GMIrLMb9v5g+btd7t6tNZfJRonOg6W7VevkPSflu6aw0l4tJahzRUv4YVfgAKpAjVh7BlaFrmitDRsssVvQCw4qt8pa5jI+FzHw17OMs0r+0D8PSHbrV0NjBPSJbxmtgFfKrw43klWdnbGnK/uCV+asnobiBPBJrmghZ51WrM6fzkjm83AGu3WlIOT2ly5U71FVTj5oS6tOlRDA9apI0sK7GW+uA6E3U47eYzTdljcnrtqaH54qwzYTSvSq5pEuV/gsz/DyJdFyj+7unN7BtbTZo3yE96OKDd2qXnL+xMXPPglUNT6YN44qNW9PnNaZljbuyS2gwlLyOIvWuSz2tCTNS53scir8mqZsh+UttKxkZhnt3VkaDw8/XbOl2wdPzLjIFTCHqhAKjpRWUqKkhnb1rwphB08/ee/CK6LnGIW5AYccFSToaL1GApQCbsxY7/GDJ5pGXP/UxC6zHaUocXEcKSmey83bp2/X6O76/x9M+IVzwMjqltyRhyXAYbqREjC6hSyqxCZU3DYPNn1Hp16KznoTqToFYsrjlH7hrspYV81IJzVqriGKUZ6HQpbmut2+zGltQ/x7VH1QntOMx5BwDDjIFxDKazMWFzODMNxuadldVQm+sSmhUDlvJcJic8g24z/JNjWrSjtwmHOwabfK5KSjiM3pUJ6muurTGfOacyzY0uXRkvzvZJojVXP1MLH26pyoEU9m2vU2rVEFlqxBMZasQTGUrje3/BRgAb0eBhF63UbQAAAAASUVORK5CYII=</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>ef1fcfe4-3022-402a-8076-4332ce183788</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>ef1fcfe4-3022-402a-8076-4332ce183788</rd:ReportID>
 </Report>

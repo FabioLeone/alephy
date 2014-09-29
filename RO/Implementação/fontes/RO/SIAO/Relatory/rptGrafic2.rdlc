@@ -1,71 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="SIAOSRVBLL">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>db6142b4-8615-4c1c-9ed2-0c6f540e16bc</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet1">
-      <Fields>
-        <Field Name="Razao_Social">
-          <DataField>Razao_Social</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Mes">
-          <DataField>Mes</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Grupo">
-          <DataField>Grupo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Sub_Consultoria">
-          <DataField>Sub_Consultoria</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Liquido">
-          <DataField>Liquido</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Desconto">
-          <DataField>Desconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Nome_Fantasia">
-          <DataField>Nome_Fantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Periodo">
-          <DataField>Periodo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="quantidade">
-          <DataField>quantidade</DataField>
-          <rd:TypeName>System.Int64</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>SIAOSRVBLL</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <rd:DataSetInfo>
-        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
-        <rd:TableName>GraficBLL</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>GraficList</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(System.String, SIAO.SRV.TO.UsersTO, System.String, System.String)</rd:ObjectDataSourceSelectMethodSignature>
-        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Chart Name="Chart2">
@@ -186,6 +120,9 @@
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
                 <MaxFontSize>14pt</MaxFontSize>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -220,6 +157,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -256,6 +196,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -289,6 +232,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <Style>
@@ -321,7 +267,23 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -412,12 +374,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.74803in</Width>
+              <Width>1.9cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.3937in</Height>
+              <Height>1cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -487,7 +449,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.3937in</Size>
+                    <Size>1cm</Size>
                     <CellContents>
                       <Textbox Name="Mes">
                         <CanGrow>true</CanGrow>
@@ -541,7 +503,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.5748in</Size>
+                <Size>3.99999cm</Size>
                 <CellContents>
                   <Textbox Name="Grupo">
                     <CanGrow>true</CanGrow>
@@ -654,12 +616,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.74803in</Width>
+              <Width>1.9cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.3937in</Height>
+              <Height>1cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -729,7 +691,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.3937in</Size>
+                    <Size>1cm</Size>
                     <CellContents>
                       <Textbox Name="Mes2">
                         <CanGrow>true</CanGrow>
@@ -783,7 +745,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.5748in</Size>
+                <Size>3.99999cm</Size>
                 <CellContents>
                   <Textbox Name="Grupo2">
                     <CanGrow>true</CanGrow>
@@ -969,6 +931,9 @@
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
                 <MaxFontSize>14pt</MaxFontSize>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -1003,6 +968,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -1039,6 +1007,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -1072,6 +1043,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <Style>
@@ -1104,7 +1078,23 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -1275,6 +1265,9 @@
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
                 <MaxFontSize>14pt</MaxFontSize>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -1309,6 +1302,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -1345,6 +1341,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -1378,6 +1377,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <Style>
@@ -1410,7 +1412,23 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -1506,12 +1524,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.74803in</Width>
+              <Width>1.9cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.3937in</Height>
+              <Height>1cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1581,7 +1599,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.3937in</Size>
+                    <Size>1cm</Size>
                     <CellContents>
                       <Textbox Name="Mes3">
                         <CanGrow>true</CanGrow>
@@ -1635,7 +1653,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.5748in</Size>
+                <Size>3.99999cm</Size>
                 <CellContents>
                   <Textbox Name="Grupo3">
                     <CanGrow>true</CanGrow>
@@ -1821,6 +1839,9 @@
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
                 <MaxFontSize>14pt</MaxFontSize>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -1855,6 +1876,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -1891,6 +1915,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -1924,6 +1951,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <Style>
@@ -1956,7 +1986,23 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -2052,12 +2098,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.74803in</Width>
+              <Width>1.9cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.3937in</Height>
+              <Height>1cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2127,7 +2173,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.3937in</Size>
+                    <Size>1cm</Size>
                     <CellContents>
                       <Textbox Name="Mes4">
                         <CanGrow>true</CanGrow>
@@ -2181,7 +2227,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.5748in</Size>
+                <Size>3.99999cm</Size>
                 <CellContents>
                   <Textbox Name="Grupo4">
                     <CanGrow>true</CanGrow>
@@ -2367,6 +2413,9 @@
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
                 <MaxFontSize>14pt</MaxFontSize>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -2401,6 +2450,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartCategoryAxes>
             <ChartValueAxes>
@@ -2437,6 +2489,9 @@
                 <CrossAt>NaN</CrossAt>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
               <ChartAxis Name="Secondary">
                 <Style>
@@ -2470,6 +2525,9 @@
                 <Location>Opposite</Location>
                 <Minimum>NaN</Minimum>
                 <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
               </ChartAxis>
             </ChartValueAxes>
             <Style>
@@ -2502,7 +2560,23 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=Fields!Sub_Consultoria.Value</Caption>
+            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -2598,12 +2672,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.74803in</Width>
+              <Width>1.9cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.3937in</Height>
+              <Height>1cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2673,7 +2747,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.3937in</Size>
+                    <Size>1cm</Size>
                     <CellContents>
                       <Textbox Name="Mes5">
                         <CanGrow>true</CanGrow>
@@ -2727,7 +2801,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.5748in</Size>
+                <Size>3.99999cm</Size>
                 <CellContents>
                   <Textbox Name="Grupo5">
                     <CanGrow>true</CanGrow>
@@ -2916,6 +2990,73 @@
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="SIAOSRVBLL">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>db6142b4-8615-4c1c-9ed2-0c6f540e16bc</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>SIAOSRVBLL</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Razao_Social">
+          <DataField>Razao_Social</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Mes">
+          <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Grupo">
+          <DataField>Grupo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Sub_Consultoria">
+          <DataField>Sub_Consultoria</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Liquido">
+          <DataField>Liquido</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Desconto">
+          <DataField>Desconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Nome_Fantasia">
+          <DataField>Nome_Fantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantidade">
+          <DataField>quantidade</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
+        <rd:TableName>GraficBLL</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>GraficList</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(System.String, SIAO.SRV.TO.UsersTO, System.String, System.String)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="logo_Cas_blue_140px">
       <MIMEType>image/png</MIMEType>
@@ -2941,6 +3082,6 @@ LPkIuH40lNS12ehjHMr9hShqcIR5wzCorjZJ904YSd2r9fLmMK2g3a1ohFsgszyGypwkzHi9tvKs7WHC
     <CodeModule>Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
     <CodeModule>Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
   </CodeModules>
-  <rd:ReportID>56ae5009-3f7d-45f6-b18c-92e8315f43d9</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>56ae5009-3f7d-45f6-b18c-92e8315f43d9</rd:ReportID>
 </Report>
