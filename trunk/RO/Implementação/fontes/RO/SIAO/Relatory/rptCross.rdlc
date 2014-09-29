@@ -1,87 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="SIAOSRV">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>c76ae31a-6537-4dd8-9523-39ec4891ca79</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet1">
-      <Fields>
-        <Field Name="Razao">
-          <DataField>Razao</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Cnpj">
-          <DataField>Cnpj</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SubConsultoria">
-          <DataField>SubConsultoria</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Mes">
-          <DataField>Mes</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Grupo">
-          <DataField>Grupo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SomaDeQuantidade">
-          <DataField>SomaDeQuantidade</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SomaDeValorBruto">
-          <DataField>SomaDeValorBruto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SomaDeValorLiquido">
-          <DataField>SomaDeValorLiquido</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SomaDeValorDesconto">
-          <DataField>SomaDeValorDesconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="PercentualDesconto">
-          <DataField>PercentualDesconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NomeFantasia">
-          <DataField>NomeFantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Importado">
-          <DataField>Importado</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Periodo">
-          <DataField>Periodo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>SIAOSRV</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <rd:DataSetInfo>
-        <rd:DataSetName>SIAO.SRV</rd:DataSetName>
-        <rd:TableName>clsControl</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>GetCross</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.clsRelat1] GetCross(SIAO.SRV.TO.UsersTO, System.String, System.String, System.String, Int32)</rd:ObjectDataSourceSelectMethodSignature>
-        <rd:ObjectDataSourceType>SIAO.SRV.clsControl, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
@@ -309,12 +227,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.72945in</Width>
+              <Width>1.8528cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.13456in</Height>
+              <Height>0.34178cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -349,7 +267,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.13456in</Height>
+              <Height>0.34178cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -385,7 +303,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.11373in</Height>
+              <Height>0.28887cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -428,7 +346,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.18665in</Size>
+                    <Size>0.47409cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox3">
                         <CanGrow>true</CanGrow>
@@ -480,7 +398,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.2179in</Size>
+                            <Size>0.55347cm</Size>
                             <CellContents>
                               <Textbox Name="Group1">
                                 <CanGrow>true</CanGrow>
@@ -548,7 +466,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.40246in</Size>
+                <Size>1.02225cm</Size>
                 <CellContents>
                   <Textbox Name="NomeFantasia1">
                     <CanGrow>true</CanGrow>
@@ -610,7 +528,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="SubConsultoria">
                             <CanGrow>true</CanGrow>
@@ -619,7 +537,23 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!SubConsultoria.Value</Value>
+                                    <Value>=IIF(Fields!SubConsultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!SubConsultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!SubConsultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!SubConsultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Value>
                                     <Style>
                                       <FontSize>9pt</FontSize>
                                     </Style>
@@ -655,7 +589,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Grupo">
                                 <CanGrow>true</CanGrow>
@@ -693,7 +627,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox55">
                                 <CanGrow>true</CanGrow>
@@ -730,7 +664,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox47">
                             <CanGrow>true</CanGrow>
@@ -764,7 +698,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox48">
                                 <CanGrow>true</CanGrow>
@@ -812,7 +746,6 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Top>0cm</Top>
         <Height>2cm</Height>
         <Width>8.34939cm</Width>
         <Style>
@@ -1048,12 +981,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.72945in</Width>
+              <Width>1.8528cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1088,7 +1021,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1124,7 +1057,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1167,7 +1100,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.15748in</Size>
+                    <Size>0.4cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox12">
                         <CanGrow>true</CanGrow>
@@ -1219,7 +1152,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.15748in</Size>
+                            <Size>0.4cm</Size>
                             <CellContents>
                               <Textbox Name="Group9">
                                 <CanGrow>true</CanGrow>
@@ -1283,7 +1216,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.40246in</Size>
+                <Size>1.02225cm</Size>
                 <CellContents>
                   <Textbox Name="Razao2">
                     <CanGrow>true</CanGrow>
@@ -1340,7 +1273,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="SubConsultoria2">
                             <CanGrow>true</CanGrow>
@@ -1349,7 +1282,23 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!SubConsultoria.Value</Value>
+                                    <Value>=IIF(Fields!SubConsultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!SubConsultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!SubConsultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!SubConsultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Value>
                                     <Style>
                                       <FontSize>9pt</FontSize>
                                     </Style>
@@ -1385,7 +1334,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Grupo2">
                                 <CanGrow>true</CanGrow>
@@ -1423,7 +1372,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox61">
                                 <CanGrow>true</CanGrow>
@@ -1460,7 +1409,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox54">
                             <CanGrow>true</CanGrow>
@@ -1494,7 +1443,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox62">
                                 <CanGrow>true</CanGrow>
@@ -1777,12 +1726,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.72945in</Width>
+              <Width>1.8528cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1817,7 +1766,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1853,7 +1802,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1896,7 +1845,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.15748in</Size>
+                    <Size>0.4cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox134">
                         <CanGrow>true</CanGrow>
@@ -1948,7 +1897,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.15748in</Size>
+                            <Size>0.4cm</Size>
                             <CellContents>
                               <Textbox Name="Group18">
                                 <CanGrow>true</CanGrow>
@@ -2012,7 +1961,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.40246in</Size>
+                <Size>1.02225cm</Size>
                 <CellContents>
                   <Textbox Name="Razao4">
                     <CanGrow>true</CanGrow>
@@ -2069,7 +2018,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="SubConsultoria4">
                             <CanGrow>true</CanGrow>
@@ -2078,7 +2027,23 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!SubConsultoria.Value</Value>
+                                    <Value>=IIF(Fields!SubConsultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!SubConsultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!SubConsultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!SubConsultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Value>
                                     <Style>
                                       <FontSize>9pt</FontSize>
                                     </Style>
@@ -2114,7 +2079,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Grupo4">
                                 <CanGrow>true</CanGrow>
@@ -2152,7 +2117,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox137">
                                 <CanGrow>true</CanGrow>
@@ -2189,7 +2154,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox138">
                             <CanGrow>true</CanGrow>
@@ -2223,7 +2188,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox139">
                                 <CanGrow>true</CanGrow>
@@ -2506,12 +2471,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.72945in</Width>
+              <Width>1.8528cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2548,7 +2513,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2586,7 +2551,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.15748in</Height>
+              <Height>0.4cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2631,7 +2596,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.15748in</Size>
+                    <Size>0.4cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox179">
                         <CanGrow>true</CanGrow>
@@ -2683,7 +2648,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.15748in</Size>
+                            <Size>0.4cm</Size>
                             <CellContents>
                               <Textbox Name="Group25">
                                 <CanGrow>true</CanGrow>
@@ -2747,7 +2712,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.40246in</Size>
+                <Size>1.02225cm</Size>
                 <CellContents>
                   <Textbox Name="Razao5">
                     <CanGrow>true</CanGrow>
@@ -2804,7 +2769,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="SubConsultoria5">
                             <CanGrow>true</CanGrow>
@@ -2813,7 +2778,23 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!SubConsultoria.Value</Value>
+                                    <Value>=IIF(Fields!SubConsultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!SubConsultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!SubConsultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!SubConsultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Value>
                                     <Style>
                                       <FontSize>9pt</FontSize>
                                     </Style>
@@ -2849,7 +2830,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>1.05337in</Size>
+                            <Size>2.67556cm</Size>
                             <CellContents>
                               <Textbox Name="Grupo5">
                                 <CanGrow>true</CanGrow>
@@ -2887,7 +2868,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05337in</Size>
+                            <Size>2.67556cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox180">
                                 <CanGrow>true</CanGrow>
@@ -2924,7 +2905,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox181">
                             <CanGrow>true</CanGrow>
@@ -2958,7 +2939,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05337in</Size>
+                            <Size>2.67556cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox182">
                                 <CanGrow>true</CanGrow>
@@ -3238,12 +3219,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.72945in</Width>
+              <Width>1.8528cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.15332in</Height>
+              <Height>0.38943cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3278,7 +3259,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.15332in</Height>
+              <Height>0.38943cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3314,7 +3295,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.15332in</Height>
+              <Height>0.38943cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3357,7 +3338,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.17414in</Size>
+                    <Size>0.44232cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox218">
                         <CanGrow>true</CanGrow>
@@ -3409,7 +3390,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>0.15332in</Size>
+                            <Size>0.38943cm</Size>
                             <CellContents>
                               <Textbox Name="Group27">
                                 <CanGrow>true</CanGrow>
@@ -3473,7 +3454,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.40246in</Size>
+                <Size>1.02225cm</Size>
                 <CellContents>
                   <Textbox Name="Razao6">
                     <CanGrow>true</CanGrow>
@@ -3530,7 +3511,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="SubConsultoria6">
                             <CanGrow>true</CanGrow>
@@ -3539,7 +3520,23 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!SubConsultoria.Value</Value>
+                                    <Value>=IIF(Fields!SubConsultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!SubConsultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!SubConsultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!SubConsultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Value>
                                     <Style>
                                       <FontSize>9pt</FontSize>
                                     </Style>
@@ -3575,7 +3572,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Grupo6">
                                 <CanGrow>true</CanGrow>
@@ -3613,7 +3610,7 @@
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox222">
                                 <CanGrow>true</CanGrow>
@@ -3650,7 +3647,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>1.10154in</Size>
+                        <Size>2.79791cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox223">
                             <CanGrow>true</CanGrow>
@@ -3684,7 +3681,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.05371in</Size>
+                            <Size>2.67642cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox224">
                                 <CanGrow>true</CanGrow>
@@ -3862,6 +3859,89 @@
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="SIAOSRV">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>c76ae31a-6537-4dd8-9523-39ec4891ca79</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>SIAOSRV</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Razao">
+          <DataField>Razao</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Cnpj">
+          <DataField>Cnpj</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SubConsultoria">
+          <DataField>SubConsultoria</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Mes">
+          <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Grupo">
+          <DataField>Grupo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SomaDeQuantidade">
+          <DataField>SomaDeQuantidade</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SomaDeValorBruto">
+          <DataField>SomaDeValorBruto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SomaDeValorLiquido">
+          <DataField>SomaDeValorLiquido</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SomaDeValorDesconto">
+          <DataField>SomaDeValorDesconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PercentualDesconto">
+          <DataField>PercentualDesconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="NomeFantasia">
+          <DataField>NomeFantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Importado">
+          <DataField>Importado</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>SIAO.SRV</rd:DataSetName>
+        <rd:TableName>clsControl</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>GetCross</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.clsRelat1] GetCross(SIAO.SRV.TO.UsersTO, System.String, System.String, System.String, Int32)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>SIAO.SRV.clsControl, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="logo_Cas_blue_140px">
       <MIMEType>image/png</MIMEType>
@@ -3882,6 +3962,6 @@ QOf2QmcRMwzJMEMqWw5j94gKdC4EdJbRxNIBVulOhNXOymkV6FwY6Cw7jViKQjAyYsm8CnRuK3RWf+On
 LPkIuH40lNS12ehjHMr9hShqcIR5wzCorjZJ904YSd2r9fLmMK2g3a1ohFsgszyGypwkzHi9tvKs7WHCuKzrcfBJPmHCzBgroNamdDasoQ6+gwv5Oc34DH8Yjt+P06lCiH1rkloroLN/GMIrLMb9v5g+btd7t6tNZfJRonOg6W7VevkPSflu6aw0l4tJahzRUv4YVfgAKpAjVh7BlaFrmitDRsssVvQCw4qt8pa5jI+FzHw17OMs0r+0D8PSHbrV0NjBPSJbxmtgFfKrw43klWdnbGnK/uCV+asnobiBPBJrmghZ51WrM6fzkjm83AGu3WlIOT2ly5U71FVTj5oS6tOlRDA9apI0sK7GW+uA6E3U47eYzTdljcnrtqaH54qwzYTSvSq5pEuV/gsz/DyJdFyj+7unN7BtbTZo3yE96OKDd2qXnL+xMXPPglUNT6YN44qNW9PnNaZljbuyS2gwlLyOIvWuSz2tCTNS53scir8mqZsh+UttKxkZhnt3VkaDw8/XbOl2wdPzLjIFTCHqhAKjpRWUqKkhnb1rwphB08/ee/CK6LnGIW5AYccFSToaL1GApQCbsxY7/GDJ5pGXP/UxC6zHaUocXEcKSmey83bp2/X6O76/x9M+IVzwMjqltyRhyXAYbqREjC6hSyqxCZU3DYPNn1Hp16KznoTqToFYsrjlH7hrspYV81IJzVqriGKUZ6HQpbmut2+zGltQ/x7VH1QntOMx5BwDDjIFxDKazMWFzODMNxuadldVQm+sSmhUDlvJcJic8g24z/JNjWrSjtwmHOwabfK5KSjiM3pUJ6muurTGfOacyzY0uXRkvzvZJojVXP1MLH26pyoEU9m2vU2rVEFlqxBMZasQTGUrje3/BRgAb0eBhF63UbQAAAAASUVORK5CYII=</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>c1cc935b-0c5e-46b5-86e2-88dc7e2455b1</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>c1cc935b-0c5e-46b5-86e2-88dc7e2455b1</rd:ReportID>
 </Report>

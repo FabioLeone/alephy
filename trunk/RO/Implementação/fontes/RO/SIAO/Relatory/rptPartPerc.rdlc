@@ -1,91 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="SIAOSRV">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>20a07a73-8324-4c57-b445-0e9ebedff5b9</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet1">
-      <Fields>
-        <Field Name="Participacao">
-          <DataField>Participacao</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Razao">
-          <DataField>Razao</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Cnpj">
-          <DataField>Cnpj</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SubConsultoria">
-          <DataField>SubConsultoria</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Mes">
-          <DataField>Mes</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Ano">
-          <DataField>Ano</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Grupo">
-          <DataField>Grupo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SomaDeQuantidade">
-          <DataField>SomaDeQuantidade</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SomaDeValorBruto">
-          <DataField>SomaDeValorBruto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SomaDeValorLiquido">
-          <DataField>SomaDeValorLiquido</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SomaDeValorDesconto">
-          <DataField>SomaDeValorDesconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="PercentualDesconto">
-          <DataField>PercentualDesconto</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NomeFantasia">
-          <DataField>NomeFantasia</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Importado">
-          <DataField>Importado</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Periodo">
-          <DataField>Periodo</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>SIAOSRV</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <rd:DataSetInfo>
-        <rd:DataSetName>SIAO.SRV</rd:DataSetName>
-        <rd:TableName>RelatoriosBLL</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>GetPercent</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.PercReport] GetPercent(SIAO.SRV.TO.UsersTO, System.String, System.String, Int32, System.String)</rd:ObjectDataSourceSelectMethodSignature>
-        <rd:ObjectDataSourceType>SIAO.SRV.RelatoriosBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
-      </rd:DataSetInfo>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix3">
@@ -174,12 +88,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.70866in</Width>
+              <Width>1.8cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -223,7 +137,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -258,7 +172,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -299,7 +213,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>0.23622in</Size>
+                <Size>0.6cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox52">
                     <CanGrow>true</CanGrow>
@@ -361,7 +275,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>0.3937in</Size>
+                <Size>1cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox112">
                     <CanGrow>true</CanGrow>
@@ -402,7 +316,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.67323in</Size>
+                    <Size>4.25cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox108">
                         <CanGrow>true</CanGrow>
@@ -459,7 +373,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.3937in</Size>
+                <Size>1cm</Size>
                 <CellContents>
                   <Textbox Name="Group3">
                     <CanGrow>true</CanGrow>
@@ -506,7 +420,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>1.67323in</Size>
+                    <Size>4.25cm</Size>
                     <CellContents>
                       <Textbox Name="Group1">
                         <CanGrow>true</CanGrow>
@@ -515,7 +429,23 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!SubConsultoria.Value</Value>
+                                <Value>=IIF(Fields!SubConsultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!SubConsultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!SubConsultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!SubConsultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!SubConsultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!SubConsultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Value>
                                 <Style />
                               </TextRun>
                             </TextRuns>
@@ -542,7 +472,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.67323in</Size>
+                    <Size>4.25cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox54">
                         <CanGrow>true</CanGrow>
@@ -581,7 +511,6 @@
         </TablixRowHierarchy>
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0cm</Top>
         <Height>2.4cm</Height>
         <Width>7.05cm</Width>
         <Style>
@@ -714,6 +643,93 @@ First(Fields!Cnpj.Value, "DataSet1") &amp;
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="SIAOSRV">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>20a07a73-8324-4c57-b445-0e9ebedff5b9</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>SIAOSRV</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Participacao">
+          <DataField>Participacao</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Razao">
+          <DataField>Razao</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Cnpj">
+          <DataField>Cnpj</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SubConsultoria">
+          <DataField>SubConsultoria</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Mes">
+          <DataField>Mes</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Ano">
+          <DataField>Ano</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Grupo">
+          <DataField>Grupo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SomaDeQuantidade">
+          <DataField>SomaDeQuantidade</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SomaDeValorBruto">
+          <DataField>SomaDeValorBruto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SomaDeValorLiquido">
+          <DataField>SomaDeValorLiquido</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SomaDeValorDesconto">
+          <DataField>SomaDeValorDesconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PercentualDesconto">
+          <DataField>PercentualDesconto</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="NomeFantasia">
+          <DataField>NomeFantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Importado">
+          <DataField>Importado</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Periodo">
+          <DataField>Periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>SIAO.SRV</rd:DataSetName>
+        <rd:TableName>RelatoriosBLL</rd:TableName>
+        <rd:ObjectDataSourceSelectMethod>GetPercent</rd:ObjectDataSourceSelectMethod>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.PercReport] GetPercent(SIAO.SRV.TO.UsersTO, System.String, System.String, Int32, System.String)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>SIAO.SRV.RelatoriosBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="logo_Cas_blue_140px">
       <MIMEType>image/png</MIMEType>
@@ -734,6 +750,6 @@ QOf2QmcRMwzJMEMqWw5j94gKdC4EdJbRxNIBVulOhNXOymkV6FwY6Cw7jViKQjAyYsm8CnRuK3RWf+On
 LPkIuH40lNS12ehjHMr9hShqcIR5wzCorjZJ904YSd2r9fLmMK2g3a1ohFsgszyGypwkzHi9tvKs7WHCuKzrcfBJPmHCzBgroNamdDasoQ6+gwv5Oc34DH8Yjt+P06lCiH1rkloroLN/GMIrLMb9v5g+btd7t6tNZfJRonOg6W7VevkPSflu6aw0l4tJahzRUv4YVfgAKpAjVh7BlaFrmitDRsssVvQCw4qt8pa5jI+FzHw17OMs0r+0D8PSHbrV0NjBPSJbxmtgFfKrw43klWdnbGnK/uCV+asnobiBPBJrmghZ51WrM6fzkjm83AGu3WlIOT2ly5U71FVTj5oS6tOlRDA9apI0sK7GW+uA6E3U47eYzTdljcnrtqaH54qwzYTSvSq5pEuV/gsz/DyJdFyj+7unN7BtbTZo3yE96OKDd2qXnL+xMXPPglUNT6YN44qNW9PnNaZljbuyS2gwlLyOIvWuSz2tCTNS53scir8mqZsh+UttKxkZhnt3VkaDw8/XbOl2wdPzLjIFTCHqhAKjpRWUqKkhnb1rwphB08/ee/CK6LnGIW5AYccFSToaL1GApQCbsxY7/GDJ5pGXP/UxC6zHaUocXEcKSmey83bp2/X6O76/x9M+IVzwMjqltyRhyXAYbqREjC6hSyqxCZU3DYPNn1Hp16KznoTqToFYsrjlH7hrspYV81IJzVqriGKUZ6HQpbmut2+zGltQ/x7VH1QntOMx5BwDDjIFxDKazMWFzODMNxuadldVQm+sSmhUDlvJcJic8g24z/JNjWrSjtwmHOwabfK5KSjiM3pUJ6muurTGfOacyzY0uXRkvzvZJojVXP1MLH26pyoEU9m2vU2rVEFlqxBMZasQTGUrje3/BRgAb0eBhF63UbQAAAAASUVORK5CYII=</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>c470cd51-d3ed-452a-b034-3ac9c21db911</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>c470cd51-d3ed-452a-b034-3ac9c21db911</rd:ReportID>
 </Report>
