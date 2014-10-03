@@ -39,7 +39,23 @@
                   <Label>=Fields!Grupo.Value</Label>
                 </ChartMember>
               </ChartMembers>
-              <Label>=Fields!Sub_Consultoria.Value</Label>
+              <Label>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
+IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
+IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
+IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
+)
+)
+)
+)
+)
+)
+)
+)</Label>
             </ChartMember>
           </ChartMembers>
         </ChartCategoryHierarchy>
