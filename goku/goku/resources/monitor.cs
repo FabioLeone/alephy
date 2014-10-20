@@ -177,7 +177,17 @@ namespace consolidate.resources
                         }
                         else
                         {
-                            msg.Append(string.Format("{0}{1}", Environment.NewLine, dal.insertXml(dt)));
+                            if (dt.Rows.Count <= 4000)
+                            {
+                                msg.Append(string.Format("{0}{1}", Environment.NewLine, dal.insertXml(dt)));
+                            }
+                            else {
+                                DataSet ds = dtPart(dt,4000);
+                                for (int i = 0; i < ds.Tables.Count; i++)
+                                {
+                                    msg.Append(string.Format("{0}{1}", Environment.NewLine, dal.insertXml(ds.Tables[i])));
+                                }
+                            }
                             s = dt.Rows[0]["cnpj"].ToString();
                         }
                     }
@@ -199,6 +209,11 @@ namespace consolidate.resources
                         msg.Append(string.Format("O arquivo deve conter as seguintes colunas: {0}{1}", Environment.NewLine, ((List<string>)o).Aggregate((i, j) => i + Environment.NewLine + j)));
                         logHelper.log(logHelper.logType.error, string.Format("O arquivo deve conter as seguintes colunas: {0}{1}", Environment.NewLine, ((List<string>)o).Aggregate((i, j) => i + Environment.NewLine + j)));
                     }
+                    else if (o.GetType() == typeof(string))
+                    {
+                        msg.Append(string.Format("O arquivo contem o(s) seguinte(s) erros: {0}{1}", Environment.NewLine, (string)o));
+                        logHelper.log(logHelper.logType.error, string.Format("O arquivo contem o(s) seguinte(s) erros: {0}{1}", Environment.NewLine, (string)o));
+                    }
                     else
                     {
                         dt = (DataTable)o;
@@ -215,8 +230,19 @@ namespace consolidate.resources
                         }
                         else
                         {
-                            msg.Append(dal.inserTxt(dt));
-                            s = dt.Rows[0]["cnpj"].ToString();
+                            if (dt.Rows.Count <= 4000)
+                            {
+                                msg.Append(dal.inserTxt(dt));
+                                s = dt.Rows[0]["cnpj"].ToString();
+                            }
+                            else { 
+                                DataSet ds = dtPart(dt, 4000);
+                                for (int i = 0; i < ds.Tables.Count; i++)
+                                {
+                                    msg.Append(dal.inserTxt(ds.Tables[i]));
+                                    s = dt.Rows[0]["cnpj"].ToString();
+                                }
+                            }
                         }
                     }
                 }
@@ -298,84 +324,98 @@ namespace consolidate.resources
             int i = 0;
             int intMes = 0;
             string strCnpj = string.Empty;
+            string fLine;
             List<string> lstc = new List<string>();
 
             while (!sr.EndOfStream)
             {
-                line = sr.ReadLine().Split(';');
+                fLine = sr.ReadLine();
+                line = fLine.Split(';');
 
-                if (i == 0)
+                try
                 {
-                    for (int j = 0; j < line.Length; j++)
+                    if (!String.IsNullOrEmpty(fLine))
                     {
-                        dt.Columns.Add(RemoveSpecialChar(line[j].Trim()));
-                    }
-                    i++;
+                        if (i == 0)
+                        {
+                            for (int j = 0; j < line.Length; j++)
+                            {
+                                dt.Columns.Add(RemoveSpecialChar(line[j].Trim()));
+                            }
+                            i++;
 
-                    if (dt.Columns.Count != 13)
-                        lstc = columns.Where(c => !dt.Columns.Contains(c)).ToList();
+                            if (dt.Columns.Count != 13)
+                                lstc = columns.Where(c => !dt.Columns.Contains(c)).ToList();
+                        }
+                        else
+                        {
+                            if (lstc.Count > 0)
+                            {
+                                sr.Dispose();
+                                return lstc;
+                            }
+
+                            DataRow dr = dt.NewRow();
+
+                            for (int j = 0; j < dt.Columns.Count; j++)
+                            {
+                                if (j.Equals(2))
+                                {
+                                    if (!intMes.Equals(Convert.ToInt32(line[j])))
+                                    {
+                                        intMes = Convert.ToInt32(line[j]);
+                                        lstMeses.Add(Convert.ToInt32(line[j]));
+                                    }
+                                }
+                                if (j.Equals(1))
+                                {
+                                    line[j] = RemoveMaskCnpj(line[j]);
+
+                                    if (!strCnpj.Equals(line[j]))
+                                    {
+                                        strCnpj = line[j];
+                                        lstCnpj.Add(strCnpj);
+                                    }
+                                }
+                                if (j > 2)
+                                {
+                                    line[j] = line[j].Replace('°', ' ');
+                                    line[j] = line[j].Replace('º', ' ');
+                                    line[j] = line[j].Replace('ª', ' ');
+                                    line[j] = line[j].Replace('\'', ' ');
+                                    line[j] = line[j].Replace('\\', '/');
+                                    line[j] = line[j].Replace('´', ' ');
+                                    line[j] = line[j].Replace('§', ' ');
+                                    line[j] = line[j].Replace(".", "");
+                                    line[j] = line[j].Replace('Í', 'I');
+                                    line[j] = line[j].Replace('í', 'i');
+                                    line[j] = line[j].Replace('Ç', 'C');
+                                    line[j] = line[j].Replace('ç', 'c');
+                                    line[j] = line[j].Replace('Ó', 'O');
+                                    line[j] = line[j].Replace('ó', 'o');
+                                    line[j] = line[j].Replace('Ô', 'O');
+                                    line[j] = line[j].Replace('ô', 'o');
+                                    line[j] = line[j].Replace('Ã', 'A');
+                                    line[j] = line[j].Replace('ã', 'a');
+                                    line[j] = line[j].Replace('Á', 'A');
+                                    line[j] = line[j].Replace('á', 'a');
+                                    line[j] = line[j].Replace('É', 'E');
+                                    line[j] = line[j].Replace('é', 'e');
+                                    line[j] = line[j].Replace('Ê', 'E');
+                                    line[j] = line[j].Replace('ê', 'e');
+                                }
+
+                                dr[j] = line[j].Trim();
+                            }
+                            dt.Rows.Add(dr);
+                        }
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (lstc.Count > 0){
-                        sr.Dispose();
-                        return lstc;
-                    }
-                     
-                    DataRow dr = dt.NewRow();
-
-                    for (int j = 0; j < dt.Columns.Count; j++)
-                    {
-                        if (j.Equals(2))
-                        {
-                            if (!intMes.Equals(Convert.ToInt32(line[j])))
-                            {
-                                intMes = Convert.ToInt32(line[j]);
-                                lstMeses.Add(Convert.ToInt32(line[j]));
-                            }
-                        }
-                        if (j.Equals(1))
-                        {
-                            line[j] = RemoveMaskCnpj(line[j]);
-
-                            if (!strCnpj.Equals(line[j]))
-                            {
-                                strCnpj = line[j];
-                                lstCnpj.Add(strCnpj);
-                            }
-                        }
-                        if (j > 2)
-                        {
-                            line[j] = line[j].Replace('°', ' ');
-                            line[j] = line[j].Replace('º', ' ');
-                            line[j] = line[j].Replace('ª', ' ');
-                            line[j] = line[j].Replace('\'', ' ');
-                            line[j] = line[j].Replace('\\', '/');
-                            line[j] = line[j].Replace('´', ' ');
-                            line[j] = line[j].Replace('§', ' ');
-                            line[j] = line[j].Replace(".", "");
-                            line[j] = line[j].Replace('Í', 'I');
-                            line[j] = line[j].Replace('í', 'i');
-                            line[j] = line[j].Replace('Ç', 'C');
-                            line[j] = line[j].Replace('ç', 'c');
-                            line[j] = line[j].Replace('Ó', 'O');
-                            line[j] = line[j].Replace('ó', 'o');
-                            line[j] = line[j].Replace('Ô', 'O');
-                            line[j] = line[j].Replace('ô', 'o');
-                            line[j] = line[j].Replace('Ã', 'A');
-                            line[j] = line[j].Replace('ã', 'a');
-                            line[j] = line[j].Replace('Á', 'A');
-                            line[j] = line[j].Replace('á', 'a');
-                            line[j] = line[j].Replace('É', 'E');
-                            line[j] = line[j].Replace('é', 'e');
-                            line[j] = line[j].Replace('Ê', 'E');
-                            line[j] = line[j].Replace('ê', 'e');
-                        }
-
-                        dr[j] = line[j].Trim();
-                    }
-                    dt.Rows.Add(dr);
+                    return e.Message + " - linha: " + fLine;
                 }
+                
             }
 
             sr.Dispose();
@@ -512,6 +552,39 @@ namespace consolidate.resources
 
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        public DataSet dtPart(DataTable dt, int max)
+        {
+            int i = 0;
+            int j = 1;
+            DataSet newDs = new DataSet();
+            DataTable newDt = dt.Clone();
+            newDt.TableName = "Table_" + j;
+            newDt.Clear();
+            foreach (DataRow row in dt.Rows)
+            {
+                DataRow newRow = newDt.NewRow();
+                newRow.ItemArray = row.ItemArray;
+
+                newDt.Rows.Add(newRow);
+                i++;
+                if (i == max)
+                {
+                    newDs.Tables.Add(newDt);
+                    j++;
+
+                    int m = (dt.Rows.Count - (newDs.Tables.Count * newDt.Rows.Count));
+                    if (m < max)
+                        max = m;
+
+                    newDt = dt.Clone();
+                    newDt.TableName = "Table_" + j;
+                    newDt.Clear();
+                    i = 0;
+                }
+            }
+            return newDs;
         }
     }
 }

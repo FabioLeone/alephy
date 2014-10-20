@@ -81,6 +81,7 @@ namespace goku.resources
                     {
                         var data = SerializeData(row.ItemArray);
                         var raw = Encoding.UTF8.GetBytes(string.Concat(data, "\n"));
+
                         copy.CopyStream.Write(raw, 0, raw.Length);
                     }
                 }
@@ -89,6 +90,7 @@ namespace goku.resources
                     copy.Cancel("Undo copy");
                     msg = ex.Message;
                     logHelper.log(logHelper.logType.error, ex.Message);
+                    cnn.Close();
                 }
                 finally
                 {
@@ -97,6 +99,8 @@ namespace goku.resources
                         copy.CopyStream.Close();
                     }
                     copy.End();
+
+                    cnn.Close();
                 }
 
                 if (String.IsNullOrEmpty(msg))
@@ -302,6 +306,7 @@ namespace goku.resources
                 cmd.Parameters.Add("@cnpj", NpgsqlDbType.Varchar).Value = dr[0].ToString();
                 cmd.Parameters.Add("@ano", NpgsqlDbType.Integer).Value = dr[1];
                 cmd.Parameters.Add("@mes", NpgsqlDbType.Integer).Value = dr[2];
+                cmd.CommandTimeout = 3840;
 
                 msc.Open();
 
