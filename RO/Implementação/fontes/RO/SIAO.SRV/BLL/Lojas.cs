@@ -152,6 +152,26 @@ namespace SIAO.SRV
             ddlLojaRelatorios.SelectedIndex = 0;
         }
 
+        public static void getLojasApp(DropDownList ddlLojaRelatorios, int intRedeId, string city)
+        {
+            ddlLojaRelatorios.DataSource = clsControl.GetLojaByRedeIdAndCity(intRedeId, city);
+            ddlLojaRelatorios.DataTextField = "NomeFantasia";
+            ddlLojaRelatorios.DataValueField = "Cnpj";
+            ddlLojaRelatorios.DataBind();
+            ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
+            ddlLojaRelatorios.SelectedIndex = 0;
+        }
+
+        public static void getLojasApp(DropDownList ddlLojaRelatorios, int intRedeId, int ufId)
+        {
+            ddlLojaRelatorios.DataSource = clsControl.GetLojaByRedeIdAndUf(intRedeId, ufId);
+            ddlLojaRelatorios.DataTextField = "NomeFantasia";
+            ddlLojaRelatorios.DataValueField = "Cnpj";
+            ddlLojaRelatorios.DataBind();
+            ddlLojaRelatorios.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", string.Empty));
+            ddlLojaRelatorios.SelectedIndex = 0;
+        }
+
         internal static void LoadLojas(TO.UsersTO oUser, System.Web.UI.WebControls.DropDownList ddlLoja)
         {
             ddlLoja.DataSource = clsControl.GetLojaByUserId(oUser.UserId);

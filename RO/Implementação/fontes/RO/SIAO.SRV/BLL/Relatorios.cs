@@ -27,21 +27,6 @@ namespace SIAO.SRV
             return lstReport;
         }
 
-        public static List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, string strCnpj, int intRedeId, CheckBox cbxSum)
-        {
-            SRV.clsControl oc = new SRV.clsControl();
-            List<clsRelat1> lstReport = oc.GetCross(clsUser, strInicio, strFim, strCnpj, intRedeId, cbxSum.Checked);
-
-            lstReport.ForEach(delegate(clsRelat1 report)
-            {
-                report.SomaDeValorBruto = Math.Round(report.SomaDeValorBruto, 0);
-                report.SomaDeValorLiquido = Math.Round(report.SomaDeValorLiquido, 0);
-                report.SomaDeValorDesconto = Math.Round(report.SomaDeValorDesconto, 0);
-            });
-
-            return lstReport;
-        }
-
         public static List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId, string strCnpj)
         {
             SRV.clsControl oc = new SRV.clsControl();

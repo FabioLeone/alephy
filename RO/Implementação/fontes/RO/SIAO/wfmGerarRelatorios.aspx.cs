@@ -82,6 +82,8 @@ namespace SIAO
                 
                 txtInicio.Enabled = false;
                 txtFim.Enabled = false;
+
+                LoadUf();
             }
             Global.LocalPage = "";
             Control ul = Master.FindControl("navlist");
@@ -106,7 +108,7 @@ namespace SIAO
                 if (this.User.RedeId > 0)
                     lr1 = RelatoriosBLL.GetCross(clsUser, txtInicio.Text, txtFim.Text, this.User.RedeId, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""));
                 else
-                    lr1 = RelatoriosBLL.GetCross(clsUser, txtInicio.Text, txtFim.Text, (ddlLojaRelatorios.SelectedItem != null ? ddlLojaRelatorios.SelectedItem.Value : ""), (String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) ? 0 : Convert.ToInt32(ddlRedesRelatorios.SelectedValue)), cbxSum);
+                    lr1 = RelatoriosBLL.GetCross(ResultData());
             }
             else if (rbtMes.Checked)
             {
@@ -376,7 +378,12 @@ namespace SIAO
         protected void ddlRedesRelatorios_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue))
+            {
                 LojasBLL.getLojasApp(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+                LoadUf(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
+                LoadCity(Convert.ToInt32(ddlRedesRelatorios.SelectedValue), 0);
+            }else
+                LoadUf();
         }
 
         protected void lbtnAna1_Click(object sender, EventArgs e)
@@ -476,6 +483,22 @@ namespace SIAO
             clsFuncs.Redirect(setPdf(lst, "Participacao", "Relatory/rptPartPerc.rdlc"), "_blank", "");
         }
 
+        protected void ddlUF_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) && !String.IsNullOrEmpty(ddlUF.SelectedValue))
+            {
+                LoadCity(Convert.ToInt32(ddlRedesRelatorios.SelectedValue), Convert.ToInt32(ddlUF.SelectedValue));
+                LojasBLL.getLojasApp(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue), Convert.ToInt32(ddlUF.SelectedValue));
+            }
+        }
+
+        protected void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) && !String.IsNullOrEmpty(ddlCity.SelectedValue))
+            {
+                LojasBLL.getLojasApp(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue), ddlCity.SelectedValue);
+            }
+        }
         #endregion
 
         #region .: Methods :.
@@ -584,6 +607,14 @@ namespace SIAO
                 lic.Add(new System.Web.UI.WebControls.ListItem("st", "true"));
 
             lic.Add(new System.Web.UI.WebControls.ListItem("sum", cbxSum.Checked.ToString()));
+
+            if (ddlUF.Visible && String.IsNullOrEmpty(ddlUF.SelectedValue)) {
+                lic.Add(new System.Web.UI.WebControls.ListItem("uf", ddlUF.SelectedValue));
+            }
+
+            if (String.IsNullOrEmpty(ddlCity.SelectedValue)) {
+                lic.Add(new System.Web.UI.WebControls.ListItem("city", ddlCity.SelectedValue));
+            }
 
             return lic;
         }
@@ -703,6 +734,66 @@ namespace SIAO
         public bool CheckCss()
         {
             return UsersBLL.CheckCssRede(this.User);
+        }
+
+        private void LoadUf()
+        {
+            DataSet ds = new DataSet();
+            ds = oc.GetUf(scn);
+
+            if (ds.Tables.Count > 0)
+            {
+                dvUF.Visible = true;
+
+                ddlUF.DataSource = ds.Tables[0];
+                ddlUF.DataValueField = ds.Tables[0].Columns[0].ToString();
+                ddlUF.DataTextField = ds.Tables[0].Columns[1].ToString();
+                ddlUF.DataBind();
+                ddlUF.Items.Insert(0, new System.Web.UI.WebControls.ListItem(String.Empty, String.Empty));
+                ddlUF.SelectedIndex = 0;
+            }
+        }
+
+        private void LoadUf(int id)
+        {
+            DataSet ds = new DataSet();
+            ds = oc.GetUf(id);
+
+            if (ds.Tables.Count > 0)
+            {
+                if (ds.Tables[0].Columns.Count > 0 && ds.Tables[0].Rows.Count > 1)
+                {
+                    dvUF.Visible = true;
+
+                    ddlUF.DataSource = ds.Tables[0];
+                    ddlUF.DataValueField = ds.Tables[0].Columns[0].ToString();
+                    ddlUF.DataTextField = ds.Tables[0].Columns[1].ToString();
+                    ddlUF.DataBind();
+                    ddlUF.Items.Insert(0, new System.Web.UI.WebControls.ListItem(String.Empty, String.Empty));
+                    ddlUF.SelectedIndex = 0;
+                }
+                else if (ds.Tables[0].Columns.Count > 0)
+                {
+                    dvUF.Visible = false;
+                    LoadCity(id, Convert.ToInt32(ds.Tables[0].Rows[0][0]));
+                }
+            }
+        }
+
+        private void LoadCity(int id, int ufId)
+        {
+            DataTable dt = new DataTable();
+            dt = oc.GetCityByNetworkAndUF(id, ufId);
+
+            if (dt.Columns.Count > 0)
+            {
+                ddlCity.DataSource = dt;
+                ddlCity.DataValueField = dt.Columns[0].ToString();
+                ddlCity.DataTextField = dt.Columns[0].ToString();
+                ddlCity.DataBind();
+                ddlCity.Items.Insert(0, new System.Web.UI.WebControls.ListItem(String.Empty, String.Empty));
+                ddlCity.SelectedIndex = 0;
+            }
         }
 
         #endregion

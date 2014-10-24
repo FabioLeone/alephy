@@ -209,6 +209,26 @@ namespace SIAO.SRV
             return ds;
         }
 
+        public DataSet GetUf(int intId)
+        {
+            DataSet ds = new DataSet();
+
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            cmm.Connection = cnn;
+
+            cmm.CommandText = "SELECT distinct uf.id,uf.UF FROM uf inner join farmacias f on uf.id = f.uf where f.idrede = @Id;";
+
+            cmm.Parameters.Add("@Id", NpgsqlDbType.Integer).Value = intId;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "UF");
+            }
+            clsDB.closeConnection(cmm);
+
+            return ds;
+        }
+
         public static Rede GetRedeByCNPJ(string strCNPJ)
         {
             DataSet ds = new DataSet();
@@ -393,6 +413,52 @@ namespace SIAO.SRV
 
             cmm.Parameters.Clear();
             cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            clsDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        internal static DataSet GetLojaByRedeIdAndCity(int intRedeId, string city)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT id, Cnpj, NomeFantasia, idRede FROM farmacias
+            WHERE farmacias.idRede = @idRede AND cidade = @city ORDER BY NomeFantasia";
+
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
+            cmm.Parameters.Add("@city", NpgsqlDbType.Varchar).Value = city;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "Farmacias");
+            }
+            clsDB.closeConnection(cmm);
+
+            return ds;
+        }
+
+        internal static object GetLojaByRedeIdAndUf(int intRedeId, int ufId)
+        {
+            DataSet ds = new DataSet();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            NpgsqlCommand cmm = new NpgsqlCommand();
+
+            cmm.Connection = cnn;
+            cmm.CommandText = @"SELECT id, Cnpj, NomeFantasia, idRede FROM farmacias
+            WHERE farmacias.idRede = @idRede AND uf = @uf ORDER BY NomeFantasia";
+
+            cmm.Parameters.Clear();
+            cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = intRedeId;
+            cmm.Parameters.Add("@uf", NpgsqlDbType.Integer).Value = ufId;
 
             if (clsDB.openConnection(cmm))
             {
@@ -993,6 +1059,28 @@ namespace SIAO.SRV
 
             return r;
         }
+
+        public DataTable GetCityByNetworkAndUF(int id, int ufId)
+        {
+            DataTable dt = new DataTable();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            StringBuilder sb = new StringBuilder(@"SELECT DISTINCT cidade FROM farmacias WHERE farmacias.idRede = @idRede AND uf = @uf ORDER BY cidade");
+            cmm.Connection = cnn;
+
+            cmm.CommandText = sb.ToString();
+            cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = id;
+            cmm.Parameters.Add("@uf", NpgsqlDbType.Integer).Value = ufId;
+
+            if (clsDB.openConnection(cmm))
+            {
+                dt = clsDB.QueryDS(ref cmm, ref dt, "city");
+            }
+            clsDB.closeConnection(cmm);
+
+            return dt;
+        }
+
         #endregion
 
         #region .:Persistence:.
@@ -1633,6 +1721,5 @@ namespace SIAO.SRV
             ulConf.InnerHtml = sb.ToString();
         }
         #endregion
-
     }
 }

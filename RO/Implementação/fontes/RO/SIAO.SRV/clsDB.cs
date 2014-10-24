@@ -137,6 +137,39 @@ namespace SIAO.SRV
             if (ds.Tables[nomeTabela].Rows.Count > 0) { return ds; } else { return addLine(ref ds, nomeTabela); }
         }
 
+        internal static DataTable QueryDS(ref NpgsqlCommand cmm, ref DataTable dt, string nomeTabela)
+        {
+            DataSet ds = new DataSet();
+
+            try
+            {
+                if (cmm.Connection.State == System.Data.ConnectionState.Closed)
+                {
+                    openConnection(cmm);
+                }
+            }
+            catch
+            {
+                openConnection(cmm);
+            }
+
+            try
+            {
+                NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmm);
+
+                da.Fill(ds, nomeTabela);
+            }
+            catch
+            {
+                dt = new DataTable();
+                dt.TableName = nomeTabela;
+            }
+
+            if (ds.Tables[nomeTabela].Rows.Count > 0) { dt = ds.Tables[0]; } else { dt = addLine(ref ds, nomeTabela).Tables[0]; }
+
+            return dt;
+        }
+
         // Acrescenta uma linha a tabela
         private static DataSet addLine(ref DataSet ds, object Tabela)
         {

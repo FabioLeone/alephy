@@ -44,6 +44,12 @@
                     OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
                 </asp:DropDownList>
             </div>
+            <div id="dvUF" runat="server" style="width:16.5% !important">
+                UF:<asp:DropDownList ID="ddlUF" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlUF_SelectedIndexChanged"></asp:DropDownList>
+            </div>
+            <div id="dvCity" runat="server" style="width:16.5% !important">
+                Cidade:<asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="true" Width="90px" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"></asp:DropDownList>
+            </div>
             <div id="dvLoja" runat="server">
                 Loja:
                 <input type="text" id="txtCnpj" class="txt_search" onfocus="rsiz(this)" />

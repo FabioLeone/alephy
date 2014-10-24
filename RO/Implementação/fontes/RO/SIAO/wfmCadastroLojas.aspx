@@ -40,7 +40,7 @@
                         Cadastro de Lojas</h2>
                 </legend>
                 <div id="divForm" style="min-height: 330px; width: 100%;">
-                    <table>
+                    <table style="margin: auto;">
                         <tr>
                             <td style="width: 140px; text-align: right;">
                                 Nome Fantasia:
