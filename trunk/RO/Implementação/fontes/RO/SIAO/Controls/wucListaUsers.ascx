@@ -19,7 +19,7 @@
             <tr>
                 <td colspan="2">
                     <asp:GridView ID="gvwUsers" AutoGenerateColumns="False" DataKeyNames="UserId" EmptyDataText="Registros não encontrados"
-                        Width="892px" runat="server" Font-Names="verdana" GridLines="None" 
+                        Width="100%" runat="server" Font-Names="verdana" GridLines="None" 
                         HeaderStyle-BackColor="#0e9de3" HeaderStyle-ForeColor="White" CellPadding="2" 
                         ForeColor="#333333" onrowdeleting="gvwUsers_RowDeleting" 
                         onrowediting="gvwUsers_RowEditing" onrowdatabound="gvwUsers_RowDataBound" 

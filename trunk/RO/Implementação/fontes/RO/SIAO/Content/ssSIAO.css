@@ -8,9 +8,8 @@
 }
 
 #page
-{
-    
-    width: 900px;
+{   
+    width: 90%;
     display: block;
     margin: 0 auto;
     padding: 0;
@@ -54,8 +53,9 @@ a
 
 #main
 {
+    margin: auto;
     background: rgba(255,255,255,0);
-    width: 900px;
+    width: 95%;
     height: 561px;
     font-style: light;
     font-size: 13pt;
@@ -287,7 +287,7 @@ section
 {
     margin: auto;
     min-height: 478px;
-    width: 900px;
+    width: 100%;
     font-family: Raavi;
 }
 
@@ -793,7 +793,7 @@ section
 
 .hdFilter div div
 {
-    width: 49% !important;
+    width: 33% !important;
     display: block;
     float: left;
     background: rgba(209,209,209,0.1);
