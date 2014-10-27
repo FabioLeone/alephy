@@ -12,51 +12,6 @@ namespace SIAO.SRV
     public class RelatoriosBLL
     {
         // Utilizado pelo modelo1
-        public static List<clsRelat1> GetCross(UsersTO clsUser, string strInicio, string strFim, int intRedeId, string strCnpj)
-        {
-            SRV.clsControl oc = new SRV.clsControl();
-            List<clsRelat1> lstReport = oc.GetCross(clsUser, strInicio, strFim, intRedeId, strCnpj);
-
-            lstReport.ForEach(delegate(clsRelat1 report)
-            {
-                report.SomaDeValorBruto = Math.Round(report.SomaDeValorBruto, 0);
-                report.SomaDeValorLiquido = Math.Round(report.SomaDeValorLiquido, 0);
-                report.SomaDeValorDesconto = Math.Round(report.SomaDeValorDesconto, 0);
-            });
-
-            return lstReport;
-        }
-
-        public static List<clsRelat1> GetCross(UsersTO clsUser, int intRedeId, string strCnpj)
-        {
-            SRV.clsControl oc = new SRV.clsControl();
-            List<clsRelat1> lstReport = oc.GetCross(clsUser, intRedeId, strCnpj);
-
-            lstReport.ForEach(delegate(clsRelat1 report)
-            {
-                report.SomaDeValorBruto = Math.Round(report.SomaDeValorBruto, 0);
-                report.SomaDeValorLiquido = Math.Round(report.SomaDeValorLiquido, 0);
-                report.SomaDeValorDesconto = Math.Round(report.SomaDeValorDesconto, 0);
-            });
-
-            return lstReport;
-        }
-
-        public static List<clsRelat1> GetCross(UsersTO clsUser, string strCnpj, int intRedeId, CheckBox cbxSum)
-        {
-            SRV.clsControl oc = new SRV.clsControl();
-            List<clsRelat1> lstReport = oc.GetCross(clsUser, strCnpj, intRedeId, cbxSum);
-
-            lstReport.ForEach(delegate(clsRelat1 report)
-            {
-                report.SomaDeValorBruto = Math.Round(report.SomaDeValorBruto, 0);
-                report.SomaDeValorLiquido = Math.Round(report.SomaDeValorLiquido, 0);
-                report.SomaDeValorDesconto = Math.Round(report.SomaDeValorDesconto, 0);
-            });
-
-            return lstReport;
-        }
-
         public static List<clsRelat1> GetCross(ListItemCollection licFilters)
         {
             if (licFilters.FindByText("st").Value.Equals("false"))
@@ -66,12 +21,19 @@ namespace SIAO.SRV
             UsersTO u = UsersBLL.GetUserSession();
             List<clsRelat1> lstReport = new List<clsRelat1>();
 
-            if (u.RedeId > 0)
-                lstReport = oc.GetCross(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u.RedeId, licFilters.FindByText("loja").Value);
-            else{
+            int uf = 0;
+
+            if (u.RedeId > 0){
+                int.TryParse(licFilters.FindByText("uf").Value, out uf);
+                
+                lstReport = oc.GetCross(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u.RedeId, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf);
+            }else{
                 int id = 0;
+                
                 int.TryParse(licFilters.FindByText("rede").Value, out id);
-                lstReport = oc.GetCross(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, licFilters.FindByText("loja").Value, id, Convert.ToBoolean(licFilters.FindByText("sum").Value));
+                int.TryParse(licFilters.FindByText("uf").Value, out uf);
+                
+                lstReport = oc.GetCross(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, licFilters.FindByText("loja").Value, id, Convert.ToBoolean(licFilters.FindByText("sum").Value), licFilters.FindByText("city").Value, uf);
             }
 
             lstReport.ForEach(delegate(clsRelat1 report)
@@ -92,28 +54,21 @@ namespace SIAO.SRV
             List<clsRelat1> lst = new List<clsRelat1>();
             UsersTO u = UsersBLL.GetUserSession();
 
-            if (String.IsNullOrEmpty(licFilters.FindByText("de").Value) && String.IsNullOrEmpty(licFilters.FindByText("ate").Value))
+            int uf = 0;
+
+            if (u.RedeId > 0)
             {
-                if (u.RedeId > 0)
-                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("loja").Value, u.RedeId, Convert.ToBoolean(licFilters.FindByText("sum").Value));
-                else
-                {
-                    int i = 0;
-                    int.TryParse(licFilters.FindByText("rede").Value, out i);
-                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("loja").Value, i, Convert.ToBoolean(licFilters.FindByText("sum").Value));
-                }
+                int.TryParse(licFilters.FindByText("uf").Value, out uf);
+
+                lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u.RedeId, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value), licFilters.FindByText("city").Value, uf);
             }
             else
             {
-                if (u.RedeId > 0)
-                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u.RedeId, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value));
-                else
-                {
-                    int i = 0;
-                    int.TryParse(licFilters.FindByText("rede").Value, out i);
-                    lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, i, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value));
-                }
-            
+                int i = 0;
+                int.TryParse(licFilters.FindByText("rede").Value, out i);
+                int.TryParse(licFilters.FindByText("uf").Value, out uf);
+
+                lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, i, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value), licFilters.FindByText("city").Value, uf);
             }
 
             lst.ForEach(delegate(clsRelat1 report)
@@ -131,32 +86,15 @@ namespace SIAO.SRV
             if (lstFiltro.FindByText("st").Value.Equals("false"))
                 return String.Empty;
 
+            int uf = 0;
+            int.TryParse(lstFiltro.FindByText("uf").Value, out uf);
+
             if(intId > 0)
-                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, intId);
+                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, intId, lstFiltro.FindByText("city").Value, uf);
             else
-                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, 0);
+                return GraficBLL.Analise(UsersBLL.GetUserSession(), lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("de").Value, lstFiltro.FindByText("ate").Value, 0, lstFiltro.FindByText("city").Value, uf);
         }
-
-        public static List<PercReport> GetPercent(UsersTO clsUser, string strIni, string strFim, int intRedeId, string strCnpj)
-        {
-            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-            {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-            }
-            else
-            {
-                strIni = strIni.Replace("/", " ");
-                strFim = strFim.Replace("/", " ");
-            }
-
-            List<PercReport> lst = RelatoriosDAL.GetPercent(clsUser, strIni, strFim, intRedeId, strCnpj);
-            if(lst.Count > 0)
-                lst.ForEach(i=>i.Periodo = String.Format("{0} à {1}", strIni, strFim));
-
-            return lst;
-        }
-
+        
         public static List<PercReport> GetPercent(ListItemCollection lstFiltro)
         {
             if (lstFiltro.FindByText("st").Value.Equals("false"))
@@ -164,20 +102,15 @@ namespace SIAO.SRV
 
             string strIni = string.Empty, strFim = string.Empty;
 
-            if (String.IsNullOrEmpty(lstFiltro.FindByText("de").Value) && String.IsNullOrEmpty(lstFiltro.FindByText("ate").Value))
-            {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-            }
-            else
-            {
-                strIni = lstFiltro.FindByText("de").Value.Replace("/", " ");
-                strFim = lstFiltro.FindByText("ate").Value.Replace("/", " ");
-            }
+            strIni = lstFiltro.FindByText("de").Value.Replace("/", " ");
+            strFim = lstFiltro.FindByText("ate").Value.Replace("/", " ");
 
             UsersTO u = UsersBLL.GetUserSession();
 
-            List<PercReport> lst = RelatoriosDAL.GetPercent(u, strIni, strFim, u.RedeId, lstFiltro.FindByText("loja").Value);
+            int uf = 0;
+            int.TryParse(lstFiltro.FindByText("uf").Value, out uf);
+
+            List<PercReport> lst = RelatoriosDAL.GetPercent(u, strIni, strFim, u.RedeId, lstFiltro.FindByText("loja").Value, lstFiltro.FindByText("city").Value, uf);
             if (lst.Count > 0)
                 lst.ForEach(i => i.Periodo = String.Format("{0} à {1}", strIni, strFim));
 

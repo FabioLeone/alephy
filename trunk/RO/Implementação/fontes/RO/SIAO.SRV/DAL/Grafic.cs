@@ -128,7 +128,7 @@ namespace SIAO.SRV.DAL
 
         #region .: Search :.
 
-        public static List<GraficTO> GetGraficMes(string strIni, UsersTO clsUser, string strLoja, string strFim)
+        public static List<GraficTO> GetGraficMes(string strIni, UsersTO clsUser, string strLoja, string strFim, string strCity, int intUf)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -278,6 +278,12 @@ namespace SIAO.SRV.DAL
                 else if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(@" GROUP BY farmacias.razaosocial,
 	            farmacias.nomefantasia,
 	            xTemp.cnpj, xTemp.grupo, xTemp.sub_consultoria
@@ -290,6 +296,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
                 cmdGrafic.CommandTimeout = 9999;
 
                 msc.Open();
@@ -310,7 +318,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<GraficTO> GetGraficMes(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj)
+        internal static List<GraficTO> GetGraficMes(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj, string strCity, int intUf)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -367,6 +375,12 @@ namespace SIAO.SRV.DAL
             else if (clsUser.FarmaciaId > 0)
                 strSQL.Append(" AND farmacias.id = @id");
 
+            if (intUf > 0)
+                strSQL.Append(" AND farmacias.uf = @uf");
+
+            if (!String.IsNullOrEmpty(strCity))
+                strSQL.Append(" AND farmacias.cidade = @city");
+
             if (String.IsNullOrEmpty(strCnpj)) strSQL.Append(" GROUP BY r.descricao, r.cnpj, xTemp.grupo, xTemp.sub_consultoria");
             else strSQL.Append(" GROUP BY farmacias.razaosocial,farmacias.nomefantasia, xTemp.cnpj, xTemp.grupo, xTemp.sub_consultoria");
 
@@ -381,6 +395,8 @@ namespace SIAO.SRV.DAL
             cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
             cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
             cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strCnpj));
+            cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+            cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
 
             try
             {
@@ -498,7 +514,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<GraficTO> GetGrafic2Mes(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj)
+        internal static List<GraficTO> GetGrafic2Mes(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj, string strCity, int intUf)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -557,6 +573,12 @@ namespace SIAO.SRV.DAL
                 else if (clsUser.FarmaciaId > 0)
                     strSQL.Append(" AND farmacias.id = @id");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 if (String.IsNullOrEmpty(strCnpj)) strSQL.Append(@" GROUP BY r.descricao, r.descricao, r.cnpj,
                 xTemp.mes,xTemp.ano,xTemp.grupo,xTemp.sub_consultoria");
 
@@ -571,6 +593,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strCnpj));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
 
                 cmdGrafic.CommandTimeout = 9999;
 
@@ -592,7 +616,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        public static List<GraficTO> GetGrafic2Mes(string strIni, UsersTO clsUser, string strLoja, string strFim)
+        public static List<GraficTO> GetGrafic2Mes(string strIni, UsersTO clsUser, string strLoja, string strFim, string strCity, int intUf)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -669,6 +693,12 @@ namespace SIAO.SRV.DAL
                 else if (!clsUser.TipoId.Equals(1))
                     strSQL.Append(" AND usuarios_vinculos.UsuarioId = @UsuarioId");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(" ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
 
                 cmdGrafic.CommandText = strSQL.ToString();
@@ -676,6 +706,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
                 cmdGrafic.CommandTimeout = 9999;
 
                 msc.Open();
@@ -729,7 +761,7 @@ namespace SIAO.SRV.DAL
             return clsIndicesGrafic;
         }
 
-        internal static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
+        internal static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj, string strCity, int intUf)
         {
             List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -758,6 +790,12 @@ namespace SIAO.SRV.DAL
                 if (!String.IsNullOrEmpty(strCnpj))
                     strSQL.Append(" AND consolidado.cnpj = @cnpj");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(@" GROUP BY consolidado.cnpj,
                 farmacias.nomefantasia,
                 farmacias.razaosocial,
@@ -774,6 +812,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@cnpj", strCnpj));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -793,7 +833,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<Grafic2TO> Grafic31ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
+        internal static List<Grafic2TO> Grafic31ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja, string strCity, int intUf)
         {
             List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -852,6 +892,12 @@ namespace SIAO.SRV.DAL
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.cnpj = @cnpj");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(@" GROUP BY consolidado.cnpj,
                 farmacias.nomefantasia,
                 farmacias.razaosocial,
@@ -868,6 +914,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@cnpj", strLoja));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -887,7 +935,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<Grafic2TO> Grafic32ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
+        internal static List<Grafic2TO> Grafic32ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj, string strCity, int intUf)
         {
             List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -928,21 +976,19 @@ namespace SIAO.SRV.DAL
                 if (!String.IsNullOrEmpty(strCnpj))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(@" ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
                 ORDER BY Ano, Mes DESC");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-                {
-                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-                }
-                else
-                {
-                    strIni = strIni.Replace("/", " ");
-                    strFim = strFim.Replace("/", " ");
-                }
+                strIni = strIni.Replace("/", " ");
+                strFim = strFim.Replace("/", " ");
 
                 cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
@@ -950,6 +996,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strCnpj));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -969,7 +1017,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<Grafic2TO> Grafic32ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
+        internal static List<Grafic2TO> Grafic32ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja, string strCity, int intUf)
         {
             List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -1040,21 +1088,19 @@ namespace SIAO.SRV.DAL
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, Grupo
                 ORDER BY Ano, Mes DESC");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
 
-                if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-                {
-                    strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
-                    strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-                }
-                else
-                {
-                    strIni = strIni.Replace("/", " ");
-                    strFim = strFim.Replace("/", " ");
-                }
+                strIni = strIni.Replace("/", " ");
+                strFim = strFim.Replace("/", " ");
 
                 cmdGrafic.CommandText = strSQL.ToString();
                 cmdGrafic.Parameters.Clear();
@@ -1062,6 +1108,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strLoja));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -1081,7 +1129,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<Grafic2TO> Grafic33ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
+        internal static List<Grafic2TO> Grafic33ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj, string strCity, int intUf)
         {
             List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -1122,6 +1170,12 @@ namespace SIAO.SRV.DAL
                 if (!String.IsNullOrEmpty(strCnpj))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(@" ) a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
                 ORDER BY Ano, Mes DESC");
 
@@ -1144,6 +1198,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strCnpj));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -1163,7 +1219,7 @@ namespace SIAO.SRV.DAL
             return clsGrafic;
         }
 
-        internal static List<Grafic2TO> Grafic33ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
+        internal static List<Grafic2TO> Grafic33ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja, string strCity, int intUf)
         {
             List<Grafic2TO> clsGrafic = new List<Grafic2TO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -1233,6 +1289,12 @@ namespace SIAO.SRV.DAL
                 if (!String.IsNullOrEmpty(strLoja))
                     strSQL.Append(" AND consolidado.CNPJ = @CNPJ");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(@") a GROUP BY CNPJ, nomefantasia, razaosocial, Ano, Mes, SubGrupo
                 ORDER BY Ano, Mes DESC");
 
@@ -1255,6 +1317,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataIni", strIni));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@DataFim", strFim));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@CNPJ", strLoja));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
                 cmdGrafic.CommandTimeout = 9999;
                 msc.Open();
 
@@ -1415,7 +1479,7 @@ namespace SIAO.SRV.DAL
             return clsGrupos;
         }
 
-        internal static List<GraficTO> GetLastMonth(UsersTO clsUser, string strIni, string strFim, string strLoja, int intRedeId)
+        internal static List<GraficTO> GetLastMonth(UsersTO clsUser, string strIni, string strFim, string strLoja, int intRedeId, string strCity, int intUf)
         {
             List<GraficTO> clsGrafic = new List<GraficTO>();
             NpgsqlConnection msc = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -1510,6 +1574,12 @@ namespace SIAO.SRV.DAL
                 else if (!clsUser.TipoId.Equals(1) && !clsUser.Nivel.Equals(0))
                     strSQL.Append(" AND uv.usuarioid = @UsuarioId ORDER BY ano DESC, mes DESC LIMIT 1), 'MM yyyy')) AND usuarios_vinculos.UsuarioId = @UsuarioId");
 
+                if (intUf > 0)
+                    strSQL.Append(" AND farmacias.uf = @uf");
+
+                if (!String.IsNullOrEmpty(strCity))
+                    strSQL.Append(" AND farmacias.cidade = @city");
+
                 strSQL.Append(" ORDER BY Ano,Mes,Sub_Consultoria,Grupo");
 
                 DbCommand cmdGrafic = msc.CreateCommand();
@@ -1520,6 +1590,8 @@ namespace SIAO.SRV.DAL
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@ini", strIni.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@fim", strFim.Replace("/", " ")));
                 cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@UsuarioId", clsUser.UserId));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.Int32, "@uf", intUf));
+                cmdGrafic.Parameters.Add(DbHelper.GetParameter(cmdGrafic, DbType.String, "@city", strCity));
 
                 cmdGrafic.CommandTimeout = 9999;
 
