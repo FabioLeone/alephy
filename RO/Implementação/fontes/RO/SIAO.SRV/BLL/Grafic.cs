@@ -14,7 +14,7 @@ namespace SIAO.SRV.BLL
     {
         #region .: Method :.
 
-        public static string Analise(UsersTO clsUsers, string strLoja, string strIni, string strFim, int intRedeId)
+        public static string Analise(UsersTO clsUsers, string strLoja, string strIni, string strFim, int intRedeId, string strCity, int intUf)
         {
             List<GraficTO> clsList = new List<GraficTO>();
 
@@ -28,7 +28,7 @@ namespace SIAO.SRV.BLL
             else
                 strIni = strIni.Replace("/", " ");
 
-            List<GraficTO> clsGrafic = GraficDAL.GetLastMonth(clsUsers, strIni, strFim, strLoja, intRedeId);
+            List<GraficTO> clsGrafic = GraficDAL.GetLastMonth(clsUsers, strIni, strFim, strLoja, intRedeId, strCity, intUf);
 
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
@@ -143,128 +143,6 @@ namespace SIAO.SRV.BLL
 
             return sb.ToString();
         }
-
-        public static List<GraficTO> GraficList(string strIni, UsersTO clsUsers, string strLoja, string strFim, bool blnLast)
-        {
-            List<GraficTO> clsList = new List<GraficTO>();
-            string strAIni = string.Empty, strAFim = string.Empty;
-
-            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-            {
-                if(blnLast)
-                    strAIni = strAFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
-                else{
-                    strAFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
-                    strAIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-                }
-            }
-            else
-            {
-                if (blnLast)
-                    strAIni = strAFim = strFim.Replace("/", " ");
-                else
-                {
-                    strAIni = strIni.Replace("/", " ");
-                    strAFim = strFim.Replace("/", " ");
-                }
-            }
-
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(strAIni, clsUsers, strLoja,strAFim);
-            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
-
-            if (clsGrafic.Count > 0)
-            {
-                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
-
-                clsGrafic.ForEach(delegate(GraficTO _Grafic)
-                {
-                    clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
-                    {
-                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
-                        {
-                            clsList.Add(new GraficTO()
-                            {
-                                Sub_Consultoria = _Grafic.Sub_Consultoria,
-                                Razao_Social = _Grafic.Razao_Social,
-                                Mes = _Grafic.Mes,
-                                Ano = _Grafic.Ano,
-                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
-                                Grupo = _Grafic.Grupo,
-                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
-                                Periodo = String.Format("{0} à {1}", strAIni, strAFim),
-                                Nome_Fantasia = _Grafic.Nome_Fantasia,
-                                quantidade = _Grafic.quantidade
-                            });
-                        }
-                    });
-                });
-            }
-
-            return clsList;
-        }
-
-        public static List<GraficTO> GraficList(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj, bool blnLast)
-        {
-            List<GraficTO> clsList = new List<GraficTO>();
-            string strAIni = string.Empty, strAFim = string.Empty;
-
-            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-            {
-                if (blnLast)
-                {
-                    strAFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strAIni = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
-                }
-                else
-                {
-                    strAFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strAIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-                }
-            }
-            else
-            {
-                if (blnLast)
-                    strAIni = strAFim = strFim.Replace("/", " ");
-                else
-                {
-                    strAIni = strIni.Replace("/", " ");
-                    strAFim = strFim.Replace("/", " ");
-                }
-            }
-
-            List<GraficTO> clsGrafic = GraficDAL.GetGraficMes(strAIni, clsUser, strAFim, idRede, strCnpj);
-            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
-
-            if (clsGrafic.Count > 0)
-            {
-                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
-
-                clsGrafic.ForEach(delegate(GraficTO _Grafic)
-                {
-                    clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
-                    {
-                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
-                        {
-                            clsList.Add(new GraficTO()
-                            {
-                                Sub_Consultoria = _Grafic.Sub_Consultoria,
-                                Razao_Social = _Grafic.Razao_Social,
-                                Mes = _Grafic.Mes,
-                                Ano = _Grafic.Ano,
-                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
-                                Grupo = _Grafic.Grupo,
-                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
-                                Periodo = String.Format("{0} à {1}",strAIni,strAFim),
-                                Nome_Fantasia = _Grafic.Nome_Fantasia,
-                                quantidade = _Grafic.quantidade
-                            });
-                        }
-                    });
-                });
-            }
-
-            return clsList;
-        }
         
         public static List<GraficTO> GraficList(System.Web.UI.WebControls.ListItemCollection licFilters)
         {
@@ -276,116 +154,26 @@ namespace SIAO.SRV.BLL
 
             string strAIni = string.Empty, strAFim = string.Empty;
 
-            if (String.IsNullOrEmpty(licFilters.FindByText("de").Value) && String.IsNullOrEmpty(licFilters.FindByText("ate").Value))
-            {
-                strAFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
-                strAIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-            }
-            else
-            {
-                strAIni = licFilters.FindByText("de").Value.Replace("/", " ");
-                strAFim = licFilters.FindByText("ate").Value.Replace("/", " ");
-            }
+            strAIni = licFilters.FindByText("de").Value.Replace("/", " ");
+            strAFim = licFilters.FindByText("ate").Value.Replace("/", " ");
 
             UsersTO u = UsersBLL.GetUserSession();
             int id = 0;
+            int uf = 0;
+
             int.TryParse(licFilters.FindByText("rede").Value, out id);
+            int.TryParse(licFilters.FindByText("uf").Value, out uf);
 
             if (u.RedeId > 0)
-                clsGrafic = GraficDAL.GetGraficMes(strAIni, u, strAFim, u.RedeId, licFilters.FindByText("loja").Value);
+                clsGrafic = GraficDAL.GetGraficMes(strAIni, u, strAFim, u.RedeId, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value,uf);
             else
-                clsGrafic = GraficDAL.GetGraficMes(strAIni, u, strAFim, id, licFilters.FindByText("loja").Value);
+                clsGrafic = GraficDAL.GetGraficMes(strAIni, u, strAFim, id, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf);
             
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
             if (clsGrafic.Count > 0)
             {
                 decimal dcmTotal = clsGrafic.Where(g => g.Grupo == "zzzzzz").Sum(l => l.Liquido);
-
-                clsGrafic.ForEach(delegate(GraficTO _Grafic)
-                {
-                    clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
-                    {
-                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
-                        {
-                            clsList.Add(new GraficTO()
-                            {
-                                Sub_Consultoria = _Grafic.Sub_Consultoria,
-                                Razao_Social = _Grafic.Razao_Social,
-                                Mes = _Grafic.Mes,
-                                Ano = _Grafic.Ano,
-                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
-                                Grupo = _Grafic.Grupo,
-                                Desconto = Decimal.Round((_Grafic.Desconto / _IndicesGrafic.desconto) * 100, 2),
-                                Periodo = String.Format("{0} à {1}", strAIni, strAFim),
-                                Nome_Fantasia = _Grafic.Nome_Fantasia,
-                                quantidade = _Grafic.quantidade
-                            });
-                        }
-                    });
-                });
-            }
-
-            return clsList;
-        }
-                         
-        public static List<GraficTO> GraficList(System.Web.UI.WebControls.RadioButton rbtPeriodo, System.Web.UI.WebControls.RadioButton rbtMes, string strIni, UsersTO clsUser, string strFim, int intRedeId, string strLoja, bool blnLast)
-        {
-            List<GraficTO> lst = new List<GraficTO>();
-
-            if (rbtPeriodo.Checked)
-            {
-                if (intRedeId > 0)
-                    lst = GraficBLL.GraficList(strIni, clsUser, strFim, intRedeId, strLoja, blnLast);
-                else
-                    lst = GraficBLL.GraficList(strIni, clsUser, strLoja, strFim, blnLast);
-            }
-            else if (rbtMes.Checked)
-            {
-                if (intRedeId > 0)
-                    lst = GraficBLL.GraficList(string.Empty, clsUser, string.Empty, intRedeId, strLoja, blnLast);
-                else
-                    lst = GraficBLL.GraficList(string.Empty, clsUser, strLoja, string.Empty, blnLast);
-            }
-
-            return lst;
-        }
-
-        public static List<GraficTO> Grafic2List(string strIni, UsersTO clsUser, string strFim, int idRede, string strCnpj, bool blnLast)
-        {
-            List<GraficTO> clsList = new List<GraficTO>();
-            string strAIni = string.Empty, strAFim = string.Empty;
-
-            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-            {
-                if (blnLast)
-                {
-                    strAFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strAIni = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString();
-                }
-                else
-                {
-                    strAFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                    strAIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-                }
-            }
-            else
-            {
-                if (blnLast)
-                    strAIni = strAFim = strFim.Replace("/", " ");
-                else
-                {
-                    strAIni = strIni.Replace("/", " ");
-                    strAFim = strFim.Replace("/", " ");
-                }
-            }
-
-            List<GraficTO> clsGrafic = GraficDAL.GetGrafic2Mes(strAIni, clsUser, strAFim, idRede, strCnpj);
-            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
-
-            if (clsGrafic.Count > 0)
-            {
-                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
 
                 clsGrafic.ForEach(delegate(GraficTO _Grafic)
                 {
@@ -436,10 +224,15 @@ namespace SIAO.SRV.BLL
             }
 
             UsersTO u = UsersBLL.GetUserSession();
+            
+            int uf = 0;
+            
+            int.TryParse(licFilters.FindByText("uf").Value, out uf);
+
             if (u.RedeId > 0)
-                clsGrafic = GraficDAL.GetGrafic2Mes(strAIni, u, strAFim, u.RedeId, licFilters.FindByText("loja").Value);
+                clsGrafic = GraficDAL.GetGrafic2Mes(strAIni, u, strAFim, u.RedeId, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf);
             else
-                clsGrafic = GraficDAL.GetGrafic2Mes(strAIni, u, licFilters.FindByText("loja").Value, strAFim);
+                clsGrafic = GraficDAL.GetGrafic2Mes(strAIni, u, licFilters.FindByText("loja").Value, strAFim, licFilters.FindByText("city").Value, uf);
 
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
@@ -473,62 +266,7 @@ namespace SIAO.SRV.BLL
 
             return clsList;
         }
-
-        public static List<GraficTO> Grafic4(string strIni, UsersTO clsUser, string strFim, int intRedeId, string strLoja)
-        {
-            List<GraficTO> clsList = new List<GraficTO>();
-
-            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-            {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-            }
-            else
-            {
-                strIni = strIni.Replace("/", " ");
-                strFim = strFim.Replace("/", " ");
-            }
-            
-            List<GraficTO> clsGrafic;
-
-            if(intRedeId > 0)
-                clsGrafic = GraficDAL.GetGrafic2Mes(strIni, clsUser, strFim, intRedeId, strLoja);
-            else
-                clsGrafic = GraficDAL.GetGrafic2Mes(strIni, clsUser, strLoja, strFim);
-
-            List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
-
-            if (clsGrafic.Count > 0)
-            {
-                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
-
-                clsGrafic.ForEach(delegate(GraficTO _Grafic)
-                {
-                    clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
-                    {
-                        if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
-                        {
-                            clsList.Add(new GraficTO()
-                            {
-                                Sub_Consultoria = _Grafic.Sub_Consultoria,
-                                Razao_Social = _Grafic.Razao_Social,
-                                Mes = _Grafic.Mes,
-                                Ano = _Grafic.Ano,
-                                Liquido = Decimal.Round(((_Grafic.Liquido / dcmTotal) / _IndicesGrafic.venda) * 100, 2),
-                                Grupo = _Grafic.Grupo,
-                                Desconto = _Grafic.Desconto * 100,
-                                Periodo = String.Format("{0} à {1}", strIni, strFim),
-                                Nome_Fantasia = _Grafic.Nome_Fantasia,
-                                quantidade = _Grafic.quantidade
-                            });
-                        }
-                    });
-                });
-            }
-
-            return clsList;
-        }
-
+        
         public static List<GraficTO> Grafic4(System.Web.UI.WebControls.ListItemCollection licFilters)
         {
             if (licFilters.FindByText("st").Value.Equals("false"))
@@ -537,26 +275,21 @@ namespace SIAO.SRV.BLL
             List<GraficTO> clsList = new List<GraficTO>();
             string strIni = string.Empty, strFim = string.Empty;
 
-            if (String.IsNullOrEmpty(licFilters.FindByText("de").Value) && String.IsNullOrEmpty(licFilters.FindByText("ate").Value))
-            {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-            }
-            else
-            {
-                strIni = licFilters.FindByText("de").Value.Replace("/", " ");
-                strFim = licFilters.FindByText("ate").Value.Replace("/", " ");
-            }
+            strIni = licFilters.FindByText("de").Value.Replace("/", " ");
+            strFim = licFilters.FindByText("ate").Value.Replace("/", " ");
 
             List<GraficTO> clsGrafic;
             UsersTO u = UsersBLL.GetUserSession();
             int id = 0;
+            int uf = 0;
+
+            int.TryParse(licFilters.FindByText("uf").Value, out uf);
             int.TryParse(licFilters.FindByText("rede").Value, out id);
 
             if (u.RedeId > 0)
-                clsGrafic = GraficDAL.GetGrafic2Mes(strIni, u, strFim, u.RedeId, licFilters.FindByText("loja").Value);
+                clsGrafic = GraficDAL.GetGrafic2Mes(strIni, u, strFim, u.RedeId, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf);
             else
-                clsGrafic = GraficDAL.GetGrafic2Mes(strIni, u, strFim, id, licFilters.FindByText("loja").Value);
+                clsGrafic = GraficDAL.GetGrafic2Mes(strIni, u, strFim, id, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf);
 
             List<IndicesGraficTO> clsIndicesGrafic = GetIndicesAll();
 
@@ -618,38 +351,6 @@ namespace SIAO.SRV.BLL
             return GraficDAL.GetGrupos(strConnection);
         }
 
-        public static List<Grafic2TO> Grafic31ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
-        {
-            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-            {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-            }
-            else
-            {
-                strIni = strIni.Replace("/", " ");
-                strFim = strFim.Replace("/", " ");
-            }
-
-            return GraficDAL.Grafic31ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId, strCnpj).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
-        }
-
-        public static List<Grafic2TO> Grafic31ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
-        {
-            if (String.IsNullOrEmpty(strIni) && String.IsNullOrEmpty(strFim))
-            {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-            }
-            else
-            {
-                strIni = strIni.Replace("/", " ");
-                strFim = strFim.Replace("/", " ");
-            }
-
-            return GraficDAL.Grafic31ByPeriodo(strIni, strFim, clsUser, strLoja).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
-        }
-
         public static List<Grafic2TO> Grafic31ByFilter(System.Web.UI.WebControls.ListItemCollection licFilters)
         {
             if (licFilters.FindByText("st").Value.Equals("false"))
@@ -657,32 +358,17 @@ namespace SIAO.SRV.BLL
 
             string strIni = string.Empty, strFim = string.Empty;
 
-            if (String.IsNullOrEmpty(licFilters.FindByText("de").Value) && String.IsNullOrEmpty(licFilters.FindByText("ate").Value))
-            {
-                strFim = DateTime.Now.AddMonths(-1).Month.ToString() + " " + DateTime.Now.Year.ToString(); ;
-                strIni = DateTime.Now.AddMonths(-6).Month.ToString() + " " + DateTime.Now.AddMonths(-6).Year.ToString();
-            }
-            else
-            {
-                strIni = licFilters.FindByText("de").Value.Replace("/", " ");
-                strFim = licFilters.FindByText("ate").Value.Replace("/", " ");
-            }
+            strIni = licFilters.FindByText("de").Value.Replace("/", " ");
+            strFim = licFilters.FindByText("ate").Value.Replace("/", " ");
 
             UsersTO u = UsersBLL.GetUserSession();
+            int uf = 0;
+            int.TryParse(licFilters.FindByText("uf").Value, out uf);
+
             if(u.RedeId > 0)
-                return GraficDAL.Grafic31ByPeriodoAndRedeId(strIni, strFim, u, u.RedeId, licFilters.FindByText("loja").Value).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
+                return GraficDAL.Grafic31ByPeriodoAndRedeId(strIni, strFim, u, u.RedeId, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
             else
-                return GraficDAL.Grafic31ByPeriodo(strIni, strFim, u, licFilters.FindByText("loja").Value).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
-        }
-
-        public static List<Grafic2TO> Grafic32ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
-        {
-            return GraficDAL.Grafic32ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId, strCnpj).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
-        }
-
-        public static List<Grafic2TO> Grafic32ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
-        {
-            return GraficDAL.Grafic32ByPeriodo(strIni, strFim, clsUser, strLoja).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
+                return GraficDAL.Grafic31ByPeriodo(strIni, strFim, u, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
         }
 
         public static List<Grafic2TO> Grafic32ByFilter(System.Web.UI.WebControls.ListItemCollection licFilters)
@@ -691,20 +377,14 @@ namespace SIAO.SRV.BLL
                 return new List<Grafic2TO>();
 
             UsersTO u = UsersBLL.GetUserSession();
+            
+            int uf = 0;
+            int.TryParse(licFilters.FindByText("uf").Value, out uf);
+            
             if(u.RedeId > 0)
-                return GraficDAL.Grafic32ByPeriodoAndRedeId(licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u, u.RedeId, licFilters.FindByText("loja").Value).Select(g => { g.Periodo = String.Format("{0} à {1}", licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value); return g; }).ToList();
+                return GraficDAL.Grafic32ByPeriodoAndRedeId(licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u, u.RedeId, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf).Select(g => { g.Periodo = String.Format("{0} à {1}", licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value); return g; }).ToList();
             else
-                return GraficDAL.Grafic32ByPeriodo(licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u, licFilters.FindByText("loja").Value).Select(g => { g.Periodo = String.Format("{0} à {1}", licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value); return g; }).ToList();
-        }
-
-        public static List<Grafic2TO> Grafic33ByPeriodoAndRedeId(string strIni, string strFim, UsersTO clsUser, int intRedeId, string strCnpj)
-        {
-            return GraficDAL.Grafic33ByPeriodoAndRedeId(strIni, strFim, clsUser, intRedeId, strCnpj).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
-        }
-
-        public static List<Grafic2TO> Grafic33ByPeriodo(string strIni, string strFim, UsersTO clsUser, string strLoja)
-        {
-            return GraficDAL.Grafic33ByPeriodo(strIni, strFim, clsUser, strLoja).Select(g => { g.Periodo = String.Format("{0} à {1}", strIni, strFim); return g; }).ToList();
+                return GraficDAL.Grafic32ByPeriodo(licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf).Select(g => { g.Periodo = String.Format("{0} à {1}", licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value); return g; }).ToList();
         }
 
         public static List<Grafic2TO> Grafic33ByFilter(System.Web.UI.WebControls.ListItemCollection licFilters)
@@ -713,10 +393,14 @@ namespace SIAO.SRV.BLL
                 return new List<Grafic2TO>();
 
             UsersTO u = UsersBLL.GetUserSession();
+            
+            int uf = 0;
+            int.TryParse(licFilters.FindByText("uf").Value, out uf);
+
             if(u.RedeId > 0)
-                return GraficDAL.Grafic33ByPeriodoAndRedeId(licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u, u.RedeId, licFilters.FindByText("loja").Value).Select(g => { g.Periodo = String.Format("{0} à {1}", licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value); return g; }).ToList();
+                return GraficDAL.Grafic33ByPeriodoAndRedeId(licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u, u.RedeId, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf).Select(g => { g.Periodo = String.Format("{0} à {1}", licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value); return g; }).ToList();
             else
-                return GraficDAL.Grafic33ByPeriodo(licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u, licFilters.FindByText("loja").Value).Select(g => { g.Periodo = String.Format("{0} à {1}", licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value); return g; }).ToList();
+                return GraficDAL.Grafic33ByPeriodo(licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u, licFilters.FindByText("loja").Value, licFilters.FindByText("city").Value, uf).Select(g => { g.Periodo = String.Format("{0} à {1}", licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value); return g; }).ToList();
         }
         #endregion
 

@@ -258,7 +258,7 @@ namespace SIAO.SRV.BLL
             gvwUsers.DataBind();
         }
 
-        public static void CheckRptVew(UsersTO u, System.Web.UI.HtmlControls.HtmlGenericControl lm1, System.Web.UI.HtmlControls.HtmlGenericControl lm2, System.Web.UI.HtmlControls.HtmlGenericControl lm3, System.Web.UI.HtmlControls.HtmlGenericControl li3, System.Web.UI.HtmlControls.HtmlGenericControl lg1, System.Web.UI.HtmlControls.HtmlGenericControl lg2, System.Web.UI.HtmlControls.HtmlGenericControl lg3, System.Web.UI.HtmlControls.HtmlGenericControl lg4, System.Web.UI.HtmlControls.HtmlGenericControl lg5, System.Web.UI.HtmlControls.HtmlGenericControl la1, System.Web.UI.HtmlControls.HtmlGenericControl dvAn)
+        public static void CheckRptVew(UsersTO u, System.Web.UI.HtmlControls.HtmlGenericControl lm1, System.Web.UI.HtmlControls.HtmlGenericControl lm2, System.Web.UI.HtmlControls.HtmlGenericControl li3, System.Web.UI.HtmlControls.HtmlGenericControl lg1, System.Web.UI.HtmlControls.HtmlGenericControl lg2, System.Web.UI.HtmlControls.HtmlGenericControl lg3, System.Web.UI.HtmlControls.HtmlGenericControl lg4, System.Web.UI.HtmlControls.HtmlGenericControl lg5, System.Web.UI.HtmlControls.HtmlGenericControl la1, System.Web.UI.HtmlControls.HtmlGenericControl dvAn)
         {
             List<RelatoriosTO> lst;
             int i = 0;
@@ -275,7 +275,6 @@ namespace SIAO.SRV.BLL
 
                             if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO1)) != null) lm1.Visible = true; else lm1.Visible = false;
                             if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO2)) != null) lm2.Visible = true; else lm2.Visible = false;
-                            if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.PORCENTAGEM_PARTICIPACAO)) != null) lm3.Visible = true; else lm3.Visible = false;
                             if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO1)) != null) lg1.Visible = true; else lg1.Visible = false;
                             if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO2)) != null) lg2.Visible = true; else lg2.Visible = false;
                             if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO3)) != null) lg3.Visible = true; else lg3.Visible = false;
@@ -296,7 +295,6 @@ namespace SIAO.SRV.BLL
 
                                 if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO1)) != null) lm1.Visible = true; else lm1.Visible = false;
                                 if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO2)) != null) lm2.Visible = true; else lm2.Visible = false;
-                                if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.PORCENTAGEM_PARTICIPACAO)) != null) lm3.Visible = true; else lm3.Visible = false;
                                 if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO1)) != null) lg1.Visible = true; else lg1.Visible = false;
                                 if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO2)) != null) lg2.Visible = true; else lg2.Visible = false;
                                 if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO3)) != null) lg3.Visible = true; else lg3.Visible = false;
@@ -320,7 +318,6 @@ namespace SIAO.SRV.BLL
 
                         if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO1)) != null) lm1.Visible = true; else lm1.Visible = false;
                         if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO2)) != null) lm2.Visible = true; else lm2.Visible = false;
-                        if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.PORCENTAGEM_PARTICIPACAO)) != null) lm3.Visible = true; else lm3.Visible = false;
                         if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO1)) != null) lg1.Visible = true; else lg1.Visible = false;
                         if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO2)) != null) lg2.Visible = true; else lg2.Visible = false;
                         if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO3)) != null) lg3.Visible = true; else lg3.Visible = false;
@@ -338,7 +335,6 @@ namespace SIAO.SRV.BLL
 
                     if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO1)) != null) lm1.Visible = true; else lm1.Visible = false;
                     if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.MODELO2)) != null) lm2.Visible = true; else lm2.Visible = false;
-                    if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.PORCENTAGEM_PARTICIPACAO)) != null) lm3.Visible = true; else lm3.Visible = false;
                     if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO1)) != null) lg1.Visible = true; else lg1.Visible = false;
                     if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO2)) != null) lg2.Visible = true; else lg2.Visible = false;
                     if (lst.Find(r => r.RelatorioTipoId.Equals((int)RelatoriosBLL.Type.GRAFICO3)) != null) lg3.Visible = true; else lg3.Visible = false;

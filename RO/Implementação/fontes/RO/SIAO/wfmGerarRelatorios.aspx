@@ -113,14 +113,6 @@
                         </div>
                     </asp:LinkButton>
                 </li>
-                <li id="lm3" runat="server">
-                    <asp:LinkButton ID="lbtnGroup" runat="server" OnClick="lbtnGroup_Click" OnClientClick="ToggleCursor(1);" Visible="false">
-                        <div id="Div4" runat="server" class="imgRel">
-                            <p>
-                                Consolidado</p>
-                        </div>
-                    </asp:LinkButton>
-                </li>
                 <li id="li3" runat="server">
                     <asp:LinkButton ID="lbtnParticipation" runat="server" 
                         OnClientClick="ToggleCursor(1);" onclick="lbtnParticipation_Click">
