@@ -324,6 +324,12 @@ namespace SIAO
                 LojasBLL.getLojasApp(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue), ddlCity.SelectedValue);
             }
         }
+
+        protected void ddlLojaRelatorios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Loja l = LojasBLL.getByCnpj(ddlLojaRelatorios.SelectedValue);
+            sInf.Text = String.Format("<p>Razão: {0} </p><p>CNPJ: {1} </p><p>Proprietário: {2}</p>",l.Razao, l.Cnpj, l.Proprietario);
+        }
         #endregion
 
         #region .: Methods :.

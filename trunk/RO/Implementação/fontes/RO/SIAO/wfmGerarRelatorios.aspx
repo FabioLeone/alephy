@@ -38,23 +38,23 @@
     <% } %>
         <h2>
             Filtro</h2>
-        <div id="dvFiltro" runat="server">
-            <div id="dvRedes" runat="server">
+        <div id="dvFiltro" runat="server" style="height:53px;">
+            <div id="dvRedes" runat="server" style="width: 31% !important;">
                 Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
                     OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
                 </asp:DropDownList>
             </div>
-            <div id="dvUF" runat="server" style="width:16.5% !important">
+            <div id="dvUF" runat="server" style="width:11% !important">
                 UF:<asp:DropDownList ID="ddlUF" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlUF_SelectedIndexChanged"></asp:DropDownList>
             </div>
-            <div id="dvCity" runat="server" style="width:16.5% !important">
+            <div id="dvCity" runat="server" style="width:20% !important">
                 Cidade:<asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="true" Width="90px" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"></asp:DropDownList>
             </div>
-            <div id="dvLoja" runat="server">
+            <div id="dvLoja" runat="server" style="width: 36.98% !important;">
                 Loja:
                 <input type="text" id="txtCnpj" class="txt_search" onfocus="rsiz(this)" />
                 <input type="button" id="btnSelect" class="btnsearch" onclick="return btnSelect_onclick()" />
-                <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="min-width: 243px;">
+                <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 84%;" OnSelectedIndexChanged="ddlLojaRelatorios_SelectedIndexChanged" AutoPostBack="true">
                 </asp:DropDownList>
                 <asp:CheckBox ID="cbxSum" runat="server" Text="Soma" ToolTip="Consolida os valores dos relarórios caso a opção selecionada for 'Todas'" />
             </div>
@@ -74,7 +74,7 @@
                     Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
                 </asp:MaskedEditExtender>
             </div>
-            <div style="width: 22% !important;">
+            <div style="width: 21% !important;">
                 <asp:RadioButton ID="rbtUAno" GroupName="filtro" AutoPostBack="true" Text="ultimo ano"
                     runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
             </div>
@@ -86,6 +86,9 @@
                 <asp:RadioButton ID="rbtUMes" GroupName="filtro" AutoPostBack="true" Text="ultimo mês"
                     runat="server" OnCheckedChanged="rbtMes_CheckedChanged"/>
             </div>
+        </div>
+        <div class="inf">
+            <asp:Literal ID="sInf" runat="server"></asp:Literal>
         </div>
     </div>
     <div class="ctApp">
@@ -190,4 +193,6 @@
     </div>
     <rsweb:ReportViewer ID="rv" runat="server" Visible="false">
     </rsweb:ReportViewer>
+            </label>
+
 </asp:Content>

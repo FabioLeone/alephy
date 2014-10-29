@@ -181,5 +181,10 @@ namespace SIAO.SRV
             ddlLoja.Items.Insert(0, new ListItem(string.Empty, string.Empty));
             ddlLoja.SelectedIndex = 0;
         }
+
+        public static Loja getByCnpj(string cnpj)
+        {
+            return clsControl.GetLojaByCNPJ(cnpj);
+        }
     }
 }

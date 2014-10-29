@@ -811,7 +811,7 @@ section
 .hdFilter div
 {
     height: 30px;
-    width: 100%;
+    width: 67%;
     display: inline-block;
     background: rgba(209,209,209,0.6);
 }
@@ -823,6 +823,21 @@ section
     float: left;
     background: rgba(209,209,209,0.1);
     padding-left: 2px;
+}
+
+.inf {
+    position: absolute;
+    width: 28.15% !important;
+    margin-left: 1px;
+    height: 83px !important;
+    top: 88px;
+    font-size: 10pt;
+}
+
+.inf > p {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: -5px;
+    -webkit-margin-start: 4px;
 }
 
 .ctApp
