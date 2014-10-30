@@ -804,25 +804,25 @@ section
 
 .hdFilter
 {
-    width: 100%;
+    width: 24.25%;
     background: rgba(62, 137, 233, 0.5);
-}
-
-.hdFilter div
-{
-    height: 30px;
-    width: 67%;
-    display: inline-block;
-    background: rgba(209,209,209,0.6);
-}
-
-.hdFilter div div
-{
-    width: 33% !important;
     display: block;
     float: left;
-    background: rgba(209,209,209,0.1);
-    padding-left: 2px;
+}
+
+.hdFilter>div
+{
+    display: block;
+    background: rgba(209,209,209,0.6);
+    margin-bottom: 3px;
+}
+
+.hdFilter>div>div
+{
+    display: block;
+    float: left;
+    background: rgba(209,209,209,0.6);
+    padding-left: 3px;
 }
 
 .inf {
@@ -850,7 +850,7 @@ section
 
 .dvList
 {
-    width: 33%;
+    width: 24.25%;
     background: rgba(62, 137, 233, 0.5);
     display: block;
     float: left;
@@ -899,7 +899,7 @@ section
     background-color: transparent;
     color: rgba(0,0,0,0.1);
     border: none;
-    margin-left: 3px;
+    margin-left: 1px;
 }
 
 .txt_search:focus

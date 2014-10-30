@@ -84,6 +84,8 @@ namespace SIAO
                 txtFim.Enabled = false;
 
                 LoadUf();
+
+                dvCity.Attributes.CssStyle.Add("width", "70% !important");
             }
             Global.LocalPage = "";
             Control ul = Master.FindControl("navlist");
@@ -271,8 +273,21 @@ namespace SIAO
             {
                 LojasBLL.getLojasApp(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
                 LoadUf(Convert.ToInt32(ddlRedesRelatorios.SelectedValue));
-                if(ddlCity.Items.Count == 0)
+                if (ddlCity.Items.Count == 0)
                     LoadCity(Convert.ToInt32(ddlRedesRelatorios.SelectedValue), 0);
+                else
+                {
+                    dvCity.Attributes.CssStyle.Remove("width");
+
+                    if (dvUF.Visible)
+                    {
+                        dvCity.Attributes.CssStyle.Add("width", "70% !important");
+                    }
+                    else
+                    {
+                        dvCity.Attributes.CssStyle.Add("width", "99.5% !important");
+                    }
+                }
             }else
                 LoadUf();
         }
@@ -328,7 +343,7 @@ namespace SIAO
         protected void ddlLojaRelatorios_SelectedIndexChanged(object sender, EventArgs e)
         {
             Loja l = LojasBLL.getByCnpj(ddlLojaRelatorios.SelectedValue);
-            sInf.Text = String.Format("<p>Razão: {0} </p><p>CNPJ: {1} </p><p>Proprietário: {2}</p>",l.Razao, l.Cnpj, l.Proprietario);
+            sInf.Text = String.Format("<p>Razão: {0} </p><p>CNPJ: {1} </p><p>Proprietário: {2}</p><p>E-mail: {3}</p><p>Fone: {4}</p>",l.Razao, l.Cnpj, l.Proprietario,l.Email,l.Fone);
         }
         #endregion
 
@@ -608,7 +623,7 @@ namespace SIAO
                 else if (ds.Tables[0].Columns.Count > 0)
                 {
                     dvUF.Visible = false;
-
+                    
                     if(ds.Tables[0].Rows[0][0] != DBNull.Value)
                         LoadCity(id, Convert.ToInt32(ds.Tables[0].Rows[0][0]));
                 }
@@ -628,6 +643,16 @@ namespace SIAO
                 ddlCity.DataBind();
                 ddlCity.Items.Insert(0, new System.Web.UI.WebControls.ListItem(String.Empty, String.Empty));
                 ddlCity.SelectedIndex = 0;
+            }
+
+            dvCity.Attributes.CssStyle.Remove("width");
+
+            if (dvUF.Visible)
+            {
+                dvCity.Attributes.CssStyle.Add("width", "70% !important");
+            }
+            else {
+                dvCity.Attributes.CssStyle.Add("width", "99.5% !important");
             }
         }
 
