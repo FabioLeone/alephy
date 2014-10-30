@@ -28,74 +28,71 @@
             var btn = document.getElementById("btnSelect");
             var wth = (ddl.offsetWidth - 18);
             e.style.width = wth + "px";
-            btn.style.marginLeft = (wth + 3) + "px";
+            btn.style.marginLeft = (wth + 1) + "px";
         }
     </script>
-    <% if(CheckCss()){ %>
-        <div class="hdFilter" style="background: rgba(62, 137, 233, 0.25);">
-    <% }else{ %>
-        <div class="hdFilter">
-    <% } %>
-        <h2>
-            Filtro</h2>
-        <div id="dvFiltro" runat="server" style="height:53px;">
-            <div id="dvRedes" runat="server" style="width: 31% !important;">
-                Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
-                    OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged">
-                </asp:DropDownList>
-            </div>
-            <div id="dvUF" runat="server" style="width:11% !important">
-                UF:<asp:DropDownList ID="ddlUF" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlUF_SelectedIndexChanged"></asp:DropDownList>
-            </div>
-            <div id="dvCity" runat="server" style="width:20% !important">
-                Cidade:<asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="true" Width="90px" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"></asp:DropDownList>
-            </div>
-            <div id="dvLoja" runat="server" style="width: 36.98% !important;">
-                Loja:
-                <input type="text" id="txtCnpj" class="txt_search" onfocus="rsiz(this)" />
-                <input type="button" id="btnSelect" class="btnsearch" onclick="return btnSelect_onclick()" />
-                <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 84%;" OnSelectedIndexChanged="ddlLojaRelatorios_SelectedIndexChanged" AutoPostBack="true">
-                </asp:DropDownList>
-                <asp:CheckBox ID="cbxSum" runat="server" Text="Soma" ToolTip="Consolida os valores dos relarórios caso a opção selecionada for 'Todas'" />
-            </div>
-        </div>
-        <div>
-            <div style="width: 33% !important;">
-                <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server"
-                    AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
-                de:
-                <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
-                <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
-                    Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
-                </asp:MaskedEditExtender>
-                até:
-                <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
-                <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
-                    Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
-                </asp:MaskedEditExtender>
-            </div>
-            <div style="width: 21% !important;">
-                <asp:RadioButton ID="rbtUAno" GroupName="filtro" AutoPostBack="true" Text="ultimo ano"
-                    runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
-            </div>
-            <div style="width: 22% !important;">
-                <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" Text="ultimos 6 meses"
-                    runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
-            </div>
-            <div style="width: 22% !important;">
-                <asp:RadioButton ID="rbtUMes" GroupName="filtro" AutoPostBack="true" Text="ultimo mês"
-                    runat="server" OnCheckedChanged="rbtMes_CheckedChanged"/>
-            </div>
-        </div>
-        <div class="inf">
-            <asp:Literal ID="sInf" runat="server"></asp:Literal>
-        </div>
-    </div>
     <div class="ctApp">
         <% if(CheckCss()){ %>
-            <div id="divForm" class="dvList" style="background: rgba(62, 137, 233, 0.25);width: 49.75%;">
+            <div class="hdFilter" style="background: rgba(62, 137, 233, 0.25);">
         <% }else{ %>
-            <div id="divForm" class="dvList">
+            <div class="hdFilter">
+        <% } %>
+            <h2>
+                Filtro</h2>
+            <div id="dvFiltro" runat="server" style="height: 119px;">
+                <div id="dvRedes" runat="server" style="width: 99.5% !important;">
+                    Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
+                        OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged" Width="81%">
+                    </asp:DropDownList>
+                </div>
+                <div id="dvUF" runat="server" style="width:28.35% !important">
+                    UF:<asp:DropDownList ID="ddlUF" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlUF_SelectedIndexChanged"></asp:DropDownList>
+                </div>
+                <div id="dvCity" runat="server">
+                    Cidade:<asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="true" Width="199px" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"></asp:DropDownList>
+                </div>
+                <div id="dvLoja" runat="server" style="width: 99.45% !important;">
+                    Loja:
+                    <input type="text" id="txtCnpj" class="txt_search" onfocus="rsiz(this)" />
+                    <input type="button" id="btnSelect" class="btnsearch" onclick="return btnSelect_onclick()" />
+                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 84%;" OnSelectedIndexChanged="ddlLojaRelatorios_SelectedIndexChanged" AutoPostBack="true">
+                    </asp:DropDownList>
+                    <asp:CheckBox ID="cbxSum" runat="server" Text="Soma" ToolTip="Consolida os valores dos relarórios caso a opção selecionada for 'Todas'" />
+                </div>
+            </div>
+            <div style="height: 61px;">
+                <div style="width: 99% !important;">
+                    <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server"
+                        AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
+                    de:
+                    <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
+                    <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
+                        Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
+                    </asp:MaskedEditExtender>
+                    até:
+                    <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
+                    <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
+                        Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
+                    </asp:MaskedEditExtender>
+                </div>
+                <div style="width: 27.5% !important;">
+                    <asp:RadioButton ID="rbtUAno" GroupName="filtro" AutoPostBack="true" Text="ultimo ano"
+                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
+                </div>
+                <div style="width: 40% !important;">
+                    <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" Text="ultimos 6 meses"
+                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
+                </div>
+                <div style="width: 30% !important;">
+                    <asp:RadioButton ID="rbtUMes" GroupName="filtro" AutoPostBack="true" Text="ultimo mês"
+                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged"/>
+                </div>
+            </div>
+        </div>
+        <% if(CheckCss()){ %>
+            <div id="divForm" class="dvList" style="background: rgba(62, 137, 233, 0.25);width: 49.75%;margin-left: 0.5%;">
+        <% }else{ %>
+            <div id="divForm" class="dvList" style="margin-left: 0.5%;">
         <% } %>
             <h2>
                 Relatórios</h2>
@@ -190,9 +187,13 @@
                 </li>
             </ul>
         </div>
+        <div class="hdFilter">
+            <h2>Informações loja</h2>
+            <div class="inf">
+                <asp:Literal ID="sInf" runat="server"></asp:Literal>
+            </div>
+        </div>
     </div>
     <rsweb:ReportViewer ID="rv" runat="server" Visible="false">
     </rsweb:ReportViewer>
-            </label>
-
 </asp:Content>
