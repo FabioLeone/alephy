@@ -85,7 +85,7 @@ namespace SIAO
 
                 LoadUf();
 
-                dvCity.Attributes.CssStyle.Add("width", "70% !important");
+                dvCity.Attributes.CssStyle.Add("width", "70%");
             }
             Global.LocalPage = "";
             Control ul = Master.FindControl("navlist");
@@ -281,11 +281,11 @@ namespace SIAO
 
                     if (dvUF.Visible)
                     {
-                        dvCity.Attributes.CssStyle.Add("width", "70% !important");
+                        dvCity.Attributes.CssStyle.Add("width", "70%");
                     }
                     else
                     {
-                        dvCity.Attributes.CssStyle.Add("width", "99.5% !important");
+                        dvCity.Attributes.CssStyle.Add("width", "99.5%");
                     }
                 }
             }else
@@ -649,7 +649,7 @@ namespace SIAO
 
             if (dvUF.Visible)
             {
-                dvCity.Attributes.CssStyle.Add("width", "70% !important");
+                dvCity.Attributes.CssStyle.Add("width", "70%");
             }
             else {
                 dvCity.Attributes.CssStyle.Add("width", "99.5% !important");

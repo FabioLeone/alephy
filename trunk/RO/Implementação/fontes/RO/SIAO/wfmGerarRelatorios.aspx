@@ -4,6 +4,11 @@
 <%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
     Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+    <% if(CheckCss()){ %>
+        <link href="Content/css/nwstyle.css" rel="Stylesheet" type="text/css" />
+    <%} %>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
         function btnSelect_onclick() {
@@ -40,52 +45,24 @@
             <h2>
                 Filtro</h2>
             <div id="dvFiltro" runat="server" style="height: 119px;">
-                <div id="dvRedes" runat="server" style="width: 99.5% !important;">
+                <div id="dvRedes" runat="server" style="width: 99.1%;">
                     Redes:<asp:DropDownList ID="ddlRedesRelatorios" runat="server" AutoPostBack="true"
                         OnSelectedIndexChanged="ddlRedesRelatorios_SelectedIndexChanged" Width="81%">
                     </asp:DropDownList>
                 </div>
-                <div id="dvUF" runat="server" style="width:28.35% !important">
+                <div id="dvUF" runat="server">
                     UF:<asp:DropDownList ID="ddlUF" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlUF_SelectedIndexChanged"></asp:DropDownList>
                 </div>
                 <div id="dvCity" runat="server">
-                    Cidade:<asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="true" Width="199px" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"></asp:DropDownList>
+                    Cidade:<asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="true" Width="72%" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"></asp:DropDownList>
                 </div>
-                <div id="dvLoja" runat="server" style="width: 99.45% !important;">
+                <div id="dvLoja" runat="server" style="width: 99.45%;">
                     Loja:
                     <input type="text" id="txtCnpj" class="txt_search" onfocus="rsiz(this)" />
                     <input type="button" id="btnSelect" class="btnsearch" onclick="return btnSelect_onclick()" />
-                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 84%;" OnSelectedIndexChanged="ddlLojaRelatorios_SelectedIndexChanged" AutoPostBack="true">
+                    <asp:DropDownList ID="ddlLojaRelatorios" runat="server" Style="width: 85%;" OnSelectedIndexChanged="ddlLojaRelatorios_SelectedIndexChanged" AutoPostBack="true">
                     </asp:DropDownList>
                     <asp:CheckBox ID="cbxSum" runat="server" Text="Soma" ToolTip="Consolida os valores dos relarórios caso a opção selecionada for 'Todas'" />
-                </div>
-            </div>
-            <div style="height: 61px;">
-                <div style="width: 99% !important;">
-                    <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server"
-                        AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
-                    de:
-                    <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
-                    <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
-                        Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
-                    </asp:MaskedEditExtender>
-                    até:
-                    <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
-                    <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
-                        Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
-                    </asp:MaskedEditExtender>
-                </div>
-                <div style="width: 27.5% !important;">
-                    <asp:RadioButton ID="rbtUAno" GroupName="filtro" AutoPostBack="true" Text="ultimo ano"
-                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
-                </div>
-                <div style="width: 40% !important;">
-                    <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" Text="ultimos 6 meses"
-                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
-                </div>
-                <div style="width: 30% !important;">
-                    <asp:RadioButton ID="rbtUMes" GroupName="filtro" AutoPostBack="true" Text="ultimo mês"
-                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged"/>
                 </div>
             </div>
         </div>
@@ -172,6 +149,43 @@
                 </li>
             </ul>
         </div>
+        <div class="hdFilter hd0">
+            <h2>Período</h2>
+            <div class="hdRange">
+                <div class="hdR1">
+                    <asp:RadioButton ID="rbtPeriodo" GroupName="filtro" Text="período" runat="server"
+                        AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
+                    de:
+                    <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
+                    <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
+                        Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
+                    </asp:MaskedEditExtender>
+                    até:
+                    <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
+                    <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
+                        Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
+                    </asp:MaskedEditExtender>
+                </div>
+                <div class="hdR2">
+                    <asp:RadioButton ID="rbtUAno" GroupName="filtro" AutoPostBack="true" Text="ultimo ano"
+                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
+                </div>
+                <div class="hdR3">
+                    <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" Text="ultimos 6 meses"
+                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged" />
+                </div>
+                <div class="hdR4">
+                    <asp:RadioButton ID="rbtUMes" GroupName="filtro" AutoPostBack="true" Text="ultimo mês"
+                        runat="server" OnCheckedChanged="rbtMes_CheckedChanged"/>
+                </div>
+            </div>
+        </div>
+        <div class="hdFilter hdInfo">
+            <h2>Informações loja</h2>
+            <div class="inf">
+                <asp:Literal ID="sInf" runat="server"></asp:Literal>
+            </div>
+        </div>
         <div id="dvAn" runat="server" class="dvList">
             <h2>
                 Análise</h2>
@@ -186,12 +200,6 @@
                     </asp:LinkButton>
                 </li>
             </ul>
-        </div>
-        <div class="hdFilter">
-            <h2>Informações loja</h2>
-            <div class="inf">
-                <asp:Literal ID="sInf" runat="server"></asp:Literal>
-            </div>
         </div>
     </div>
     <rsweb:ReportViewer ID="rv" runat="server" Visible="false">
