@@ -88,6 +88,7 @@
   <ItemGroup>
     <Content Include="configurations.aspx" />
     <Content Include="Content\css\Animations.css" />
+    <Content Include="Content\css\mdstyle.css" />
     <Content Include="Content\css\nwstyle.css" />
     <Content Include="Content\css\style1.css" />
     <Content Include="Content\delete.png" />

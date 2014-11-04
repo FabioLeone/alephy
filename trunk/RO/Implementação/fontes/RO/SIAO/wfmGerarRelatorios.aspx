@@ -5,9 +5,6 @@
     Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
-    <% if(CheckCss()){ %>
-        <link href="Content/css/nwstyle.css" rel="Stylesheet" type="text/css" />
-    <%} %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
