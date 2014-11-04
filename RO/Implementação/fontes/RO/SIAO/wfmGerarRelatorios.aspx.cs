@@ -82,10 +82,6 @@ namespace SIAO
                 
                 txtInicio.Enabled = false;
                 txtFim.Enabled = false;
-
-                LoadUf();
-
-                dvCity.Attributes.CssStyle.Add("width", "70%");
             }
             Global.LocalPage = "";
             Control ul = Master.FindControl("navlist");
@@ -334,9 +330,22 @@ namespace SIAO
 
         protected void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) && !String.IsNullOrEmpty(ddlCity.SelectedValue))
+            if (ddlRedesRelatorios.Visible)
             {
-                LojasBLL.getLojasApp(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue), ddlCity.SelectedValue);
+                if (!String.IsNullOrEmpty(ddlRedesRelatorios.SelectedValue) && !String.IsNullOrEmpty(ddlCity.SelectedValue))
+                {
+                    LojasBLL.getLojasApp(ddlLojaRelatorios, Convert.ToInt32(ddlRedesRelatorios.SelectedValue), ddlCity.SelectedValue);
+                }
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(ddlCity.SelectedValue))
+                {
+                    LojasBLL.getLojasApp(ddlLojaRelatorios, this.User.RedeId, ddlCity.SelectedValue);
+                }
+                else {
+                    LojasBLL.getLojasApp(ddlLojaRelatorios, this.User.RedeId);
+                }
             }
         }
 
@@ -371,6 +380,31 @@ namespace SIAO
                 LojasBLL.getLojasApp(this.User,ddlLojaRelatorios,dvFiltro, dvLoja);
 
             UsersBLL.CheckRptVew(UsersBLL.GetUserSession(),lm1,lm2,li3,lg1,lg2,lg3,lg4,lg5,la1,dvAn);
+
+            ContentPlaceHolder cph = Page.Master.FindControl("head") as ContentPlaceHolder;
+
+            if (!ddlRedesRelatorios.Visible)
+            {
+                if (cph != null)
+                {
+                    LiteralControl lc = new LiteralControl();
+                    if (CheckCss())
+                    {
+                        lc.Text = "<link href=\"Content/css/mdstyle.css\" rel=\"Stylesheet\" type=\"text/css\" />";
+                    }
+                    else
+                    {
+                        lc.Text = "<link href=\"Content/css/nwstyle.css\" rel=\"Stylesheet\" type=\"text/css\" />";
+                    }
+                    cph.Controls.Add(lc);
+                }
+                LoadUf(this.User.RedeId);
+            }
+            else {
+                LoadUf();
+
+                dvCity.Attributes.CssStyle.Add("width", "70%");
+            }
         }
 
         private void divErro(string msg)
