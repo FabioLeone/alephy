@@ -398,7 +398,11 @@ namespace SIAO
                     }
                     cph.Controls.Add(lc);
                 }
-                LoadUf(this.User.RedeId);
+
+                if (this.User.RedeId > 0)
+                    LoadUf(this.User.RedeId);
+                else
+                    LoadUf(this.User);
             }
             else {
                 LoadUf();
@@ -664,6 +668,40 @@ namespace SIAO
             }
         }
 
+        private void LoadUf(UsersTO user)
+        {
+            DataSet ds = new DataSet();
+            ds = oc.GetUfByUser(user.UserId);
+
+            if (ds.Tables.Count > 0)
+            {
+                if (ds.Tables[0].Columns.Count > 0 && ds.Tables[0].Rows.Count > 1)
+                {
+                    dvUF.Visible = true;
+
+                    ddlUF.DataSource = ds.Tables[0];
+                    ddlUF.DataValueField = ds.Tables[0].Columns[0].ToString();
+                    ddlUF.DataTextField = ds.Tables[0].Columns[1].ToString();
+                    ddlUF.DataBind();
+                    ddlUF.Items.Insert(0, new System.Web.UI.WebControls.ListItem(String.Empty, String.Empty));
+                    ddlUF.SelectedIndex = 0;
+                }
+                else if (ds.Tables[0].Columns.Count > 0)
+                {
+                    dvUF.Visible = false;
+
+                    if (ds.Tables[0].Rows[0][0] != DBNull.Value)
+                        LoadCity(user, Convert.ToInt32(ds.Tables[0].Rows[0][0]));
+
+                    dvFilter.Attributes.Add("class", dvFilter.Attributes["class"].ToString().Replace("hd0", "hd_nouf"));
+                    dvInf.Attributes.Add("class", dvInf.Attributes["class"].ToString().Replace("hdInfo", "hdI_nouf"));
+                    dvAn.Attributes.Add("class", dvAn.Attributes["class"].ToString() + " an_nouf");
+                    dvCity.Attributes.Add("class", "ct_nouf");
+                    dvLoja.Attributes.Add("class", "lj_nouf");
+                }
+            }
+        }
+
         private void LoadCity(int id, int ufId)
         {
             DataTable dt = new DataTable();
@@ -686,6 +724,33 @@ namespace SIAO
                 dvCity.Attributes.CssStyle.Add("width", "70%");
             }
             else {
+                dvCity.Attributes.CssStyle.Add("width", "99.5% !important");
+            }
+        }
+
+        private void LoadCity(UsersTO user, int ufId)
+        {
+            DataTable dt = new DataTable();
+            dt = oc.GetCityByUserIdAndUF(user.UserId, ufId);
+
+            if (dt.Columns.Count > 0)
+            {
+                ddlCity.DataSource = dt;
+                ddlCity.DataValueField = dt.Columns[0].ToString();
+                ddlCity.DataTextField = dt.Columns[0].ToString();
+                ddlCity.DataBind();
+                ddlCity.Items.Insert(0, new System.Web.UI.WebControls.ListItem(String.Empty, String.Empty));
+                ddlCity.SelectedIndex = 0;
+            }
+
+            dvCity.Attributes.CssStyle.Remove("width");
+
+            if (dvUF.Visible)
+            {
+                dvCity.Attributes.CssStyle.Add("width", "70%");
+            }
+            else
+            {
                 dvCity.Attributes.CssStyle.Add("width", "99.5% !important");
             }
         }

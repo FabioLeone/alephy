@@ -146,7 +146,7 @@
                 </li>
             </ul>
         </div>
-        <div class="hdFilter hd0">
+        <div id="dvFilter" runat="server" class="hdFilter hd0">
             <h2>Período</h2>
             <div class="hdRange">
                 <div class="hdR1">
@@ -177,7 +177,7 @@
                 </div>
             </div>
         </div>
-        <div class="hdFilter hdInfo">
+        <div id="dvInf" runat="server" class="hdFilter hdInfo">
             <h2>Informações loja</h2>
             <div class="inf">
                 <asp:Literal ID="sInf" runat="server"></asp:Literal>

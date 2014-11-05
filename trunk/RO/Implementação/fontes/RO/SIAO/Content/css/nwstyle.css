@@ -2,12 +2,21 @@
     margin-top: -202.3px !important;
 }
 
+.hd_nouf {
+    margin-top: -233px;
+}
+
 #ContentPlaceHolder1_dvFiltro {
     height: auto !important;
 }
 
 .hdInfo {
     margin-top: -77.8px !important;
+    width: 32%;
+}
+
+.hdI_nouf {
+    margin-top: -110.8px !important;
     width: 32%;
 }
 
@@ -24,12 +33,26 @@
         margin-top: -218.3px !important;
     }
 
+    
+    .hd_nouf {
+        margin-top: -249px;
+    }
+
     .hdInfo {
         margin-top: -114.8px !important;
     }
 
+    .hdI_nouf {
+        margin-top: -146.8px !important;
+        width: 32%;
+    }
+
     #ContentPlaceHolder1_dvAn {
         margin: -206.3px 32.5%;
+    }
+
+    .an_nouf {
+        margin: -200.3px 32.5% !important;
     }
 }
 
@@ -38,12 +61,25 @@
         margin-top: -232.3px !important;
     }
 
+    .hd_nouf {
+        margin-top: -263px;
+    }
+
     .hdInfo {
         margin-top: -123.8px !important;
     }
 
+    .hdI_nouf {
+        margin-top: -155.8px !important;
+        width: 32%;
+    }
+
     #ContentPlaceHolder1_dvAn {
         margin: -212.3px 32.5%;
+    }
+
+    .an_nouf {
+        margin: -211.3px 32.5% !important;
     }
 }
 
@@ -55,6 +91,14 @@
 
     #ContentPlaceHolder1_dvCity {
         width:70.45% !important;
+    }
+
+    .ct_nouf {
+        float: none;
+    }
+
+    .lj_nouf {
+        float: inherit;
     }
 
     .hd0 {
