@@ -229,6 +229,26 @@ namespace SIAO.SRV
             return ds;
         }
 
+        public DataSet GetUfByUser(int intId)
+        {
+            DataSet ds = new DataSet();
+
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            cmm.Connection = cnn;
+
+            cmm.CommandText = "SELECT distinct uf.id,uf.UF FROM uf inner join farmacias f on uf.id = f.uf inner join usuarios_vinculos u on f.id = u.farmaciaid where u.usuarioid = @Id;";
+
+            cmm.Parameters.Add("@Id", NpgsqlDbType.Integer).Value = intId;
+
+            if (clsDB.openConnection(cmm))
+            {
+                ds = clsDB.QueryDS(ref cmm, ref ds, "UF");
+            }
+            clsDB.closeConnection(cmm);
+
+            return ds;
+        }
+
         public static Rede GetRedeByCNPJ(string strCNPJ)
         {
             DataSet ds = new DataSet();
@@ -856,6 +876,27 @@ namespace SIAO.SRV
 
             cmm.CommandText = sb.ToString();
             cmm.Parameters.Add("@idRede", NpgsqlDbType.Integer).Value = id;
+            cmm.Parameters.Add("@uf", NpgsqlDbType.Integer).Value = ufId;
+
+            if (clsDB.openConnection(cmm))
+            {
+                dt = clsDB.QueryDS(ref cmm, ref dt, "city");
+            }
+            clsDB.closeConnection(cmm);
+
+            return dt;
+        }
+
+        public DataTable GetCityByUserIdAndUF(int id, int ufId)
+        {
+            DataTable dt = new DataTable();
+            NpgsqlCommand cmm = new NpgsqlCommand();
+            NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
+            StringBuilder sb = new StringBuilder(@"SELECT DISTINCT cidade FROM farmacias f INNER JOIN usuarios_vinculos u ON f.id = u.farmaciaid WHERE u.usuarioid = @id AND uf = @uf ORDER BY cidade");
+            cmm.Connection = cnn;
+
+            cmm.CommandText = sb.ToString();
+            cmm.Parameters.Add("@id", NpgsqlDbType.Integer).Value = id;
             cmm.Parameters.Add("@uf", NpgsqlDbType.Integer).Value = ufId;
 
             if (clsDB.openConnection(cmm))
