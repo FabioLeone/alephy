@@ -281,7 +281,7 @@ namespace SIAO
                     }
                     else
                     {
-                        dvCity.Attributes.CssStyle.Add("width", "99.5%");
+                        dvCity.Attributes.CssStyle.Add("width", "99.5% !important");
                     }
                 }
             }else
