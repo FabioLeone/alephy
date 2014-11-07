@@ -12,7 +12,7 @@ namespace SIAO.SRV
     internal class RelatoriosDAL
     {
         #region .:Search:.
-        internal static List<clsRelat1> GetMod2(UsersTO clsUser, string strIni, string strFim, int intRedeId, string strCnpj, bool blnSum, string strCity, int intUf)
+        internal static List<clsRelat1> GetMod2(UsersTO clsUser, string strIni, string strFim, int intRedeId, string strCnpj, bool blnSum, string strCity, int intUf, bool bln)
         {
             List<clsRelat1> lr = new List<clsRelat1>();
             NpgsqlConnection cnn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["SIAOConnectionString"].ConnectionString);
@@ -36,7 +36,7 @@ namespace SIAO.SRV
             CASE 
 		        WHEN consolidado.sub_consultoria IS NULL
 			        OR consolidado.sub_consultoria = '' 
-		        THEN 'NÃO INDENTIFICADO'
+		        THEN 'NÃO IDENTIFICADO'
 		        ELSE consolidado.sub_consultoria
             END
             ) as ""Sub Consultoria"",
@@ -119,6 +119,9 @@ namespace SIAO.SRV
 
             if (!String.IsNullOrEmpty(strCity))
                 SQL.Append(" AND farmacias.cidade = @city");
+
+            if (bln)
+                SQL.Append(" AND upper(consolidado.Grupo) IN ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')");
 
             if (clsUser.TipoId.Equals(1) && clsUser.Nivel.Equals(0))
             {

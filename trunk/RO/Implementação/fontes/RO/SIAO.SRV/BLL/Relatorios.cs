@@ -53,6 +53,14 @@ namespace SIAO.SRV
 
             List<clsRelat1> lst = new List<clsRelat1>();
             UsersTO u = UsersBLL.GetUserSession();
+            Boolean bln = UsersBLL.CheckCssRede(u);
+
+
+            int i = 0;
+            int.TryParse(licFilters.FindByText("rede").Value, out i);
+
+            if (!bln)
+                bln = checkNetwork(i, licFilters.FindByText("loja").Value);
 
             int uf = 0;
 
@@ -60,15 +68,13 @@ namespace SIAO.SRV
             {
                 int.TryParse(licFilters.FindByText("uf").Value, out uf);
 
-                lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u.RedeId, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value), licFilters.FindByText("city").Value, uf);
+                lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, u.RedeId, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value), licFilters.FindByText("city").Value, uf, bln);
             }
             else
             {
-                int i = 0;
-                int.TryParse(licFilters.FindByText("rede").Value, out i);
                 int.TryParse(licFilters.FindByText("uf").Value, out uf);
 
-                lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, i, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value), licFilters.FindByText("city").Value, uf);
+                lst = RelatoriosDAL.GetMod2(u, licFilters.FindByText("de").Value, licFilters.FindByText("ate").Value, i, licFilters.FindByText("loja").Value, Convert.ToBoolean(licFilters.FindByText("sum").Value), licFilters.FindByText("city").Value, uf, bln);
             }
 
             lst.ForEach(delegate(clsRelat1 report)
@@ -79,6 +85,17 @@ namespace SIAO.SRV
             });
 
             return lst;
+        }
+
+        private static bool checkNetwork(int network_id, string store)
+        {
+            if (network_id > 0)
+            {
+                return clsControl.GetRedeById(network_id).RedeName.ToLower().Contains("multidrogas");
+            }
+            else {
+                return clsControl.GetRedeById(LojasBLL.getByCnpj(store).idRede).RedeName.ToLower().Contains("multidrogas");
+            }
         }
 
         public static string GetAnalise(ListItemCollection lstFiltro, int intId)
