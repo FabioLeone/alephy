@@ -94,7 +94,12 @@ namespace SIAO.SRV
                 return clsControl.GetRedeById(network_id).RedeName.ToLower().Contains("multidrogas");
             }
             else {
-                return clsControl.GetRedeById(LojasBLL.getByCnpj(store).idRede).RedeName.ToLower().Contains("multidrogas");
+                string r = clsControl.GetRedeById(LojasBLL.getByCnpj(store).idRede).RedeName;
+
+                if (!String.IsNullOrEmpty(r))
+                    return r.ToLower().Contains("multidrogas");
+                else
+                    return false;
             }
         }
 
