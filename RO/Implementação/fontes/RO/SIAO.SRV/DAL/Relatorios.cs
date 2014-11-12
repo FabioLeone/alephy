@@ -39,22 +39,28 @@ namespace SIAO.SRV
 		        THEN 'NÃO IDENTIFICADO'
 		        ELSE consolidado.sub_consultoria
             END
-            ) as ""Sub Consultoria"",
-            ""upper""(
-		    CASE 
-		        WHEN upper(consolidado.Grupo) IN ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS','PERFUMARIA')
-		        THEN consolidado.Grupo
-		        ELSE 'EXTRA MEDICAMENTOS'
-		    END
-		    ) as ""Grupo"",
-            ""upper""(
-            CASE 
-		        WHEN consolidado.importado IS NULL
-			        OR consolidado.importado = '0' 
-		        THEN 'NACIONAL'
-		        ELSE 'IMPORTADO'
-            END
-            ) as ""importado"",");
+            ) as ""Sub Consultoria"",");
+
+            if (bln){
+                SQL.Append(@" ""upper""(
+		            CASE 
+		                WHEN upper(consolidado.Grupo) IN ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS','PERFUMARIA')
+		                THEN consolidado.Grupo
+		                ELSE 'EXTRA MEDICAMENTOS'
+		            END
+		            ) as ""Grupo"",");
+            }else{
+                SQL.Append(@" upper(consolidado.Grupo) as ""Grupo"",");
+            }
+
+            SQL.Append(@" ""upper""(
+                CASE 
+		            WHEN consolidado.importado IS NULL
+			            OR consolidado.importado = '0' 
+		            THEN 'NACIONAL'
+		            ELSE 'IMPORTADO'
+                END
+                ) as ""importado"",");
 
             if (String.IsNullOrEmpty(strCnpj) && blnSum) SQL.Append(@" SUM(consolidado.Quantidade) AS ""Soma De Quantidade"",
 	            SUM(consolidado.Valor_Bruto) AS ""Soma De Valor bruto"",
