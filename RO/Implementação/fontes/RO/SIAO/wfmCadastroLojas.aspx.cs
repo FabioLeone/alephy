@@ -82,8 +82,8 @@ namespace SIAO
 
             divError.ID = "msgError";
             divError.Attributes.Add("class", "alerta");
-            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "-17%");
-            divError.Style.Add("bottom", "3.5%");
+            divError.Style.Add(HtmlTextWriterStyle.MarginLeft, "-8.5%");
+            divError.Style.Add("bottom", "2.06%");
             divError.InnerHtml = "<p>" + msg + "</p>";
 
             UpdatePanel1.ContentTemplateContainer.Controls.Add(divError);
