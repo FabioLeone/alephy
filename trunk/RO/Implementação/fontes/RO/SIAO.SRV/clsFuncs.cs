@@ -310,6 +310,8 @@ namespace SIAO.SRV
 
         public bool ValidaCnpj(string cnpj)
         {
+            if (cnpj.Contains(",")) cnpj = cnpj.Replace(",", ".");
+
             if (cnpj.Equals("__.___.___/____-__")) { return false; }
 
             int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };

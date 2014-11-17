@@ -89,10 +89,8 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtCnpj" runat="server"></asp:TextBox>
-                                <asp:MaskedEditExtender ID="txtCnpj_MaskedEditExtender" runat="server" CultureAMPMPlaceholder=""
-                                    CultureCurrencySymbolPlaceholder="" CultureDateFormat="" CultureDatePlaceholder=""
-                                    CultureDecimalPlaceholder="" CultureThousandsPlaceholder="" CultureTimePlaceholder=""
-                                    Enabled="True" TargetControlID="txtCnpj" Mask="99,999,999/9999-99" ClearMaskOnLostFocus="false">
+                                <asp:MaskedEditExtender ID="txtCnpj_MaskedEditExtender" runat="server"
+                                    Enabled="True" TargetControlID="txtCnpj" Mask="99.999.999/9999-99" ClearMaskOnLostFocus="false">
                                 </asp:MaskedEditExtender>
                             </td>
                         </tr>
