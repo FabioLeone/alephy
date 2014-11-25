@@ -403,7 +403,7 @@ namespace goku.resources
                             SELECT Cnpj,Mes,Ano,apelido,nome,Sum(Quantidade),Sum(Valor_Bruto),Sum(Valor_Liquido),Sum(Valor_Desconto),Importado,id
                             FROM (
                             SELECT distinct b.Cnpj,b.Mes,b.Ano,CASE WHEN (p.apelido is null or p.apelido = '') THEN p.nome ELSE p.apelido END as apelido,
-                            ps.nome
+                            CASE WHEN (ps.apelido is null or ps.apelido = '') THEN ps.nome ELSE ps.apelido END as nome
                             ,b.Quantidade,b.Valor_Bruto,b.Valor_Liquido,b.Valor_Desconto,produtos_base.Importado,f.id,
                             b.barras
                             FROM base_cliente_espera b
