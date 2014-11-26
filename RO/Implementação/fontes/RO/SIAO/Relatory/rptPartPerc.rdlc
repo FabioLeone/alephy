@@ -429,23 +429,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=IIF(Fields!SubConsultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
-IIF(Fields!SubConsultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
-IIF(Fields!SubConsultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
-IIF(Fields!SubConsultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
-IIF(Fields!SubConsultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
-IIF(Fields!SubConsultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
-IIF(Fields!SubConsultoria.Value.Equals("ADM - AB"), "Antibióticos", 
-IIF(Fields!SubConsultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
-IIF(Fields!SubConsultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!SubConsultoria.Value)
-)
-)
-)
-)
-)
-)
-)
-)</Value>
+                                <Value>=Fields!SubConsultoria.Value</Value>
                                 <Style />
                               </TextRun>
                             </TextRuns>
@@ -464,6 +448,7 @@ IIF(Fields!SubConsultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!SubConsult
                           <PaddingBottom>1pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>

@@ -37,7 +37,7 @@ namespace SIAO.SRV
 		        WHEN consolidado.sub_consultoria IS NULL
 			        OR consolidado.sub_consultoria = '' 
 		        THEN 'NÃO IDENTIFICADO'
-		        ELSE consolidado.sub_consultoria
+		        ELSE (select case when apelido is null or apelido = '' then nome else apelido end from produtos_subgrupos where lower(nome) = lower(consolidado.sub_consultoria))
             END
             ) as ""Sub Consultoria"",");
 

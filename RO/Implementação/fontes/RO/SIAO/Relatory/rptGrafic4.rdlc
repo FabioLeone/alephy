@@ -267,23 +267,7 @@
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
-IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
-)
-)
-)
-)
-)
-)
-)
-)</Caption>
+            <Caption>=Fields!Sub_ConsultoriaAP.Value</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -1081,23 +1065,7 @@ IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consu
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
-IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
-)
-)
-)
-)
-)
-)
-)
-)</Caption>
+            <Caption>=Fields!Sub_ConsultoriaAP.Value</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -1411,23 +1379,7 @@ IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consu
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
-IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
-)
-)
-)
-)
-)
-)
-)
-)</Caption>
+            <Caption>=Fields!Sub_ConsultoriaAP.Value</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -1982,23 +1934,7 @@ IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consu
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
-IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
-)
-)
-)
-)
-)
-)
-)
-)</Caption>
+            <Caption>=Fields!Sub_ConsultoriaAP.Value</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -2557,23 +2493,7 @@ IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consu
         </ChartLegends>
         <ChartTitles>
           <ChartTitle Name="Default">
-            <Caption>=IIF(Fields!Sub_Consultoria.Value.Equals("ADM (N FORM)"), "Sem estratégia", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1 (ANTI - RH)"), "Público feminino", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2 (TRATA)"), "Tratamentos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 2-2 (FPB)"), "Popular do Brasil", 
-IIF(Fields!Sub_Consultoria.Value.Equals("RELAC (PBM)"), "Cuponagem", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PORT (PSICO)"), "Psicos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM - AB"), "Antibióticos", 
-IIF(Fields!Sub_Consultoria.Value.Equals("ADM (ANTI-FLA)"), "Antiflamatórios", 
-IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consultoria.Value)
-)
-)
-)
-)
-)
-)
-)
-)</Caption>
+            <Caption>=Fields!Sub_ConsultoriaAP.Value</Caption>
             <Style>
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontWeight>Bold</FontWeight>
@@ -3043,13 +2963,17 @@ IIF(Fields!Sub_Consultoria.Value.Equals("PDE 1-2"), "Feminino", Fields!Sub_Consu
           <DataField>quantidade</DataField>
           <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
+        <Field Name="Sub_ConsultoriaAP">
+          <DataField>Sub_ConsultoriaAP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>SIAO.SRV.BLL</rd:DataSetName>
         <rd:TableName>GraficBLL</rd:TableName>
         <rd:ObjectDataSourceSelectMethod>GraficList</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(System.String, SIAO.SRV.TO.UsersTO, System.String, System.String)</rd:ObjectDataSourceSelectMethodSignature>
-        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceSelectMethodSignature>System.Collections.Generic.List`1[SIAO.SRV.TO.GraficTO] GraficList(System.Web.UI.WebControls.ListItemCollection)</rd:ObjectDataSourceSelectMethodSignature>
+        <rd:ObjectDataSourceType>SIAO.SRV.BLL.GraficBLL, SIAO.SRV, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f9d9030a67b71aa2</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
