@@ -18,6 +18,8 @@ namespace SIAO.SRV.TO
         public string Nome_Fantasia { get; set; }
         public string Periodo { get; set; }
         public long quantidade { get; set; }
+
+        public string Sub_ConsultoriaAP { get; set; }
     }
 
     [Serializable]

@@ -43,6 +43,16 @@ namespace SIAO.SRV.DAL
             {
                 clsGrafic.Ano = 0;
             }
+
+            try
+            {
+                if (!drdGrafic.IsDBNull(drdGrafic.GetOrdinal("sub_apelido"))) { clsGrafic.Sub_ConsultoriaAP = drdGrafic.GetString(drdGrafic.GetOrdinal("sub_apelido")); } else { clsGrafic.Sub_ConsultoriaAP = string.Empty; }
+            }
+            catch
+            {
+                clsGrafic.Sub_ConsultoriaAP = string.Empty;
+            }
+
             return clsGrafic;
         }
 
@@ -526,12 +536,12 @@ namespace SIAO.SRV.DAL
                 strSQL.Append(@"SELECT");
 
                 if (String.IsNullOrEmpty(strCnpj)) strSQL.Append(@" r.descricao as razaosocial, r.descricao as nomefantasia, r.cnpj,
-                xTemp.mes,xTemp.ano,xTemp.grupo,xTemp.sub_consultoria,SUM(xTemp.""Liquido"") as ""Liquido"", AVG(xTemp.""Desconto"") as ""Desconto"", SUM(xTemp.""Quantidade"")::BIGINT as ""Quantidade""");
+                xTemp.mes,xTemp.ano,xTemp.grupo,xTemp.sub_consultoria,SUM(xTemp.""Liquido"") as ""Liquido"", AVG(xTemp.""Desconto"") as ""Desconto"", SUM(xTemp.""Quantidade"")::BIGINT as ""Quantidade"", sub_apelido");
                 else strSQL.Append(@" farmacias.razaosocial,farmacias.nomefantasia, xTemp.*");
                 
                 strSQL.Append(@" FROM (
                 select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
-                    sum(quantidade) as ""Quantidade""
+                    sum(quantidade) as ""Quantidade"",(select case when apelido is null or apelido = '' then nome else apelido end from produtos_subgrupos where lower(nome) = lower(sub_consultoria)) as sub_apelido
 	                from consolidado
 	                WHERE 
 	                ((UPPER(grupo) LIKE 'GENÉRICOS' and UPPER(sub_consultoria) like 'PDE 2%') 
@@ -539,20 +549,20 @@ namespace SIAO.SRV.DAL
 	                (UPPER(grupo) LIKE 'ALTERNATIVOS' and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)','PDE 1-2'))
 	                OR 
 	                ((UPPER(grupo) LIKE 'PROPAGADOS' OR UPPER(grupo) LIKE 'GENÉRICOS') and UPPER(sub_consultoria) in ('PDE 1 (ANTI - RH)','PDE 2 (TRATA)','PDE 1-2')))
-	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria 
+	                GROUP BY cnpj, mes, ano, grupo, sub_consultoria, sub_apelido
                 union
 	                select cnpj, mes, ano, 'Total', sub_consultoria,sum(valor_liquido) as ""Liquido"",
                     CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto"", 
-                    sum(quantidade) as ""Quantidade""
+                    sum(quantidade) as ""Quantidade"",(select case when apelido is null or apelido = '' then nome else apelido end from produtos_subgrupos where lower(nome) = lower(sub_consultoria)) as sub_apelido
 	                from consolidado
 	                WHERE 
 	                upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
 	                AND
 	                upper(sub_consultoria) in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)','PDE 1 (ANTI - RH)','PDE 1-2')
-	                GROUP BY cnpj, mes, ano, sub_consultoria
+	                GROUP BY cnpj, mes, ano, sub_consultoria, sub_apelido
                 union
 	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
-                    sum(quantidade) as ""Quantidade""
+                    sum(quantidade) as ""Quantidade"", NULL
 	                from consolidado
 	                WHERE 
                     upper(Grupo) in ('PROPAGADOS','ALTERNATIVOS','GENÉRICOS')
@@ -580,7 +590,7 @@ namespace SIAO.SRV.DAL
                     strSQL.Append(" AND farmacias.cidade = @city");
 
                 if (String.IsNullOrEmpty(strCnpj)) strSQL.Append(@" GROUP BY r.descricao, r.descricao, r.cnpj,
-                xTemp.mes,xTemp.ano,xTemp.grupo,xTemp.sub_consultoria");
+                xTemp.mes,xTemp.ano,xTemp.grupo,xTemp.sub_consultoria, sub_apelido");
 
                 strSQL.Append(" ORDER BY Ano,Mes,Grupo,Sub_Consultoria");
 
