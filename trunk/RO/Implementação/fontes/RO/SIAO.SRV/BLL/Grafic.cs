@@ -184,6 +184,7 @@ namespace SIAO.SRV.BLL
                             clsList.Add(new GraficTO()
                             {
                                 Sub_Consultoria = _Grafic.Sub_Consultoria,
+                                Sub_ConsultoriaAP = _Grafic.Sub_ConsultoriaAP,
                                 Razao_Social = _Grafic.Razao_Social,
                                 Mes = _Grafic.Mes,
                                 Ano = _Grafic.Ano,
