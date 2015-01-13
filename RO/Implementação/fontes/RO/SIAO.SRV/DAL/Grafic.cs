@@ -540,7 +540,7 @@ namespace SIAO.SRV.DAL
                 else strSQL.Append(@" farmacias.razaosocial,farmacias.nomefantasia, xTemp.*");
                 
                 strSQL.Append(@" FROM (
-                select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
+                select cnpj, mes, ano, grupo, sub_consultoria ,sum(valor_liquido) as ""Liquido"",CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto"", 
                     sum(quantidade) as ""Quantidade"",(select case when apelido is null or apelido = '' then nome else apelido end from produtos_subgrupos where lower(nome) = lower(sub_consultoria)) as sub_apelido
 	                from consolidado
 	                WHERE 
@@ -561,7 +561,7 @@ namespace SIAO.SRV.DAL
 	                upper(sub_consultoria) in ('PDE 2 (TRATA)','PORT (PSICO)','RELAC (PBM)','PDE 1 (ANTI - RH)','PDE 1-2')
 	                GROUP BY cnpj, mes, ano, sub_consultoria, sub_apelido
                 union
-	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto)as ""Desconto"", 
+	                select cnpj, mes, ano, 'zzzzzz', NULL ,sum(valor_liquido) as ""Liquido"",CASE WHEN SUM(consolidado.Valor_Bruto) > 0 THEN SUM(consolidado.Valor_Desconto) / SUM(consolidado.Valor_Bruto) ELSE 0 END as ""Desconto"", 
                     sum(quantidade) as ""Quantidade"", NULL
 	                from consolidado
 	                WHERE 
