@@ -296,10 +296,13 @@ namespace SIAO.SRV.BLL
 
             if (clsGrafic.Count > 0)
             {
-                decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
+                //decimal dcmTotal = clsGrafic[clsGrafic.Count - 1].Liquido;
+                decimal dcmTotal = 0;
 
                 clsGrafic.ForEach(delegate(GraficTO _Grafic)
                 {
+                    dcmTotal = clsGrafic.Find(g => g.Grupo == "zzzzzz" && g.Ano == _Grafic.Ano && g.Mes == _Grafic.Mes).Liquido;
+
                     clsIndicesGrafic.ForEach(delegate(IndicesGraficTO _IndicesGrafic)
                     {
                         if (_Grafic.Sub_Consultoria.ToUpper() == _IndicesGrafic.categoria.ToUpper() && _Grafic.Grupo.ToUpper() == _IndicesGrafic.grupo.ToUpper())
