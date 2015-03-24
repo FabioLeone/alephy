@@ -9,6 +9,11 @@
     <script type="text/javascript" src="Content/js/modernizr.custom.86080.js"></script>
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            if (/http:\/\/(www\.)?multi\.pdev\.com\.br\/ro/.test(document.URL)) { window.location = "http://multi.pdev.com.br/ro_multi"; }
+        }
+    </script>
 </head>
 <body id="home">
     <form id="frmLogon" runat="server">
