@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CB1F0A23-D7D8-4E32-966B-829E5883861E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SIAO.SRV</RootNamespace>
+    <AssemblyName>SIAO.SRV</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Npgsql">
+      <HintPath>bin\Debug\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="Mono.Security" />
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BLL\Users.cs" />
+    <Compile Include="TO\Users.cs" />
+    <Compile Include="Rede.cs" />
+    <Compile Include="clsControl.cs" />
+    <Compile Include="BLL\Redes.cs" />
+    <Compile Include="clsDB.cs" />
+    <Compile Include="DAL\Users.cs" />
+    <Compile Include="DAL\DbHelper.cs" />
+    <Compile Include="DAL\CDM.cs" />
+    <Compile Include="clsFuncs.cs" />
+    <Compile Include="clsRelat1.cs" />
+    <Compile Include="TO\Grafic.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="BLL\" />
+    <Folder Include="TO\" />
+    <Folder Include="DAL\" />
+  </ItemGroup>
+</Project>

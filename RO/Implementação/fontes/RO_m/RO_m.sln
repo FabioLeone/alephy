@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIAO", "SIAO\SIAO.csproj", "{F3617C1E-5A0A-4DD1-8964-2EDC386AF8BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIAO.SRV", "SIAO.SRV\SIAO.SRV.csproj", "{CB1F0A23-D7D8-4E32-966B-829E5883861E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB1F0A23-D7D8-4E32-966B-829E5883861E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB1F0A23-D7D8-4E32-966B-829E5883861E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB1F0A23-D7D8-4E32-966B-829E5883861E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB1F0A23-D7D8-4E32-966B-829E5883861E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3617C1E-5A0A-4DD1-8964-2EDC386AF8BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3617C1E-5A0A-4DD1-8964-2EDC386AF8BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3617C1E-5A0A-4DD1-8964-2EDC386AF8BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3617C1E-5A0A-4DD1-8964-2EDC386AF8BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SIAO\SIAO.csproj
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,33 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="/usr/bin/google-chrome-stable" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="SIAO.SRV/BLL/Users.cs">
+    <Files>
+      <File FileName="SIAO.SRV/DAL/Users.cs" Line="9" Column="9" />
+      <File FileName="SIAO.SRV/BLL/Users.cs" Line="34" Column="34" />
+      <File FileName="SIAO/web.config" Line="63" Column="63" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="SIAO" expanded="True">
+            <Node name="Logon.aspx" expanded="True" />
+          </Node>
+          <Node name="SIAO.SRV" expanded="True">
+            <Node name="BLL" expanded="True">
+              <Node name="Users.cs" selected="True" />
+            </Node>
+            <Node name="DAL" expanded="True" />
+            <Node name="TO" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

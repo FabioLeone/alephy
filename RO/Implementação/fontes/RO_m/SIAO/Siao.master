@@ -1,0 +1,81 @@
+﻿<%@ Master Language="C#" Inherits="SIAO.Siao" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+	<title>Farma Manager</title>
+	<link href="Content/ssSIAO.css" rel="Stylesheet" type="text/css" />
+</head>
+<body>
+<div id="container">
+<form id="form1" runat="server">
+	<% if(CheckCss()){%>
+		<header style="background-color: rgba(224, 0, 26, 0.86);">
+	    	<a id="A1" class="menub" href="#" style="background: rgba(0, 51, 153, 0.77);">
+    <%}else{ %>
+        <header>
+            <a id="log" class="menub" href="#">
+    <%} %>
+		<div class="logo"></div>
+        <span>&raquo;</span>
+    </a>
+    <div class="center">
+        <nav>
+        	<ul id="navlist" runat="server">
+                <li id="l1" runat="server"><a href="Default.aspx">Home</a></li>
+                <%if (VerificaConfig())
+                    { %>
+                <li id="l2" runat="server"><a href="configurations.aspx">Configurações</a></li>
+				<%}
+                    if (VerificaRelatorio())
+                    {%>
+                <li id="l3" runat="server"><a href="wfmGerarRelatorios.aspx">Aplicativos</a></li>
+				<%}
+                    if (VerificaEnvio())
+                    { %>
+                <li id="l4" runat="server"><a href="wfmEnvio.aspx">Envio de Informações</a></li>
+                <%} %>
+            </ul>
+			<ul id="Ul1" style="float:right;">
+				<% if (!String.IsNullOrEmpty(SIAO.Local.LocalPage))
+                    { %>
+                <li><a href='<%= SIAO.Local.LocalPage %>'>Voltar</a></li>
+                <% } %>
+                <li>
+                	<asp:LinkButton ID="LinkButton1" runat="server" OnClick="lbtnLogoff_Click1">Logoff</asp:LinkButton>
+                </li>
+			</ul>
+        </nav>
+	</div>
+	<a id="arq" href="#" class="menuc">Arquivos gerados</a>
+	<div id="inf">
+    <img src="Content/images/app/logo_Cas_blue_128.png" />
+    <hr />
+    <h3>CasBrasil</h3>
+    <p>
+    <b>Sede:</b> <br />
+    Avenida Itatiaia, 201<br />
+    Jardim Itatiaia <wr /> 
+    Campinas - SP <br />
+    CEP: 13101-310 <br /><br />
+
+    <b>Escritório:</b> <br />
+    Avenida<wr /> Governador Pedro de Toledo,<wr /> 1760, Sala 16 <br />
+    CEP: 13070-715 <br /><br />
+    </p>
+
+    <h3>Contatos</h3>
+    <p>Central: +55 19 3368-4446</p>
+    <br />
+    <p><b>Skypes:</b></p>
+    <p>
+    Antonio Silva: casbrasil1 <br />
+    Felipe: casbrasil02</p>
+
+    </div>
+	</header>
+    <asp:contentplaceholder id="contentPlaceHolder1" runat="server" /> 
+</form>
+</div>
+</body>
+</html>
+

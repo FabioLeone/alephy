@@ -1,0 +1,6 @@
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO.SRV/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO.SRV/bin/Debug/SIAO.SRV.dll.mdb
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO.SRV/bin/Debug/SIAO.SRV.dll
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO.SRV/obj/Debug/SIAO.SRV.dll
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO.SRV/obj/Debug/SIAO.SRV.dll.mdb
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO.SRV/bin/Debug/Npgsql.dll
