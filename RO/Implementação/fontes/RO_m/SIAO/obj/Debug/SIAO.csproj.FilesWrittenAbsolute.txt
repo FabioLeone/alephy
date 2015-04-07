@@ -6,3 +6,7 @@
 /home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO/bin/SIAO.SRV.dll
 /home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO/bin/SIAO.SRV.dll.mdb
 /home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO/bin/Npgsql.dll
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO/bin/itextsharp.dll
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO/bin/Ionic.Zip.dll
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO/bin/Ionic.Zip.xml
+/home/fleone/repositorio/project/alephy/RO/Implementação/fontes/RO_m/SIAO/bin/AjaxControlToolkit.dll

@@ -31,7 +31,7 @@ namespace SIAO.SRV.TO
             base.OnEndPage(writer, document);
             PdfPTable tabFot = new PdfPTable(new float[] { 1F });
             PdfPCell cell;
-            Font f = new Font(Font.HELVETICA, 9F);
+			Font f = new Font(Font.FontFamily.HELVETICA, 9F);
             tabFot.TotalWidth = 416F;
             Phrase p = new Phrase(new Chunk(ImageHeader, 0, -4));
             p.Add(new Chunk("UVF / CasBrasil: (19) 3368-4446 |  Antonio Silva: (19) 99222-0436 treinamento@casbrasil.com.br", f));

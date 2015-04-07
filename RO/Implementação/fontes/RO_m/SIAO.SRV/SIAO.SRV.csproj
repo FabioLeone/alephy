@@ -38,6 +38,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="Mono.Security" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="itextsharp">
+      <HintPath>bin\Debug\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>bin\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +59,12 @@
     <Compile Include="clsFuncs.cs" />
     <Compile Include="clsRelat1.cs" />
     <Compile Include="TO\Grafic.cs" />
+    <Compile Include="BLL\Lojas.cs" />
+    <Compile Include="BLL\Files.cs" />
+    <Compile Include="DAL\Files.cs" />
+    <Compile Include="TO\Files.cs" />
+    <Compile Include="Loja.cs" />
+    <Compile Include="TO\RolesTO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

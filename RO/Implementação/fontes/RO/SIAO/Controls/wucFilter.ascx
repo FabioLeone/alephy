@@ -1,6 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="wucFilter.ascx.cs" Inherits="SIAO.Controls.wucFilter" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <div id="dvFilter" runat="server">
     <fieldset style="width: 96.2%;">
         <legend>
@@ -25,14 +24,8 @@
                     AutoPostBack="true" OnCheckedChanged="rbtPeriodo_CheckedChanged" />
                 de:
                 <asp:TextBox ID="txtInicio" runat="server" Width="48px"></asp:TextBox>
-                <asp:MaskedEditExtender ID="txtInicio_MaskedEditExtender" runat="server" CultureDateFormat="MM/yyyy"
-                    Enabled="True" TargetControlID="txtInicio" Mask="99/9999" ClearMaskOnLostFocus="false">
-                </asp:MaskedEditExtender>
                 até:
                 <asp:TextBox ID="txtFim" runat="server" Width="48px"></asp:TextBox>
-                <asp:MaskedEditExtender ID="txtFim_MaskedEditExtender1" runat="server" CultureDateFormat="MM/yyyy"
-                    Enabled="True" TargetControlID="txtFim" Mask="99/9999" ClearMaskOnLostFocus="false">
-                </asp:MaskedEditExtender>
             </div>
             <div style="display: table-cell;">
                 <asp:RadioButton ID="rbtMes" GroupName="filtro" AutoPostBack="true" Text="ultimos 6 meses"

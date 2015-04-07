@@ -33,6 +33,8 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -42,6 +44,40 @@
     <Content Include="Content\ssSIAO.css" />
     <Content Include="Logon.aspx" />
     <Content Include="Content\js\modernizr.custom.86080.js" />
+    <Content Include="Content\js\jquery.easing.1.3.js" />
+    <Content Include="Content\js\jquery.lavalamp.min.js" />
+    <Content Include="configurations.aspx" />
+    <Content Include="Content\css\Animations.css" />
+    <Content Include="Content\html\analise.htm" />
+    <Content Include="Content\images\app\logo_Cas_blue_128.png" />
+    <Content Include="Content\images\banners\bg.jpg" />
+    <Content Include="Content\images\banners\logo.png" />
+    <Content Include="Content\a_Logo.jpg" />
+    <Content Include="Content\delete.png" />
+    <Content Include="Content\document.png" />
+    <Content Include="Content\easyscroll.js" />
+    <Content Include="Content\edit.png" />
+    <Content Include="Content\graphic.png" />
+    <Content Include="Content\important.png" />
+    <Content Include="Content\login-box-backg.png" />
+    <Content Include="Content\login-btn.png" />
+    <Content Include="Content\navigation-bg.jpg" />
+    <Content Include="Content\navigation-hover.png" />
+    <Content Include="Content\navigation-separator.png" />
+    <Content Include="Content\report.gif" />
+    <Content Include="Content\report.png" />
+    <Content Include="Content\Search.png" />
+    <Content Include="Content\success.png" />
+    <Content Include="Content\images\app\icons\Board-icon.png" />
+    <Content Include="Content\images\app\icons\Charts-Combo-icon.png" />
+    <Content Include="Content\images\app\icons\Charts-icon.png" />
+    <Content Include="Content\images\app\icons\doc-icon.png" />
+    <Content Include="Content\images\app\icons\search.png" />
+    <Content Include="Content\images\app\icons\Settings-icon.png" />
+    <Content Include="Content\images\app\icons\user-icon.png" />
+    <Content Include="wfmUsers.aspx" />
+    <Content Include="Controls\wucCadastroUser.ascx" />
+    <Content Include="Controls\wucListaUsers.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -66,6 +102,30 @@
     <Compile Include="Logon.aspx.designer.cs">
       <DependentUpon>Logon.aspx</DependentUpon>
     </Compile>
+    <Compile Include="configurations.aspx.cs">
+      <DependentUpon>configurations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="configurations.aspx.designer.cs">
+      <DependentUpon>configurations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfmUsers.aspx.cs">
+      <DependentUpon>wfmUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfmUsers.aspx.designer.cs">
+      <DependentUpon>wfmUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\wucCadastroUser.ascx.cs">
+      <DependentUpon>wucCadastroUser.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\wucCadastroUser.ascx.designer.cs">
+      <DependentUpon>wucCadastroUser.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\wucListaUsers.ascx.cs">
+      <DependentUpon>wucListaUsers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\wucListaUsers.ascx.designer.cs">
+      <DependentUpon>wucListaUsers.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -80,6 +140,13 @@
     <Folder Include="Content\images\" />
     <Folder Include="Content\images\app\" />
     <Folder Include="Content\js\" />
+    <Folder Include="Content\css\" />
+    <Folder Include="Content\html\" />
+    <Folder Include="uploads\" />
+    <Folder Include="uploads\enviados\" />
+    <Folder Include="Content\images\banners\" />
+    <Folder Include="Content\images\app\icons\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SIAO.SRV\SIAO.SRV.csproj">

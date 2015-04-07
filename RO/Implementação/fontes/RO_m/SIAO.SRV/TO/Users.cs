@@ -6,10 +6,6 @@ namespace SIAO.SRV.TO
 	[Serializable]
 	public class UsersTO
 	{
-		public UsersTO ()
-		{
-		}
-
 		public int UserId { get; set; }
 		public string UserName { get; set; }
 		public DateTime LastActivityDate { get; set; }

@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="wucCadastroUser.ascx.cs"
     Inherits="SIAO.Controls.wucCadastroUser" %>
-    <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
 <asp:Panel ID="Panel1" runat="server">
     <fieldset style="width: 372px;margin: 0 auto;">
         <legend>
@@ -61,10 +61,9 @@
                         <asp:TextBox ID="txtValidade" runat="server" ToolTip="Prazo de validade da senha."
                             Width="188px"></asp:TextBox>
                         <asp:Label ID="lblV" runat="server" ForeColor="Red"></asp:Label>
-                        <asp:CalendarExtender ID="txtValidade_CalendarExtender" runat="server" Enabled="True"
-                            TargetControlID="txtValidade" DaysModeTitleFormat="MMMM, yy" TodaysDateFormat="MMMM d, yy"
-                            Format="dd/MM/yyyy">
-                        </asp:CalendarExtender>
+                        <asp:Calendar ID="txtValidade_CalendarExtender" runat="server" Enabled="True"
+                            Parent="txtValidade" TitleFormat="MMMM, yy" DayNameFormat="MMMM d, yy">
+                        </asp:Calendar>
                     </td>
                 </tr>
                 <tr>

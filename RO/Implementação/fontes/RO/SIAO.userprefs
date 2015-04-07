@@ -1,36 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="firefox" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SIAO.SRV/DAL/Users.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SIAO/Web.config">
     <Files>
-      <File FileName="SIAO/configurations.aspx.cs" Line="33" Column="33" />
-      <File FileName="SIAO/Controls/wucListaUsers.ascx" Line="19" Column="19" />
-      <File FileName="SIAO/Controls/wucCadastroUser.ascx" Line="5" Column="5" />
-      <File FileName="SIAO/Controls/wucCadastroUser.ascx.cs" Line="28" Column="28" />
-      <File FileName="SIAO.SRV/BLL/Users.cs" Line="60" Column="60" />
-      <File FileName="SIAO.SRV/DAL/Users.cs" Line="10" Column="10" />
+      <File FileName="SIAO/configurations.aspx.cs" Line="10" Column="10" />
+      <File FileName="SIAO/Controls/wucListaUsers.ascx" Line="69" Column="69" />
+      <File FileName="SIAO/Controls/wucListaUsers.ascx.cs" Line="26" Column="26" />
+      <File FileName="SIAO.SRV/TO/Files.cs" Line="37" Column="37" />
+      <File FileName="SIAO/Controls/wucCadastroUser.ascx.designer.cs" Line="1" Column="1" />
+      <File FileName="SIAO/Controls/wucCadastroUser.ascx" Line="99" Column="99" />
+      <File FileName="SIAO/Controls/wucFilter.ascx.designer.cs" Line="3" Column="3" />
+      <File FileName="SIAO/Controls/wucFilter.ascx" Line="84" Column="84" />
+      <File FileName="SIAO/wfmLabRelat.aspx.designer.cs" Line="66" Column="66" />
+      <File FileName="SIAO/wfmLabRelat.aspx" Line="15" Column="15" />
+      <File FileName="SIAO/Web.config" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="SIAO" expanded="True">
-            <Node name="Controls" expanded="True">
-              <Node name="wucCadastroUser.ascx" expanded="True" />
-            </Node>
-            <Node name="configurations.aspx" expanded="True" />
-            <Node name="wfmUsers.aspx" expanded="True" />
-          </Node>
-          <Node name="SIAO.SRV" expanded="True">
-            <Node name="BLL" expanded="True" />
-            <Node name="DAL" expanded="True">
-              <Node name="Users.cs" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
